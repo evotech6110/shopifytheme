@@ -1,0 +1,436 @@
+{% style %}
+  /* Video carousel - START */
+  .video-carousel-wrapper{
+    position: relative;
+    z-index: 0;
+  }
+  .video-carousel-wrapper.swiper-initialize{
+    visibility: hidden;
+  }
+  .video-carousel-wrapper.gradient-enabled {
+    background: var(--color-background);
+    background: var(--color-background-gradient);
+  }
+  .video-carousel-wrapper .wrapper{
+    padding-left: var(--container-left-padding);
+    padding-right: var(--container-right-padding);
+  }
+  
+  .video-carousel-wrapper .video-carousel-swiper{
+    position: relative;
+  }
+  .video-carousel-wrapper .video-carousel-button-prev,
+  .video-carousel-wrapper .video-carousel-button-next{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    border-radius: var(--theme-border-radius);
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out, opacity 200ms ease-in-out;
+    border: none;
+  }
+  .video-carousel-wrapper .video-carousel-button-prev.ic-btn-secondary:not(:hover):not(:disabled):not(:focus-visible),
+  .video-carousel-wrapper .video-carousel-button-next.ic-btn-secondary:not(:hover):not(:disabled):not(:focus-visible){
+    background-color: rgba(var(--secondary-btn-bg-rgb), 0.5);
+  }
+  .video-carousel-wrapper .video-carousel-button-prev:disabled,
+  .video-carousel-wrapper .video-carousel-button-next:disabled{
+    opacity: 0;
+    pointer-events: none;
+  }
+  .video-carousel-wrapper .video-carousel-button-prev:not(:disabled),
+  .video-carousel-wrapper .video-carousel-button-next:not(:disabled){
+    cursor: pointer;
+  }
+  .video-carousel-wrapper .video-carousel-button-prev{
+    inset-inline-start: 0.5rem;
+  }
+  .video-carousel-wrapper .video-carousel-button-next{
+    inset-inline-end: 0.5rem;
+  }
+  .video-carousel-wrapper .video-wrapper{
+    aspect-ratio: var(--_video-ratio, 1); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border-radius: var(--theme-border-radius);
+    overflow: hidden;
+  }
+  .video-carousel-wrapper .video-wrapper.show-background{
+    background-color: var(--color-background-variant);
+  }
+  .video-carousel-wrapper .internal-video{
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .video-carousel-wrapper video{
+    width: 100%;
+    height: 100%;
+    object-fit: var(--_video-fit, cover);
+  }
+  .video-carousel-wrapper .video-toggle{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    background-color: transparent;
+    padding: 0.625rem;
+    border: none;
+  }
+  .video-carousel-wrapper .video-toggle .icon-btn,
+  .video-carousel-wrapper .video-sound-toggle{
+    border-radius: var(--theme-border-radius);
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out, opacity 200ms ease-in-out;
+    border: none;
+  }
+
+  .video-carousel-wrapper .video-actions{
+    position: absolute;
+    top: 0.625rem;
+    inset-inline-end: 0.625rem;
+  }
+  .video-carousel-wrapper .video-actions button:not(:disabled){
+    cursor: pointer;
+  }
+
+  .video-carousel-wrapper .icon-btn {
+    display: block;
+    padding: calc(0.625rem * var(--font-body-scale));
+  }
+  .video-carousel-wrapper .icon-btn svg {
+    display: block;
+    width: calc(1.5rem * var(--font-body-scale));
+    height: calc(1.5rem * var(--font-body-scale));
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .video-carousel-wrapper .video-carousel-swiper[data-video-play-on="hover"] .video-toggle{
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      transition: opacity 200ms ease-in-out;
+    }
+    .video-carousel-wrapper .video-carousel-swiper[data-video-play-on="hover"] .video-toggle.playing{
+      opacity: 0;
+    }
+    .video-carousel-wrapper .video-toggle .icon-btn.ic-btn-secondary:not(:hover):not(:disabled):not(:focus-visible),
+    .video-carousel-wrapper .video-sound-toggle.ic-btn-secondary:not(:hover):not(:disabled):not(:focus-visible){
+      background-color: rgba(var(--secondary-btn-bg-rgb), 0.8);
+    }
+    .video-carousel-wrapper .video-actions button:not(:focus-visible){
+      opacity: 0;
+    }
+    .video-carousel-wrapper .video-wrapper:hover .video-actions button,
+    .video-carousel-wrapper .video-toggle:focus-visible ~ .video-actions button{
+      opacity: 1;
+    }
+  }
+  /* Video carousel - END */
+{% endstyle %}
+<div class="section-wrapper color-{{ section.settings.color_scheme }} gradient-enabled ic-py-14 video-carousel-wrapper swiper-initialize">
+  <div class="wrapper{% if section.settings.content_width != 'full-width' %} ic-container{% endif %}">
+    <div 
+      id="{{ section.id }}-video-carousel" 
+      class="swiper video-carousel-swiper" 
+      data-slides-per-view-large-desktop="{{ section.settings.large_desktop_slides }}"
+      data-slides-per-view-desktop="{{ section.settings.desktop_slides }}"
+      data-slides-per-view-tablet="{{ section.settings.tablet_slides }}"
+      data-slides-per-view-mobile-landscape="{{ section.settings.mobile_landscape_slides }}"
+      data-slides-per-view-mobile="{{ section.settings.mobile_slides }}"
+      data-video-play-on="{{ section.settings.play_on }}"
+      style="--_video-ratio: {{ section.settings.video_aspect_ratio }};">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
+            <div class="video-wrapper{% if block.settings.media_background %} show-background{% endif %}{% if block.settings.media_border %} border{% endif %}" style="--_video-fit: {{ block.settings.video_fit }};">
+              {% if block.settings.video != nil %}
+                <div class="internal-video">
+                  {% assign video_id = section.id | append: '-video-' | append: forloop.index %}
+                  {{ block.settings.video | media_tag: image_size: "2048x", autoplay: false, loop: true, muted: true, controls: false, preload: "none", id: video_id, loading: 'lazy' }}
+                  <button 
+                    class="video-toggle" 
+                    aria-label="{{ 'sections.video_carousel.aria_label.play_video' | t: id: forloop.index }}"
+                    aria-controls="{{ video_id }}"
+                    aria-pressed="false">
+                    <span class="icon-btn ic-btn-secondary">
+                      {% render 'icon-play-outline' %}
+                    </span>
+                  </button>
+                  {% if block.settings.unmute_button %}
+                    <div class="video-actions">
+                      <button 
+                        class="icon-btn ic-btn-secondary video-sound-toggle" 
+                        aria-label="{{ 'sections.video_carousel.aria_label.unmute_video' | t: id: forloop.index }}"
+                        aria-controls="{{ video_id }}"
+                        aria-pressed="false">
+                        {% render 'icon-volume-off' %}
+                      </button>
+                    </div>
+                  {% endif %}
+                </div>
+              {% else %}
+                  {{ 'image' | placeholder_svg_tag }}
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% if section.settings.navigation %}
+        <button type="button" class="icon-btn ic-btn-secondary video-carousel-button-prev" data-carousel-id="{{ section.id }}-video-carousel">
+          {% render 'icon-left' %}
+        </button>
+        <button type="button" class="icon-btn ic-btn-secondary video-carousel-button-next" data-carousel-id="{{ section.id }}-video-carousel">
+          {% render 'icon-right' %}
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    videoCarousel('{{ section.id }}');
+  });
+  document.addEventListener('shopify:section:load', () => {
+    videoCarousel('{{ section.id }}');
+  });
+  document.addEventListener('shopify:section:reorder', () => {
+    videoCarousel('{{ section.id }}');
+  });
+</script>
+{% schema %}
+{
+  "name": "t:sections.video_carousel.name",
+  "tag": "section",
+  "class": "video-carousel-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings_schema.general.settings.color_scheme.label",
+      "default": "scheme_1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video_carousel.settings.video.content"
+    },
+    {
+      "type": "select",
+      "id": "play_on",
+      "label": "t:sections.video_carousel.settings.video.play_on.label",
+      "options": [
+        {
+        "value": "hover",
+        "label": "t:sections.video_carousel.settings.video.play_on.option_hover"
+        },
+        {
+        "value": "click",
+        "label": "t:sections.video_carousel.settings.video.play_on.option_click"
+        }
+      ],
+      "default": "hover",
+      "info": "t:sections.video_carousel.settings.video.play_on.info"
+    },
+    {
+      "type": "select",
+      "id": "video_aspect_ratio",
+      "label": "t:sections.video_carousel.settings.video_ratio.label",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.video_carousel.settings.video_ratio.option_1.label"
+        },
+        {
+          "value": "4 / 5",
+          "label": "t:sections.video_carousel.settings.video_ratio.option_2.label"
+        },
+        {
+          "value": "9 / 16",
+          "label": "t:sections.video_carousel.settings.video_ratio.option_3.label"
+        },
+        {
+          "value": "5 / 4",
+          "label": "t:sections.video_carousel.settings.video_ratio.option_4.label"
+        },
+        {
+          "value": "16 / 9",
+          "label": "t:sections.video_carousel.settings.video_ratio.option_5.label"
+        }
+      ],
+      "default": "9 / 16"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video_carousel.settings.slideshow.content"
+    },
+    {
+      "type": "select",
+      "id": "large_desktop_slides",
+      "label": "t:sections.video_carousel.settings.slideshow.settings.large_desktop_slides.label",
+      "options": [
+        { "value": "5", "label": "5" },
+        { "value": "6", "label": "6" },
+        { "value": "7", "label": "7" }
+      ],
+      "default": "7"
+    },
+    {
+      "type": "select",
+      "id": "desktop_slides",
+      "label": "t:sections.video_carousel.settings.slideshow.settings.desktop_slides.label",
+      "options": [
+      { "value": "4", "label": "4" },
+      { "value": "5", "label": "5" }
+      ],
+      "default": "5"
+    },
+    {
+      "type": "select",
+      "id": "tablet_slides",
+      "label": "t:sections.video_carousel.settings.slideshow.settings.tablet_slides.label",
+      "options": [
+      { "value": "3", "label": "3" },
+      { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "mobile_landscape_slides",
+      "label": "t:sections.video_carousel.settings.slideshow.settings.mobile_landscape_slides.label",
+      "options": [
+      { "value": "2", "label": "2" },
+      { "value": "3", "label": "3" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "mobile_slides",
+      "label": "t:sections.video_carousel.settings.slideshow.settings.mobile_slides.label",
+      "options": [
+      { "value": "1", "label": "1" },
+      { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "checkbox",
+      "id": "navigation",
+      "label": "t:sections.video_carousel.settings.slideshow.settings.enable_navigation.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video_carousel.settings.layout.label"
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "t:sections.video_carousel.settings.content_width.label",
+      "options": [
+        {
+        "value": "page-width",
+        "label": "t:sections.video_carousel.settings.content_width.option_page"
+        },
+        {
+        "value": "full-width",
+        "label": "t:sections.video_carousel.settings.content_width.option_full"
+        }
+      ],
+      "default": "full-width"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "t:sections.video_carousel.blocks.video.name",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:sections.video_carousel.blocks.video.settings.label"
+        },
+        {
+          "type": "select",
+          "id": "video_fit",
+          "label": "t:sections.video_carousel.blocks.video.settings.fit.label",
+          "options": [
+            {
+              "value": "contain",
+              "label": "t:sections.video_carousel.blocks.video.settings.fit.option_1.label"
+            },
+            {
+              "value": "cover",
+              "label": "t:sections.video_carousel.blocks.video.settings.fit.option_2.label"
+            }
+          ],
+          "default": "cover"
+        },
+        {
+          "type": "checkbox",
+          "id": "unmute_button",
+          "label": "t:sections.video_carousel.settings.enable_unmute.label",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "media_background",
+          "label": "t:sections.video_carousel.blocks.video.settings.show_bckground.label",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "media_border",
+          "label": "t:sections.video_carousel.blocks.video.settings.show_border.label",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.video_carousel.name",
+      "blocks": [
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "*"
+    ]
+  }
+}
+{% endschema %}

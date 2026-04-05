@@ -1,0 +1,345 @@
+{{ 'filter-form.css' | asset_url | stylesheet_tag: preload: true }}
+
+<div class="search-listing-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container search-listing ic-py-13">
+        {% if search.performed %}
+            <h1 class="ic-h2 ic-mb-8 ic-text-center">{{ "sections.template_search.search_results" | t }}</h1>
+        {% else %}
+            <h1 class="ic-h2 ic-mb-8 ic-text-center">{{ "sections.template_search.search" | t }}</h1>
+        {% endif %}
+            <div class="ic-flex ic-justify-content-center ic-mb-14">
+                <div class="search-container" data-section={{ section.id }}>
+                    <form action="{{ routes.search_url }}" method="get" class="ic-inline-flex ic-overflow-hidden ic-w400px ic-max-w-100 search-page-form">
+                        <input 
+                            type="search" 
+                            name="q" 
+                            placeholder="{{ "sections.template_search.search" | t }}" 
+                            value="{{ search.terms | escape }}" 
+                            class="ic-px-4 ic-py-2 ic-flex-1 {% if predictive_search.performed %} suggestion-active{% endif %}"
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="ic-btn ic-btn-primary ic-py-2 ic-px-8">
+                            {% render 'icon-search' %}
+                        </button>
+                    </form>
+                    {%- if predictive_search.performed -%}
+                        {% render 'search-suggestion' %}
+                      {% endif %}
+                </div>
+            </div>
+            
+            <div class="load-wrapper">
+                {% if search.performed %}
+                    {% if search.results.size >= 0 %}
+                        {% paginate search.results by 12 %}
+                            {% liquid
+                                if search.filters.size > 0
+                                    assign filter_in = "filter-in"
+                                    else
+                                    assign filter_in = nil
+                                endif
+                            %}
+
+                            <div class="ic-grid search-filter-wrapper {{ filter_in }} ic-grid-gap-8 ic-mb-13" data-url="{{ routes.search_url | append: '?q=' | append: search.terms | url_escape }}" data-sort="{{ search.sort_by }}">
+                                {% if search.filters.size > 0 %}
+                                    {% render 'filter', filter_data: search %}
+                                {% endif %}
+                                <div class="search-result-container filtered-results result-container"  id="search-results">
+                                    <div class="ic-flex ic-mb-4 ic-align-items-center ic-flex-gap-x-4 ic-flex-gap-y-6">
+                                        <div class="pagination-wrapper pagination-wrapper-top">
+                                            {% render 'pagination', pagination: paginate %}
+                                        </div>
+                                        {% liquid
+                                            if search.results.size > 0
+                                            assign result_from = paginate.current_offset | plus: 1
+                                            else
+                                            assign result_from = paginate.current_offset
+                                            endif
+                                            if paginate.current_page == paginate.pages
+                                            assign last_page_results = paginate.items | modulo: 12
+                                            if last_page_results == 0 and search.results.size > 0
+                                            assign  last_page_results = 12
+                                            endif
+                                            assign result_to = paginate.current_offset | plus: last_page_results
+                                            else
+                                            assign result_to = paginate.current_offset | plus: 12
+                                            endif
+                                        %}
+                                        <div class="ic-flex ic-justify-content-space-between ic-align-items-center ic-flex-gap-x-4 ic-flex-gap-y-6 ic-w-100 ic-w-2xl-auto">
+                                            <p id="search-results-count" class="filtered-text">
+                                                {% if search.results.size > 0 %}
+                                                {{ "sections.template_search.search_label" | t: count: search.results_count, result_from: result_from, result_to: result_to }}
+                                                {% else %}
+                                                {{ "sections.template_search.search_term" | t }}
+                                                {% endif %}
+                                                <span class="ic-font-medium">{{ search.terms | escape }}</span>
+                                            </p>
+                                            {% if search.filters.size > 0 %}
+                                                <sort-filter class="sort-by--container ic-inline-block">
+                                                    <label for="sort-by" aria-label="{{ 'sections.template_collection.sort_by' | t }}" class="ic-mr-5">{{ "sections.template_collection.sort_by" | t }}:</label>
+                                                    {%- assign sort_by = search.sort_by | default: search.default_sort_by -%}
+                                                    <select id="sort-by" class="sort-by">
+                                                        {% for option in search.sort_options %}
+                                                        <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <span class="arrow">
+                                                        {% render 'icon-chevron-down' %}
+                                                    </span>
+                                                </sort-filter>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% if search.results.size > 0 %}
+                                        {% for product_item in search.results %}
+                                            {% if product_item.object_type == 'product' %}
+                                            <div class="result--container ic-py-3" id="product-result-container">
+                                                <h2 class="ic-h3 ic-mb-3">{{ "sections.template_search.products" | t }}</h2>
+                                                <div class="ic-grid ic-grid-template-cols-1 ic-grid-template-cols-md-3 ic-grid-template-cols-2xl-4 ic-grid-gap-4">
+                                                    {% liquid
+                                                        if search.filters.size > 0
+                                                            assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 570px, (max-width: 899px) 205px, (max-width: 1023px) 250px, (max-width: 1279px) 170px, (max-width: 1535px) 255px, 245px'
+                                                            assign srcset = '200, 260, 310, 400, 500, 600'
+                                                        else
+                                                            assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 575px, (max-width: 899px) 205px, (max-width: 1023px) 250px, (max-width: 1279px) 290px, (max-width: 1535px) 375px, 335px'
+                                                            assign srcset = '210, 260, 340, 400, 500, 600'
+                                                        endif
+                                                    %}
+                                                    {% for product in search.results %}
+                                                        {% case product.object_type %}
+                                                            {% when 'product' %}
+                                                                {% render 'product-card', 
+                                                                    product: product, 
+                                                                    collection: collection, 
+                                                                    sale_badge: section.settings.sale-badge, 
+                                                                    vendor: section.settings.vendor, 
+                                                                    offer_badge: section.settings.offer-badge, 
+                                                                    color_scheme: section.settings.result_color_scheme,
+                                                                    sizes: sizes, 
+                                                                    srcset: srcset,
+                                                                    default_image: section.settings.default_image,
+                                                                    quick_view: section.settings.quick_view %}
+                                                        {% endcase %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            {% break %}
+                                            {% endif %}
+                                        {% endfor %}
+        
+                                        {% for article_item in search.results %}
+                                            {% if article_item.object_type == 'article' %}
+                                            <div class="result--container ic-py-3" id="article-result-container">
+                                                <h2 class="ic-h3 ic-my-3">{{ "sections.template_search.article" | t }}</h2>
+                                                <div class="ic-grid ic-grid-template-cols-1 ic-grid-template-cols-md-3 ic-grid-template-cols-2xl-4 ic-grid-gap-4">
+                                                    {% liquid
+                                                        if search.filters.size > 0
+                                                            if section.settings.blog_image_style == 'ic-object-contain'
+                                                            assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 575px, (max-width: 899px) 210px, (max-width: 1023px) 255px, (max-width: 1279px) 175px, (max-width: 1535px) 260px, 250px'
+                                                            assign srcset = '200, 270, 300, 400, 500, 600'
+                                                            assign largest_width = 600
+                                                            else
+                                                            assign sizes = '(max-width: 639px) calc(200vw - 40px), (max-width: 767px) 1150px, (max-width: 899px) 420px, (max-width: 1023px) 510px, (max-width: 1279px) 350px, (max-width: 1535px) 520px, 500px'
+                                                            assign srcset = '200, 270, 300, 400, 450, 550, 600, 1000, 1180, 1250'
+                                                            assign largest_width = 1250
+                                                            endif
+                                                        else
+                                                            if section.settings.blog_image_style == 'ic-object-contain'
+                                                            assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 575px, (max-width: 899px) 210px, (max-width: 1023px) 255px, (max-width: 1279px) 305px, (max-width: 1535px) 380px, 340px'
+                                                            assign srcset = '200, 260, 350, 400, 500, 600'
+                                                            assign largest_width = 600
+                                                            else
+                                                            assign sizes = '(max-width: 639px) calc(200vw - 40px), (max-width: 767px) 1150px, (max-width: 899px) 420px, (max-width: 1023px) 510px, (max-width: 1279px) 610px, (max-width: 1535px) 760px, 680px'
+                                                            assign srcset = '200, 260, 350, 400, 450, 520, 650, 700, 800, 1000, 1180, 1250'
+                                                            assign largest_width = 1250
+                                                            endif
+                                                        endif
+                                                    %}
+                                                    {% for article in search.results %}
+                                                        {% case article.object_type %}
+                                                            {% when 'article' %}
+                                                                {% render 'article-card', article: article, read_more_text: section.settings.blog_read_more, image_style: section.settings.blog_image_style, featured_image: section.settings.blog_featured_image, placeholder_image: section.settings.blog_placeholder_image, color_scheme: section.settings.result_color_scheme, show_date: section.settings.blog_date, show_author: section.settings.blog_author, image_ratio: section.settings.blog_image_ratio, sizes: sizes, srcset: srcset, largest_width: largest_width %}
+                                                        {% endcase %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                                {% break %}
+                                            {% endif %}
+                                        {% endfor %}
+        
+                                        {% for page_item in search.results %}
+                                            {% if page_item.object_type == 'page' %}
+                                            <div class="result--container ic-py-3" id="page-result-container">
+                                                <h2 class="ic-h3 ic-my-3">{{ "sections.template_search.pages" | t }}</h2>
+                                                <div class="ic-grid ic-grid-template-cols-1 ic-grid-gap-4">
+                                                    {% for page in search.results %}
+                                                        {% case page.object_type %}
+                                                            {% when 'page' %}
+                                                                <div class="page-card ic-flex ic-flex-col ic-my-3 ic-p-4 color-{{ section.settings.result_color_scheme }} gradient-enabled">
+                                                                    <h1 class="ic-h2 ic-font-medium ic-mb-3">{{ page.title }}</h1>
+                                                                    <div class="ic-mb-4">{{ page.content | strip_html | truncatewords: 35 }}</div>
+                                                                    <a href="{{ page.url | split: '?' | first | default: '#' }}" class="text-base">{{ "sections.template_search.view_more" | t }}</a>
+                                                                </div>
+                                                        {% endcase %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                                {% break %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% else %}
+                                        {% if search.filters.size > 0 %}
+                                            <div class="ic-py-20" id="empty-result-container">
+                                                <span class="ic-block ic-mx-auto ic-w150px ic-mb-8">{% render 'icon-empty' %}</span>
+                                                <p class="ic-text-center ic-h3">{{ "sections.template_search.no_filter_result" | t }}</p> 
+                                            </div>
+                                            {% else %}
+                                            <div class="ic-py-20" id="empty-result-container">
+                                                <span class="ic-block ic-mx-auto ic-w150px ic-mb-8">{% render 'icon-empty' %}</span>
+                                                <p class="ic-text-center ic-h3">{{ "sections.template_search.no_search_result" | t: value: search.terms }}</p> 
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                    
+                                </div>
+                            </div>
+                            <div class="pagination-wrapper pagination-wrapper-bottom">
+                                {% render 'pagination', pagination: paginate %}
+                            </div>
+                        {% endpaginate %}
+                    {% else %}
+                        <div class="ic-text-center ic-my-12">
+                            <p>{{ "sections.template_search.no_search_result" | t: value: search.terms }}</p>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "t:sections.template_search.name",
+    "settings": [
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:settings_schema.general.settings.color_scheme.label",
+            "default": "scheme_1"
+        },
+        {
+            "type": "color_scheme",
+            "id": "result_color_scheme",
+            "label": "t:sections.template_search.result_color_scheme.label",
+            "default": "scheme_1"
+        },
+        {
+            "type": "header",
+            "content": "t:snippets.product_card.content"
+        },
+        {
+            "type": "checkbox",
+            "id": "sale-badge",
+            "default": true,
+            "label": "t:snippets.product_card.sale_badge.label"
+        },
+        {
+            "type": "checkbox",
+            "id": "vendor",
+            "default": true,
+            "label": "t:snippets.product_card.vendor.label"
+        },
+        {
+            "type": "checkbox",
+            "id": "offer-badge",
+            "default": true,
+            "label": "t:snippets.product_card.offer_badge.label"
+        },
+        {
+            "type": "checkbox",
+            "id": "quick_view",
+            "default": false,
+            "label": "t:snippets.product_card.quick_view.label"
+        },
+        {
+            "type": "image_picker",
+            "id": "default_image",
+            "label": "t:snippets.product_card.default_image.label"
+        },
+        {
+            "type": "header",
+            "content": "t:snippets.article_card.content"
+        },
+        {
+            "type":"text",
+            "id":"blog_read_more",
+            "label":"t:snippets.article_card.read_more.label",
+            "default":"Read more"
+        },
+        {
+            "type":"select",
+            "id":"blog_image_style",
+            "options":[
+                {
+                    "value":"ic-object-cover",
+                    "label":"t:snippets.article_card.image_style.option_1.label"
+                },
+                {
+                    "value":"ic-object-contain",
+                    "label":"t:snippets.article_card.image_style.option_2.label"
+                }
+            ],
+            "default":"ic-object-cover",
+            "label":"t:snippets.article_card.image_style.label"
+        },
+        {
+            "type": "select",
+            "id": "blog_image_ratio",
+            "options": [
+                {
+                "value": "16:9",
+                "label": "16:9"
+                },
+                {
+                "value": "4:3",
+                "label": "4:3"
+                },
+                {
+                "value": "3:2",
+                "label": "3:2"
+                },
+                {
+                "value": "1:1",
+                "label": "1:1"
+                }
+            ],
+            "default": "4:3",
+            "label": "t:snippets.article_card.image_ratio.label"
+        },
+        {
+            "type": "checkbox",
+            "id": "blog_featured_image",
+            "default": true,
+            "label": "t:snippets.article_card.show_image.label"
+        },
+        {
+            "type": "checkbox",
+            "id": "blog_placeholder_image",
+            "default": true,
+            "label": "t:snippets.article_card.show_placeholder.label"
+        },
+        {
+            "type": "checkbox",
+            "id": "blog_date",
+            "default": true,
+            "label": "t:snippets.article_card.show_date.label"
+        },
+        {
+            "type": "checkbox",
+            "id": "blog_author",
+            "default": true,
+            "label": "t:snippets.article_card.show_author.label"
+        }
+    ]
+}
+{% endschema %}

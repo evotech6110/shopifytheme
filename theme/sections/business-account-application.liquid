@@ -1,0 +1,1068 @@
+{% comment %}
+  EvoTech Digital — Business Account Application Form
+  Section file:  sections/business-account-application.liquid
+  Template file: templates/page.business-account-application.json
+  Sends to:      info@evotech.au via Shopify {% form 'contact' %}
+{% endcomment %}
+
+<style>
+  /* ── EvoTech Brand Variables (from theme settings_data.json) ── */
+  :root {
+    --et-navy:        #0e2240;
+    --et-navy-deep:   #09172d;
+    --et-lime:        #cff394;
+    --et-lime-dark:   #5c7d26;
+    --et-lime-mid:    #a8d96a;
+    --et-lime-bg:     #f2fce8;
+    --et-white:       #ffffff;
+    --et-bg-light:    #f8f9fd;
+    --et-border:      #e2e4e8;
+    --et-text:        #5e6979;
+    --et-heading:     #0e2240;
+    --et-price:       #2b419b;
+    --et-error:       #9e3737;
+    --et-success:     #0d8226;
+    --et-required:    #FF0F0F;
+    --et-radius:      8px;
+    --et-radius-lg:   12px;
+    --et-radius-input: 10px;
+  }
+
+  .baf-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    font-family: 'Merriweather', Georgia, serif;
+    color: var(--et-text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Page header ── */
+  .baf-page-header {
+    background: var(--et-navy);
+    border-radius: var(--et-radius-lg);
+    padding: 40px 40px 32px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .baf-page-header::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(207,243,148,.08);
+    pointer-events: none;
+  }
+  .baf-header-badge {
+    display: inline-block;
+    background: var(--et-lime);
+    color: var(--et-navy);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    font-family: inherit;
+  }
+  .baf-page-header h1 {
+    font-family: 'Cormorant Garamond', 'Georgia', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--et-white);
+    margin: 0 0 10px;
+    line-height: 1.15;
+  }
+  .baf-page-header p {
+    color: rgba(255,255,255,.75);
+    font-size: 14px;
+    max-width: 520px;
+    margin: 0;
+    line-height: 1.7;
+  }
+  .baf-header-meta {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,.15);
+    font-size: 12px;
+  }
+  .baf-header-meta span {
+    color: rgba(255,255,255,.65);
+  }
+  .baf-header-meta strong {
+    color: var(--et-lime);
+    display: block;
+    font-size: 13px;
+  }
+
+  /* ── Info notice ── */
+  .baf-notice {
+    background: var(--et-lime-bg);
+    border: 1px solid #b8e084;
+    border-left: 4px solid var(--et-lime-dark);
+    border-radius: var(--et-radius);
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    color: #3b5a1a;
+  }
+  .baf-notice strong { font-weight: 700; color: var(--et-lime-dark); }
+
+  /* ── Section cards ── */
+  .baf-section {
+    background: var(--et-white);
+    border: 1px solid var(--et-border);
+    border-radius: var(--et-radius-lg);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .baf-section-head {
+    background: var(--et-bg-light);
+    border-bottom: 1px solid var(--et-border);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .baf-section-icon {
+    width: 36px; height: 36px;
+    background: var(--et-navy);
+    border-radius: var(--et-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .baf-section-head h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--et-heading);
+    margin: 0 0 2px;
+  }
+  .baf-section-head p {
+    font-size: 12px;
+    color: var(--et-text);
+    margin: 0;
+  }
+  .baf-section-body {
+    padding: 28px;
+  }
+
+  /* ── Sub-heading ── */
+  .baf-sub-heading {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--et-navy);
+    margin: 24px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--et-lime);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .baf-sub-heading:first-child { margin-top: 0; }
+
+  /* ── Form grid ── */
+  .baf-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .baf-row.full { grid-template-columns: 1fr; }
+  .baf-row.thirds { grid-template-columns: 1fr 1fr 1fr; }
+  .baf-row.auto { grid-template-columns: auto; }
+
+  /* ── Field ── */
+  .baf-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .baf-field label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    color: var(--et-heading);
+    font-family: inherit;
+  }
+  .baf-field label .req {
+    color: var(--et-required);
+    font-size: 12px;
+    margin-left: 2px;
+  }
+  .baf-field input,
+  .baf-field select,
+  .baf-field textarea {
+    border: 1px solid var(--et-border);
+    border-radius: var(--et-radius-input);
+    background: var(--et-white);
+    padding: 11px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--et-heading);
+    width: 100%;
+    transition: border-color .15s, box-shadow .15s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  }
+  .baf-field input:focus,
+  .baf-field select:focus,
+  .baf-field textarea:focus {
+    outline: none;
+    border-color: var(--et-navy);
+    box-shadow: 0 0 0 3px rgba(14,34,64,.1);
+  }
+  .baf-field textarea { resize: vertical; min-height: 80px; }
+  .baf-field .hint {
+    font-size: 11px;
+    color: var(--et-text);
+    line-height: 1.5;
+  }
+
+  /* ── Divider ── */
+  .baf-divider {
+    height: 1px;
+    background: var(--et-border);
+    margin: 24px 0;
+  }
+
+  /* ── Same-address toggle ── */
+  .baf-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    cursor: pointer;
+  }
+  .baf-checkbox-row input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: var(--et-navy);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .baf-checkbox-row label {
+    font-size: 13px;
+    color: var(--et-heading);
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  /* ── Business type selector ── */
+  .baf-type-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .baf-type-btn {
+    border: 2px solid var(--et-border);
+    border-radius: var(--et-radius);
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--et-text);
+    background: var(--et-white);
+    transition: all .15s;
+    font-family: inherit;
+  }
+  .baf-type-btn.selected,
+  .baf-type-btn:hover {
+    border-color: var(--et-navy);
+    background: var(--et-bg-light);
+    color: var(--et-navy);
+  }
+  .baf-type-btn .type-icon { font-size: 20px; display: block; margin-bottom: 5px; }
+
+  /* ── T&C ── */
+  .baf-tc-scroll {
+    background: var(--et-bg-light);
+    border: 1px solid var(--et-border);
+    border-radius: var(--et-radius);
+    height: 240px;
+    overflow-y: auto;
+    padding: 18px 20px;
+    font-size: 12px;
+    line-height: 1.75;
+    color: #4a5261;
+    margin-bottom: 18px;
+    scroll-behavior: smooth;
+  }
+  .baf-tc-scroll::-webkit-scrollbar { width: 6px; }
+  .baf-tc-scroll::-webkit-scrollbar-thumb { background: var(--et-border); border-radius: 3px; }
+  .baf-tc-scroll::-webkit-scrollbar-thumb:hover { background: #b0b5be; }
+  .baf-tc-scroll h4 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--et-heading);
+    margin: 16px 0 5px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 14px;
+  }
+  .baf-tc-scroll h4:first-child { margin-top: 0; }
+  .baf-tc-scroll p { margin-bottom: 10px; }
+  .baf-tc-scroll ul { margin: 6px 0 10px 18px; }
+  .baf-tc-scroll ul li { margin-bottom: 4px; }
+
+  .baf-tc-read-notice {
+    background: var(--et-lime-bg);
+    border: 1px solid #b8e084;
+    border-radius: var(--et-radius);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--et-lime-dark);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .baf-agree-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .baf-agree-row input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: var(--et-navy);
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+  .baf-agree-row label {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--et-heading);
+    cursor: pointer;
+  }
+  .baf-agree-row label a {
+    color: var(--et-lime-dark);
+    text-decoration: underline;
+  }
+  .baf-agree-row label .req { color: var(--et-required); }
+
+  /* ── Submit button ── */
+  .baf-submit-wrap {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--et-border);
+  }
+  .baf-submit-btn {
+    background: var(--et-navy);
+    color: var(--et-white);
+    border: 2px solid var(--et-navy);
+    border-radius: var(--et-radius);
+    padding: 14px 2rem;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    cursor: pointer;
+    width: 100%;
+    transition: background .2s, border-color .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .baf-submit-btn:hover {
+    background: var(--et-navy-deep);
+    border-color: var(--et-navy-deep);
+  }
+  .baf-submit-btn:disabled {
+    background: #b0b8c5;
+    border-color: #b0b8c5;
+    cursor: not-allowed;
+  }
+  .baf-submit-footer {
+    font-size: 11px;
+    color: var(--et-text);
+    text-align: center;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  /* ── Success state ── */
+  .baf-success {
+    display: none;
+    background: var(--et-white);
+    border: 1px solid var(--et-border);
+    border-radius: var(--et-radius-lg);
+    padding: 48px 32px;
+    text-align: center;
+  }
+  .baf-success.show { display: block; }
+  .baf-success-icon {
+    width: 64px; height: 64px;
+    background: var(--et-lime);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+  }
+  .baf-success h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 28px;
+    color: var(--et-heading);
+    margin-bottom: 10px;
+  }
+  .baf-success p { font-size: 14px; color: var(--et-text); max-width: 440px; margin: 0 auto 10px; line-height: 1.7; }
+  .baf-ref-box {
+    display: inline-block;
+    background: var(--et-bg-light);
+    border: 1px dashed var(--et-border);
+    border-radius: var(--et-radius);
+    padding: 10px 24px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    color: var(--et-navy);
+    letter-spacing: 2px;
+    margin: 14px auto 20px;
+  }
+
+  /* ── Error messages ── */
+  .baf-field-error {
+    font-size: 11px;
+    color: var(--et-error);
+    margin-top: 3px;
+    display: none;
+  }
+  .baf-field.has-error input,
+  .baf-field.has-error select,
+  .baf-field.has-error textarea {
+    border-color: var(--et-error);
+    box-shadow: 0 0 0 3px rgba(158,55,55,.1);
+  }
+  .baf-field.has-error .baf-field-error { display: block; }
+
+  /* ── Responsive ── */
+  @media (max-width: 680px) {
+    .baf-page-header { padding: 28px 22px 24px; }
+    .baf-page-header h1 { font-size: 26px; }
+    .baf-section-body { padding: 20px; }
+    .baf-row { grid-template-columns: 1fr; }
+    .baf-row.thirds { grid-template-columns: 1fr 1fr; }
+    .baf-type-grid { grid-template-columns: 1fr 1fr; }
+    .baf-header-meta { gap: 14px; }
+  }
+  @media (max-width: 420px) {
+    .baf-row.thirds { grid-template-columns: 1fr; }
+    .baf-type-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<div class="baf-wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="baf-page-header">
+    <div class="baf-header-badge">Business Account Application</div>
+    <h1>Open a Business Account<br>with EvoTech Digital</h1>
+    <p>Establish a trading account for your organisation to submit purchase requests for IT hardware, software licences, managed services, and network solutions.</p>
+    <div class="baf-header-meta">
+      <span><strong>Perth WA 6000</strong>Head Office</span>
+      <span><strong>+61 466 911 816</strong>Sales Team</span>
+      <span><strong>info@evotech.au</strong>Accounts</span>
+      <span><strong>ABN 72 375 743 898</strong>EvoTech Digital</span>
+    </div>
+  </div>
+
+  <div class="baf-notice">
+    <strong>How this works:</strong> Complete this form to open a business account. Once approved, your team can submit purchase requests which EvoTech will quote and process. Payment terms (including deposit and balance structure) are negotiated individually for each order — we do not offer automatic credit lines.
+  </div>
+
+  <!-- MAIN FORM — uses Shopify contact form, sends to store email -->
+  {% form 'contact', id: 'baf-form' %}
+
+    {% if form.errors %}
+      <div class="baf-notice" style="border-left-color: var(--et-error); background:#fdf2f2; color: var(--et-error);">
+        <strong>Please correct the following:</strong> {{ form.errors | default_errors }}
+      </div>
+    {% endif %}
+
+    {% if form.posted_successfully? %}
+      <div class="baf-success show">
+        <div class="baf-success-icon">✓</div>
+        <h2>Application Submitted!</h2>
+        <div class="baf-ref-box" id="baf-ref-display">BAF-2026-{{ 'now' | date: '%s' | modulo: 9000 | plus: 1000 }}</div>
+        <p>Thank you — your business account application has been received by EvoTech Digital's accounts team. We'll review your details and respond to <strong>{{ form.email }}</strong> within 1–2 business days AWST.</p>
+        <p style="font-size:12px; color: var(--et-text);">Questions? Call <strong>+61 466 911 816</strong> or email <strong>info@evotech.au</strong><br>Mon–Fri 8:00am–6:00pm AWST</p>
+      </div>
+
+    {% else %}
+
+    <!-- HIDDEN: marks this as business account app so we can identify in inbox -->
+    <input type="hidden" name="contact[tags]" value="business-account-application">
+    <input type="hidden" name="contact[subject]" value="Business Account Application — EvoTech Digital">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 1 — COMPANY DETAILS                 -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="baf-section">
+      <div class="baf-section-head">
+        <div class="baf-section-icon">🏢</div>
+        <div>
+          <h2>Company Details</h2>
+          <p>Your organisation's information — all fields marked * are required</p>
+        </div>
+      </div>
+      <div class="baf-section-body">
+
+        <div class="baf-sub-heading">Business type</div>
+
+        <div class="baf-type-grid" id="bizTypeGrid">
+          <button type="button" class="baf-type-btn" onclick="setBizType(this,'Sole Trader')">
+            <span class="type-icon">👤</span>Sole Trader
+          </button>
+          <button type="button" class="baf-type-btn" onclick="setBizType(this,'Partnership')">
+            <span class="type-icon">🤝</span>Partnership
+          </button>
+          <button type="button" class="baf-type-btn selected" onclick="setBizType(this,'Company / Pty Ltd')">
+            <span class="type-icon">🏛</span>Company / Pty Ltd
+          </button>
+          <button type="button" class="baf-type-btn" onclick="setBizType(this,'Other')">
+            <span class="type-icon">📋</span>Other
+          </button>
+        </div>
+        <input type="hidden" name="contact[business_type]" id="bizTypeInput" value="Company / Pty Ltd">
+
+        <div class="baf-sub-heading">Company information</div>
+
+        <div class="baf-row">
+          <div class="baf-field" id="field-company">
+            <label>Company / Trading Name <span class="req">*</span></label>
+            <input type="text" name="contact[company_name]" required placeholder="e.g. Acme Corporation Pty Ltd">
+            <span class="baf-field-error">Company name is required</span>
+          </div>
+          <div class="baf-field">
+            <label>ABN / ACN</label>
+            <input type="text" name="contact[abn]" placeholder="e.g. 30 000 000 000" maxlength="14">
+            <span class="hint">Your Australian Business Number or Company Number</span>
+          </div>
+        </div>
+
+        <div class="baf-row">
+          <div class="baf-field">
+            <label>Industry / Sector</label>
+            <select name="contact[industry]">
+              <option value="">Select your industry</option>
+              <option>Construction & Infrastructure</option>
+              <option>Mining & Resources</option>
+              <option>Government / Local Council</option>
+              <option>Healthcare & Medical</option>
+              <option>Education</option>
+              <option>Professional Services (Legal, Finance, Accounting)</option>
+              <option>Retail & Wholesale</option>
+              <option>Hospitality & Tourism</option>
+              <option>Transport & Logistics</option>
+              <option>Manufacturing</option>
+              <option>Not-for-Profit / NDIS</option>
+              <option>Technology</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="baf-field">
+            <label>Number of Employees</label>
+            <select name="contact[employee_count]">
+              <option value="">Select range</option>
+              <option>1–10</option>
+              <option>11–50</option>
+              <option>51–200</option>
+              <option>201–500</option>
+              <option>500+</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="baf-row">
+          <div class="baf-field" id="field-website">
+            <label>Company Website</label>
+            <input type="url" name="contact[website]" placeholder="https://www.yourcompany.com.au">
+          </div>
+          <div class="baf-field">
+            <label>Years in Business</label>
+            <input type="number" name="contact[years_in_business]" min="0" max="200" placeholder="e.g. 25">
+          </div>
+        </div>
+
+        <div class="baf-divider"></div>
+        <div class="baf-sub-heading">Primary contact</div>
+
+        <div class="baf-row">
+          <div class="baf-field" id="field-contact-name">
+            <label>Contact Name <span class="req">*</span></label>
+            <input type="text" name="contact[name]" required placeholder="First and last name">
+            <span class="baf-field-error">Contact name is required</span>
+          </div>
+          <div class="baf-field" id="field-job-title">
+            <label>Job Title <span class="req">*</span></label>
+            <input type="text" name="contact[job_title]" required placeholder="e.g. Purchasing Manager">
+            <span class="baf-field-error">Job title is required</span>
+          </div>
+        </div>
+
+        <div class="baf-row">
+          <div class="baf-field" id="field-email">
+            <label>Email Address <span class="req">*</span></label>
+            <input type="email" name="contact[email]" required placeholder="you@yourcompany.com.au">
+            <span class="baf-field-error">A valid email address is required</span>
+          </div>
+          <div class="baf-field" id="field-phone">
+            <label>Phone Number <span class="req">*</span></label>
+            <input type="tel" name="contact[phone]" required placeholder="e.g. +61 8 9XXX XXXX">
+            <span class="baf-field-error">Phone number is required</span>
+          </div>
+        </div>
+
+        <div class="baf-row">
+          <div class="baf-field">
+            <label>Accounts Payable Email</label>
+            <input type="email" name="contact[ap_email]" placeholder="accounts@yourcompany.com.au">
+            <span class="hint">Where invoices should be sent (if different to above)</span>
+          </div>
+          <div class="baf-field">
+            <label>Accounts Payable Phone</label>
+            <input type="tel" name="contact[ap_phone]" placeholder="e.g. +61 8 9XXX XXXX">
+          </div>
+        </div>
+
+        <div class="baf-divider"></div>
+        <div class="baf-sub-heading">Billing address</div>
+
+        <div class="baf-row full">
+          <div class="baf-field" id="field-billing-street">
+            <label>Street Address <span class="req">*</span></label>
+            <input type="text" name="contact[billing_street]" required placeholder="e.g. Level 3, 123 St Georges Terrace">
+            <span class="baf-field-error">Billing street address is required</span>
+          </div>
+        </div>
+        <div class="baf-row thirds">
+          <div class="baf-field" id="field-billing-city">
+            <label>City / Suburb <span class="req">*</span></label>
+            <input type="text" name="contact[billing_city]" required>
+            <span class="baf-field-error">City is required</span>
+          </div>
+          <div class="baf-field" id="field-billing-state">
+            <label>State <span class="req">*</span></label>
+            <select name="contact[billing_state]" required>
+              <option value="">Select</option>
+              <option>WA</option>
+              <option>VIC</option>
+              <option>NSW</option>
+              <option>QLD</option>
+              <option>SA</option>
+              <option>TAS</option>
+              <option>ACT</option>
+              <option>NT</option>
+            </select>
+            <span class="baf-field-error">State is required</span>
+          </div>
+          <div class="baf-field" id="field-billing-postcode">
+            <label>Postcode <span class="req">*</span></label>
+            <input type="text" name="contact[billing_postcode]" required pattern="[0-9]{4}" maxlength="4" placeholder="e.g. 6000">
+            <span class="baf-field-error">Valid 4-digit postcode required</span>
+          </div>
+        </div>
+
+        <div class="baf-divider"></div>
+        <div class="baf-sub-heading">Delivery address</div>
+
+        <div class="baf-checkbox-row" onclick="toggleDelivery()">
+          <input type="checkbox" id="sameAsBilling" name="contact[same_delivery]" value="Yes">
+          <label for="sameAsBilling">Delivery address is the same as billing address</label>
+        </div>
+
+        <div id="deliveryFields">
+          <div class="baf-row full">
+            <div class="baf-field" id="field-del-street">
+              <label>Street Address <span class="req">*</span></label>
+              <input type="text" name="contact[delivery_street]" id="del-street" required placeholder="Site or office delivery address">
+              <span class="baf-field-error">Delivery street address is required</span>
+            </div>
+          </div>
+          <div class="baf-row thirds">
+            <div class="baf-field" id="field-del-city">
+              <label>City / Suburb <span class="req">*</span></label>
+              <input type="text" name="contact[delivery_city]" id="del-city" required>
+              <span class="baf-field-error">City is required</span>
+            </div>
+            <div class="baf-field" id="field-del-state">
+              <label>State <span class="req">*</span></label>
+              <select name="contact[delivery_state]" id="del-state" required>
+                <option value="">Select</option>
+                <option>WA</option>
+                <option>VIC</option>
+                <option>NSW</option>
+                <option>QLD</option>
+                <option>SA</option>
+                <option>TAS</option>
+                <option>ACT</option>
+                <option>NT</option>
+              </select>
+              <span class="baf-field-error">State is required</span>
+            </div>
+            <div class="baf-field" id="field-del-postcode">
+              <label>Postcode <span class="req">*</span></label>
+              <input type="text" name="contact[delivery_postcode]" id="del-postcode" required pattern="[0-9]{4}" maxlength="4" placeholder="e.g. 6000">
+              <span class="baf-field-error">Valid 4-digit postcode required</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="baf-row full" style="margin-top:8px">
+          <div class="baf-field">
+            <label>Special Delivery Instructions</label>
+            <textarea name="contact[delivery_notes]" placeholder="e.g. Loading dock access only, contact site foreman prior to delivery, business hours Mon–Fri only..."></textarea>
+          </div>
+        </div>
+
+      </div><!-- /baf-section-body -->
+    </div><!-- /section 1 -->
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 2 — PROCUREMENT PREFERENCES         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="baf-section">
+      <div class="baf-section-head">
+        <div class="baf-section-icon">💻</div>
+        <div>
+          <h2>IT Procurement Preferences</h2>
+          <p>Help us understand your technology requirements and purchasing patterns</p>
+        </div>
+      </div>
+      <div class="baf-section-body">
+
+        <div class="baf-row">
+          <div class="baf-field">
+            <label>Estimated Annual IT Spend (AUD)</label>
+            <select name="contact[annual_it_spend]">
+              <option value="">Select range</option>
+              <option>Under $10,000</option>
+              <option>$10,000 – $50,000</option>
+              <option>$50,000 – $100,000</option>
+              <option>$100,000 – $250,000</option>
+              <option>$250,000 – $500,000</option>
+              <option>$500,000+</option>
+            </select>
+          </div>
+          <div class="baf-field">
+            <label>Primary Purchase Categories</label>
+            <select name="contact[purchase_categories]">
+              <option value="">Select main category</option>
+              <option>Hardware (Laptops, Desktops, Servers)</option>
+              <option>Networking (Switches, Routers, WiFi)</option>
+              <option>Software Licences & Cloud</option>
+              <option>Peripherals & Accessories</option>
+              <option>Managed IT Services</option>
+              <option>Cyber Security Solutions</option>
+              <option>Mixed / All categories</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="baf-row full">
+          <div class="baf-field">
+            <label>What are you looking to purchase or enquire about?</label>
+            <textarea name="contact[purchase_intent]" placeholder="e.g. We are looking to procure 50 laptops for a new office fit-out, along with networking equipment and Microsoft 365 licences..."></textarea>
+          </div>
+        </div>
+
+        <div class="baf-row">
+          <div class="baf-field">
+            <label>Preferred Payment Method</label>
+            <select name="contact[payment_method]">
+              <option value="">Select</option>
+              <option>EFT / Bank Transfer</option>
+              <option>Credit Card</option>
+              <option>Cheque</option>
+              <option>Purchase Order (existing account)</option>
+            </select>
+          </div>
+          <div class="baf-field">
+            <label>How did you hear about EvoTech?</label>
+            <select name="contact[referral_source]">
+              <option value="">Select</option>
+              <option>Google Search</option>
+              <option>Referral / Word of Mouth</option>
+              <option>Social Media</option>
+              <option>Email / Newsletter</option>
+              <option>Industry Association</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="baf-row full">
+          <div class="baf-field">
+            <label>Trade References <span style="font-weight:400;font-size:11px;color:var(--et-text)">(optional — 1–2 supplier references speeds approval)</span></label>
+            <textarea name="contact[trade_references]" placeholder="e.g. 1. Company Name, Contact Name, Phone&#10;2. Company Name, Contact Name, Phone" rows="3"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /section 2 -->
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 3 — TERMS & CONDITIONS + SUBMIT     -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="baf-section">
+      <div class="baf-section-head">
+        <div class="baf-section-icon">📋</div>
+        <div>
+          <h2>Terms & Conditions</h2>
+          <p>Governed by the laws of Western Australia — please read in full before submitting</p>
+        </div>
+      </div>
+      <div class="baf-section-body">
+
+        <div class="baf-tc-scroll" id="tc-scroll">
+
+          <h4>1. Business Account — Scope & Purpose</h4>
+          <p>These Terms govern the establishment and use of a Business Account ("Account") with EvoTech Digital (ABN 72 375 743 898) ("EvoTech"), a managed IT services and IT procurement provider based in Perth, Western Australia. A Business Account allows approved organisations ("Account Holder") to submit purchase requests for IT hardware, software, managed services, and related technology solutions.</p>
+
+          <h4>2. Account Application & Approval</h4>
+          <p>2.1 Submission of this application does not constitute automatic approval of a Business Account. EvoTech reserves the right to approve, decline, or conditionally approve any application at its sole discretion.</p>
+          <p>2.2 EvoTech may conduct verification of the information provided, including contacting supplied trade references. By submitting this application, the Account Holder authorises EvoTech to make such enquiries.</p>
+          <p>2.3 EvoTech will notify the applicant of its decision within 3–5 business days of receiving a complete application.</p>
+
+          <h4>3. Purchase Requests & Orders</h4>
+          <p>3.1 An approved Business Account enables the Account Holder to submit purchase requests. Each purchase request will be reviewed and quoted by EvoTech individually. A formal quote constitutes EvoTech's offer; the Account Holder's written acceptance constitutes a binding Order.</p>
+          <p>3.2 EvoTech does not offer automatic credit lines. Payment terms for each Order are negotiated individually between EvoTech and the Account Holder prior to order confirmation.</p>
+          <p>3.3 Standard payment terms for orders without a separately negotiated credit arrangement require a 50% advance deposit prior to procurement, with the remaining 50% balance payable on or before delivery.</p>
+
+          <h4>4. Pricing & Quotations</h4>
+          <p>4.1 All prices are quoted in Australian Dollars (AUD) inclusive of GST (10%) unless otherwise stated. Prices in quotes are valid for 14 days from the date of issue unless otherwise specified.</p>
+          <p>4.2 EvoTech reserves the right to adjust pricing due to manufacturer price changes, currency fluctuations, or supply chain factors. Account Holders will be notified of material price changes before an Order is confirmed.</p>
+
+          <h4>5. Title & Risk</h4>
+          <p>Title to and ownership of goods remains with EvoTech until full payment of the Order value has been received in cleared funds, in accordance with the Personal Property Securities Act 2009 (Cth) ("PPSA"). Risk passes to the Account Holder upon delivery to the nominated address.</p>
+
+          <h4>6. Delivery</h4>
+          <p>6.1 Estimated delivery timeframes are provided in good faith and are not guaranteed. EvoTech accepts no liability for delays outside its reasonable control, including supplier and freight delays.</p>
+          <p>6.2 Delivery is to the nominated address. The Account Holder is responsible for ensuring a suitable receiving person is available. Additional charges may apply for remote, restricted-access, or after-hours deliveries.</p>
+
+          <h4>7. Warranties & Returns</h4>
+          <p>7.1 Hardware products carry the manufacturer's warranty. EvoTech will assist in warranty claims as a courtesy service.</p>
+          <p>7.2 Returns for change of mind are not accepted. Defective or incorrect goods must be notified in writing within 7 days of delivery. Goods must be returned in original packaging.</p>
+          <p>7.3 Nothing in these Terms limits any rights the Account Holder may have under the Australian Consumer Law (ACL) (Schedule 2 of the Competition and Consumer Act 2010 (Cth)).</p>
+
+          <h4>8. Australian Consumer Law</h4>
+          <p>EvoTech complies with all applicable provisions of the Australian Consumer Law. Consumer guarantees apply and cannot be excluded where the ACL applies. EvoTech will not engage in misleading or deceptive conduct (s.18 ACL) or make false representations (s.29 ACL).</p>
+
+          <h4>9. IT Procurement Standards</h4>
+          <p>EvoTech aligns its procurement practices with the Digital Transformation Agency (DTA) ICT Procurement Framework and adheres to the Commonwealth Supplier Code of Conduct, including ethical supply chain practices and compliance with the Modern Slavery Act 2018 (Cth). Equipment is sourced in accordance with applicable Australian import, safety, and standards requirements.</p>
+
+          <h4>10. Privacy</h4>
+          <p>Information collected through this application is handled in accordance with the Privacy Act 1988 (Cth) and EvoTech's Privacy Policy (evotech.au/policies/privacy-policy). Information is used for account administration, order processing, and business communications only and will not be sold or disclosed to third parties without consent, except as required by law.</p>
+
+          <h4>11. Account Holder Obligations</h4>
+          <p>The Account Holder agrees to: (a) keep account credentials secure; (b) notify EvoTech promptly of any change in contact, billing, or delivery details; (c) ensure purchase requests are submitted by authorised personnel only; and (d) not use the Account for unlawful purposes.</p>
+
+          <h4>12. Account Suspension & Termination</h4>
+          <p>EvoTech may suspend or terminate an Account with written notice if: the Account Holder fails to pay outstanding invoices; materially breaches these Terms; provides false information; or ceases to trade. Outstanding obligations survive termination.</p>
+
+          <h4>13. Limitation of Liability</h4>
+          <p>To the maximum extent permitted by law and subject to Clause 7.3, EvoTech's liability is limited to the value of the specific goods or services supplied. EvoTech is not liable for indirect, consequential, special, or economic loss, loss of data, loss of profit, or loss of business opportunity.</p>
+
+          <h4>14. Overdue Payments</h4>
+          <p>Overdue amounts accrue interest at 2% per month (compounding) from the due date, in accordance with the Civil Judgments Enforcement Act 2004 (WA). EvoTech reserves the right to suspend an Account pending payment of all overdue amounts.</p>
+
+          <h4>15. Governing Law & Disputes</h4>
+          <p>These Terms are governed by the laws of Western Australia, Australia. The parties submit to the non-exclusive jurisdiction of the courts of Western Australia. Disputes shall first be subject to good-faith negotiation (14 days), then mediation through the Law Society of Western Australia, before either party commences litigation.</p>
+
+          <h4>16. Variations</h4>
+          <p>EvoTech may update these Terms from time to time. Updated Terms will be published at evotech.au and apply to all Orders placed after the update date. Continued use of the Account constitutes acceptance of updated Terms.</p>
+
+          <p style="margin-top:18px; font-style:italic; font-size:11px; color:#666;">Last updated March 2026. Prepared in accordance with the Competition and Consumer Act 2010 (Cth), Sale of Goods Act 1895 (WA), Personal Property Securities Act 2009 (Cth), Privacy Act 1988 (Cth), and the laws of Western Australia. This document does not constitute legal advice — seek qualified Australian legal counsel for advice specific to your circumstances.</p>
+
+        </div><!-- /tc-scroll -->
+
+        <div class="baf-tc-read-notice" id="tc-read-notice" style="display:none">
+          ✅ You have scrolled through the full Terms &amp; Conditions.
+        </div>
+
+        <div class="baf-agree-row">
+          <input type="checkbox" id="agree1" name="contact[agree_terms]" value="yes" required>
+          <label for="agree1">I have read, understood, and agree to EvoTech Digital's Terms &amp; Conditions above, including the payment terms and account conditions. <span class="req">*</span></label>
+        </div>
+        <div class="baf-agree-row">
+          <input type="checkbox" id="agree2" name="contact[agree_auth]" value="yes" required>
+          <label for="agree2">I confirm I am duly authorised to submit this application on behalf of the company named in this form and that all information provided is accurate and complete. <span class="req">*</span></label>
+        </div>
+        <div class="baf-agree-row">
+          <input type="checkbox" id="agree3" name="contact[agree_privacy]" value="yes">
+          <label for="agree3">I consent to EvoTech Digital contacting me via the provided email and phone regarding this application and relevant products or services. <a href="/policies/privacy-policy">Privacy Policy</a>.</label>
+        </div>
+
+        <div class="baf-row" style="margin-top:20px">
+          <div class="baf-field">
+            <label>Authorised Signatory Name <span class="req">*</span></label>
+            <input type="text" name="contact[signatory_name]" required placeholder="Full name of authorised person">
+          </div>
+          <div class="baf-field">
+            <label>Date <span class="req">*</span></label>
+            <input type="date" name="contact[sign_date]" id="signDate" required>
+          </div>
+        </div>
+
+        <!-- Hidden: compile all form data into the Shopify "body" field for email -->
+        <input type="hidden" name="contact[body]" id="baf-body-hidden">
+
+        <div class="baf-submit-wrap">
+          <button type="submit" class="baf-submit-btn" id="baf-submit-btn">
+            <span>📤</span> Submit Business Account Application
+          </button>
+          <p class="baf-submit-footer">
+            Submitting this form sends your application to <strong>info@evotech.au</strong>.<br>
+            We respond within 1–2 business days AWST (Mon–Fri 8:00am–6:00pm).
+          </p>
+        </div>
+
+      </div><!-- /section body -->
+    </div><!-- /section 3 -->
+
+    {% endif %}
+
+  {% endform %}
+
+</div><!-- /baf-wrap -->
+
+<script>
+(function() {
+
+  /* ── Today's date ── */
+  var today = new Date();
+  var iso = today.toISOString().split('T')[0];
+  var sd = document.getElementById('signDate');
+  if (sd) sd.value = iso;
+
+  /* ── Business type selector ── */
+  window.setBizType = function(btn, val) {
+    document.querySelectorAll('.baf-type-btn').forEach(function(b) { b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    document.getElementById('bizTypeInput').value = val;
+  };
+
+  /* ── Delivery address toggle ── */
+  window.toggleDelivery = function() {
+    var cb = document.getElementById('sameAsBilling');
+    var fields = document.getElementById('deliveryFields');
+    var delInputs = fields.querySelectorAll('input, select');
+    if (cb.checked) {
+      fields.style.display = 'none';
+      delInputs.forEach(function(el) { el.removeAttribute('required'); });
+    } else {
+      fields.style.display = 'block';
+      delInputs.forEach(function(el) {
+        var parentId = el.closest('.baf-field') ? el.closest('.baf-field').id : '';
+        if (parentId && parentId.indexOf('del-') === 0) el.setAttribute('required', '');
+      });
+    }
+  };
+
+  /* ── T&C scroll detection ── */
+  var tcScroll = document.getElementById('tc-scroll');
+  var tcNotice = document.getElementById('tc-read-notice');
+  if (tcScroll && tcNotice) {
+    tcScroll.addEventListener('scroll', function() {
+      var atBottom = (tcScroll.scrollTop + tcScroll.clientHeight) >= (tcScroll.scrollHeight - 30);
+      if (atBottom) tcNotice.style.display = 'flex';
+    });
+  }
+
+  /* ── Build body summary for Shopify email ── */
+  function buildBody() {
+    var form = document.getElementById('baf-form');
+    if (!form) return;
+    var fields = form.querySelectorAll('input:not([type=hidden]):not([type=checkbox]):not([type=submit]), select, textarea');
+    var lines = ['=== EvoTech Digital — Business Account Application ===', ''];
+    fields.forEach(function(f) {
+      if (!f.name || f.name === 'contact[body]') return;
+      var label = f.name.replace('contact[', '').replace(']', '').replace(/_/g, ' ');
+      var val = f.value || '—';
+      lines.push(label.toUpperCase() + ': ' + val);
+    });
+    lines.push('');
+    lines.push('--- Agreements ---');
+    ['agree1','agree2','agree3'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        var lbl = el.nextElementSibling ? el.nextElementSibling.textContent.trim().substring(0,80) + '...' : id;
+        lines.push((el.checked ? '[YES] ' : '[NO]  ') + lbl);
+      }
+    });
+    lines.push('');
+    lines.push('Submitted: ' + new Date().toLocaleString('en-AU', {timeZone:'Australia/Perth'}));
+    lines.push('Source: evotech.au/pages/business-account-application');
+    var bodyEl = document.getElementById('baf-body-hidden');
+    if (bodyEl) bodyEl.value = lines.join('\n');
+  }
+
+  /* ── Submit handler ── */
+  var form = document.getElementById('baf-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      var ok = true;
+
+      /* Check required checkboxes */
+      ['agree1','agree2'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && !el.checked) {
+          el.closest('.baf-agree-row').style.outline = '2px solid var(--et-error)';
+          el.closest('.baf-agree-row').style.borderRadius = '4px';
+          ok = false;
+        } else if (el) {
+          el.closest('.baf-agree-row').style.outline = '';
+        }
+      });
+
+      if (!ok) {
+        e.preventDefault();
+        window.scrollTo({ top: document.getElementById('tc-scroll').offsetTop - 80, behavior: 'smooth' });
+        return;
+      }
+
+      buildBody();
+    });
+  }
+
+})();
+</script>
+
+
+{% schema %}
+{
+  "name": "Business Account Form",
+  "tag": "div",
+  "class": "section-business-account-application",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme_1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Business Account Form"
+    }
+  ]
+}
+{% endschema %}

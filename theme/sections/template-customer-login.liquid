@@ -1,0 +1,136 @@
+<div class="login-section-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container" x-data="{ loginForm: true, pwRecoverForm: false, focusLoginForm() { this.$nextTick(() => { this.$refs.loginForm.focus(); }); }, focusRecoverForm() { this.$nextTick(() => { this.$refs.recoverForm.focus(); }); } }">
+        <div class="ic-flex ic-justify-content-center ic-align-items-center ic-py-13">
+            <div class="ic-flex-col-12 ic-flex-col-lg-7 ic-flex-col-xl-6">
+                <div id="recover" x-show="pwRecoverForm" class="recover-modal" x-cloak x-ref="recoverForm" tabindex="-1">
+                    <div class="account-panel color-{{ section.settings.content_color_scheme }}">
+                        <h1 class="ic-text-center ic-mb-6">{{ "sections.template_customer_login.recover_your_password" | t }}</h1>
+                        <p class="ic-text-center">{{ "sections.template_customer_login.recover_your_password_label" | t }}</p>
+                        <div class="ic-mt-8">
+                            {% form 'recover_customer_password', class: 'recover-form' %}
+                                {% assign recover_success = form.posted_successfully? %}
+                                {% render 'form-error', form: form, error_id: 'recover__form' %}
+                                <div class="ic-my-4 ic-flex ic-flex-row ic-flex-gap-10px">
+                                    <label for="email" aria-label="{{ 'sections.template_customer_login.email_address' | t }}">{{ "sections.template_customer_login.email_address" | t }}</label>
+                                    <input 
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        autocomplete="email"
+                                        class="ic-relative ic-block ic-w-100"
+                                        placeholder="{{ 'sections.template_customer_login.email_address' | t }}"
+                                    >
+                                </div>
+                                <div>
+                                    <button type="submit" class="ic-btn ic-btn-primary ic-w-100 ic-justify-content-center recover-password-button">{{ "sections.template_customer_login.recover_password" | t }}</button>
+                                </div>
+                                
+                            {% endform %}
+                        </div>
+                    </div>
+                    <div class="ic-mt-6">
+                        <a x-on:click="loginForm = true; pwRecoverForm = false; focusLoginForm(); if (window.location.href.includes('#recover')) { window.location.replace(window.location.href.replace('#recover', '')); }" href="javascript:void(0)">{{ "sections.template_customer_login.back_to_login" | t }}</a>
+                    </div>
+                </div>
+                <div x-show="loginForm" class="login-modal" x-ref="loginForm" tabindex="-1">
+                    <div class="account-panel color-{{ section.settings.content_color_scheme }}">
+                        <h1 class="ic-text-center ic-mb-8">{{ "sections.template_customer_login.login" | t }}</h1>
+                        {%- if recover_success == true -%}
+                            <div class="success-box ic-mb-4">
+                                <div class="ic-text-sm ic-font-medium  ic-color-success ic-flex ic-flex-gap-2 ic-flex-nowrap">
+                                <span>{% render 'icon-success' %}</span>
+                                {{ 'sections.template_customer_login.recover_success_message' | t }}
+                                </div>
+                            </div>
+                        {%- endif -%}
+                        <div>
+                            {% form 'customer_login' %}
+                                {% render 'form-error', form: form, error_id: 'customer__login' %}
+                                <div class="ic-flex ic-flex-row ic-flex-gap-6 ic-mt-4 ic-mb-6">
+                                    <div class="ic-flex ic-flex-row ic-flex-gap-10px ic-w-100 ic-flex-md-1">
+                                        <label for="email_address" aria-label="{{ 'sections.template_customer_login.email_address' | t }}">{{ "sections.template_customer_login.email_address" | t }}</label>
+                                        <input 
+                                            type="email"
+                                            name="customer[email]"
+                                            id="email_address"
+                                            autocomplete="email"
+                                            class="ic-relative ic-block ic-w-100"
+                                            placeholder="{{ 'sections.template_customer_login.email_address' | t }}"
+                                        >
+                                    </div>
+                                    {% if form.password_needed %}
+                                        <div class="ic-flex ic-flex-row ic-flex-gap-10px ic-w-100 ic-flex-md-1">
+                                            <label for="password" aria-label="{{ 'sections.template_customer_login.password' | t }}">{{ "sections.template_customer_login.password" | t }}</label>
+                                            <input 
+                                                type="password"
+                                                name="customer[password]"
+                                                id="password"
+                                                autocomplete="current-password"
+                                                class="ic-relative ic-block ic-w-100"
+                                                placeholder="{{ 'sections.template_customer_login.password' | t }}"
+                                            >
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="ic-flex ic-justify-content-space-between ic-align-items-center ic-flex-gap-4">
+                                    <p>
+                                        {{ "sections.template_customer_login.new_customer" | t }} 
+                                        <a href="{{ routes.account_register_url | default: '#' }}" class="ic-font-semibold">{{ "sections.template_customer_login.create_account" | t }}</a>
+                                    </p>
+                                    
+                                    <button type="submit" class="ic-btn ic-btn-primary ic-justify-content-center ic-w-100 ic-w-sm-auto">{{ "sections.template_customer_login.sign_in" | t }}</button>
+                                </div>
+                            {% endform %}
+                        </div>
+                
+                        {% if shop.checkout.guest_login %}
+                            <hr class="ic-my-12">
+                
+                            {% form 'guest_login' %}
+                            <div>
+                                <input type="submit" class="ic-btn ic-btn-tertiary ic-w-100 ic-justify-content-center" value="{{ "sections.template_customer_login.continue_as_a_guest" | t }}">
+                            </div>
+                            {% endform %}
+                        {% endif %}
+                    </div>
+                    <div class="ic-mt-7 ic-flex ic-justify-content-space-between ic-flex-gap-4">
+                        <a x-on:click="loginForm = false; pwRecoverForm = true; focusRecoverForm()" href="javascript:void(0)" class="ic-ml-auto">{{ "sections.template_customer_login.forgot_password" | t }}?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% stylesheet %}
+    #recover:target{
+        display: block !important;
+    }
+
+    #recover:target + .login-modal{
+        display: none !important;
+    }
+    .recover-modal{
+        scroll-margin-top: var(--inner-header-height);
+    }
+{% endstylesheet %}
+
+{% schema %}
+{
+    "name": "t:sections.template_customer_login.name",
+    "settings": [
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:sections.template_customer_login.settings.color_scheme.background.label",
+            "default": "scheme_1"
+        },
+        {
+            "type": "color_scheme",
+            "id": "content_color_scheme",
+            "label": "t:sections.template_customer_login.settings.color_scheme.content.label",
+            "default": "scheme_1"
+        }
+    ]
+}
+{% endschema %}

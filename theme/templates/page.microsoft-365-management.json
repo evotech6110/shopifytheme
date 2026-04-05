@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "microsoft_365_management": {
+      "type": "microsoft-365-management",
+      "settings": {
+        "phone_number": "0466 911 816",
+        "email_address": "info@evotech.au",
+        "cta_primary_link": "/pages/contact",
+        "show_announce": true
+      }
+    }
+  },
+  "order": [
+    "microsoft_365_management"
+  ]
+}

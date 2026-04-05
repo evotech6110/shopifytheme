@@ -1,0 +1,524 @@
+{{ 'cart-page.css' | asset_url | stylesheet_tag: preload: true }}
+<div class="cart-section-wrapper color-{{ section.settings.color_scheme }} gradient-enabled" data-id={{ section.id }}>
+    <div class="ic-container ic-py-10 cart-section-container">
+        {% if cart.item_count > 0 %}
+            {% form 'cart', cart, class: 'ic-pb-10' %}
+                <div class="ic-flex ic-justify-content-space-between ic-align-items-center cart-header ic-mb-7">
+                    <h1 class="ic-h2 ic-mb-6 ic-mb-sm-0 ic-w-100 ic-w-sm-auto">{{ "sections.template_cart.shopping_cart" | t }}</h1>
+                    <span class="ic-font-bold ic-h2">{{ cart.items.size }} {{ "sections.template_cart.product_count" | t: count: cart.items.size }}</span>
+                </div>
+                <div class="cart-container">
+                    <div class="item-wrapper ic-pr-lg-3 color-{{ section.settings.card_color_scheme }}">
+                        {% for item in cart.items %}
+                            <div class="ic-mb-4 item-table"  data-item-count="{{ cart.items.size }}">
+                                <div class="item-container">
+                                    {% if item.image %}
+                                        <div class="item-image">
+                                            <a href="{{ item.url | default: '#' }}" class="ic-block ic-h-100">
+                                                {{ item.image 
+                                                    | image_url: width: 100
+                                                    | image_tag:
+                                                    loading: 'lazy',
+                                                    widths: '100', 
+                                                    sizes: '100px',
+                                                    alt: item.image.alt,
+                                                    class: "ic-w-100 ic-h-100 ic-object-contain"
+                                                }}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                    <div class="item-detail ic-flex ic-flex-col ic-break-words">
+                                        <p class="ic-mb-1">{{ item.product.vendor }}</p>
+                                        <a href="{{ item.url | default: '#' }}" class="item-title">{{ item.product.title }}</a>
+                                        {% liquid 
+                                            if item.selling_plan_allocation != nil
+                                            assign variant_mb = "ic-mb-2"
+                                            elsif item.properties != empty
+                                            assign variant_mb = "ic-mb-1"
+                                            else
+                                            assign variant_mb = "ic-mb-3"
+                                            endif
+                                        %}
+                                        {%- if item.product.has_only_default_variant == false -%}
+                                            <div class="{{ variant_mb }} item-variant">
+                                                {%- for option in item.options_with_values -%}
+                                                    <span class="ic-block ic-mb-2">{{ option.name }}: {{ option.value }}</span>
+                                                {%- endfor -%}
+                                            </div>
+                                        {%- endif -%}
+                                        {% unless item.properties == empty %}
+                                            <div class="ic-mb-3">
+                                                {%- for property in item.properties -%}
+                                                    {%- assign property_first_char = property.first | slice: 0 -%}
+                                                    {%- if property.last != blank and property_first_char != '_' -%}
+                                                    <p class="ic-mb-2">
+                                                        <span class="ic-mr-1">{{ property.first }}:</span>
+                                                        {%- if property.last contains '/uploads/' -%}
+                                                        <a href="{{ property.last }}" class="link" target="_blank" aria-label="{{ property.last | split: '/' | last }}. {{ 'general.open_new_window' | t }}">
+                                                            {{ property.last | split: '/' | last }}
+                                                        </a>
+                                                        {%- else -%}
+                                                        <span>{{ property.last }}</span>
+                                                        {%- endif -%}
+                                                    </p>
+                                                    {%- endif -%}
+                                                {%- endfor -%}
+                                            </div>
+                                        {% endunless %}
+                                        {%- if item.selling_plan_allocation != nil -%}
+                                            <p class="ic-text-sm ic-mb-3">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                                        {% endif %}
+                                        {% if item.line_level_discount_allocations.size > 0 %}
+                                        <div class="ic-flex ic-flex-gap-4 ic-mb-2">
+                                            {% for discount_allocation in item.line_level_discount_allocations %}
+                                                <span class="ic-text-xs discount-badge ic-py-1 ic-px-2 ic-rounded-lg">{{ discount_allocation.discount_application.title }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                        {% if item.original_price != item.final_price %}
+                                            <div class="ic-flex ic-flex-gap-2 ic-align-items-center">
+                                                <p class="ic-text-lg ic-font-semibold price-text">{{ item.final_price | money }}</p>
+                                                <p class="ic-text-line-through ic-font-semibold compare-price">{{ item.original_price | money }}</p>
+                                            </div>
+                                        {% else %}
+                                        
+                                        <div class="ic-flex ic-flex-gap-2 ic-align-items-center">
+                                            <p class="ic-text-lg ic-font-semibold price-text">{{ item.original_price | money }}</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if item.unit_price_measurement != nil %}
+                                            <small class="unit-price ic-mb-2">
+                                                <span>
+                                                    <span>{{- item.unit_price | money -}}</span>
+                                                    <span aria-hidden="true">/</span>
+                                                    <span>
+                                                        {%- if item.unit_price_measurement.reference_value != 1 -%}
+                                                        {{- item.unit_price_measurement.reference_value -}}
+                                                        {%- endif -%}
+                                                        {{ item.unit_price_measurement.reference_unit }}
+                                                    </span>
+                                                </span>
+                                            </small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="item-right">
+                                    <div class="item-quantity ic-mb-md-2">
+                                        {% liquid 
+                                            unless item.variant.inventory_policy == 'continue' or item.variant.inventory_management == nil
+                                                if item.variant.inventory_quantity < 1
+                                                    assign quantity = 1
+                                                else
+                                                assign quantity = item.variant.inventory_quantity
+                                                endif
+                                                assign max_attribute = 'max=' | append: quantity
+                                                else
+                                                assign max_attribute = nil
+                                            endunless
+                                        %}
+                                        <div class="quantity-and-remove">
+                                            <div class="quantity-container">
+                                                <button type="button" name="update" class="quantity-btn minus ic-px-4 ic-py-2 ">-</button>
+                                                <label for="updates_{{ forloop.index }}" class="ic-screen-reader">{{ "sections.template_cart.quantity" | t }}</label>
+                                                <input type="number" name="updates[]" id="updates_{{ forloop.index }}" value="{{ item.quantity }}" step="1" min="0" {{ max_attribute }} class="ic-px-3 ic-py-4 ic-text-center" data-valid="valid" data-variant="{{ item.variant_id }}">
+                                                <button type="button" name="update" class="quantity-btn plus ic-px-4 ic-py-2 ">+</button>
+                                                <input type="submit" value="Update cart" class="ic-screen-reader" hidden>
+                                            </div>
+                                            <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="cart_remove_btn">
+                                                <span class="ic-screen-reader">{{ "sections.template_cart.remove" | t }}</span>
+                                                <span class="icon">{% render 'icon-trash' %}</span>
+                                            </a>
+                                        </div>
+                                        <div class="quantity-error ic-color-error ic-flex-gap-2 ic-mt-2">
+                                            {% render 'icon-error' %}
+                                            <span class="error-message ic-text-xs"></span>
+                                        </div>
+                                    </div>
+                                    <div class="item-total">
+                                        {% if item.original_line_price != item.final_line_price %}
+                                            <div class="ic-flex ic-flex-gap-2 ic-align-items-center ic-justify-content-md-end">
+                                                <p class="ic-text-lg ic-font-semibold price-text">{{ item.final_line_price | money }}</p>
+                                                <p class="ic-text-line-through ic-font-semibold compare-price">{{ item.original_line_price | money }}</p>
+                                            </div>
+                                        {% else %}
+                                            <div class="ic-flex ic-flex-gap-2 ic-align-items-center ic-justify-content-md-end">
+                                                <p class="ic-text-lg ic-font-semibold price-text">{{ item.original_line_price | money }}</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+            
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="order-summary ic-pl-lg-3">
+                        <div class="order-summary-card color-{{ section.settings.card_color_scheme }}">
+                            <div class="ic-flex ic-justify-content-space-between ic-mb-4">
+                                <p class="ic-font-medium">{{ "sections.template_cart.price" | t }} ({{ cart.item_count }} {{ "sections.template_cart.items_count" | t: count: cart.item_count }})</p>
+                                <p class="ic-font-medium">{{ cart.original_total_price | money }}</p>
+                            </div>
+                            {% if cart.original_total_price != cart.items_subtotal_price %}
+                                <div class="ic-flex ic-justify-content-space-between ic-mb-4 discount-price">
+                                    <p class="ic-font-medium">{{ "sections.template_cart.discount" | t }}</p>
+                                    <p class="ic-font-medium">-{{ cart.total_discount | money }}</p>
+                                </div>
+                            {% endif %}
+                            {%- if cart.cart_level_discount_applications.size > 0 -%}
+                                {%- for discount in cart.cart_level_discount_applications -%}
+                                    <div class="ic-flex ic-justify-content-space-between ic-mb-4 discount-price">
+                                        <p class="ic-font-medium">{{ discount.title }}</p>
+                                        <p class="ic-font-medium">-{{ discount.total_allocated_amount | money }}</p>
+                                    </div>
+                                {%- endfor -%}
+                            {%- endif -%}
+                            {% liquid 
+                                if cart.taxes_included
+                                assign tax_text = "sections.template_cart.tax_included" | t
+                                else
+                                assign tax_text = "sections.template_cart.tax_not_included" | t
+                                endif
+                            %}
+                            
+                            <div class="ic-flex ic-justify-content-space-between sub-total">
+                                <p class="ic-font-semibold">{{ "sections.template_cart.subtotal" | t }}:</p>
+                                <p class="ic-font-semibold">{{ cart.total_price | money }}</p>
+                            </div>
+                            <p class="ic-text-sm ic-text-left ic-inline-block ic-mt-5">{{ tax_text }} {{ "sections.template_cart.shipping" | t }}</p>
+                        </div>
+
+                        <div class="order-summary-card cart-note order-collapse color-{{ section.settings.card_color_scheme }}">
+                            <collapsible-content class="collapsible-detail" aria-expanded="true">
+                                <button type="button" class="collapsible-toggle">
+                                    <span class="text">{{ "sections.template_cart.shipping_instructions" | t }}</span>
+                                    <span class="icon closed">{% render 'icon-plus-light' %}</span>
+                                    <span class="icon opened">{% render 'icon-minus-light' %}</span>
+                                </button>
+                                <div class="collapsible-content" style="height: 0px;">
+                                <div class="collapsible-content-inner">
+                                    <label for="CartNote" class="ic-screen-reader">{{ "sections.template_cart.shipping_instructions" | t }}</label>
+                                    <textarea name="note" id="CartNote" value="{{ cart.note }}">{{ cart.note | strip }}</textarea>
+                                </div>
+                                </div>
+                            </collapsible-content>
+                        </div>
+
+                        
+                        
+                        <div class="ic-flex ic-justify-content-end ic-justify-content-lg-center ic-flex-gap-4 ic-mt-6">
+                            <button type="submit" name="checkout" class="ic-btn ic-btn-primary ic-justify-content-center">
+                                {{ "sections.template_cart.checkout" | t }}
+                                <span class="icon">{% render 'icon-right' %}</span>
+                            </button>
+                            {% if additional_checkout_buttons %}
+                                <div class="additional-checkout-buttons ic-w-100">
+                                    {{ content_for_additional_checkout_buttons }}
+                                </div>
+                            {% endif %}
+                            <a href="{{ routes.all_products_collection_url | default: '#' }}" class="ic-btn ic-btn-tertiary ic-justify-content-center ic-w-100">{{ "sections.template_cart.continue_shopping" | t }}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endform %}
+        {% else %}
+            <div class="ic-flex ic-justify-content-center ic-align-items-center ic-h-100">
+                <div class="ic-text-center">
+                    <h1 class="ic-mb-4">{{ "sections.template_cart.cart_empty" | t }}</h1>
+                    <div class="">
+                        <a href="{{ routes.all_products_collection_url | default: '#' }}">{{ "sections.template_cart.continue_shopping" | t }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    let quantity_btn = document.querySelectorAll(".cart-container .quantity-btn");
+
+    for (let i = 0; i < quantity_btn.length; i++) {
+        quantity_btn[i].addEventListener("click", cartQuantity);
+    }
+
+    var delay;
+    function cartQuantity(event) {
+        clearTimeout(delay);
+        let $button = this;
+        let itemWrapper = this.closest('.item-wrapper');
+        let $input = $button.closest('.quantity-container').querySelector('input[name="updates[]"]');
+        let inputValue = $input.value * 1;
+        let max_quantity = $input.getAttribute('max') * 1;
+        let itemVariantID = $input.dataset.variant;
+        let itemVariants = itemWrapper.querySelectorAll('[data-variant="' + itemVariantID +'"]');
+        let oldValue = 0;
+        itemVariants.forEach((itemVariant) => {
+            oldValue += (itemVariant.value * 1); 
+        });
+        let newVal;
+
+        if ($input.hasAttribute('max')) {
+            if ($.trim($button.innerHTML) == "+") {
+                if (oldValue < max_quantity) {
+                    newVal = ($input.value * 1) + 1;
+                    $input.value = newVal;
+                    document.getElementById("cart_form").submit();
+                } else if (oldValue > max_quantity) {
+                    newVal = (max_quantity - oldValue) + ($input.value * 1);
+                    $input.value = newVal;
+                    document.getElementById("cart_form").submit();
+                } else {
+                    let error_quantity = this.closest('.item-quantity').querySelector('.quantity-error');
+                    let message_quantity = this.closest('.item-quantity').querySelector('.quantity-error .error-message');
+                    if (oldValue == max_quantity){
+                        message_quantity.innerHTML = '{{ "sections.template_cart.error.max_quantity" | t }} ';
+                        error_quantity.classList.add('show');
+                    }
+                }
+            } else {
+                // Don't allow decrementing below zero
+                if (oldValue > max_quantity){
+                    newVal = (max_quantity - oldValue) + ($input.value * 1);
+                    $input.value = newVal;
+                    document.getElementById("cart_form").submit();
+                } else if (oldValue > 0) {
+                    newVal = ($input.value * 1) - 1;
+                    $input.value = newVal;
+                    document.getElementById("cart_form").submit();
+                } else {
+                    newVal = 0;
+                    $input.value = newVal;
+                    document.getElementById("cart_form").submit();
+                }
+            }
+        } else {
+            if ($.trim($button.innerHTML) == "+") {
+                newVal = ($input.value * 1) + 1;
+                $input.value = newVal;
+                delay = setTimeout(function() { document.getElementById("cart_form").submit(); }, 300)
+                
+            } else {
+                // Don't allow decrementing below zero
+                if (oldValue > 0) {
+                    newVal = ($input.value * 1) - 1;
+                    $input.value = newVal;
+                    delay = setTimeout(function() { document.getElementById("cart_form").submit(); }, 300)
+                } else {
+                    newVal = 0;
+                    $input.value = newVal;
+                }
+            }
+        }
+    };
+
+    
+    
+    const quantity_input = document.querySelectorAll('input[name="updates[]"]');
+    for (let i = 0; i < quantity_input.length; i++) {
+        quantity_input[i].addEventListener("input", cartQuantityError);
+        quantity_input[i].addEventListener("change", (event) => { handleQuantityChange(event.target) });
+    }
+    function handleQuantityChange(qntInput){
+        if(qntInput.getAttribute('data-valid') == "valid"){
+            document.getElementById("cart_form").submit();
+        }else{
+            let itemWrapper = qntInput.closest('.item-wrapper');
+            let itemVariantID = qntInput.dataset.variant;
+            let itemVariants = itemWrapper.querySelectorAll('[data-variant="' + itemVariantID +'"]');
+            let quantity_value = 0;
+            itemVariants.forEach((itemVariant) => {
+                quantity_value += (itemVariant.value * 1);
+            });
+            const quantity_max = qntInput.getAttribute('max') * 1;
+            const quantity_min = qntInput.getAttribute('min') * 1;
+
+            if(quantity_max && quantity_value > quantity_max){
+                qntInput.value = (quantity_max - quantity_value) + (qntInput.value * 1);
+            } else if(quantity_min && quantity_value < quantity_min){
+                qntInput.value = 0;
+            } else if(Number.isInteger(quantity_value) == false){
+                qntInput.value = Math.round(qntInput.value);
+            }
+            document.getElementById("cart_form").submit();
+        }
+    }
+    function cartQuantityError(){
+        
+        let itemWrapper = this.closest('.item-wrapper');
+        let itemVariantID = this.dataset.variant;
+        let itemVariants = itemWrapper.querySelectorAll('[data-variant="' + itemVariantID +'"]');
+        let quantity_value = 0;
+        itemVariants.forEach((itemVariant) => {
+            quantity_value += (itemVariant.value * 1);
+        });
+        const quantity_max = this.getAttribute('max') * 1;
+        const quantity_min = this.getAttribute('min') * 1;
+        
+        const quantity_error = this.closest('.item-quantity').querySelector('.quantity-error');
+        const quantity_message = this.closest('.item-quantity').querySelector('.quantity-error .error-message');
+        if(quantity_max && quantity_value > quantity_max){
+            quantity_message.innerHTML = '{{ "sections.template_cart.error.quantity_should_be_less_than" | t }} ' + quantity_max;
+            this.setAttribute('data-valid', 'invalid');
+            quantity_error.classList.add('show');
+        }else if(quantity_min && quantity_value < quantity_min){
+            quantity_message.innerHTML = '{{ "sections.template_cart.error.quantity_should_be_greater_than" | t }} ' + quantity_min;
+            this.setAttribute('data-valid', 'invalid');
+            quantity_error.classList.add('show');
+        }else if(Number.isInteger(quantity_value) == false){
+            quantity_message.innerHTML = '{{ "sections.template_cart.error.quantity_should_be_counting_number" | t }}';
+            this.setAttribute('data-valid', 'invalid');
+            quantity_error.classList.add('show');
+        }else{
+            quantity_message.innerHTML = null;
+            this.setAttribute('data-valid', 'valid');
+            quantity_error.classList.remove('show');
+        }
+    }
+
+      
+    
+</script>
+<script>
+    var cartCountEl = document.querySelector('[data-item-count]');
+    if(cartCountEl){
+        var cartCount = cartCountEl.getAttribute('data-item-count')
+        for (let i = 1; i <= cartCount; i++) {
+            idname = 'updates_' + [i];
+            if (document.querySelector(`#${idname}`) != null) {
+                document.querySelector(`#${idname}`).addEventListener('keypress', function (evt) {
+                    var keycode = evt.charCode || evt.keyCode;
+                    if (keycode == 46) {
+                        evt.preventDefault();
+                    }
+                });
+                let input = document.querySelector(`#${idname}`);
+
+                input.addEventListener('input', function () {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+            }
+        }
+    }
+</script>
+<script>
+        
+
+    function updateCartNote(new_note) {
+        fetch(window.Shopify.routes.root + 'cart/update.js', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ note: new_note })
+        })
+        .then(response => {
+            if (response.ok) {
+            return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            // optionally do something after the cart note is removed
+        })
+        .catch(error => {
+            console.error('There was a problem updating the cart note:', error);
+        });
+    }
+
+    const noteTextarea = document.getElementById('CartNote');
+    if(noteTextarea){
+        noteTextarea.addEventListener('change', function() {
+            const updatedNoteValue = noteTextarea.value;
+
+            updateCartNote(updatedNoteValue);
+
+        });
+    }
+
+    function clearCart() {
+        fetch(window.Shopify.routes.root + 'cart/clear.js', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+            removeCartNote();
+            return response.json();
+            
+
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            location.reload();
+            // optionally do something after the cart is cleared
+        })
+        .catch(error => {
+            console.error('There was a problem clearing the cart:', error);
+        });
+    }
+        
+    function removeCartNote() {
+    fetch(window.Shopify.routes.root + 'cart/update.js', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ note: '' })
+    })
+    .then(response => {
+        if (response.ok) {
+        return response.json();
+        }
+        throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+        location.reload();
+        // optionally do something after the cart note is removed
+    })
+    .catch(error => {
+        console.error('There was a problem removing the cart note:', error);
+    });
+    }
+        
+        
+    if(cartCountEl){
+        const cart_clear_btn = document.querySelectorAll('.cart_remove_btn');
+        for(let i = 0; i < cart_clear_btn.length; i++){
+            cart_clear_btn[i].addEventListener('click', function(event){
+            if(cartCount == 1){
+                event.preventDefault();
+                    clearCart();
+                }
+            })
+        }
+    }
+        
+        
+</script>
+
+    {% schema %}
+        {
+            "name": "t:sections.template_cart.name",
+            "class":"ic-h-100 fill-screen-height",
+            "settings": [
+                {
+                    "type": "color_scheme",
+                    "id": "color_scheme",
+                    "label": "t:settings_schema.general.settings.color_scheme.label",
+                    "default": "scheme_1"
+                },
+                {
+                    "type": "header",
+                    "content": "t:sections.template_cart.settings.cards.content"
+                },
+                {
+                    "type": "color_scheme",
+                    "id": "card_color_scheme",
+                    "label": "t:settings_schema.general.settings.color_scheme.label",
+                    "default": "scheme_1"
+                }
+            ]
+        }
+    {% endschema %}

@@ -1,0 +1,58 @@
+{% liquid
+  if icon_image != nil or icon_label != empty or icon_image_two != nil or icon_label_two != empty or icon_image_three != nil or icon_label_three != empty
+  assign icon_text_content = true
+  else
+  assign icon_text_content = false
+  endif
+
+  if icon_image != nil or icon_label != empty
+  assign icon_text = true
+  else
+  assign icon_text = false
+  endif
+  if icon_image_two != nil or icon_label_two != empty
+  assign icon_text_two = true
+  else
+  assign icon_text_two = false
+  endif
+  if icon_image_three != nil or icon_label_three != empty
+  assign icon_text_three = true
+  else
+  assign icon_text_three = false
+  endif
+  
+  if icon_image != nil
+  assign icon_image = icon_image | image_url: width: icon_size | image_tag
+  endif
+  if icon_image_two != nil
+  assign icon_image_two = icon_image_two | image_url: width: icon_size | image_tag
+  endif
+  if icon_image_three != nil
+  assign icon_image_three = icon_image_three | image_url: width: icon_size | image_tag
+  endif
+%}
+{% if icon_text_content %}
+  <div class="icon-text-wrapper {{ class }}" {{ attr }}>
+    {% if icon_text %}
+      <div class="icon-text {{ icon_style }}">
+        {% if icon_order == 'icon-first' %}{{ icon_image }}{% endif %}
+        <span>{{ icon_label }}</span>
+        {% if icon_order == 'icon-second' %}{{ icon_image }}{% endif %}
+      </div>
+    {% endif %}
+    {% if icon_text_two %}
+      <div class="icon-text {{ icon_style }}">
+        {% if icon_order == 'icon-first' %}{{ icon_image_two }}{% endif %}
+        <span>{{ icon_label_two }}</span>
+        {% if icon_order == 'icon-second' %}{{ icon_image_two }}{% endif %}
+      </div>
+    {% endif %}
+    {% if icon_text_three %}
+      <div class="icon-text {{ icon_style }}">
+        {% if icon_order == 'icon-first' %}{{ icon_image_three }}{% endif %}
+        <span>{{ icon_label_three }}</span>
+        {% if icon_order == 'icon-second' %}{{ icon_image_three }}{% endif %}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

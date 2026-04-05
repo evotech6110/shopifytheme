@@ -1,0 +1,19 @@
+<nav class="footer_menu--items footer-nav">
+    <ul class="ic-block">
+      {% for link in menu.links %}
+        {% if link.active %}
+          <li class="ic-nav-link active ic-mb-3" aria-current="page">
+            <a href="{{ link.url | default: '#' }}">
+              <span class="">{{ link.title }}</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="ic-nav-link ic-mb-3">
+            <a href="{{ link.url | default: '#' }}">
+              <span class="">{{ link.title }}</span>
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>

@@ -1,0 +1,147 @@
+{% style %}
+  /* Scrolling Image Section - START */
+  .scrolling-image-wrapper {
+    display: flex;
+    overflow: hidden;
+    --animation-duration: 8s;
+    --scroll-gap: 24px;
+  }
+  .scrolling-image-wrapper.gradient-enabled {
+    background: var(--color-background);
+    background: var(--color-background-gradient);
+  }
+  .scrolling-image-wrapper.no-scrolling {
+    visibility: hidden;
+  }
+  .scrolling-image-wrapper .scrolling-image-container{
+    display: flex;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  .scrolling-image-wrapper .scrolling-image {
+    margin-left: calc(var(--scroll-gap, 24px) / 2);
+    margin-right: calc(var(--scroll-gap, 24px) / 2);
+    display: inline-block;
+    min-width: var(--_image-width, 80px);
+    width: var(--_image-width, 80px);
+  }
+  .scrolling-image-wrapper .scrolling-image-container img,
+  .scrolling-image-wrapper .scrolling-image-container svg { 
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  @keyframes scrolling-image {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+  }
+  .scrolling-image-wrapper:not(.no-scrolling) .scrolling-image-container {
+    animation: scrolling-image var(--animation-duration) linear infinite;
+  }
+  /* Scrolling Image Section - END */
+{% endstyle %}
+<div class="section-wrapper color-{{ section.settings.color_scheme }} gradient-enabled ic-py-14 scrolling-image-wrapper"
+  data-scroll-speed="{{ section.settings.scroll_speed }}"
+  style="--scroll-gap: {{ section.settings.scroll_gap }}px;">
+  {% if section.blocks.size > 0 %}
+    <div class="scrolling-image-container">
+      {% for block in section.blocks %}
+        <span class="scrolling-image" style="--_image-width: {{ block.settings.image_width }}px;">
+          {% if block.settings.image != nil %}
+              {% if section.index <= 2 %}
+                {{ block.settings.image 
+                  | image_url: width: block.settings.image.width, height: block.settings.image.height 
+                  | image_tag: alt:block.settings.image.alt, preload: true, fetchpriority: 'high', widths: '320, 480, 768, 1024, 1366, 1600, 1920' }}
+              {% else %}
+                {{ block.settings.image 
+                  | image_url: width: block.settings.image.width, height: block.settings.image.height 
+                  | image_tag: alt:block.settings.image.alt, loading: 'lazy', widths: '320, 480, 768, 1024, 1366, 1600, 1920' }}
+              {% endif %}
+            {% else %}
+                {{ 'image' | placeholder_svg_tag }}
+          {% endif %}
+        </span>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.scrolling_image.name",
+  "tag": "section",
+  "class": "scrolling-image-section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings_schema.general.settings.color_scheme.label",
+      "default": "scheme_1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.scrolling_image.settings.layout.label"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "t:sections.scrolling_image.settings.scroll_speed.label",
+      "min": 5,
+      "max": 20,
+      "unit": "s",
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "scroll_gap",
+      "label": "t:sections.scrolling_image.settings.scroll_gap.label",
+      "min": 0,
+      "max": 100,
+      "unit": "px",
+      "step": 2,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.scrolling_image.blocks.image.name",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.scrolling_image.blocks.image.settings.image.label"
+        },
+        {
+          "type": "range",
+          "id": "image_width",
+          "label": "t:sections.scrolling_image.blocks.image.settings.image_width.label",
+          "min": 32,
+          "max": 320,
+          "step": 4,
+          "unit": "px",
+          "default": 120
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.scrolling_image.name",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["*"]
+  }
+}
+{% endschema %}

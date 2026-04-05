@@ -1,0 +1,22 @@
+<div class="page-section-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container">
+        <div class="ic-flex ic-flex-col ic-align-items-center ic-py-13">
+            <h1 class="text-3xl ic-font-medium ic-mb-8 ic-mb-md-16 title ic-break-words">{{ page.title }}</h1>
+            <div class="ic-flex-col-12 ic-flex-col-md-10 ic-flex-col-lg-9 ic-mx-auto description richtext-container ic-break-words">{{ page.content }}</div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "t:sections.template_page.name",
+    "settings": [
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:settings_schema.general.settings.color_scheme.label",
+            "default": "scheme_1"
+        }
+    ]
+}
+{% endschema %}

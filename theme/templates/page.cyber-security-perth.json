@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "cyber_security_perth": {
+      "type": "cyber-security-perth",
+      "settings": {
+        "phone_number": "0466 911 816",
+        "email_address": "info@evotech.au",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_link": "/pages/contact",
+        "show_announce": true
+      }
+    }
+  },
+  "order": [
+    "cyber_security_perth"
+  ]
+}

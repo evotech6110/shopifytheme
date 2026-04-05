@@ -1,0 +1,238 @@
+<div id="newsletter-popup" class="popup-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container ic-flex ic-justify-content-center">
+        <div class="popup-card">
+            <button class="popup-close" aria-controls="newsletter-popup"><span>{% render 'icon-close' %}</span></button>
+            <div class="popup-inner">
+                <div class="text-form-wrapper ic-break-words">
+                    {% if section.settings.subheading != blank or section.settings.heading != blank or section.settings.subtext != blank %}
+                        <div class="text-container">
+                            {% if section.settings.subheading != blank %}
+                                <p class="subheaidng ic-text-lg">{{ section.settings.subheading }}</p>
+                            {% endif %}
+                            {% if section.settings.heading != blank %}
+                                <h3 class="heading ic-h1 ic-mb-2">{{ section.settings.heading }}</h3>
+                            {% endif %}
+                            {% if section.settings.subtext != blank %}
+                                <p class="subtext">{{ section.settings.subtext }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if section.settings.newsletter %}
+                        <div class="form-container">
+                            {% form 'customer', id: 'popupContactForm', class: 'popup-newsletter' %}
+                                <input type="hidden" name="contact[tags]" value="newsletter">
+                                {% if section.settings.newsletter-heading != blank %}
+                                    <h4 class="ic-font-normal ic-mb-3">{{ section.settings.newsletter-heading }}</h4>
+                                {% endif %}
+                                <div class="ic-relative ic-i wrapper">
+                                  <label
+                                    for="NewsletterForm--popup"
+                                    class="ic-screen-reader"
+                                    aria-label="{{ 'sections.popup.enter_your_email' | t }}">{{ "sections.popup.enter_your_email" | t }}</label>
+                                  <input
+                                    type="email"
+                                    id="NewsletterForm--popup"
+                                    name="contact[email]"
+                                    placeholder="{{ "sections.popup.email" | t }}"
+                                    class="ic-w-100 ic-px-3 ic-py-2 ic-text-base"
+                                    {% if form.errors %}
+                                        aria-describedby="popupContactError"
+                                      {% elsif form.posted_successfully? %}
+                                        aria-describedby="popupContactSuccess"
+                                      {% endif %}
+                                    required />
+                                    {% if form.errors %}
+                                        {% render 'form-error', form: form, error_id: 'popupContactError' %}
+                                    {% elsif form.posted_successfully? %}
+                                    <div class="success-box ic-text-sm ic-font-medium ic-mb-4 ic-mt-0" id="popupContactSuccess">
+                                        <span>{% render 'icon-success' %}</span>
+                                        {{ "sections.popup.posted_succesfully" | t }}
+                                    </div>
+                                    {% endif %}
+                                    {% assign submit = 'sections.popup.default.submit' | t %}
+                                    {% assign close = 'sections.popup.default.close' | t %}
+                                  <button
+                                    type="submit"
+                                    name="commit"
+                                    aria-label="{{ 'sections.popup.newsletter_submit' | t }}"
+                                    class="ic-btn ic-btn-primary ic-w-100 ic-justify-content-center ic-mt-5 ic-mb-3">{{ section.settings.newsletter-submit-button | default: submit }} <span class="icon">{% render 'icon-right' %}</span></button>
+                                </div>
+                            {% endform %}
+                            <button class="ic-btn ic-btn-tertiary ic-justify-content-center ic-w-100 popup-cancel" aria-controls="newsletter-popup">{{ section.settings.newsletter-cancel-button | default: close }}</button>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if section.settings.popup-image != nil %}
+                    <div class="image-container">
+                        {% liquid
+                            if section.settings.popup-image.alt != null
+                                assign alt = section.settings.popup-image.alt
+                            else
+                                assign alt = section.settings.popup-image.src | split: '/' | last | split: '.' | first
+                            endif
+                        %}
+                        {{
+                        section.settings.popup-image
+                        | image_url: width: 600
+                        | image_tag:
+                            loading: 'lazy',
+                            sizes: '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 470px, (max-width: 899px) 185px, (max-width: 1024px) 240px, 255px',
+                            widths: '200, 300, 375, 500, 600',
+                            alt: alt
+                        }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% javascript %}
+
+    if (!Shopify.designMode){
+        if (!localStorage.getItem('popupDisplayed')) {
+            setTimeout(function(){
+                popupShow()
+                localStorage.setItem('popupDisplayed', true);
+            }, 5000)
+        }
+        const newsletterPopup = document.getElementById('newsletter-popup');
+        const popupCloseBtn = newsletterPopup.querySelector('.popup-close');
+        const popupCancelBtn = newsletterPopup.querySelector('.popup-cancel');
+        popupCloseBtn.addEventListener('click', function(){
+            popupClose()
+        });
+        popupCancelBtn.addEventListener('click', function(){
+            popupClose()
+        });
+        document.addEventListener('click', function(event) {
+            const popupCard = newsletterPopup.querySelector('.popup-card');
+            if (!popupCard.contains(event.target)) {
+                popupClose();
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.location.hash === '#popupContactForm') {
+                popupShow();
+            }
+        });
+    }
+
+    if(Shopify.designMode){
+        document.addEventListener('shopify:section:select', function(){
+            const sectionSelected = event.target.classList.contains('popup-section');
+            if(sectionSelected){
+                popupShow();
+            }
+        })
+        document.addEventListener('shopify:section:deselect', function(){
+            const sectionSelected = event.target.classList.contains('popup-section');
+            if(sectionSelected){
+                popupClose();
+            }
+        })
+        document.addEventListener('shopify:section:unload', function(){
+            const sectionSelected = event.target.classList.contains('popup-section');
+            if(sectionSelected){
+                const htmlEl = document.querySelector('html');
+                htmlEl.classList.remove('popup-show');
+            }
+        })
+    }
+
+    function popupShow() {
+        const htmlEl = document.querySelector('html');
+        const newsletterPopup = document.getElementById('newsletter-popup');
+        const popupCard = newsletterPopup.querySelector('.popup-card');
+        newsletterPopup.classList.add('show');
+        htmlEl.classList.add('popup-show');
+        if(Shopify.designMode){
+            newsletterPopup.classList.add('fade');
+        }
+        setTimeout(function() {
+            newsletterPopup.classList.add('fade');
+            if(!Shopify.designMode){
+                popupCard.focus();
+            }
+        }, 100);
+
+        // Trap focus within the popup card
+        popupCard.setAttribute('tabindex', '-1');
+        popupCard.addEventListener('keydown', function(event) {
+            trapFocus(event, popupCard);
+        });
+    }
+
+    function popupClose() {
+        const htmlEl = document.querySelector('html');
+        const newsletterPopup = document.getElementById('newsletter-popup');
+        newsletterPopup.classList.remove('fade');
+        setTimeout(function() {
+            newsletterPopup.classList.remove('show');
+            htmlEl.classList.remove('popup-show');
+        }, 400);
+    }
+{% endjavascript %}
+
+{% schema %}
+    {
+        "name": "t:sections.popup.name",
+        "class": "popup-section",
+        "settings": [
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type": "text",
+                "id": "subheading",
+                "default": "Subheading",
+                "label": "t:sections.popup.settings.subheading.label"
+            },
+            {
+                "type": "text",
+                "id": "heading",
+                "default": "Heading",
+                "label": "t:sections.popup.settings.heading.label"
+            },
+            {
+                "type": "text",
+                "id": "subtext",
+                "default": "Give your description here",
+                "label": "t:sections.popup.settings.description.label"
+            },
+            {
+                "type": "checkbox",
+                "id": "newsletter",
+                "default": true,
+                "label": "t:sections.popup.settings.enable_newsletter.label"
+            },
+            {
+                "type": "text",
+                "id": "newsletter-heading",
+                "default": "Subscribe to our newsletter",
+                "label": "t:sections.popup.settings.newsletter_heading.label"
+            },
+            {
+                "type": "text",
+                "id": "newsletter-submit-button",
+                "default": "Subscribe",
+                "label": "t:sections.popup.settings.newsletter_submit_button.label"
+            },
+            {
+                "type": "text",
+                "id": "newsletter-cancel-button",
+                "default": "Cancel",
+                "label": "t:sections.popup.settings.newsletter_cancel_button.label"
+            },
+            {
+                "type": "image_picker",
+                "id": "popup-image",
+                "label": "t:sections.popup.settings.image.label",
+                "info": "t:sections.popup.settings.image.info"
+            }
+        ]
+    }
+{% endschema %}

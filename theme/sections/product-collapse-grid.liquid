@@ -1,0 +1,165 @@
+{% liquid
+    assign first_content_index = nil
+    assign second_content_index = nil
+    assign third_content_index = nil
+    assign fourth_content_index = nil
+
+    for block in section.blocks
+        if block.type == 'description' and product.description != ''
+            if first_content_index == nil
+            assign first_content_index = forloop.index
+            elsif second_content_index == nil
+            assign second_content_index = forloop.index
+            elsif third_content_index == nil
+            assign third_content_index = forloop.index
+            elsif fourth_content_index == nil
+            assign fourth_content_index = forloop.index
+            endif
+        endif
+
+            assign outer_specs = nil
+            if block.settings.specifications != ''
+            assign outer_namespace = block.settings.specifications | split: '.' | first
+            assign outer_key = block.settings.specifications | split: '.' | last
+            assign outer_specs = product.metafields[outer_namespace][outer_key].value
+            endif
+            
+        if block.type == 'collapsible_content'
+            if block.settings.collapse_content != '' or outer_specs != nil
+                if first_content_index == nil
+                assign first_content_index = forloop.index
+                elsif second_content_index == nil
+                assign second_content_index = forloop.index
+                elsif third_content_index == nil
+                assign third_content_index = forloop.index
+                elsif fourth_content_index == nil
+                assign fourth_content_index = forloop.index
+                endif
+            endif
+        endif
+    endfor
+%}
+{% if first_content_index != nil %}
+    <div class="collapsible-grid-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+        <div class="ic-container ic-py-6">
+            <div class="collapsible-grid split-grid">
+                {% if first_content_index != nil %}
+                    <div class="left-grid">
+                        {% liquid
+                            for block in section.blocks
+                                if forloop.index == first_content_index
+                                    if block.type == 'description' and product.description != ''
+                                        assign toggle_title = 'sections.collapsibles_grid.description' | t
+                                        render 'collapsible-content', class: 'description-collapse', attr: block.shopify_attributes, collapse_state: "true", toggle_text: toggle_title, collapse_content: product.description, specifications: nil
+                                    endif
+                                    if block.type == 'collapsible_content'
+                                        assign left_specs = nil
+                                        if block.settings.specifications != ''
+                                            assign left_namespace = block.settings.specifications | split: '.' | first
+                                            assign left_key = block.settings.specifications | split: '.' | last
+                                            assign left_specs = product.metafields[left_namespace][left_key].value
+                                        endif
+                                    
+                                        if block.settings.collapse_content != '' or left_specs != nil
+                                            render 'collapsible-content', attr: block.shopify_attributes, collapse_state: "true", toggle_text: block.settings.collapse_toggle, collapse_content: block.settings.collapse_content, specifications: block.settings.specifications
+                                        endif
+                                    endif
+                                endif
+                            endfor
+                        %}
+                    </div>
+                {% endif %}
+                {% if second_content_index != nil %}
+                    <div class="right-grid">
+                        {% liquid
+                            for block in section.blocks
+                                if forloop.index >= second_content_index
+                                    if block.type == 'description' and product.description != ''
+                                        assign toggle_title = 'sections.collapsibles_grid.description' | t
+                                        render 'collapsible-content', class: 'description-collapse', attr: block.shopify_attributes, collapse_state: "true", toggle_text: toggle_title, collapse_content: product.description, specifications: ''
+                                    endif
+                                    if block.type == 'collapsible_content'
+                                        assign right_specs = nil
+                                        if block.settings.specifications != ''
+                                            assign right_namespace = block.settings.specifications | split: '.' | first
+                                            assign right_key = block.settings.specifications | split: '.' | last
+                                            assign right_specs = product.metafields[right_namespace][right_key].value
+                                        endif
+                                        if block.settings.collapse_content != '' or right_specs != nil
+                                            render 'collapsible-content', attr: block.shopify_attributes, collapse_state: "true", toggle_text: block.settings.collapse_toggle, collapse_content: block.settings.collapse_content, specifications: block.settings.specifications
+                                        endif
+                                    endif
+                                endif
+                            endfor
+                        %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% schema %}
+    {
+        "name": "t:sections.collapsibles_grid.name",
+        "tag": "section",
+        "class": "section",
+        "max_blocks": 4,
+        "settings": [
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "description",
+                "name": "t:sections.collapsibles_grid.blocks.description.name",
+                "limit": 1
+            },
+            {
+                "type": "collapsible_content",
+                "name": "t:sections.collapsibles_grid.blocks.collapsible_content.name",
+                "settings": [
+                  {
+                    "type": "text",
+                    "id": "collapse_toggle",
+                    "default": "Title",
+                    "label": "t:sections.collapsibles_grid.blocks.collapsible_content.settings.toggle_text.label"
+                  },
+                  {
+                    "type": "richtext",
+                    "id": "collapse_content",
+                    "default": "<p>Use this text to display some key features of the products</p>",
+                    "label": "t:sections.collapsibles_grid.blocks.collapsible_content.settings.content.label"
+                  },
+                  {
+                    "type": "text",
+                    "id": "specifications",
+                    "label": "t:sections.collapsibles_grid.blocks.collapsible_content.settings.specifications.label",
+                    "info": "t:sections.collapsibles_grid.blocks.collapsible_content.settings.specifications.info"
+                    
+                  }
+                ]
+            }
+        ],
+        "presets":[
+            {
+                "name": "t:sections.collapsibles_grid.name",
+                "blocks": [
+                    {
+                        "type": "description"
+                    },
+                    {
+                        "type": "collapsible_content"
+                    }
+                ]
+            }
+        ],
+        "enabled_on": {
+            "templates": ["product"]
+        }
+    }
+{% endschema %}

@@ -1,0 +1,22 @@
+<div class="search-wrapper ic-w-100 search-container" data-section={{ section.id }}>
+    <form action="{{ routes.search_url }}" method="get" class="ic-w-100">
+      <div class="ic-flex ic-flex-nowrap search-form-container">
+        <label for="all-search" class="ic-screen-reader" aria-label="{{ 'sections.header.aria_label.search' | t }}">{{ "sections.header.search" | t }}</label>
+        <input
+          x-ref="searchField"
+          type="search"
+          id="all-search"
+          name="q"
+          placeholder="{{ 'sections.header.search' | t }}"
+          value="{{ search.terms | escape }}"
+          class="{%- if predictive_search.performed -%}suggestion-active{% endif %}"
+          autocomplete="off">
+        <button type="submit" class="search-icon" aria-label="{{ 'sections.header.aria_label.search' | t }}">
+          {% render 'icon-search' %}
+        </button>
+      </div>
+    </form>
+    {%- if predictive_search.performed -%}
+      {% render 'search-suggestion' %}
+    {% endif %}
+</div>

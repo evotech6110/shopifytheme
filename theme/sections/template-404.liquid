@@ -1,0 +1,182 @@
+{% style %}
+.et-404 {
+  background: linear-gradient(135deg, #0e2240 0%, #162e55 100%);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.et-404::before {
+  content: '404';
+  position: absolute;
+  font-size: clamp(120px, 20vw, 280px);
+  font-weight: 900;
+  color: rgba(207,243,148,0.05);
+  line-height: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  letter-spacing: -8px;
+}
+.et-404-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.et-404-code {
+  font-size: clamp(64px, 10vw, 96px);
+  font-weight: 900;
+  color: #cff394;
+  line-height: 1;
+  margin: 0 0 8px;
+  letter-spacing: -2px;
+}
+.et-404-title {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 16px;
+}
+.et-404-desc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  margin: 0 0 40px;
+}
+.et-404-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.et-404-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #cff394;
+  color: #0e2240;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 13px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.et-404-btn-primary:hover { background: #a8e060; transform: translateY(-1px); }
+.et-404-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 13px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.et-404-btn-outline:hover { border-color: #cff394; color: #cff394; }
+.et-404-links {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 40px;
+}
+.et-404-links-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 20px;
+}
+.et-404-links-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.et-404-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.75);
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.et-404-link:hover {
+  background: rgba(207,243,148,0.12);
+  border-color: rgba(207,243,148,0.3);
+  color: #cff394;
+}
+.et-404-link::before { content: '›'; color: #cff394; font-weight: 700; }
+{% endstyle %}
+
+<div class="et-404">
+  <div class="et-404-inner">
+
+    <div class="et-404-code">404</div>
+    <h1 class="et-404-title">Page Not Found</h1>
+    <p class="et-404-desc">
+      The page you're looking for doesn't exist or has been moved.<br>
+      Let us help you find what you need.
+    </p>
+
+    <div class="et-404-actions">
+      <a href="{{ routes.root_url }}" class="et-404-btn-primary">
+        ← Back to Home
+      </a>
+      <a href="{{ routes.root_url }}pages/contact" class="et-404-btn-outline">
+        Contact Us
+      </a>
+    </div>
+
+    <div class="et-404-links">
+      <p class="et-404-links-title">Popular Pages</p>
+      <div class="et-404-links-grid">
+        <a href="{{ routes.root_url }}pages/managed-it-services-perth" class="et-404-link">Managed IT Services</a>
+        <a href="{{ routes.root_url }}pages/cyber-security-perth" class="et-404-link">Cyber Security</a>
+        <a href="{{ routes.root_url }}pages/business-it-support" class="et-404-link">IT Support Perth</a>
+        <a href="{{ routes.root_url }}pages/cloud-migration-services" class="et-404-link">Cloud & M365</a>
+        <a href="{{ routes.root_url }}pages/it-consulting-vcio" class="et-404-link">IT Consulting</a>
+        <a href="{{ routes.root_url }}pages/network-design-security" class="et-404-link">Network Security</a>
+        <a href="{{ routes.root_url }}collections/all" class="et-404-link">IT Catalog</a>
+        <a href="{{ routes.root_url }}pages/contact" class="et-404-link">Get a Free Assessment</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{%- comment -%} 404 Schema for GSC {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Page Not Found — {{ shop.name }}",
+  "description": "The page you requested could not be found. Return to {{ shop.name }} homepage for managed IT services, cyber security and IT support in Perth.",
+  "url": "{{ request.origin }}{{ request.path }}",
+  "isPartOf": { "@id": "{{ request.origin }}/#website" }
+}
+</script>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "tag": "section",
+  "class": "section-404",
+  "settings": []
+}
+{% endschema %}

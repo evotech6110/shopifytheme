@@ -1,0 +1,32 @@
+<div class="ic-py-13 color-{{ section.settings.color_scheme }} gradient-enabled custom-liquid">
+    {{ section.settings.custom_liquid }}
+</div>
+{% schema %}
+{
+    "name": "t:sections.custom-liquid.name",
+    "class": "section",
+    "tag": "section",
+    "settings": [
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "t:settings_schema.general.settings.color_scheme.label",
+          "default": "scheme_1"
+        },
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "t:sections.custom-liquid.settings.custom_liquid.label",
+          "info": "t:sections.custom-liquid.settings.custom_liquid.info"
+        }
+    ],
+    "presets": [
+        {
+          "name": "t:sections.custom-liquid.presets.name"
+        }
+      ],
+      "disabled_on": {
+          "groups": ["*"]
+      }
+}
+{% endschema %}

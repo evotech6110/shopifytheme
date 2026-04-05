@@ -1,0 +1,20 @@
+<div class="cart-popup-wrapper" tabindex="-1">
+    <div id="cart-popup" class="cart-popup" aria-modal="true" aria-label="{{ 'snippets.cart_popup.cart_item_added' | t }}" role="dialog" tabindex="-1">
+        <div class="cart-popup-header">
+            <p class="cart-popup-heading">{%- render 'icon-success' -%} {{ 'snippets.cart_popup.item_added_to_cart' | t }}</p>
+            <button type="button" class="cart-popup-close" aria-label="{{ 'snippets.cart_popup.cart_popup_close' | t }}">
+                {% render 'icon-close' %}
+            </button>
+        </div>
+        <div class="cart-popup-content">
+            <div id="cart-popup-product" class="cart-popup-product">
+            </div>
+            <div class="cart-popup-links">
+                <a href="{{ routes.cart_url | default: '#' }}" id="cart-popup-button" class="ic-btn ic-btn-secondary ic-text-center ic-justify-content-center cart-btn ic-inline-block"> {{ 'snippets.cart_popup.view_cart' | t }} <span class="btn_cart_count">{{ cart.item_count }}</span></a>
+                <form action="{{ routes.cart_url }}" method="post" id="cart-popup-form">
+                <button class="ic-btn ic-btn-primary ic-text-center ic-justify-content-center ic-inline-block" name="checkout"> {{ 'snippets.cart_popup.check_out' | t }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

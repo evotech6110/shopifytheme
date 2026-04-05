@@ -1,0 +1,82 @@
+<div class="social-sharing-wrapper">
+  <button
+    class="btn--icon btn--share"
+    type="button"
+    aria-label="{{ 'snippets.social_sharing.show_share' | t }}"
+    aria-expanded="false"
+    aria-controls="share-{{ section.id }}"
+  >
+    {% render 'icon-share' %}
+    <span class="btn--share-label">{{ 'snippets.social_sharing.share' | t }}</span>
+  </button>
+  <div id="share-{{ section.id }}" class="share-dropdown">
+    <div class="link-copy">
+      <button class="link-copy-button" aria-label="{{ 'snippets.social_sharing.copy_link' | t }}">
+        {% render 'link-icon', style: icon_style %}
+      </button>
+      {% liquid 
+        if share_permalink
+        assign copy_link = shop.url | append: share_permalink | append: '?variant=' | append: share_variant_id
+        else
+        assign copy_link = shop.url | append: article_url
+        endif
+      %}
+      <span class="copy-link ic-screen-reader">{{ copy_link }}</span>
+    </div>
+    <ul class="social-sharing">
+      <li>
+        {% liquid 
+          if share_permalink
+          assign fb_link = shop.url | append: share_permalink | append: '?variant=' | append: share_variant_id
+          else
+          assign fb_link = shop.url | append: article_url
+          endif
+        %}
+        <a
+          target="_blank"
+          href="//www.facebook.com/sharer.php?u={{ fb_link }}"
+          aria-label="{{ 'snippets.social_sharing.facebook' | t }}. {{ 'general.open_new_window' | t }}"
+          title="Facebook"
+        >
+          {% render 'icon-facebook', style: icon_style %}
+        </a>
+      </li>
+      <li>
+        <a
+          target="_blank"
+          {% if share_permalink %}
+            href="//twitter.com/intent/tweet?text={{ share_title | url_param_escape }}&amp;url={{ shop.url | append: share_permalink | append: '?variant=' | append: share_variant_id }}"
+            {% else %}
+            href="//twitter.com/intent/tweet?text={{ share_title | url_param_escape }}&amp;url={{ shop.url | append: article_url }}"
+          {% endif %}
+          title="X"
+          aria-label="{{ 'snippets.social_sharing.x' | t }}. {{ 'general.open_new_window' | t }}"
+        >
+          {% render 'icon-x', style: icon_style %}
+        </a>
+      </li>
+      <li>
+        {% liquid
+          if share_image
+          assign blog_image_url = share_image | image_url: width: 1024
+          assign pinterest_blog_url = 'media=' | append: blog_image_url | append: '&amp;'
+          else
+          assign pinterest_blog_url = nil
+          endif
+        %}
+        <a
+          target="_blank"
+          {% if share_permalink %}
+            href="//pinterest.com/pin/create/button/?url={{ shop.url | append: share_permalink | append: '?variant=' | append: share_variant_id }}&amp;{{ pinterest_blog_url }}description={{ product.title | url_param_escape }}"
+            {% else %}
+            href="//pinterest.com/pin/create/button/?url={{ shop.url | append: article_url }}&amp;{{ pinterest_blog_url }}description={{ share_title | url_param_escape }}"
+          {% endif %}
+          title="Pinterest"
+          aria-label="{{ 'snippets.social_sharing.pinterest' | t }}. {{ 'general.open_new_window' | t }}"
+        >
+          {% render 'icon-pinterest', style: icon_style %}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

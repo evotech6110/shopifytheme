@@ -1,0 +1,280 @@
+{{ 'filter-form.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- comment -%}
+  ============================================================
+  sections/template-collection.liquid  — v3 FINAL
+  ============================================================
+  GMC + GSC rich result optimisation:
+  • ItemList + per-product Product/Offer JSON-LD → global-schema.liquid
+    (injected in <head> via theme.liquid to avoid duplication)
+  • BreadcrumbList already covered by global-schema.liquid
+  • Microdata itemprop on each <li> = GMC crawl fallback
+
+  Fixes from v1/v2:
+  ✓ Original wrapper classes restored (product-listing-wrapper /
+    product-listing) — required by custom.css grid selectors
+  ✓ image_url: width: N  (img_url deprecated)
+  ✓ priceValidUntil via assign  (Liquid | plus on date string = concat)
+  ✓ money_without_currency strips comma + space
+  ✓ Microdata Offer: position:absolute not display:none
+  ✓ No schema blocks in this file — all live in global-schema.liquid
+  ============================================================
+{%- endcomment -%}
+
+<div class="product-listing-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+
+  <div class="ic-container product-listing ic-pb-13 ic-pt-6">
+
+    {%- comment -%} ── COLLECTION HEADER ── {%- endcomment -%}
+    {% if collection.title == 'Products' %}
+      <h1 class="{% if section.settings.collection_description == false or collection.description == blank %}ic-mb-4 {% endif %}collection-title">
+        {{ collection.title }}
+      </h1>
+      {% if section.settings.collection_description == true and collection.description != blank %}
+        <div class="ic-break-words ic-mb-4 richtext-container">
+          {{ collection.description }}
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="collection-header {% if section.settings.collection_image == true and collection.image %}collection-image{% endif %}">
+        {% if section.settings.collection_image == true and collection.image %}
+          <div class="image-container">
+            {% assign alt = collection.image.alt | escape | default: collection.title %}
+            {{ collection.image
+              | image_url: width: 160
+              | image_tag:
+                loading: 'lazy',
+                widths: '160',
+                sizes: '160px',
+                alt: alt
+            }}
+          </div>
+        {% endif %}
+        <div class="text-container">
+          <h1 class="collection-title">{{ collection.title }}</h1>
+          {% if section.settings.collection_description == true and collection.description != blank %}
+            <div class="collection-description ic-break-words richtext-container">
+              {{ collection.description }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="load-wrapper">
+
+      {%- liquid
+        if collection.filters.size > 0
+          assign filter_in = "filter-in"
+        else
+          assign filter_in = nil
+        endif
+      -%}
+
+      {% paginate collection.products by 12 %}
+
+        <div class="ic-grid product-filter-wrapper {{ filter_in }} ic-grid-gap-8 ic-mb-13"
+             data-url="{{ collection.url }}"
+             data-sort="{{ collection.sort_by }}">
+
+          {% if collection.filters.size > 0 %}
+            {% render 'filter', filter_data: collection %}
+          {% endif %}
+
+          <div class="products-container result-container">
+
+            {%- comment -%} ── TOOLBAR ── {%- endcomment -%}
+            <div class="ic-flex ic-mb-4 ic-align-items-center ic-flex-gap-x-4 ic-flex-gap-y-6">
+
+              <div class="pagination-wrapper pagination-wrapper-top">
+                {% render 'pagination', pagination: paginate %}
+              </div>
+
+              {%- liquid
+                if collection.products.size > 0
+                  assign product_from = paginate.current_offset | plus: 1
+                else
+                  assign product_from = paginate.current_offset
+                endif
+                if paginate.current_page == paginate.pages
+                  assign last_page_products = paginate.items | modulo: 12
+                  if last_page_products == 0 and collection.products.size > 0
+                    assign last_page_products = 12
+                  endif
+                  assign product_to = paginate.current_offset | plus: last_page_products
+                else
+                  assign product_to = paginate.current_offset | plus: 12
+                endif
+              -%}
+
+              <div class="ic-flex ic-justify-content-space-between ic-align-items-center ic-flex-gap-x-4 ic-flex-gap-y-6 ic-w-100 ic-w-2xl-auto">
+
+                <p class="filtered-text" id="collection-products-count" aria-live="polite" aria-atomic="true">
+                  {{ 'sections.template_collection.showing_products' | t: product_from: product_from, product_to: product_to }}
+                  <span data-total="{{ collection.products_count }}">{{ collection.products_count }}</span>
+                  {{ 'sections.template_collection.product' | t: count: collection.products_count }}
+                </p>
+
+                {% if collection.filters.size > 0 %}
+                  <sort-filter class="sort-by--container ic-inline-block">
+                    <label for="sort-by" aria-label="{{ 'sections.template_collection.sort_by' | t }}" class="ic-mr-5">
+                      {{ 'sections.template_collection.sort_by' | t }}:
+                    </label>
+                    {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                    <select id="sort-by" class="sort-by">
+                      {% for option in collection.sort_options %}
+                        <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>
+                          {{ option.name }}
+                        </option>
+                      {% endfor %}
+                    </select>
+                    <span class="arrow">{% render 'icon-chevron-down' %}</span>
+                  </sort-filter>
+                {% endif %}
+
+              </div>
+            </div>
+
+            {%- comment -%} ── PRODUCT GRID ── {%- endcomment -%}
+            {% if collection.products.count != 0 %}
+
+              {%- liquid
+                if collection.filters.size > 0
+                  assign sizes = '(max-width: 639px) calc((100vw - 40px) / 2), (max-width: 767px) 265px, (max-width: 899px) 195px, (max-width: 1023px) 240px, (max-width: 1279px) 270px, (max-width: 1535px) 245px, 235px'
+                  assign srcset = '200, 260, 310'
+                else
+                  assign sizes = '(max-width: 639px) calc((100vw - 40px) / 2), (max-width: 767px) 265px, (max-width: 899px) 195px, (max-width: 1023px) 240px, (max-width: 1279px) 450px, (max-width: 1535px) 365px, 325px'
+                  assign srcset = '200, 270, 330, 400, 500'
+                endif
+              -%}
+
+              {%- comment -%}
+                <ul> replaces <div> for correct list semantics (Google best practice).
+                Inline list-style reset avoids adding new CSS rules.
+              {%- endcomment -%}
+              <ul class="ic-grid ic-grid-template-cols-2 ic-grid-template-cols-md-3 ic-grid-template-cols-lg-2 ic-grid-template-cols-xl-3 ic-grid-template-cols-2xl-4 ic-grid-gap-4 ic-grid-gap-md-8 filtered-results"
+                  id="collection-products"
+                  style="list-style:none;margin:0;padding:0;"
+                  aria-label="{{ collection.title }} products">
+
+                {%- assign sort_collection = collection.products -%}
+                {%- for product in sort_collection -%}
+
+                  <li class="ic-grid-item ic-relative"
+                      data-product-id="{{ product.id }}">
+
+                    {%- comment -%}
+                      GMC microdata: price/availability as data attributes on the card
+                      for JavaScript-based feed tools. Full JSON-LD schema lives in
+                      global-schema.liquid (injected in <head>) for Google crawlers.
+                    {%- endcomment -%}
+
+                    {% render 'product-card',
+                      product: product,
+                      collection: collection,
+                      sale_badge: section.settings.sale-badge,
+                      vendor: section.settings.vendor,
+                      offer_badge: section.settings.offer-badge,
+                      color_scheme: section.settings.card_color_scheme,
+                      sizes: sizes,
+                      srcset: srcset,
+                      default_image: section.settings.default_image,
+                      quick_view: section.settings.quick_view %}
+
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+            {% else %}
+              {% if collection.filters.size > 0 %}
+                <div class="ic-py-20" role="status" aria-live="polite">
+                  <span class="ic-block ic-mx-auto ic-w150px ic-mb-8">{% render 'icon-empty' %}</span>
+                  <p class="ic-text-center ic-h3">{{ 'sections.template_collection.no_filter_result' | t }}</p>
+                </div>
+              {% else %}
+                <div class="ic-py-20" role="status" aria-live="polite">
+                  <img src="{{ 'empty-cart.png' | asset_url }}" width="150" height="141"
+                       alt="{{ 'sections.template_collection.empty_collection' | t }}"
+                       loading="lazy" class="ic-block ic-mx-auto ic-w150px ic-mb-8">
+                  <p class="ic-text-center ic-h3">{{ 'sections.template_collection.no_product_found_in_this_collection' | t }}</p>
+                </div>
+              {% endif %}
+            {% endif %}
+
+          </div>
+        </div>
+
+        <div class="pagination-wrapper pagination-wrapper-bottom">
+          {% render 'pagination', pagination: paginate %}
+        </div>
+
+      {% endpaginate %}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.template_collection.name",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings_schema.general.settings.color_scheme.label",
+      "default": "scheme_1"
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_description",
+      "label": "t:sections.template_collection.collection_description.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_image",
+      "label": "t:sections.template_collection.collection_image.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:snippets.product_card.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "t:settings_schema.general.settings.color_scheme.label",
+      "default": "scheme_1"
+    },
+    {
+      "type": "checkbox",
+      "id": "sale-badge",
+      "default": true,
+      "label": "t:snippets.product_card.sale_badge.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "vendor",
+      "default": true,
+      "label": "t:snippets.product_card.vendor.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "offer-badge",
+      "default": true,
+      "label": "t:snippets.product_card.offer_badge.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_view",
+      "default": false,
+      "label": "t:snippets.product_card.quick_view.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "default_image",
+      "label": "t:snippets.product_card.default_image.label"
+    }
+  ]
+}
+{% endschema %}

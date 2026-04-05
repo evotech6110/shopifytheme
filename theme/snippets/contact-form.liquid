@@ -1,0 +1,48 @@
+{% form 'contact', class: 'ic-w-100' %}
+  {% if form.errors %}
+      <div class="ic-flex ic-flex-col ic-align-items-center ic-p-5 contact-form-error-wrapper">
+        {% assign errorId = 'contact__email-' | append: section.id %}
+          {% render 'form-error', form: form, error_id: errorId %}
+      </div>
+  {% elsif form.posted_successfully? %}
+  
+  <div class="ic-flex ic-justify-content-center ic-w-100 ic-my-3 ic-p-5">
+      <div class="ic-text-sm ic-font-medium  ic-color-success contact-form-success-head">
+          <span class="contact-form-success-icon">
+              {% render 'icon-success' %}
+          </span>
+          {{ 'sections.contact_form.success_message' | t }}
+      </div>
+  </div>
+  {% endif %}
+  <div class="ic-flex ic-justify-content-center">
+      <div class="ic-flex-col-12 ic-flex-col-md-6 ic-flex-col-lg-4">
+          <div class="ic-flex ic-px-1 ic-mb-5">
+              <div class="ic-flex-col-12 ic-mb-5">
+                  <label class="ic-text-sm ic-font-medium ic-inline-block ic-mb-1" for="contact_name-{{ section.id }}" aria-label="{{ 'sections.contact_form.name' | t }}">{{ 'sections.contact_form.name' | t }}</label>
+                  <input class="ic-relative ic-block ic-w-100" type="text" name="contact[name]" id="contact_name-{{ section.id }}">
+              </div>
+              <div class="ic-flex-col-12 ic-mb-5">
+                  <label class="ic-text-sm ic-font-medium required ic-inline-block ic-mb-1" for="contact_email-{{ section.id }}" aria-label="{{ 'sections.contact_form.email_address' | t }}">{{ 'sections.contact_form.email_address' | t }}</label>
+                  <input class="ic-relative ic-block ic-w-100" type="email" name="contact[email]" id="contact_email-{{ section.id }}" aria-describedby="contact__email-{{ section.id }}" required>
+              </div>
+              <div class="ic-flex-col-12">
+                  <label class="ic-text-sm ic-font-medium ic-inline-block ic-mb-1" for="contact_phone-{{ section.id }}" aria-label="{{ 'sections.contact_form.phone' | t }}">{{ 'sections.contact_form.phone' | t }}</label>
+                  <input class="ic-relative ic-block ic-w-100" type="tel" name="contact[phone]" id="contact_phone-{{ section.id }}" aria-describedby="contact_phone" />
+              </div>
+          </div>
+          <div class="ic-flex ic-px-1 ic-mb-8">
+              <div class="ic-flex-col-12">
+                  <label class="ic-text-sm ic-font-medium ic-inline-block ic-mb-1" for="contact_message-{{ section.id }}" aria-label="{{ 'sections.contact_form.message' | t }}">{{ 'sections.contact_form.message' | t }}</label>
+                  <textarea class="ic-relative ic-block ic-w-100 ic-min-h-80px" name="contact[body]" id="contact_message-{{ section.id }}"></textarea>
+              </div>
+          </div>
+          <div class="ic-flex ic-px-1">
+              <div class="ic-flex-col-12">
+                  <input class="ic-btn ic-btn-primary ic-w-100 ic-justify-content-center" type="submit" value="{{ 'sections.contact_form.submit' | t }}">
+              </div>
+          </div>
+      </div>
+  </div>
+  
+{% endform %}

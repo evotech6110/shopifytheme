@@ -1,0 +1,674 @@
+{% style %}
+/* ── EvoTech Footer Enhancements ── */
+.footer-section h4 {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  color: #cff394 !important;
+  margin-bottom: 16px !important;
+  padding-bottom: 8px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+.footer_menu--items a {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65) !important;
+  text-decoration: none !important;
+  transition: color 0.15s, padding-left 0.15s !important;
+  display: inline-block !important;
+}
+.footer_menu--items a:hover {
+  color: #cff394 !important;
+  padding-left: 4px !important;
+}
+.footer_menu--items .ic-nav-link {
+  margin-bottom: 8px !important;
+}
+.footer_menu--items .ic-nav-link::before {
+  content: '›  ';
+  color: #cff394;
+  opacity: 0.5;
+  font-weight: 700;
+}
+.footer-detail-text p, .footer-detail-text a {
+  font-size: 13.5px !important;
+  line-height: 1.7 !important;
+  color: rgba(255,255,255,0.65) !important;
+}
+.footer-detail-text a:hover { color: #cff394 !important; }
+.footer-content { gap: 32px !important; }
+.footer-details {
+  border-radius: 12px;
+}
+.footer-newsletter label {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+.footer-newsletter input[type="email"] {
+  font-size: 13.5px !important;
+  border-radius: 6px 0 0 6px !important;
+}
+.text-content p { 
+  font-size: 13.5px !important; 
+  color: rgba(255,255,255,0.65) !important;
+  line-height: 1.7 !important;
+}
+.text-content strong { color: rgba(255,255,255,0.9) !important; }
+.text-content a { color: #cff394 !important; text-decoration: none !important; }
+.text-content a:hover { text-decoration: underline !important; }
+{% endstyle %}
+<div class="footer-section ic-break-words color-{{ section.settings.color_scheme }} gradient-enabled ic-pt-7">
+  <div class="{% if section.settings.content_width != true %}ic-container{% else %}ic-container-fluid{% endif %}">
+    <div class="footer-content">
+      <div class="footer-details color-{{ section.settings.content_color_scheme }} gradient-enabled">
+        {% liquid
+          if section.settings.logo_background
+          assign logo_bg_class = ' footer-logo-bg'
+          assign logo_bg_color = section.settings.logo_background_color
+          assign logo_text_color = section.settings.logo_text_color
+          else
+          assign logo_bg_class = nil
+          assign logo_bg_color = 'transparent'
+          assign logo_text_color = nil
+          endif
+        %}
+        <div class="footer-logo{{ logo_bg_class }} ic-mb-1 ic-mb-lg-4" style="--_logo-bg-color: {{ logo_bg_color }}">
+          {% if section.settings.footer-logo != nil %}
+            {%  liquid
+              if section.settings.footer-logo.alt != null
+                assign alt = section.settings.footer-logo.alt
+              else
+                assign alt = section.settings.footer-logo.src | split: '/' | last | split: '.' | first
+              endif
+            %}
+            
+            {{
+              section.settings.footer-logo
+              | image_url: width: 820
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 550px, (max-width: 899px) 680px, (max-width: 1024px) 810px, (max-width: 1279px) 300px, 400px',
+                widths: '200, 350, 420, 600, 700, 820',
+                alt: alt
+            }}
+            {% else %}
+            <a class="ic-inline-flex ic-align-items-center ic-text-no-underline" href="{{ routes.root_url }}" {% if logo_text_color %}style="color: {{ logo_text_color }}"{% endif %}> 
+              <span class="ic-h3 ic-break-words" {% if logo_text_color %}style="color: {{ logo_text_color }}"{% endif %}>{{ shop.name }}</span>
+            </a>
+          {% endif %}
+        </div>
+        {% if section.settings.footer-text != blank %}
+          <div class="footer-detail-text ic-pr-14 ic-mb-3 ic-mb-lg-6">
+            <p class="ic-text-sm">{{ section.settings.footer-text }}</p>
+          </div>
+        {% endif %}
+        {% if section.settings.newsletter_enable %}
+          <div class="footer-newsletter-container">
+            <div class="ic-mr-auto ic-flex ic-mb-lg-6">
+              {% form 'customer', id: 'footerContactForm', class: 'footer-newsletter ic-w-100' %}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                {% if section.settings.newsletter_heading != blank %}
+                  <h3 class="ic-block ic-mb-4 ic-font-medium ic-break-words">{{ section.settings.newsletter_heading }}</h3>
+                {% endif %}
+                <div class="ic-relative ic-i wrapper">
+                  <label
+                    for="NewsletterForm--footer"
+                    class="ic-screen-reader"
+                    aria-label="{{ 'sections.footer.enter_your_email' | t }}">{{ "sections.footer.enter_your_email" | t }}</label>
+                  <input
+                    type="email"
+                    id="NewsletterForm--footer"
+                    name="contact[email]"
+                    placeholder="{{ "sections.footer.email" | t }}"
+                    class="ic-w-100"
+                    {% if form.errors %}
+                      aria-describedby="footerContactError"
+                    {% elsif form.posted_successfully? %}
+                      aria-describedby="footerContactSuccess"
+                    {% endif %}
+                    required />
+                  <button
+                    type="submit"
+                    name="commit"
+                    aria-label="{{ 'sections.footer.aria_label.newsletter_submit' | t }}">{% render 'icon-right' %}</button>
+                </div>
+                {% if form.errors %}
+                  {% render 'form-error', form: form, error_id: 'footerContactError' %}
+                {% elsif form.posted_successfully? %}
+                  <div class="success-box ic-text-sm ic-font-medium" id="footerContactSuccess">
+                    <span>{% render 'icon-success' %}</span>
+                    {{ "sections.footer.posted_succesfully" | t }}
+                  </div>
+                {% endif %}
+
+              {% endform %}
+            </div>
+          </div>
+        {% endif %}
+        {% if shop.features.follow_on_shop? and section.settings.follow_on_shop %}
+          <div class="follow-shop-button">
+            {{ shop | login_button: action: 'follow' }}
+          </div>
+        {% endif %}
+        {% liquid
+          if settings.social_facebook_link != blank or settings.social_instagram_link != blank or settings.social_x_link != blank or settings.social_threads_link != blank or settings.social_whatsapp_link != blank or settings.social_pinterest_link != blank or settings.social_tiktok_link != blank or settings.social_tumblr_link != blank or settings.social_snapchat_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank or settings.social_spotify_link != blank or settings.social_linkedin_link != blank or settings.social_discord_link != blank or settings.social_email_link != blank
+          assign socials = true
+          else
+          assign socials = false
+          endif
+          if section.settings.social_media and socials
+          assign social_media = true
+          else
+          assign social_media = false
+          endif
+        %}
+        {% if social_media %}
+          {% assign icon_style = section.settings.social_icon_style %}
+          <div class="ic-flex footer-social-container ic-mt-3 ic-mt-lg-auto">
+            <ul class="ic-flex footer-social-list">
+              {% if settings.social_facebook_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_facebook_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.facebook_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-facebook', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_instagram_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_instagram_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.instagram_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-instagram', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_x_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_x_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.x_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-x', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_threads_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_threads_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.threads_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-threads', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_whatsapp_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_whatsapp_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.whatsapp_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-whatsapp', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_pinterest_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_pinterest_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.pinterest_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-pinterest', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_tiktok_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_tiktok_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.tiktok_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-tiktok', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_tumblr_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_tumblr_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.tumblr_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-tumblr', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_snapchat_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_snapchat_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.snapchat_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-snapchat', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_youtube_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_youtube_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.youtube_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-youtube', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_vimeo_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_vimeo_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.vimeo_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-vimeo', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_spotify_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_spotify_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.spotify_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-spotify', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_linkedin_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_linkedin_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.linkedin_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-linkedin', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_discord_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_discord_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.discord_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-discord', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_email_link != blank %}
+                <li>
+                  <a
+                    href="{{ settings.social_email_link | default: '#' }}"
+                    class="ic-inline-block"
+                    target="_blank"
+                    aria-label="{{ 'sections.footer.aria_label.email_link' | t }}. {{ 'general.open_new_window' | t }}">
+                    {% render 'icon-email', style: icon_style %}
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+      <div class="footer-nav-container color-{{ section.settings.content_color_scheme }} gradient-enabled">
+        {%- comment -%} EvoTech Footer — hardcoded columns for reliability {%- endcomment -%}
+        <div class="footer-menu-wrapper footer-menu-grid-4">
+
+          {%- comment -%} Column 1: Brand / Contact {%- endcomment -%}
+          <div class="footer-text-column">
+            <h4>EvoTech Digital</h4>
+            <div class="text-content ic-break-words">
+              <p>Perth's trusted Managed IT Services provider for small to medium businesses across Western Australia.</p>
+              <p>
+                <strong>&#128205;</strong> Perth, WA 6000<br>
+                <strong>&#128222;</strong> <a href="tel:+61466911816">+61 466 911 816</a><br>
+                <strong>&#128231;</strong> <a href="mailto:info@evotech.au">info@evotech.au</a><br>
+                <strong>ABN:</strong> 72 375 743 898
+              </p>
+              <p>Mon&ndash;Fri: 8:00am &ndash; 6:00pm AWST</p>
+            </div>
+          </div>
+
+          {%- comment -%} Column 2: IT Services {%- endcomment -%}
+          <div class="footer-menu-column">
+            <h4>IT Services Perth</h4>
+            <nav class="footer_menu--items footer-nav" aria-label="IT Services">
+              <ul class="ic-block">
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/managed-it-services-perth">Managed IT Services</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/cyber-security-perth">Cyber Security Solutions</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/business-it-support">IT Support Perth</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/cloud-migration-services">Cloud & Microsoft 365</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/it-consulting-vcio">IT Consulting & vCIO</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/network-design-security">Network Design & Security</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/managed-print-services">Managed Print Services</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          {%- comment -%} Column 3: Company {%- endcomment -%}
+          <div class="footer-menu-column">
+            <h4>Company</h4>
+            <nav class="footer_menu--items footer-nav" aria-label="Company">
+              <ul class="ic-block">
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}">Home</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/contact">Contact Us</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}collections/all">IT Catalog</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/it-procurement-perth">IT Procurement</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/onsite-it-support-perth">Onsite IT Support</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/remote-it-support">Remote IT Support</a></li>
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}blogs/news">Blog & IT Tips</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          {%- comment -%} Column 4: Policies — uses Shopify native policy URLs {%- endcomment -%}
+          <div class="footer-menu-column">
+            <h4>Policies &amp; Legal</h4>
+            <nav class="footer_menu--items footer-nav" aria-label="Legal">
+              <ul class="ic-block">
+                {%- if shop.privacy_policy.body != blank %}
+                  <li class="ic-nav-link ic-mb-3"><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>
+                {%- else %}
+                  <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}policies/privacy-policy">Privacy Policy</a></li>
+                {%- endif %}
+                {%- if shop.refund_policy.body != blank %}
+                  <li class="ic-nav-link ic-mb-3"><a href="{{ shop.refund_policy.url }}">Return &amp; Refund Policy</a></li>
+                {%- else %}
+                  <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}policies/refund-policy">Return &amp; Refund Policy</a></li>
+                {%- endif %}
+                {%- if shop.shipping_policy.body != blank %}
+                  <li class="ic-nav-link ic-mb-3"><a href="{{ shop.shipping_policy.url }}">Shipping Policy</a></li>
+                {%- else %}
+                  <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}policies/shipping-policy">Shipping Policy</a></li>
+                {%- endif %}
+                {%- if shop.terms_of_service.body != blank %}
+                  <li class="ic-nav-link ic-mb-3"><a href="{{ shop.terms_of_service.url }}">Terms of Service</a></li>
+                {%- else %}
+                  <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}policies/terms-of-service">Terms of Service</a></li>
+                {%- endif %}
+                <li class="ic-nav-link ic-mb-3"><a href="{{ routes.root_url }}pages/contact">Contact Information</a></li>
+              </ul>
+            </nav>
+          </div>
+
+        </div>
+        {% if section.settings.payment_method and shop.enabled_payment_types.size > 0 %}
+          <div class="ic-w-100 ic-flex ic-align-items-center ic-mt-4">
+            <p class="ic-text-sm ic-mr-4">{{ 'sections.footer.we_accept' | t }}:</p>
+            <div class="ic-flex payment-icons">
+              {% for type in shop.enabled_payment_types -%}
+                {{ type | payment_type_svg_tag }}
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="ic-flex ic-py-7">
+      {% liquid
+        if section.settings.lower_footer_alignment == 'ic-justify-content-center'
+          assign text_align = 'ic-text-center'
+          else
+          assign text_align = 'ic-text-left'
+        endif
+      %}
+      <div class="ic-w-100">
+        {%- comment -%} SEO Bottom Bar {%- endcomment -%}
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+          {%- comment -%} Copyright + ABN {%- endcomment -%}
+          <p style="font-size: 13px; color: rgba(255,255,255,0.55); margin: 0;">
+            © {{ 'now' | date: "%Y" }} <a href="{{ routes.root_url }}" style="color: rgba(255,255,255,0.75); text-decoration: none; font-weight: 600;">{{ shop.name }}</a> — ABN: 72 375 743 898. All rights reserved.
+          </p>
+          {%- comment -%} Policy links using Shopify native URLs {%- endcomment -%}
+          <nav aria-label="Legal">
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 16px;">
+              <li><a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" style="font-size: 12.5px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#cff394'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Privacy Policy</a></li>
+              <li><a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}" style="font-size: 12.5px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#cff394'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Return & Refund Policy</a></li>
+              <li><a href="{{ shop.shipping_policy.url | default: '/policies/shipping-policy' }}" style="font-size: 12.5px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#cff394'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Shipping Policy</a></li>
+              <li><a href="{{ shop.terms_of_service.url | default: '/policies/terms-of-service' }}" style="font-size: 12.5px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='#cff394'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Terms of Service</a></li>
+            </ul>
+          </nav>
+        </div>
+        {%- comment -%} SEO Location Keywords Row {%- endcomment -%}
+        <p style="font-size: 11.5px; color: rgba(255,255,255,0.3); margin: 12px 0 0; text-align: center; line-height: 1.6;">
+          Managed IT Services Perth &nbsp;·&nbsp; IT Support Perth &nbsp;·&nbsp; Cyber Security Perth &nbsp;·&nbsp; Cloud Migration Perth &nbsp;·&nbsp; IT Consulting Perth WA &nbsp;·&nbsp; Microsoft 365 Perth &nbsp;·&nbsp; Network Security Perth
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "t:sections.footer.name",
+    "tag": "footer",
+    "class": "section-footer",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "t:sections.footer.settings.background_color_scheme.label",
+        "default": "scheme_1"
+      },
+      {
+        "type": "checkbox",
+        "id": "content_width",
+        "label": "t:sections.footer.settings.content_width.label",
+        "default": false
+      },
+      {
+        "type": "color_scheme",
+        "id": "content_color_scheme",
+        "label": "t:sections.footer.settings.content_color_scheme.label",
+        "default": "scheme_3"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.footer.settings.details.content"
+      },
+      {
+        "type": "image_picker",
+        "id": "footer-logo",
+        "label": "t:sections.footer.settings.logo.label",
+        "info": "t:sections.footer.settings.logo.info"
+      },
+      {
+        "type": "checkbox",
+        "id": "logo_background",
+        "default": false,
+        "label":"t:sections.footer.settings.logo_background.label"
+      },
+      {
+        "type": "color",
+        "id": "logo_background_color",
+        "default": "#cff394",
+        "label": "t:sections.footer.settings.logo_background_color.label",
+        "info": "t:sections.footer.settings.logo_background.info"
+      },
+      {
+        "type": "color",
+        "id": "logo_text_color",
+        "default": "#3d3d3d",
+        "label": "t:sections.footer.settings.logo_text.label",
+        "info": "t:sections.footer.settings.logo_background.info"
+      },
+      {
+        "type": "text",
+        "id": "footer-text",
+        "default": "Use this text to outline about your brand's story and future.",
+        "label": "t:sections.footer.settings.footer_text.label",
+        "info": "t:sections.footer.settings.footer_text.info"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.footer.settings.email_signup.label",
+        "info": "t:sections.footer.settings.email_signup.info"
+      },
+      {
+        "type": "checkbox",
+        "id": "newsletter_enable",
+        "default": true,
+        "label": "t:sections.footer.settings.newsletter_enable.label"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_heading",
+        "default": "Subscribe to our emails",
+        "label": "t:sections.footer.settings.newsletter_heading.label"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.footer.settings.follow_on_shop.content",
+        "info": "t:sections.footer.settings.follow_on_shop.info"
+      },
+      {
+        "type": "checkbox",
+        "id": "follow_on_shop",
+        "default": true,
+        "label": "t:sections.footer.settings.follow_on_shop.label"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.footer.settings.social_media.content"
+      }, 
+      {
+        "type": "checkbox",
+        "id": "social_media",
+        "label": "t:sections.footer.settings.social_media.show_media.label",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "social_icon_style",
+        "label": "t:sections.footer.settings.social_media.icon_style.label",
+        "options": [
+          {
+          "value": "fill",
+          "label": "t:sections.footer.settings.social_media.icon_style.option_1.label"
+          },
+          {
+          "value": "outline",
+          "label": "t:sections.footer.settings.social_media.icon_style.option_2.label"
+          },
+          {
+          "value": "colored",
+          "label": "t:sections.footer.settings.social_media.icon_style.option_3.label"
+          }
+        ],
+        "default": "fill"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.footer.settings.payment_method.content"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_method",
+        "label": "t:sections.footer.settings.payment_method.label",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "t:sections.footer.settings.lower_footer_heading.label"
+      }, 
+      {
+        "type": "select",
+        "id": "lower_footer_alignment",
+        "options": [
+          {
+            "value": "ic-justify-content-start",
+            "label": "t:sections.footer.settings.lower_footer.option__1.label"
+          }, {
+            "value": "ic-justify-content-center",
+            "label": "t:sections.footer.settings.lower_footer.option__2.label"
+          }, {
+            "value": "ic-justify-content-end",
+            "label": "t:sections.footer.settings.lower_footer.option__3.label"
+          }
+        ],
+        "default": "ic-justify-content-center",
+        "label": "t:sections.footer.settings.lower_footer.label"
+      }
+    ],
+    "max_blocks": 5,
+    "blocks": [
+      {
+        "type": "menu",
+        "name": "t:sections.footer.blocks.menu.label",
+        "settings": [
+          {
+            "type": "text",
+            "id": "menu-heading",
+            "label": "t:sections.footer.blocks.menu_heading.label",
+            "info": "t:sections.footer.blocks.menu_heading.info"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "default": "footer",
+            "label": "t:sections.footer.blocks.menu.label",
+            "info": "t:sections.footer.blocks.menu.info"
+          },
+          {
+            "type": "checkbox",
+            "id": "menu-title",
+            "default": true,
+            "label": "t:sections.footer.blocks.menu_title.label"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "t:sections.footer.blocks.text.name",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text-heading",
+            "default": "Contact",
+            "label": "t:sections.footer.blocks.text.heading.label"
+          },
+          {
+            "type": "richtext",
+            "id": "text-content",
+            "default": "<p>Use this text to share your store details and contact information.</p>",
+            "label": "t:sections.footer.blocks.text.content.label"
+          }
+        ]
+      }
+    ],
+    "default": {
+      "blocks": [
+        {
+          "type": "menu"
+        },
+        {
+          "type": "text"
+        }
+      ]
+    }
+  }
+{% endschema %}

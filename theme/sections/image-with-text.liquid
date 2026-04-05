@@ -1,0 +1,263 @@
+<div class="image-with-text-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container ic-pt-20 ic-pb-12 ic-py-md-14">
+        <div class="ic-flex {{ section.settings.image_placement }} {{ section.settings.content_align }}">
+            <div class="ic-flex-col-lg-6">
+                {% if section.settings.image != nil %}
+                    {%  liquid
+                        if section.settings.image.alt != null
+                            assign alt = section.settings.image.alt
+                        else
+                            assign alt = section.settings.image.src | split: '/' | last | split: '.' | first
+                        endif
+                    %}
+                    {{
+                        section.settings.image
+                        | image_url: width: 910
+                        | image_tag:
+                        loading: 'lazy',
+                        sizes: '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 600px, (max-width: 899px) 730px, (max-width: 1023px) 900px, (max-width: 1279px) 500px, (max-width: 1535px) 625px, 750px',
+                        widths: '200, 375, 430, 550, 650, 760, 800, 910',
+                        alt: alt,
+                        class: 'ic-block ic-w-100 ic-h-auto'
+                    }}
+                    {% else %}
+                    <div class="placeholder-container">
+                        {{ 'image' | placeholder_svg_tag: 'ic-block ic-w-100 ic-h360px ic-object-cover' }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="ic-flex-col-lg-6">
+                <div class="ic-px-6 ic-px-lg-16 ic-py-8 ic-py-lg-0 {{ section.settings.text_align }} ic-break-words">
+                    {% for block in section.blocks %}
+                        {% liquid
+                            if forloop.last
+                            assign blockMargin = nil
+                            else
+                            assign blockMargin = 'ic-mb-4 '
+                            endif
+                        %}
+                        {% case block.type %}
+                            {% when 'heading' %}
+                                {% if block.settings.heading != empty %}
+                                    <h2 class="{{ blockMargin }}media-with-text-heading richtext-container" {{ block.shopify_attributes }}>{{ block.settings.heading | replace: 'p>', 'span>' }}</h2>
+                                {% endif %}
+                            {% when 'subheading' %}
+                                {% if block.settings.subheading != empty %}
+                                    <div class="{{ blockMargin }}ic-h4 richtext-container" {{ block.shopify_attributes }}>
+                                    {{ block.settings.subheading }}
+                                    </div>
+                                {% endif %}
+                            {% when 'text' %}
+                                {% if block.settings.content != empty %}
+                                    <div class="{{ blockMargin }}media-with-text-content richtext-container" {{ block.shopify_attributes }}>{{ block.settings.content }}</div>
+                                {% endif %}
+                            {% when 'button' %}
+                                {% liquid
+                                    if blockMargin != nil
+                                    assign blockMargin = 'ic-mb-6 '
+                                    endif
+                                %}
+                                {% if block.settings.button_label != empty or block.settings.second_button_label != empty %}
+                                    {% liquid
+                                        if section.settings.text_align == 'ic-text-left'
+                                        assign button_align = 'ic-justify-content-start'
+                                        elsif section.settings.text_align == 'ic-text-center'
+                                        assign button_align = 'ic-justify-content-center'
+                                        elsif section.settings.text_align == 'ic-text-right'
+                                        assign button_align = 'ic-justify-content-end'
+                                        endif
+                                    %}
+                                    <div class="{{ blockMargin }}ic-flex ic-flex-gap-8 {{ button_align }}" {{ block.shopify_attributes }}>
+                                        {% if block.settings.button_label != empty %}
+                                            <a href="{{ block.settings.button_link | default: '#' }}" class="ic-btn {{ block.settings.button_style }} ic-max-w-100">{{ block.settings.button_label }}</a>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                
+                        {% endcase %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "t:sections.image_with_text.name",
+    "class": "section",
+    "tag": "section",
+    "settings":[
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:settings_schema.general.settings.color_scheme.label",
+            "default": "scheme_1"
+        },
+        {
+            "type":"image_picker",
+            "id":"image",
+            "label":"t:sections.image_with_text.settings.image.label",
+            "info":"t:sections.image_with_text.settings.image.info"
+        },
+        {
+            "type":"select",
+            "id":"image_placement",
+            "options":[
+                {
+                    "value":"ic-flex-col ic-flex-lg-row",
+                    "label":"t:sections.image_with_text.settings.image_placement.option_1.label"
+                },
+                {
+                    "value":"ic-flex-col-reverse ic-flex-lg-row-reverse",
+                    "label":"t:sections.image_with_text.settings.image_placement.option_2.label"
+                }
+            ],
+            "default":"ic-flex-col ic-flex-lg-row",
+            "label":"t:sections.image_with_text.settings.image_placement.label"
+        },
+        {
+            "type":"select",
+            "id":"content_align",
+            "options":[
+                {
+                    "value":"ic-align-items-start",
+                    "label":"t:sections.image_with_text.settings.content_align.option_1.label"
+                },
+                {
+                    "value":"ic-align-items-center",
+                    "label":"t:sections.image_with_text.settings.content_align.option_2.label"
+                },
+                {
+                    "value":"ic-align-items-end",
+                    "label":"t:sections.image_with_text.settings.content_align.option_3.label"
+                }
+            ],
+            "default":"ic-align-items-center",
+            "label":"t:sections.image_with_text.settings.content_align.label"
+        },
+        {
+            "type":"select",
+            "id":"text_align",
+            "options":[
+                {
+                    "value":"ic-text-left",
+                    "label":"t:sections.image_with_text.settings.text_align.option_1.label"
+                },
+                {
+                    "value":"ic-text-center",
+                    "label":"t:sections.image_with_text.settings.text_align.option_2.label"
+                },
+                {
+                    "value":"ic-text-right",
+                    "label":"t:sections.image_with_text.settings.text_align.option_3.label"
+                }
+            ],
+            "default":"ic-text-left",
+            "label":"t:sections.image_with_text.settings.text_align.label"
+        }
+    ],
+    "blocks":[
+        {
+            "type":"heading",
+            "name":"t:sections.image_with_text.blocks.heading.name",
+            "limit":1,
+            "settings":[
+                {
+                    "type":"text",
+                    "id":"heading",
+                    "default":"Heading",
+                    "label":"t:sections.image_with_text.blocks.heading.settings.heading.label"
+                }
+            ]
+        },
+        {
+            "type":"subheading",
+            "name":"t:sections.image_with_text.blocks.subheading.name",
+            "limit":1,
+            "settings":[
+                {
+                    "type":"richtext",
+                    "id":"subheading",
+                    "default":"<p>Subheading</p>",
+                    "label":"t:sections.image_with_text.blocks.subheading.settings.subheading.label"
+                }
+            ]
+        },
+        {
+            "type":"text",
+            "name":"t:sections.image_with_text.blocks.text.name",
+            "limit":1,
+            "settings":[
+                {
+                    "type":"richtext",
+                    "id":"content",
+                    "default":"<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                    "label":"t:sections.image_with_text.blocks.text.settings.content.label"
+                }
+            ]
+        },
+        {
+            "type":"button",
+            "name":"t:sections.image_with_text.blocks.button.name",
+            "limit":1,
+            "settings":[
+                {
+                    "type":"text",
+                    "id":"button_label",
+                    "default":"Button label",
+                    "label":"t:sections.image_with_text.blocks.button.settings.button_label.label",
+                    "info":"t:sections.image_with_text.blocks.button.settings.button_label.info"
+                },
+                {
+                    "type":"url",
+                    "id":"button_link",
+                    "label":"t:sections.image_with_text.blocks.button.settings.button_link.label"
+                },
+                {
+                    "type":"select",
+                    "id":"button_style",
+                    "options":[
+                        {
+                            "value":"ic-btn-primary",
+                            "label":"t:sections.image_with_text.blocks.button.settings.button_style.option_1.label"
+                        },
+                        {
+                            "value":"ic-btn-secondary",
+                            "label":"t:sections.image_with_text.blocks.button.settings.button_style.option_2.label"
+                        },
+                        {
+                            "value":"ic-btn-tertiary",
+                            "label":"t:sections.image_with_text.blocks.button.settings.button_style.option_3.label"
+                        }
+                    ],
+                    "default":"ic-btn-primary",
+                    "label":"t:sections.image_with_text.blocks.button.settings.button_style.label"
+                }
+            ]
+        }
+    ],
+    "presets":[
+        {
+            "name":"t:sections.image_with_text.name",
+            "blocks":[
+                {
+                    "type":"heading"
+                },
+                {
+                    "type":"subheading"
+                },
+                {
+                    "type":"text"
+                },
+                {
+                    "type":"button"
+                }
+            ]
+        }
+    ],
+    "disabled_on": {
+        "groups": ["*"]
+    }
+}
+{% endschema %}

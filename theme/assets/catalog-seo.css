@@ -1,0 +1,131 @@
+/*
+  catalog-seo.css
+  Companion stylesheet for template-collection.liquid (GMC + GSC optimised)
+  Drop into /assets/ alongside filter-form.css
+*/
+
+/* ── Breadcrumb ── */
+.catalog-breadcrumb {
+  padding-block: 0.75rem;
+}
+
+.breadcrumb-list {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.875rem;
+  color: var(--color-foreground-muted, #666);
+}
+
+.breadcrumb-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.breadcrumb-list a:hover {
+  color: var(--color-primary, #1a7a3a);
+}
+
+.breadcrumb-sep {
+  color: var(--color-foreground-muted, #999);
+  font-size: 0.75rem;
+}
+
+/* ── Collection header ── */
+.catalog-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.catalog-header__media {
+  flex-shrink: 0;
+}
+
+.catalog-header__img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.catalog-title {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.2;
+}
+
+.catalog-description {
+  margin-top: 0.5rem;
+  color: var(--color-foreground-secondary, #555);
+}
+
+/* ── Toolbar ── */
+.catalog-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+}
+
+.catalog-toolbar__meta {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.catalog-count {
+  font-size: 0.875rem;
+  color: var(--color-foreground-secondary, #555);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.count-total {
+  font-weight: 600;
+  color: var(--color-foreground, #111);
+}
+
+/* ── Grid list reset ── */
+.catalog-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+  ── Microdata Offer wrapper ──
+  FIX: display:none causes Google to IGNORE microdata entirely.
+  Use zero-size absolute positioning instead — visually invisible
+  but fully readable by crawlers (same technique as sr-only for screen readers).
+  The child <meta> and <link> tags are void elements with no visual output anyway.
+*/
+.catalog-microdata {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ── Empty state ── */
+.catalog-empty {
+  text-align: center;
+}
+
+/* ── Sort ── */
+.sort-label {
+  font-size: 0.875rem;
+  color: var(--color-foreground-secondary, #555);
+}

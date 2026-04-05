@@ -1,0 +1,329 @@
+<!doctype html>
+  <html class="no-js em-infinity-theme" lang="{{ request.locale.iso_code }}">
+    <head> 
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="theme-color" content="">
+      <link rel="canonical" href="{{ canonical_url }}">
+      <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+      
+      <title>
+        {{ page_title }}
+        {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+        {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      </title>
+      {% if settings.favicon %}
+        <link rel="icon" type="image/x-icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+      {% endif %}
+      {%- unless settings.font_heading.system? and settings.font_body.system? -%}
+        <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+      {%- endunless -%}
+      {% if page_description %}
+        <meta name="description" content="{{ page_description | escape }}">
+      {% endif %}
+      {% render 'meta-tags' %}
+      {{ content_for_header }}
+  
+      {%- liquid
+        assign body_font_bold = settings.font_body | font_modify: 'weight', 'bold'
+        assign body_font_italic = settings.font_body | font_modify: 'style', 'italic'
+        assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+        assign btn_border_opacity = settings.button_border_opacity | divided_by: 100.0
+      %}
+  
+      {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+      <style>
+        {{ settings.font_body | font_face: font_display: 'swap' }}
+        {{ body_font_bold | font_face: font_display: 'swap' }}
+        {{ body_font_italic | font_face: font_display: 'swap' }}
+        {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+        {{ settings.font_heading | font_face: font_display: 'swap' }}
+  
+        {% for scheme in settings.color_schemes %}
+          {% if forloop.index == 1 %}
+            :root,
+          {% endif %}
+          .color-{{ scheme.id }} {
+            --heading-color: {{ scheme.settings.color_heading }};
+          --text-color-rgb: {{ scheme.settings.color_text.red }}, {{ scheme.settings.color_text.green }}, {{ scheme.settings.color_text.blue }};
+          --text-color: {{ scheme.settings.color_text }};
+          {%  liquid
+            assign textColorBrightness = scheme.settings.color_text | color_brightness
+            
+            if textColorBrightness > 128
+            assign textColorVariant = scheme.settings.color_text | color_darken: 20
+            else
+            assign textColorVariant = scheme.settings.color_text | color_lighten: 20
+            endif
+          %}
+          --text-color-variant:{{ textColorVariant }};
+          --text-color-variant-rgb:{{ textColorVariant.red }}, {{ textColorVariant.green }}, {{ textColorVariant.blue }};
+  
+          --price-color: {{ scheme.settings.color_price }};
+          --price-color-rgb: {{ scheme.settings.color_price.red }}, {{ scheme.settings.color_price.green }}, {{ scheme.settings.color_price.blue }};
+  
+          --color-background:{{ scheme.settings.color_background }};
+          --color-background-rgb:{{ scheme.settings.color_background.red }}, {{ scheme.settings.color_background.green }}, {{ scheme.settings.color_background.blue }};
+          {%  liquid
+            assign colorBrightness = scheme.settings.color_background | color_brightness
+            
+            if colorBrightness > 128
+            assign colorVariant = scheme.settings.color_background | color_darken: 10
+            assign colorSahdowVariant = scheme.settings.color_background | color_darken: 10
+            else
+            assign colorVariant = scheme.settings.color_background | color_lighten: 10
+            assign colorSahdowVariant = scheme.settings.color_background | color_lighten: 30
+            endif
+          %}
+          --color-background-variant:{{ colorVariant }};
+          --color-background-variant-rgb: {{ colorVariant.red }}, {{ colorVariant.green }}, {{ colorVariant.blue }};
+          --color-background-shadow:{{ colorSahdowVariant }};
+          --color-background-shadow-rgb: {{ colorSahdowVariant.red }}, {{ colorSahdowVariant.green }}, {{ colorSahdowVariant.blue }};
+          {% if scheme.settings.color_background_gradient != empty %}
+          --color-background-gradient: {{ scheme.settings.color_background_gradient }};
+          {% else %}
+          --color-background-gradient: {{ scheme.settings.color_background }};
+          {% endif %}
+  
+          --primary-btn-bg-color: {{ scheme.settings.color_primary_bg }};
+          --primary-btn-bg-rgb: {{ scheme.settings.color_primary_bg.red }}, {{ scheme.settings.color_primary_bg.green }}, {{ scheme.settings.color_primary_bg.blue }};
+          --primary-btn-text-color: {{ scheme.settings.color_primary_text }};
+          {%  liquid
+            assign primaryButtonBrightness = scheme.settings.color_primary_bg | color_brightness
+            
+            if primaryButtonBrightness > 128
+            assign primaryButton = scheme.settings.color_primary_bg | color_darken: 10
+            else
+            assign primaryButton = scheme.settings.color_primary_bg | color_lighten: 10
+            endif
+          %}
+          --primary-btn-bg-color-variant: {{ primaryButton }};
+          
+          --secondary-btn-bg-color: {{ scheme.settings.color_secondary_bg }};
+          --secondary-btn-bg-rgb: {{ scheme.settings.color_secondary_bg.red }}, {{ scheme.settings.color_secondary_bg.green }}, {{ scheme.settings.color_secondary_bg.blue }};
+          --secondary-btn-text-color: {{ scheme.settings.color_secondary_text }};
+          {%  liquid
+            assign secondaryButtonBrightness = scheme.settings.color_secondary_bg | color_brightness
+            
+            if secondaryButtonBrightness > 128
+            assign secondaryButton = scheme.settings.color_secondary_bg | color_darken: 10
+            else
+            assign secondaryButton = scheme.settings.color_secondary_bg | color_lighten: 10
+            endif
+          %}
+          --secondary-btn-bg-color-variant: {{ secondaryButton }};
+  
+          --tertiary-btn-bg-color: {{ scheme.settings.color_tertiary_bg }};
+          --tertiary-btn-bg-rgb: {{ scheme.settings.color_tertiary_bg.red }}, {{ scheme.settings.color_tertiary_bg.green }}, {{ scheme.settings.color_tertiary_bg.blue }};
+          --tertiary-btn-text-color: {{ scheme.settings.color_tertiary_text }};
+          --tertiary-border-color: {{ scheme.settings.color_tertiary_border | color_modify: 'alpha', btn_border_opacity }};
+          --tertiary-hover-color: {{ scheme.settings.color_tertiary_text }};;
+  
+          --primary-color: {{ scheme.settings.color_primary }};
+          --primary-rgb: {{ scheme.settings.color_primary.red }}, {{ scheme.settings.color_primary.green }}, {{ scheme.settings.color_primary.blue }};
+          --primary-light-color: {{ scheme.settings.color_primary | color_lighten: 10 }};
+          --primary-dark-color:  {{ scheme.settings.color_primary | color_darken: 10 }};
+          --primary-dark-color-600:  {{ scheme.settings.color_primary | color_darken: 10 | color_modify: 'alpha', 0.6 }};
+          --light-color-rgb: {{ scheme.settings.color_light.red }}, {{ scheme.settings.color_light.green }}, {{ scheme.settings.color_light.blue }};
+          --light-color: {{ scheme.settings.color_light }};
+          --dark-color-rgb: {{ scheme.settings.color_dark.red }}, {{ scheme.settings.color_dark.green }}, {{ scheme.settings.color_dark.blue }};
+          --dark-color: {{ scheme.settings.color_dark }};
+          --disabled-bg-color: {{ scheme.settings.color_soldout_bg }};
+          --disabled-text-color: {{ scheme.settings.color_soldout_text }};
+          --disabled-text-color-rgb: {{ scheme.settings.color_soldout_text.red }}, {{ scheme.settings.color_soldout_text.green }}, {{ scheme.settings.color_soldout_text.blue }};
+  
+          --link-color: {{ scheme.settings.color_link }};
+          --link-color-rgb: {{ scheme.settings.color_link.red }}, {{ scheme.settings.color_link.green }}, {{ scheme.settings.color_link.blue }};
+          {%  liquid
+            assign linkBrightness = scheme.settings.color_link | color_brightness
+            
+            if linkBrightness > 128
+            assign linkVariant = scheme.settings.color_link | color_darken: 10
+            else
+            assign linkVariant = scheme.settings.color_link | color_lighten: 10
+            endif
+          %}
+          --link-color-variant:{{ linkVariant }};
+          --link-color-variant-rgb: {{ linkVariant.red }}, {{ linkVariant.green }}, {{ linkVariant.blue }};
+          --link-hover-color: var(--link-color-variant);
+          }
+        {% endfor %}
+  
+        :root{
+  
+          --heading-font:{{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+          --heading-font-style: {{ settings.font_heading.style }};
+          --heading-font-weight: {{ settings.font_heading.weight }};
+  
+          --body-font:{{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+          --body-font-style: {{ settings.font_body.style }};
+          --body-font-weight: {{ settings.font_body.weight }};
+          
+          --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+          --font-heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+  
+          --section-vertical-spacing: {{ settings.section_vertical_spacing }}px;
+  
+          --button-border-width: {{ settings.button_border_width }}px;
+          --button-border-opacity: {{ settings.button_border_opacity | divided_by: 100.0 }};
+          --button-border-radius: {{ settings.button_border_radius }}px;
+  
+          --button-shadow-opacity: {{ settings.button_shadow_opacity | divided_by: 100.0 }};
+          --button-shadow-horizontal-offset: {{ settings.button_shadow_horizontal_offset }}px;
+          --button-shadow-vertical-offset: {{ settings.button_shadow_vertical_offset }}px;
+          --button-shadow-blur: {{ settings.button_shadow_blur }}px;
+  
+          --variant-border-width: {{ settings.variant_border_width }}px;
+          --variant-border-opacity: {{ settings.variant_border_opacity | divided_by: 100.0 }};
+          --variant-border-radius: {{ settings.variant_border_radius }}px;
+  
+          --variant-shadow-opacity: {{ settings.variant_shadow_opacity | divided_by: 100.0 }};
+          --variant-shadow-horizontal-offset: {{ settings.variant_shadow_horizontal_offset }}px;
+          --variant-shadow-vertical-offset: {{ settings.variant_shadow_vertical_offset }}px;
+          --variant-shadow-blur: {{ settings.variant_shadow_blur }}px;
+  
+          --input-border-width: {{ settings.input_border_width }}px;
+          --input-border-opacity: {{ settings.input_border_opacity | divided_by: 100.0 }};
+          --input-border-radius: {{ settings.input_border_radius }}px;
+          --input-border-color: {{ settings.input_border_color }};
+          --input-border-color-rgb: {{ settings.input_border_color.red }}, {{ settings.input_border_color.green }}, {{ settings.input_border_color.blue }};
+  
+          --input-shadow-opacity: {{ settings.input_shadow_opacity | divided_by: 100.0 }};
+          --input-shadow-horizontal-offset: {{ settings.input_shadow_horizontal_offset }}px;
+          --input-shadow-vertical-offset: {{ settings.input_shadow_vertical_offset }}px;
+          --input-shadow-blur: {{ settings.input_shadow_blur }}px;
+  
+          --badge-border-radius: {{ settings.badge_radius }}px;
+          --badge-skew: {{ settings.badge_style }};
+  
+          --theme-border-radius : {{ settings.theme_border_radius }}px;
+        }
+      </style>
+      {{ 'config.css' | asset_url | stylesheet_tag: preload: true }}
+      {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+      {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
+      {{ 'utilities.css' | asset_url | stylesheet_tag: preload: true }}
+      {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag: preload: true }}
+      {{ 'evotech-homepage-optimized.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'alpine.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'jquery-3.6.0.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'panzoom.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'product-model.js' | asset_url }}" defer></script>
+    <style>
+      [x-cloak]{
+        display: none !important;
+      }
+      [x-footer], [x-swiper]{
+        visibility: hidden;
+      }
+      .menu-close-overlay{
+        display:none;
+      }
+      @media (max-width:1023px){
+        [x-link], [x-account], [x-login]{
+          display: none !important;
+        }
+        body.menu-overlay{
+          overflow:hidden;
+        }
+        
+        body.menu-overlay .menu-close-overlay{
+          display:block;
+          background-color:rgba(0,0,0,0.2);
+          width:100vw;
+          height:100vh;
+          position:fixed;
+          left:0;
+          top:0;
+          z-index: 3;
+        }
+      }
+    </style>
+  
+  {% render 'global-schema' %}
+  </head>
+  
+    <body class=""  x-data="{ searchBarOpen: false }">
+      <style>
+        *{
+          box-sizing: border-box;
+        }
+      </style>
+      <div class="ic-relative ic-zindex-max header-group">
+        <a href="#MainContent" class="ic-btn ic-btn-primary skip-link">{{ 'general.skip_to_content' | t }}</a>
+        {% sections 'header-group' %}
+      </div>
+      {% if settings.cart_type == 'popup' %}
+        {% render 'cart-popup' %}
+      {% endif %}
+      {% sections 'overlay-group' %}
+      {% section 'quick-view-product' %}
+      {% if settings.enable_breadcrumbs == true %}
+      {% section 'breadcrumbs' %}
+      {% endif %}
+      <main id="MainContent" role="main" tabindex="-1" x-on:click="searchBarOpen = false">
+        {{ content_for_layout }}
+        <div class="copied-message">{{ 'general.link_copied' | t }}</div>
+      </main>
+      
+      <div class="footer-group" x-footer>
+        {% sections 'footer-group' %}
+      </div>
+  
+      <div id="productModelModal" class="product-model">
+        <div class="product-model-inner" style="display: none;">
+          <div class="product-model-wrapper">
+            <div class="ic-relative ic-h-100 ic-flex ic-flex-col">
+              <div class="product-model-head">
+                <h2 class="ic-font-bold">{{ product.title }}</h2>
+                <button class="product-model-close" aria-label="{{ 'sections.template_product.model_close' | t }}">
+                  {% render 'icon-close' %}
+                </button>
+              </div>
+              <div id="body" class="product-model-body"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <script>
+        window.variantStrings = {
+          soldOut: `{{ 'sections.template_product.sold_out' | t }}`,
+          addToCart: `{{ "sections.template_product.add_to_cart" | t }}`,
+          unavailable: `{{ 'sections.template_product.unavailable' | t }}`
+        };
+        window.slideLabels = {
+          goTo: `{{ 'sections.template_product.slide_labels.go_to_item' | t }}`,
+          slide: `{{ 'sections.template_product.slide_labels.slide' | t }}`,
+          item: `{{ 'sections.template_product.slide_labels.item' | t }}`
+        };
+        window.zoomLabels = {
+          zoomIn: `{{ 'snippets.product_media.activate_zoom' | t }}`,
+          zoomOut: `{{ 'snippets.product_media.deactivate_zoom' | t }}`,
+          actionInfoDesktop: `{{ 'snippets.product_media.zoom_action_info_desktop' | t }}`,
+          actionInfoMobile: `{{ 'snippets.product_media.zoom_action_info_mobile' | t }}`
+        };
+        window.videoCarouselA11y = {
+          pause_video: `{{ 'sections.video_carousel.aria_label.pause_video' | t }}`,
+          play_video: `{{ 'sections.video_carousel.aria_label.play_video' | t }}`,
+          mute_video: `{{ 'sections.video_carousel.aria_label.mute_video' | t }}`,
+          unmute_video: `{{ 'sections.video_carousel.aria_label.unmute_video' | t }}`,
+          no_audio: `{{ 'sections.video_carousel.aria_label.no_audio' | t }}`,
+          slide_label: `{{ 'sections.video_carousel.aria_label.video_label' | t }}`,
+          prev_slide: `{{ 'sections.video_carousel.aria_label.previuos_video' | t }}`,
+          next_slide: `{{ 'sections.video_carousel.aria_label.next_video' | t }}`,
+          volume_icon: `{% render 'icon-volume' %}`,
+          volume_off_icon: `{% render 'icon-volume-off' %}`,
+          pause_icon: `{% render 'icon-pause-outline' %}`,
+          play_icon: `{% render 'icon-play-outline' %}`,
+        };
+      </script>
+      {% render 'product-script' %}
+      <script type="text/javascript" src="{{ 'main.js' | asset_url }}" defer></script>
+  
+  </body>
+  </html>
+  

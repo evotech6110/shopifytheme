@@ -1,0 +1,118 @@
+<div animation-duration="{{ section.settings.scrolling-speed }}" class="ic-py-10 ic-flex ic-flex-nowrap scrolling-wrapper no-scrolling  {{ section.settings.text-style }} color-{{ section.settings.color_scheme }} gradient-enabled" style="--scroll-gap: {{ section.settings.scrolling-gap }}px">
+    {% if section.settings.scrolling-text-one != blank or section.settings.scrolling-text-two != blank or section.settings.scrolling-text-three != blank %}
+    <div class="scrolling-text-wrapper">
+        {% if section.settings.scrolling-text-one != blank %}
+        <span class="scrolling-text {{ section.settings.text-size }}">{{ section.settings.scrolling-text-one }}</span>
+        {% endif %}
+        {% if section.settings.scrolling-text-two != blank %}
+        <span class="scrolling-text {{ section.settings.text-size }}">{{ section.settings.scrolling-text-two }}</span>
+        {% endif %}
+        {% if section.settings.scrolling-text-three != blank %}
+        <span class="scrolling-text {{ section.settings.text-size }}">{{ section.settings.scrolling-text-three }}</span>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+{% schema %}
+    {
+        "name": "t:sections.scrolling_text.name",
+        "class": "scrollign-text-section",
+        "tag": "section",
+        "settings": [
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type": "text",
+                "id": "scrolling-text-one",
+                "default": "Offer text",
+                "label": "t:sections.scrolling_text.settings.text_one.label",
+                "info": "t:sections.scrolling_text.settings.text_info.info"
+            },
+            {
+                "type": "text",
+                "id": "scrolling-text-two",
+                "label": "t:sections.scrolling_text.settings.text_two.label",
+                "info": "t:sections.scrolling_text.settings.text_info.info"
+            },
+            {
+                "type": "text",
+                "id": "scrolling-text-three",
+                "label": "t:sections.scrolling_text.settings.text_three.label",
+                "info": "t:sections.scrolling_text.settings.text_info.info"
+            },
+            {
+                "type": "select",
+                "id": "text-size",
+                "options": [
+                    {
+                        "value": "ic-display-1",
+                        "label": "t:sections.scrolling_text.settings.text_size.option_1.label"
+                    },
+                    {
+                        "value": "ic-h1",
+                        "label": "t:sections.scrolling_text.settings.text_size.option_2.label"
+                    },
+                    {
+                        "value": "ic-h3",
+                        "label": "t:sections.scrolling_text.settings.text_size.option_3.label"
+                    }
+                ],
+                "default": "ic-h1",
+                "label": "t:sections.scrolling_text.settings.text_size.label"
+            },
+            {
+                "type": "select",
+                "id": "text-style",
+                "options": [
+                    {
+                        "value": "text-normal",
+                        "label": "t:sections.scrolling_text.settings.text_style.option_1.label"
+                    },
+                    {
+                        "value": "text-card",
+                        "label": "t:sections.scrolling_text.settings.text_style.option_2.label"
+                    },
+                    {
+                        "value": "text-divider",
+                        "label": "t:sections.scrolling_text.settings.text_style.option_3.label"
+                    }
+                ],
+                "default": "text-normal",
+                "label": "t:sections.scrolling_text.settings.text_style.label"
+            },
+            {
+                "type": "range",
+                "id": "scrolling-gap",
+                "min": 16,
+                "max": 80,
+                "step": 2,
+                "unit": "px",
+                "default": 64,
+                "label": "t:sections.scrolling_text.settings.scrolling_gap.label"
+            },
+            {
+                "type": "range",
+                "id": "scrolling-speed",
+                "min": 5,
+                "max": 20,
+                "step": 1,
+                "unit": "s",
+                "default": 8,
+                "label": "t:sections.scrolling_text.settings.scrolling_speed.label"
+            }
+        ],
+        "presets": [
+            {
+                "name": "t:sections.scrolling_text.name"
+            }
+        ],
+        "disabled_on": {
+            "groups": ["*"]
+        }
+    }
+{% endschema %}

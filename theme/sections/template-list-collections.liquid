@@ -1,0 +1,52 @@
+<div class="list-collections-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container">
+        <div class="ic-py-13">
+            {% if section.settings.title %}
+                <h1 class="ic-font-semibold ic-mb-8 ic-text-center">{{ section.settings.title }}</h1>
+            {% endif %}
+            {% paginate collections by 12 %}
+                <div class="ic-grid ic-grid-template-cols-1 ic-grid-template-cols-sm-2 ic-grid-template-cols-md-3 ic-grid-template-cols-xl-4  ic-grid-gap-8 ic-mb-8">
+                    {% liquid
+                        assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 242px, (max-width: 899px) 181px, (max-width: 1023px) 225px, (max-width: 1279px) 266px, (max-width: 1535px) 246px, 310px'
+                        assign srcset = '200, 270, 320, 400, 500, 600'
+                    %}
+                    {% for collection in collections %}
+                        {% render 'collection-card', card-style: 'style-1', collection: collection, starting-price: false, button: true, card-scheme: section.settings.card_color_scheme, srcset: srcset, sizes: sizes, default_image: section.settings.default_image %}
+                    {% endfor %}
+                </div>
+                {% render 'pagination', pagination: paginate %}
+            {% endpaginate %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name":"t:sections.template_list_collections.name",
+        "settings":[
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type":"text",
+                "id":"title",
+                "default":"Collections",
+                "label":"t:sections.template_list_collections.settings.title.label"
+            },
+            {
+                "type": "color_scheme",
+                "id": "card_color_scheme",
+                "label": "t:sections.template_list_collections.settings.card_color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type": "image_picker",
+                "id": "default_image",
+                "label": "t:snippets.collection_card.default_image.label"
+            }
+        ]
+    }
+{% endschema %}

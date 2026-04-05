@@ -1,0 +1,96 @@
+<div class="article-card {% if color_scheme %} color-{{ color_scheme }} gradient-enabled{% endif %}">
+    {% liquid
+        if image_ratio
+        assign ratio_first = image_ratio | split: ':' | first | times: 1.0
+        assign ratio_last = image_ratio | split: ':' | last | times: 1.0
+        assign ratio_value = ratio_last | divided_by: ratio_first
+        assign ratio_percentage = ratio_value | times: 100
+        else
+        assign ratio_percentage = 75
+        endif
+
+        if article.image
+            assign alt = article.image.alt
+            assign img_class = 'ic-w-100 ic-h-100 ' | append: image_style
+        endif
+    %}
+    {% if featured_image and placeholder_image %}
+        <div class="ratio-container" style="--_image_ratio: {{ ratio_percentage }}%">
+            {% if article.image %}
+                {{ article.image 
+                    | image_url: width: largest_width
+                    | image_tag:
+                    loading: 'lazy',
+                    widths: srcset, 
+                    sizes: sizes,
+                    alt: alt,
+                    class: img_class
+                }}
+            {% else %}
+                {% assign svg_class = 'ic-w-100 ic-h-100 ' | append: image_style %}
+                {{ 'image' | placeholder_svg_tag: svg_class }}
+            {% endif %}
+        </div>
+    {% elsif featured_image %}
+        {% if article.image %}
+            <div class="ratio-container" style="--_image_ratio: {{ ratio_percentage }}%">
+                {{ article.image 
+                    | image_url: width: largest_width
+                    | image_tag:
+                    loading: 'lazy',
+                    widths: srcset, 
+                    sizes: sizes,
+                    alt: alt,
+                    class: img_class
+                }}
+            </div>
+        {% endif %}
+    {% elsif placeholder_image %}
+        <div class="ratio-container" style="--_image_ratio: {{ ratio_percentage }}%">
+            {% assign svg_class = 'ic-w-100 ic-h-100 ' | append: image_style %}
+            {{ 'image' | placeholder_svg_tag: svg_class }}
+        </div>
+    {% endif %}
+    <div class="ic-mt-4 ic-break-words text-container">
+        {% if show_date == true or show_author == true %}
+            <div class="ic-mb-2 ic-text-sm article-date-author" itemscope itemtype="http://schema.org/Person">
+                {% if show_date == true %}
+                    <time itemprop="datePublished dateCreated" datetime="{{ article.published_at | default: '2023-01-05 12:36:17 +0530' | date: '%d-%m-%Y' }}">{{ article.published_at | default: '2023-01-05 12:36:17 +0530' | date: format: 'date' }}</time>
+                {% endif %}
+                {% if show_date == true and show_author == true %}
+                    <span class="ic-text-lg ic-mx-1">|</span>
+                {% endif %}
+                {% if show_author == true %}
+                    {% assign default_author = 'snippets.article_card.author' | t %}
+                    <span itemprop="author">{{ article.author | default: default_author }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% assign default_title = 'snippets.article_card.title' | t %}
+        <a href="{{ article.url | split: '?' | first | default: '#' }}" class="card-link link-heading">
+            <h2 class="ic-font-medium ic-mb-4 ic-h3 title">{{ article.title | default: default_title }}</h2>
+        </a>
+        
+        {% liquid
+            if article
+            assign default_description = article.excerpt_or_content | strip_html | truncatewords: 22
+            else
+            assign default_description = 'snippets.article_card.short_description' | t | strip_html | truncatewords: 22
+            endif
+        %}
+        {% if default_description != '' %}
+        <p class="description ic-text-sm">{{ default_description }}</p>
+        {% endif %}
+
+        {% if blog.comments_enabled? and article.comments_count > 0 %}
+            <p class="comment-count ic-text-sm">{{ 'snippets.article_card.comment_count' | t: count: article.comments_count }}</p>
+        {% endif %}
+        
+        {% if read_more_text != blank %}
+            <span class="ic-btn ic-btn-primary ic-btn-small ic-mt-auto">
+                {{ read_more_text }}
+                <span class="icon">{% render 'icon-right' %}</span>
+            </span>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,148 @@
+<div class="customer-account-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container">
+        <div class="ic-py-13">
+            <h1 class="text-2xl font-bold text-gray-700 ic-mb-8">{{ "sections.template_customer_account.account" | t }}</h1>
+            
+            <div class="ic-block ic-lg-flex ic-flex-gap-5">
+                <div class="ic-flex-col-lg-4 ic-flex-col-2xl-3 ic-mb-8 ic-mb-lg-0">
+                    <div class="customer-panel color-{{ section.settings.card_color_scheme }}">
+                        <div class="customer-head">
+                            <p class="customer-name">{{ customer.name }}</p>
+                            <p class="ic-text-sm customer-email">{{ customer.email }}</p>
+                        </div>
+                        <div class="customer-address">
+                            <span class="default-badge">{{ "sections.template_customer_account.default_badge" | t }}</span>
+                            <div class="ic-text-sm default-address">
+                                {{ customer.default_address | format_address }}
+                            </div>
+                            <a href="{{ routes.account_addresses_url | default: '#' }}" class="ic-mt-8 ic-text-sm ic-inline-flex ic-align-items-center ic-base-link">
+                                {{ "sections.template_customer_account.view_addresses" | t }}
+                                {% if customer.addresses_count %}
+                                    ({{ customer.addresses_count }})
+                                {% endif %}
+                                <span class="icon ic-ml-2">{% render 'icon-right' %}</span>
+                            </a>
+                        </div>
+                        <div class="account-logout">
+                            {{ "sections.header.logout" | t | customer_logout_link }}
+                        </div>
+                    </div>
+                </div>
+
+                {% assign number_of_orders = customer.orders | size %}
+                {% if number_of_orders > 0 %}
+                    <div class="ic-flex-col-lg-8 ic-flex-col-2xl-9 ic-mb-8 ic-mb-md-0">
+
+                        {% paginate customer.orders by 8 %}
+                            <div class="order-wrapper">
+                                <h2 class="ic-h3 ic-font-bold text-gray-700 ic-mb-7">{{ "sections.template_customer_account.order_history" | t }}</h2>
+                                <div class="order-list color-{{ section.settings.card_color_scheme }}">
+                                    {% for order in customer.orders %}
+                                        <div class="order-card">
+                                            <div class="order-card-head">
+                                                <div class="order-id">
+                                                    <p class="card-head-title">{{ "sections.template_customer_account.order" | t }}</p>
+                                                    <p class="card-head-value">{{ order.name | link_to: order.customer_url, class: 'card-link' }}</p>
+                                                </div>
+                                                <div class="order-date">
+                                                    <p class="card-head-title">{{ "sections.template_customer_account.date" | t }}</p>
+                                                    <p class="card-head-value">{{ order.created_at | date: "%B %d, %Y" }}</p>
+                                                </div>
+                                                <div class="payment-wrapper">
+                                                    <p class="order-payment">{{ order.financial_status_label }}</p>
+                                                    <p class="order-price price-text">
+                                                        {% if cart.currency.iso_code == "INR" %}
+                                                            {{ cart.currency.symbol }}{{ order.total_price | money_without_currency }}
+                                                            {% else %}
+                                                            {{ order.total_price | money_without_trailing_zeros }}
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="order-card-body">
+                                                <div class="image-wrapper" data-head="{{ "sections.template_customer_account.product" | t }}">
+                                                    {% for line_item in order.line_items limit: 3 %}
+                                                        {% liquid
+                                                            assign line_count = order.line_items.size | minus: 2
+                                                            if forloop.index == 2 and line_count > 0
+                                                            assign lg_line_attr = line_count | plus: 1
+                                                            assign lg_more_image = 'lg-more-image'
+                                                            else
+                                                            assign lg_line_attr = nil
+                                                            assign lg_more_image = nil
+                                                            endif
+                                                            if forloop.index == 3 and line_count > 1
+                                                            assign line_attr = line_count
+                                                            assign more_image = 'more-image'
+                                                            else
+                                                            assign line_attr = nil
+                                                            assign more_image = nil
+                                                            endif
+                                                        %}
+                                                        <div class="image-container {{ lg_more_image }} {{ more_image }}" data-lines="{{ line_attr }}" data-lg-lines="{{ lg_line_attr }}">
+                                                            {% if line_item.image %}
+                                                                {% liquid
+                                                                    if line_item.image.alt
+                                                                    assign alt =line_item.image.alt | escape
+                                                                    else
+                                                                    assign alt = line_item.image.src | split: '/' | last | split: '.' | first
+                                                                    endif
+                                                                %}
+                                                                {{ line_item.image 
+                                                                    | image_url: width: 80
+                                                                    | image_tag:
+                                                                    loading: 'lazy',
+                                                                    widths: '60, 80', 
+                                                                    sizes: '(max-width: 767px) 60px, 80px',
+                                                                    alt: alt,
+                                                                    class: "ic-w-100 ic-h-100 ic-object-center ic-object-contain"
+                                                                }}
+                                                            {% else %}
+                                                                {{ 'product-5' | placeholder_svg_tag: 'ic-w-100 ic-h-100 ic-object-center ic-object-contain' }}
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <p class="order-fullfilment" data-head="{{ "sections.template_customer_account.fullfillment" | t }}">{{ order.fulfillment_status_label }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% render 'pagination', pagination: paginate %}
+                            
+                        {% endpaginate %}
+                    </div>
+                {% else %}
+                    <div class="ic-flex-col-md-8 ic-flex-col-lg-9 ic-flex-col-2xl-10 ic-flex ic-align-items-center ic-justify-content-md-center ic-mb-8 ic-mb-md-0">
+                        <h2 class="ic-text-lg ic-font-medium">{{ "sections.template_customer_account.you_currently_dont_have_any_orders" | t }}</h2>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "t:sections.template_customer_account.name",
+    "settings": [
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:settings_schema.general.settings.color_scheme.label",
+            "default": "scheme_1"
+        },
+        {
+            "type": "header",
+            "content": "t:sections.template_customer_account.settings.cards.content"
+        },
+        {
+            "type": "color_scheme",
+            "id": "card_color_scheme",
+            "label": "t:settings_schema.general.settings.color_scheme.label",
+            "default": "scheme_1"
+        }
+    ]
+}
+{% endschema %}

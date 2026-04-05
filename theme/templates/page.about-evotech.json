@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "main": {
+      "type": "template-page",
+      "settings": {}
+    },
+    "about_content": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "About EvoTech Digital"
+          }
+        },
+        "description": {
+          "type": "text",
+          "settings": {
+            "description": "<p>EvoTech Digital is a Perth-based technology company founded to help Western Australian businesses thrive through smart IT solutions. We offer Managed IT Services, Cyber Security, Cloud Migration, and IT Consulting to SMEs across Perth and WA. We also operate an online technology store supplying quality networking, smart home, storage, and PC hardware to businesses and consumers Australia-wide.</p><p><strong>Business Details:</strong><br>ABN: 72 375 743 898<br>Address: Perth, WA 6000<br>Phone: +61 466 911 816<br>Email: info@evotech.au<br>Hours: Monday to Friday, 8:00am – 6:00pm AWST</p><p>We are committed to transparent pricing, honest product descriptions, and reliable customer service.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "description"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "text_width": "ic-flex-col-lg-8",
+        "text_position": "ic-justify-content-center",
+        "text_align": "ic-text-left"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "about_content"
+  ]
+}

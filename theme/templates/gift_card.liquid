@@ -1,0 +1,339 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  {%- liquid
+    assign body_font_bold = settings.font_body | font_modify: 'weight', 'bold'
+    assign body_font_italic = settings.font_body | font_modify: 'style', 'italic'
+    assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+    assign btn_border_opacity = settings.button_border_opacity | divided_by: 100.0
+  %}
+  {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+  <style>
+    {{ settings.font_body | font_face: font_display: 'swap' }}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {{ body_font_italic | font_face: font_display: 'swap' }}
+    {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+    {{ settings.font_heading | font_face: font_display: 'swap' }}
+
+    {% for scheme in settings.color_schemes %}
+      {% if forloop.index == 1 %}
+        :root,
+      {% endif %}
+      .color-{{ scheme.id }} {
+        --heading-color: {{ scheme.settings.color_heading }};
+      --text-color-rgb: {{ scheme.settings.color_text.red }}, {{ scheme.settings.color_text.green }}, {{ scheme.settings.color_text.blue }};
+      --text-color: {{ scheme.settings.color_text }};
+      {%  liquid
+        assign textColorBrightness = scheme.settings.color_text | color_brightness
+        
+        if textColorBrightness > 128
+        assign textColorVariant = scheme.settings.color_text | color_darken: 20
+        else
+        assign textColorVariant = scheme.settings.color_text | color_lighten: 20
+        endif
+      %}
+      --text-color-variant:{{ textColorVariant }};
+      --text-color-variant-rgb:{{ textColorVariant.red }}, {{ textColorVariant.green }}, {{ textColorVariant.blue }};
+
+      --price-color: {{ scheme.settings.color_price }};
+      --price-color-rgb: {{ scheme.settings.color_price.red }}, {{ scheme.settings.color_price.green }}, {{ scheme.settings.color_price.blue }};
+
+      --color-background:{{ scheme.settings.color_background }};
+      --color-background-rgb:{{ scheme.settings.color_background.red }}, {{ scheme.settings.color_background.green }}, {{ scheme.settings.color_background.blue }};
+      {%  liquid
+        assign colorBrightness = scheme.settings.color_background | color_brightness
+        
+        if colorBrightness > 128
+        assign colorVariant = scheme.settings.color_background | color_darken: 10
+        assign colorSahdowVariant = scheme.settings.color_background | color_darken: 10
+        else
+        assign colorVariant = scheme.settings.color_background | color_lighten: 10
+        assign colorSahdowVariant = scheme.settings.color_background | color_lighten: 30
+        endif
+      %}
+      --color-background-variant:{{ colorVariant }};
+      --color-background-variant-rgb: {{ colorVariant.red }}, {{ colorVariant.green }}, {{ colorVariant.blue }};
+      --color-background-shadow:{{ colorSahdowVariant }};
+      --color-background-shadow-rgb: {{ colorSahdowVariant.red }}, {{ colorSahdowVariant.green }}, {{ colorSahdowVariant.blue }};
+      {% if scheme.settings.color_background_gradient != empty %}
+      --color-background-gradient: {{ scheme.settings.color_background_gradient }};
+      {% else %}
+      --color-background-gradient: {{ scheme.settings.color_background }};
+      {% endif %}
+
+      --primary-btn-bg-color: {{ scheme.settings.color_primary_bg }};
+      --primary-btn-bg-rgb: {{ scheme.settings.color_primary_bg.red }}, {{ scheme.settings.color_primary_bg.green }}, {{ scheme.settings.color_primary_bg.blue }};
+      --primary-btn-text-color: {{ scheme.settings.color_primary_text }};
+      {%  liquid
+        assign primaryButtonBrightness = scheme.settings.color_primary_bg | color_brightness
+        
+        if primaryButtonBrightness > 128
+        assign primaryButton = scheme.settings.color_primary_bg | color_darken: 10
+        else
+        assign primaryButton = scheme.settings.color_primary_bg | color_lighten: 10
+        endif
+      %}
+      --primary-btn-bg-color-variant: {{ primaryButton }};
+      
+      --secondary-btn-bg-color: {{ scheme.settings.color_secondary_bg }};
+      --secondary-btn-bg-rgb: {{ scheme.settings.color_secondary_bg.red }}, {{ scheme.settings.color_secondary_bg.green }}, {{ scheme.settings.color_secondary_bg.blue }};
+      --secondary-btn-text-color: {{ scheme.settings.color_secondary_text }};
+      {%  liquid
+        assign secondaryButtonBrightness = scheme.settings.color_secondary_bg | color_brightness
+        
+        if secondaryButtonBrightness > 128
+        assign secondaryButton = scheme.settings.color_secondary_bg | color_darken: 10
+        else
+        assign secondaryButton = scheme.settings.color_secondary_bg | color_lighten: 10
+        endif
+      %}
+      --secondary-btn-bg-color-variant: {{ secondaryButton }};
+
+      --tertiary-btn-bg-color: {{ scheme.settings.color_tertiary_bg }};
+      --tertiary-btn-bg-rgb: {{ scheme.settings.color_tertiary_bg.red }}, {{ scheme.settings.color_tertiary_bg.green }}, {{ scheme.settings.color_tertiary_bg.blue }};
+      --tertiary-btn-text-color: {{ scheme.settings.color_tertiary_text }};
+      --tertiary-border-color: {{ scheme.settings.color_tertiary_border | color_modify: 'alpha', btn_border_opacity }};
+      --tertiary-hover-color: {{ scheme.settings.color_tertiary_text }};
+
+      --primary-color: {{ scheme.settings.color_primary }};
+      --primary-rgb: {{ scheme.settings.color_primary.red }}, {{ scheme.settings.color_primary.green }}, {{ scheme.settings.color_primary.blue }};
+      --primary-light-color: {{ scheme.settings.color_primary | color_lighten: 10 }};
+      --primary-dark-color:  {{ scheme.settings.color_primary | color_darken: 10 }};
+      --primary-dark-color-600:  {{ scheme.settings.color_primary | color_darken: 10 | color_modify: 'alpha', 0.6 }};
+      --light-color-rgb: {{ scheme.settings.color_light.red }}, {{ scheme.settings.color_light.green }}, {{ scheme.settings.color_light.blue }};
+      --light-color: {{ scheme.settings.color_light }};
+      --dark-color-rgb: {{ scheme.settings.color_dark.red }}, {{ scheme.settings.color_dark.green }}, {{ scheme.settings.color_dark.blue }};
+      --dark-color: {{ scheme.settings.color_dark }};
+      --disabled-bg-color: {{ scheme.settings.color_soldout_bg }};
+      --disabled-text-color: {{ scheme.settings.color_soldout_text }};
+      --disabled-text-color-rgb: {{ scheme.settings.color_soldout_text.red }}, {{ scheme.settings.color_soldout_text.green }}, {{ scheme.settings.color_soldout_text.blue }};
+
+      --link-color: {{ scheme.settings.color_link }};
+      --link-color-rgb: {{ scheme.settings.color_link.red }}, {{ scheme.settings.color_link.green }}, {{ scheme.settings.color_link.blue }};
+      {%  liquid
+        assign linkBrightness = scheme.settings.color_link | color_brightness
+        
+        if linkBrightness > 128
+        assign linkVariant = scheme.settings.color_link | color_darken: 10
+        else
+        assign linkVariant = scheme.settings.color_link | color_lighten: 10
+        endif
+      %}
+      --link-color-variant:{{ linkVariant }};
+      --link-color-variant-rgb: {{ linkVariant.red }}, {{ linkVariant.green }}, {{ linkVariant.blue }};
+      --link-hover-color: var(--link-color-variant);
+      }
+    {% endfor %}
+
+    :root{
+
+      --heading-font:{{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+      --heading-font-style: {{ settings.font_heading.style }};
+      --heading-font-weight: {{ settings.font_heading.weight }};
+
+      --body-font:{{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+      --body-font-style: {{ settings.font_body.style }};
+      --body-font-weight: {{ settings.font_body.weight }};
+      
+      --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+      --font-heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+
+      --section-vertical-spacing: {{ settings.section_vertical_spacing }}px;
+
+      --button-border-width: {{ settings.button_border_width }}px;
+      --button-border-opacity: {{ settings.button_border_opacity | divided_by: 100.0 }};
+      --button-border-radius: {{ settings.button_border_radius }}px;
+
+      --button-shadow-opacity: {{ settings.button_shadow_opacity | divided_by: 100.0 }};
+      --button-shadow-horizontal-offset: {{ settings.button_shadow_horizontal_offset }}px;
+      --button-shadow-vertical-offset: {{ settings.button_shadow_vertical_offset }}px;
+      --button-shadow-blur: {{ settings.button_shadow_blur }}px;
+
+      --variant-border-width: {{ settings.variant_border_width }}px;
+      --variant-border-opacity: {{ settings.variant_border_opacity | divided_by: 100.0 }};
+      --variant-border-radius: {{ settings.variant_border_radius }}px;
+
+      --variant-shadow-opacity: {{ settings.variant_shadow_opacity | divided_by: 100.0 }};
+      --variant-shadow-horizontal-offset: {{ settings.variant_shadow_horizontal_offset }}px;
+      --variant-shadow-vertical-offset: {{ settings.variant_shadow_vertical_offset }}px;
+      --variant-shadow-blur: {{ settings.variant_shadow_blur }}px;
+
+      --input-border-width: {{ settings.input_border_width }}px;
+      --input-border-opacity: {{ settings.input_border_opacity | divided_by: 100.0 }};
+      --input-border-radius: {{ settings.input_border_radius }}px;
+      --input-border-color: {{ settings.input_border_color }};
+      --input-border-color-rgb: {{ settings.input_border_color.red }}, {{ settings.input_border_color.green }}, {{ settings.input_border_color.blue }};
+
+      --input-shadow-opacity: {{ settings.input_shadow_opacity | divided_by: 100.0 }};
+      --input-shadow-horizontal-offset: {{ settings.input_shadow_horizontal_offset }}px;
+      --input-shadow-vertical-offset: {{ settings.input_shadow_vertical_offset }}px;
+      --input-shadow-blur: {{ settings.input_shadow_blur }}px;
+
+      --badge-border-radius: {{ settings.badge_radius }}px;
+      --badge-skew: {{ settings.badge_style }};
+
+      --theme-border-radius : {{ settings.theme_border_radius }}px;
+    }
+  </style>
+  {{ 'config.css' | asset_url | stylesheet_tag: preload: true }}
+  {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+  {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
+  {{ 'utilities.css' | asset_url | stylesheet_tag: preload: true }}
+  
+  <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+  {{ content_for_header }}
+
+<style>
+  @media print {
+    .no-print {
+      display: none;
+    }
+    .gift-card-body, html{
+      width: 100%;
+    }
+    .gift-card-body{
+      transform: scale(0.9);
+      page-break-inside: avoid;
+    }
+    .gift-card-body header{
+      padding: 0;
+      margin-top: 32px;
+      margin-bottom: 20px;
+    }
+
+  }
+  @media (max-width:767px){
+    .gift-card-buttons{
+      max-width: 100%;
+      display: block;
+    }
+    @media print {
+    .no-print {
+      display: none;
+    }
+
+  }
+    
+  }
+</style>
+</head>
+<body class="gift-card-body">
+  <header class="ic-pt-13 ic-pb-6">
+    <div class="ic-container ic-text-center">
+      {% if shop.brand.logo %}
+        <span class="ic-mb-4 ic-inline-block gift-card-logo">
+          {{ shop.brand.logo | image_url: width: 300 
+            | image_tag: 
+            loading: 'lazy', 
+            sizes: '300px',
+            widths: '300',
+            alt: shop.name }}
+        </span>
+        {% else %}
+      <span class="ic-h2 ic-font-medium ic-mb-4 ic-inline-block">{{ shop.name }}</span>
+      {% endif %}
+      <h1 class="ic-mb-4">{{ "gift_cards.issued.title" | t }}</h1>
+      <div>
+        <p class="ic-text-lg ic-font-medium price-text">
+          {% if settings.currency_code_enabled %}
+            {{ gift_card.initial_value | money_with_currency }}
+          {% else %}
+            {{ gift_card.initial_value | money }}
+          {% endif %}
+        </p>
+        {%- if gift_card.expires_on -%}
+          <p class="ic-text-lg ic-font-medium ic-mt-4">
+            {{ "gift_cards.issued.expires_on" | t }} {{ gift_card.expires_on | date: '%B %e, %Y' }}
+          </p>
+        {%- endif -%}
+        {%- if gift_card.enabled == false or gift_card.expired -%}
+          <p class="ic-text-lg ic-font-medium ic-mt-4">{{ "gift_cards.issued.card_expired" | t }}</p>
+        {%- endif -%}
+      </div>
+  
+      {% if settings.currency_code_enabled %}
+        {%- assign gift_card_balance = gift_card.balance | money_with_currency -%}
+      {% else %}
+        {%- assign gift_card_balance = gift_card.balance | money -%}
+      {% endif %}
+      {%- if gift_card.balance != gift_card.initial_value -%}
+        <p class="ic-text-lg ic-font-medium ic-mt-4">{{ "gift_cards.issued.card_balance_text" | t: balance: gift_card_balance }}</p>
+      {%- endif -%}
+    </div>
+  </header>
+  <main class="gift-card">
+    <div class="ic-container ic-flex ic-flex-col ic-align-items-center ic-pb-13">
+      <div class="ic-mb-6">
+        <img src="{{ 'gift-card/card.svg' | shopify_asset_url }}" alt="" class="ic-max-w-100 ic-h-auto" height="{{ 300 | divided_by: 1.5 }}" width="300" loading="lazy">
+      </div>
+      <div class="gift-card-qr ic-mb-6 ic-bg-white ic-p-1" data-identifier="{{ gift_card.qr_identifier }}"></div>
+      <p class="ic-text-center ic-mb-4">{{ "gift_cards.issued.use_info" | t }}</p>
+      <div class="gift-card-code-wrapper ic-flex ic-flex-nowrap ic-align-items-center ic-flex-gap-4 ic-rounded-lg ic-py-2 ic-px-4">
+        <span class="gift-card-code ic-text-lg ic-border-none ic-p-0 ic-font-medium ic-bg-transparent" aria-label="{{ 'gift_cards.issued.gift_card_code' | t }}">{{ gift_card.code | format_code }}</span>
+        <button class="gift-card-link ic-bg-transparent ic-p-1 ic-border-none ic-cursor-pointer ic-line-h-1 no-print" title="{{ 'gift_cards.issued.copy_code' | t }}">{% render 'icon-copy' %}</button>
+      </div>
+      <div class="gift-card-success ic-align-items-center ic-flex-gap-2 ic-mt-2 no-print ic-hidden" role="status">
+        <span class="ic-color-success ic-block ic-w15px ic-h15px">{% render 'icon-success' %}</span>
+        <span class="ic-text-sm">{{ "gift_cards.issued.code_copied" | t }}</span>
+      </div>
+
+      <div class="ic-mt-6">
+        {%- if gift_card.pass_url -%}
+          <a href="{{ gift_card.pass_url | default: '#' }}" class="gift_card__apple-wallet ic-inline-block">
+            <img src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t }}" loading="lazy" class="ic-block ic-w180px ic-h-auto">
+          </a>
+        {%- endif -%}
+      </div>
+      <div class="gift-card-buttons no-print ic-flex ic-flex-gap-8 ic-w450px ic-mt-6">
+        <a
+          href="{{ shop.url | default: '#' }}"
+          class="ic-btn ic-btn-primary ic-flex-1 ic-justify-content-center ic-w-100"
+          target="_blank"
+          rel="noopener"
+          aria-label="{{ "gift_cards.issued.continue_shopping" | t }}. {{ 'general.open_new_window' | t }}"
+        >
+          {{ "gift_cards.issued.continue_shopping" | t }}
+          <span class="icon">{% render 'icon-external-link' %}</span>
+        </a>
+        <button
+          class="ic-btn ic-btn-secondary ic-flex-1 ic-justify-content-center ic-w-100 ic-mt-4 ic-mt-md-0"
+          onclick="window.print();"
+        >
+          {{ "gift_cards.issued.print" | t }}
+        </button>
+      </div>
+    </div>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      new QRCode( document.querySelector('.gift-card-qr'), {
+      text: document.querySelector('.gift-card-qr').dataset.identifier,
+      width: 120,
+      height: 120,
+      imageAltText: '{{ "gift_cards.issued.qr_code" | t }}'
+      });
+    });
+
+    var isMessageDisplayed = false
+    document
+    .querySelector('.gift-card-link')
+    .addEventListener('click', () => {
+      let giftCode = document.querySelector('.gift-card-code').innerHTML;
+      navigator.clipboard.writeText(giftCode).then(function () {
+        if (!isMessageDisplayed) {
+          document.querySelector('.gift-card-success').classList.remove('ic-hidden');
+          document.querySelector('.gift-card-success').classList.add('ic-flex');
+          isMessageDisplayed = true
+        }
+      });
+    });
+  </script>
+</body>
+</html>

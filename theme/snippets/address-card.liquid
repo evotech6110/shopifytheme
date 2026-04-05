@@ -1,0 +1,184 @@
+<div x-data="{ 
+        address_{{ address.id }}: false, 
+        focusEditAddressForm() { 
+            this.$nextTick(() => { 
+                this.$refs.editAddressForm.focus(); 
+            }); 
+        },
+        openEditAddressModal(event) { 
+            this.focusedElement = event.target;
+            this.address_{{ address.id }} = true; 
+            this.focusEditAddressForm(); 
+        }, 
+        closeEditAddressModal() { 
+            this.address_{{ address.id }} = false; 
+            if (this.focusedElement) {
+                this.$nextTick(() => {
+                    this.focusedElement.focus();
+                });
+            }
+        }
+    }"
+    @keydown.window.escape="closeEditAddressModal()" x-cloak>
+
+    <div class="address-card ic-h-100 {% if address == customer.default_address %}default{% endif %} color-{{ color_scheme }}">
+                                
+        <div class="address-text">
+            <p class="address-name">{{ address.name }}</p>
+            {{ address | format_address | replace: address.name | remove_first: '<br>' }}
+        </div>
+        <div class="address-action">
+            <button x-on:click="openEditAddressModal($event);" class="adrress-btn" x-ref="openButton" aria-label="{{ "sections.template_customer_addresses.edit_address" | t }}">
+            {% render 'icon-edit' %}
+            </button>
+            <button 
+                class="adrress-btn"
+                data-url="{{ address.url }}"
+                data-delete-address
+                aria-label="{{ "sections.template_customer_addresses.delete_address" | t }}"
+            >
+            {% render 'icon-trash' %}
+            </button>
+            {% if address == customer.default_address %}
+                <div class="ic-ml-auto">
+                    <span class="default-badge ic-text-xs">{{ 'snippets.address_card.default' | t }}</span>
+                </div>
+            {% endif %}
+        </div>
+    
+        <form action="{{ address.url }}" method="post">
+            <input type="hidden" name="_method" value="delete">
+        </form>
+    </div>
+
+    <div x-show="address_{{ address.id }}" class="ic-h-100 ic-w-100 ic-fixed edit-address-modal" x-on:click="closeEditAddressModal()">
+        <div class="ic-container">
+            <div class="address-form-popup-wrapper">
+                <div class="ic-flex-col-12 ic-flex-col-md-7 ic-flex-col-lg-6 ic-flex-col-xl-5 ic-flex-col-2xl-4 form-popup-inner" x-on:click.stop>
+                    <div class="form-popup-container">
+                        <div class="form-popup-head">
+                            <h2 class="ic-text-lg ic-font-medium" x-ref="editAddressForm" tabindex="-1">{{ "sections.template_customer_addresses.edit_address" | t }}</h2>
+                            <button x-on:click="closeEditAddressModal()" class="close-btn" aria-label="{{ "sections.template_customer_addresses.close_edit_address" | t }}">
+                                {% render 'icon-close' %}
+                            </button>
+                        </div>
+    
+                        {% form 'customer_address', address %}
+                            <div class="form-group">
+                                <label for="address_fname_{{ form.id }}" class="required" aria-label="{{ 'sections.template_customer_addresses.first_name' | t }}">{{ "sections.template_customer_addresses.first_name" | t }}</label>
+                                <input 
+                                    type="text" 
+                                    name="address[first_name]" 
+                                    id="address_fname_{{ form.id }}" 
+                                    value="{{ form.first_name }}"
+                                    required
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="address_lname_{{ form.id }}" class="required" aria-label="{{ 'sections.template_customer_addresses.last_name' | t }}">{{ "sections.template_customer_addresses.last_name" | t }}</label>
+                                <input 
+                                    type="text" 
+                                    name="address[last_name]" 
+                                    id="address_lname_{{ form.id }}" 
+                                    value="{{ form.last_name }}"
+                                    required
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="address_company_{{ form.id }}" aria-label="{{ 'sections.template_customer_addresses.company' | t }}">{{ "sections.template_customer_addresses.company" | t }}</label>
+                                <input 
+                                    type="text" 
+                                    name="address[company]" 
+                                    id="address_company_{{ form.id }}" 
+                                    value="{{ form.company }}"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="address_address1_{{ form.id }}" class="required" aria-label="{{ 'sections.template_customer_addresses.address_1' | t }}">{{ "sections.template_customer_addresses.address_1" | t }}</label>
+                                <input 
+                                    type="text" 
+                                    name="address[address1]" 
+                                    id="address_address1_{{ form.id }}" 
+                                    value="{{ form.address1 }}"
+                                    required
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="address_address2_{{ form.id }}" aria-label="{{ 'sections.template_customer_addresses.address_2' | t }}">{{ "sections.template_customer_addresses.address_2" | t }}</label>
+                                <input 
+                                    type="text" 
+                                    name="address[address2]" 
+                                    id="address_address2_{{ form.id }}" 
+                                    value="{{ form.address2 }}"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="address_city_{{ form.id }}" aria-label="{{ 'sections.template_customer_addresses.city' | t }}">{{ "sections.template_customer_addresses.city" | t }}</label>
+                                <input 
+                                    type="text" 
+                                    name="address[city]" 
+                                    id="address_city_{{ form.id }}" 
+                                    value="{{ form.city }}"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="address_country_{{ form.id }}" aria-label="{{ 'sections.template_customer_addresses.country' | t }}">{{ "sections.template_customer_addresses.country" | t }}</label>
+                                <select 
+                                    name="address[country]" 
+                                    id="address_country_{{ form.id }}" 
+                                    value="{{ form.country }}"
+                                    data-country-selector
+                                    data-id="{{ form.id }}"
+                                >
+                                    {{ all_country_option_tags }}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="address_province_{{ form.id }}" aria-label="{{ 'sections.template_customer_addresses.state' | t }}">{{ "sections.template_customer_addresses.state" | t }}</label>
+                                <select 
+                                    name="address[province]"
+                                    id="address_province_{{ form.id }}" 
+                                    value="{{ form.province }}"
+                                >
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="address_zip_{{ form.id }}" aria-label="{{ 'sections.template_customer_addresses.postal_zip_code' | t }}">{{ "sections.template_customer_addresses.postal_zip_code" | t }}</label>
+                                <input 
+                                    type="text" 
+                                    name="address[zip]" 
+                                    id="address_zip_{{ form.id }}" 
+                                    value="{{ form.zip }}"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="address_phone_{{ form.id }}" class="required" aria-label="{{ 'sections.template_customer_addresses.phone_number' | t }}">{{ "sections.template_customer_addresses.phone_number" | t }}</label>
+                                <input 
+                                    type="tel" 
+                                    name="address[phone]" 
+                                    id="address_phone_{{ form.id }}" 
+                                    value="{{ form.phone }}"
+                                    required
+                                >
+                            </div>
+                            <div class="form-group">
+                                <div class="form-checkbox-field">
+                                    {{ form.set_as_default_checkbox }}
+                                    <label for="address_default_address_{{ form.id }}" aria-label="{{ 'sections.template_customer_addresses.set_as_default_address' | t }}" class="checkbox-label">
+                                        <span class="icon-checked">{% render 'icon-check' %}</span>
+                                        <span class="checkbox-label-text">{{ "sections.template_customer_addresses.set_as_default_address" | t }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-popup-action">
+                                <button type="submit" class="ic-flex-1 ic-btn ic-btn-primary ic-justify-content-center">{{ "sections.template_customer_addresses.save_address" | t }}</button>
+                                <button x-on:click="closeEditAddressModal()" type="reset" class="ic-flex-1 ic-btn ic-btn-secondary ic-justify-content-center">{{ "sections.template_customer_addresses.cancel" | t }}</button>
+                            </div>
+                        {% endform %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,39 @@
+<div class="contact-form-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container contact-form-container" data-section="{{ section.id }}">
+        <div class="ic-flex ic-flex-col ic-align-items-center ic-py-14 contact-form-inner ">
+            {% if section.settings.title != blank %}
+                <h1 class="ic-break-words ic-font-medium ic-mb-8 ic-mb-md-16">{{ section.settings.title }}</h1>
+            {% endif %}
+            {% render 'contact-form' %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name":"t:sections.contact.name",
+        "class":"contact-form-section",
+        "settings":[
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type":"text",
+                "id":"title",
+                "label":"t:sections.contact.settings.title.label"
+            }
+        ],
+        "presets":[
+            {
+                "name":"t:sections.contact.presets.name"
+            }
+        ],
+        "disabled_on": {
+            "templates": ["page"],
+            "groups": ["*"]
+        }
+    }
+{% endschema %}

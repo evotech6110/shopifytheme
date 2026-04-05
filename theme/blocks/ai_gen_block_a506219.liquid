@@ -1,0 +1,709 @@
+{% doc %}
+  @prompt
+    make a popup enquiry form:
+    with following fields:
+    Name: (optional)
+    Email: (required)
+    Contact No:
+    Required IT Service or Product Enquiry( Required)
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-enquiry-popup-{{ ai_gen_id }} {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .ai-enquiry-popup-{{ ai_gen_id }}.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .ai-enquiry-popup-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+  }
+
+  .ai-enquiry-popup-container-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: {{ block.settings.popup_max_width }}px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: {{ block.settings.popup_bg_color }};
+    border-radius: {{ block.settings.popup_border_radius }}px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: {{ block.settings.popup_padding }}px;
+  }
+
+  .ai-enquiry-popup-header-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .ai-enquiry-popup-title-{{ ai_gen_id }} {
+    color: {{ block.settings.heading_color }};
+    font-size: {{ block.settings.heading_size }}px;
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .ai-enquiry-popup-close-{{ ai_gen_id }} {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+
+  .ai-enquiry-popup-close-{{ ai_gen_id }}:hover {
+    opacity: 1;
+  }
+
+  .ai-enquiry-popup-close-{{ ai_gen_id }} svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ai-enquiry-form-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ai-enquiry-form-field-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ai-enquiry-form-label-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.label_size }}px;
+    font-weight: 500;
+  }
+
+  .ai-enquiry-form-required-{{ ai_gen_id }} {
+    color: {{ block.settings.required_color }};
+    margin-left: 4px;
+  }
+
+  .ai-enquiry-form-input-{{ ai_gen_id }},
+  .ai-enquiry-form-textarea-{{ ai_gen_id }} {
+    padding: 12px 16px;
+    border: {{ block.settings.input_border_width }}px solid {{ block.settings.input_border_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    font-size: {{ block.settings.input_text_size }}px;
+    color: {{ block.settings.text_color }};
+    background-color: {{ block.settings.input_bg_color }};
+    transition: border-color 0.2s ease;
+  }
+
+  .ai-enquiry-form-input-{{ ai_gen_id }}:focus,
+  .ai-enquiry-form-textarea-{{ ai_gen_id }}:focus {
+    outline: none;
+    border-color: {{ block.settings.input_focus_border_color }};
+  }
+
+  .ai-enquiry-form-textarea-{{ ai_gen_id }} {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .ai-enquiry-form-submit-{{ ai_gen_id }} {
+    padding: 14px 32px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_text_size }}px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    align-self: flex-start;
+  }
+
+  .ai-enquiry-form-submit-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+  }
+
+  .ai-enquiry-trigger-{{ ai_gen_id }} {
+    padding: 14px 28px;
+    background-color: {{ block.settings.trigger_bg_color }};
+    color: {{ block.settings.trigger_text_color }};
+    border: none;
+    border-radius: {{ block.settings.trigger_border_radius }}px;
+    font-size: {{ block.settings.trigger_text_size }}px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+  }
+
+  .ai-enquiry-trigger-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.trigger_hover_bg_color }};
+  }
+
+  .ai-enquiry-success-{{ ai_gen_id }} {
+    color: {{ block.settings.success_color }};
+    padding: 12px;
+    background-color: {{ block.settings.success_bg_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    margin-bottom: 16px;
+  }
+
+  .ai-enquiry-error-{{ ai_gen_id }} {
+    color: {{ block.settings.error_color }};
+    padding: 12px;
+    background-color: {{ block.settings.error_bg_color }};
+    border-radius: {{ block.settings.input_border_radius }}px;
+    margin-bottom: 16px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-enquiry-popup-container-{{ ai_gen_id }} {
+      padding: {{ block.settings.popup_padding | times: 0.7 }}px;
+    }
+
+    .ai-enquiry-popup-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.85 }}px;
+    }
+  }
+{% endstyle %}
+
+<enquiry-popup-{{ ai_gen_id }} class="ai-enquiry-popup-wrapper-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <button class="ai-enquiry-trigger-{{ ai_gen_id }}" aria-label="Open enquiry form">
+    {{ block.settings.trigger_button_text }}
+  </button>
+
+  <div class="ai-enquiry-popup-{{ ai_gen_id }}">
+    <div class="ai-enquiry-popup-overlay-{{ ai_gen_id }}"></div>
+    <div class="ai-enquiry-popup-container-{{ ai_gen_id }}">
+      <div class="ai-enquiry-popup-header-{{ ai_gen_id }}">
+        <h2 class="ai-enquiry-popup-title-{{ ai_gen_id }}">{{ block.settings.popup_heading }}</h2>
+        <button class="ai-enquiry-popup-close-{{ ai_gen_id }}" aria-label="Close enquiry form">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      {%- form 'contact' -%}
+        <input type="hidden" name="contact[enquiry_type]" value="IT Service or Product Enquiry">
+
+        {%- if form.posted_successfully? -%}
+          <div class="ai-enquiry-success-{{ ai_gen_id }}">
+            {{ block.settings.success_message }}
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="ai-enquiry-error-{{ ai_gen_id }}">
+            {{ form.errors.messages | first }}
+          </div>
+        {%- endif -%}
+
+        <div class="ai-enquiry-form-{{ ai_gen_id }}">
+          <div class="ai-enquiry-form-field-{{ ai_gen_id }}">
+            <label for="ai-enquiry-name-{{ ai_gen_id }}" class="ai-enquiry-form-label-{{ ai_gen_id }}">
+              {{ block.settings.name_label }}
+            </label>
+            <input
+              type="text"
+              id="ai-enquiry-name-{{ ai_gen_id }}"
+              name="contact[name]"
+              class="ai-enquiry-form-input-{{ ai_gen_id }}"
+              placeholder="{{ block.settings.name_placeholder }}"
+              autocomplete="name"
+            >
+          </div>
+
+          <div class="ai-enquiry-form-field-{{ ai_gen_id }}">
+            <label for="ai-enquiry-email-{{ ai_gen_id }}" class="ai-enquiry-form-label-{{ ai_gen_id }}">
+              {{ block.settings.email_label }}
+              <span class="ai-enquiry-form-required-{{ ai_gen_id }}">*</span>
+            </label>
+            <input
+              type="email"
+              id="ai-enquiry-email-{{ ai_gen_id }}"
+              name="contact[email]"
+              class="ai-enquiry-form-input-{{ ai_gen_id }}"
+              placeholder="{{ block.settings.email_placeholder }}"
+              required
+              autocomplete="email"
+              {% if form.errors %}
+                aria-invalid="true"
+              {% endif %}
+            >
+          </div>
+
+          <div class="ai-enquiry-form-field-{{ ai_gen_id }}">
+            <label for="ai-enquiry-phone-{{ ai_gen_id }}" class="ai-enquiry-form-label-{{ ai_gen_id }}">
+              {{ block.settings.phone_label }}
+            </label>
+            <input
+              type="tel"
+              id="ai-enquiry-phone-{{ ai_gen_id }}"
+              name="contact[phone]"
+              class="ai-enquiry-form-input-{{ ai_gen_id }}"
+              placeholder="{{ block.settings.phone_placeholder }}"
+              autocomplete="tel"
+            >
+          </div>
+
+          <div class="ai-enquiry-form-field-{{ ai_gen_id }}">
+            <label for="ai-enquiry-message-{{ ai_gen_id }}" class="ai-enquiry-form-label-{{ ai_gen_id }}">
+              {{ block.settings.message_label }}
+              <span class="ai-enquiry-form-required-{{ ai_gen_id }}">*</span>
+            </label>
+            <textarea
+              id="ai-enquiry-message-{{ ai_gen_id }}"
+              name="contact[body]"
+              class="ai-enquiry-form-textarea-{{ ai_gen_id }}"
+              placeholder="{{ block.settings.message_placeholder }}"
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="ai-enquiry-form-submit-{{ ai_gen_id }}">
+            {{ block.settings.submit_button_text }}
+          </button>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</enquiry-popup-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class EnquiryPopup{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.triggerButton = this.querySelector('.ai-enquiry-trigger-{{ ai_gen_id }}');
+        this.popup = this.querySelector('.ai-enquiry-popup-{{ ai_gen_id }}');
+        this.overlay = this.querySelector('.ai-enquiry-popup-overlay-{{ ai_gen_id }}');
+        this.closeButton = this.querySelector('.ai-enquiry-popup-close-{{ ai_gen_id }}');
+        this.form = this.querySelector('form');
+
+        this.setupEventListeners();
+        this.checkFormStatus();
+      }
+
+      setupEventListeners() {
+        this.triggerButton.addEventListener('click', () => this.openPopup());
+        this.closeButton.addEventListener('click', () => this.closePopup());
+        this.overlay.addEventListener('click', () => this.closePopup());
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.popup.classList.contains('active')) {
+            this.closePopup();
+          }
+        });
+
+        this.form.addEventListener('submit', () => {
+          setTimeout(() => this.checkFormStatus(), 100);
+        });
+      }
+
+      openPopup() {
+        this.popup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        this.closeButton.focus();
+      }
+
+      closePopup() {
+        this.popup.classList.remove('active');
+        document.body.style.overflow = '';
+        this.triggerButton.focus();
+      }
+
+      checkFormStatus() {
+        const successMessage = this.querySelector('.ai-enquiry-success-{{ ai_gen_id }}');
+        if (successMessage) {
+          this.openPopup();
+          this.form.reset();
+        }
+
+        const errorMessage = this.querySelector('.ai-enquiry-error-{{ ai_gen_id }}');
+        if (errorMessage) {
+          this.openPopup();
+        }
+      }
+    }
+
+    customElements.define('enquiry-popup-{{ ai_gen_id }}', EnquiryPopup{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "IT enquiry popup",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Trigger button"
+    },
+    {
+      "type": "text",
+      "id": "trigger_button_text",
+      "label": "Button text",
+      "default": "Enquire now"
+    },
+    {
+      "type": "color",
+      "id": "trigger_bg_color",
+      "label": "Background color",
+      "default": "#0e2240"
+    },
+    {
+      "type": "color",
+      "id": "trigger_hover_bg_color",
+      "label": "Hover background color",
+      "default": "#5c7d26"
+    },
+    {
+      "type": "color",
+      "id": "trigger_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "trigger_text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "trigger_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Popup"
+    },
+    {
+      "type": "text",
+      "id": "popup_heading",
+      "label": "Heading",
+      "default": "IT Service or Product Enquiry"
+    },
+    {
+      "type": "range",
+      "id": "popup_max_width",
+      "min": 400,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "popup_padding",
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "popup_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "popup_bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 18,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#0e2240"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#5e6979"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Label size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "required_color",
+      "label": "Required asterisk color",
+      "default": "#d82c0d"
+    },
+    {
+      "type": "header",
+      "content": "Form fields"
+    },
+    {
+      "type": "text",
+      "id": "name_label",
+      "label": "Name label",
+      "default": "Name"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "Name placeholder",
+      "default": "Your name"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "your.email@example.com"
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Contact number label",
+      "default": "Contact number"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Contact number placeholder",
+      "default": "04XX XXX XXX"
+    },
+    {
+      "type": "text",
+      "id": "message_label",
+      "label": "Enquiry label",
+      "default": "Required IT service or product enquiry"
+    },
+    {
+      "type": "text",
+      "id": "message_placeholder",
+      "label": "Enquiry placeholder",
+      "default": "Please describe your IT service or product requirements..."
+    },
+    {
+      "type": "header",
+      "content": "Input style"
+    },
+    {
+      "type": "range",
+      "id": "input_text_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "input_bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Border color",
+      "default": "#e2e4e8"
+    },
+    {
+      "type": "color",
+      "id": "input_focus_border_color",
+      "label": "Focus border color",
+      "default": "#0e2240"
+    },
+    {
+      "type": "range",
+      "id": "input_border_width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "input_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Submit button"
+    },
+    {
+      "type": "text",
+      "id": "submit_button_text",
+      "label": "Button text",
+      "default": "Submit enquiry"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Background color",
+      "default": "#0e2240"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Hover background color",
+      "default": "#5c7d26"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Messages"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you for your enquiry. We'll get back to you shortly."
+    },
+    {
+      "type": "color",
+      "id": "success_color",
+      "label": "Success text color",
+      "default": "#008060"
+    },
+    {
+      "type": "color",
+      "id": "success_bg_color",
+      "label": "Success background color",
+      "default": "#d4f4e8"
+    },
+    {
+      "type": "color",
+      "id": "error_color",
+      "label": "Error text color",
+      "default": "#d82c0d"
+    },
+    {
+      "type": "color",
+      "id": "error_bg_color",
+      "label": "Error background color",
+      "default": "#ffd4d4"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "IT enquiry popup"
+    }
+  ]
+}
+{% endschema %}

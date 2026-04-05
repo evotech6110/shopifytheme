@@ -1,0 +1,136 @@
+/* Import Font */
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600;700&display=swap'); */
+
+
+/* Base */
+
+:root{
+    --base-font-size: 1rem;
+}
+
+
+/* Colors */
+:root{
+    --secondary-color: #d0a6f5;
+    --secondary-hover-color: #e4c9fc;
+
+    
+    --white-color:#fff;
+    --black-color:#000;
+    --required-color:#FF0F0F;
+    --error-color:#9e3737;
+    --success-color:#0d8226;
+    --warning-color: #ed7e00;
+}
+
+/* Typography */
+
+:root{
+
+    /* Headin font sizes - desktop  */
+
+    --display-h1-size: 56px;
+    --h1-size: 32px;
+    --h2-size: 26px;
+    --h3-size: 20px;
+    --h4-size: 16px;
+    --h5-size: 14px;
+    --h6-size: 12px;
+
+    /* Headin font sizes - laptop  */
+
+    --display-h1-laptop-size: var(--display-h1-size);
+    --h1-laptop-size: var(--h1-size);
+    --h2-laptop-size: var(--h2-size);
+    --h3-laptop-size: var(--h3-size);
+    --h4-laptop-size: var(--h4-size);
+    --h5-laptop-size: var(--h5-size);
+    --h6-laptop-size: var(--h6-size);
+
+    /* Headin font sizes - tablet  */
+
+    --display-h1-tablet-size: var(--display-h1-size);
+    --h1-tablet-size: var(--h1-size);
+    --h2-tablet-size: var(--h2-size);
+    --h3-tablet-size: var(--h3-size);
+    --h4-tablet-size: var(--h4-size);
+    --h5-tablet-size: var(--h5-size);
+    --h6-tablet-size: var(--h6-size);
+
+    /* Headin font sizes - mobile  */
+
+    --display-h1-mobile-size: var(--display-h1-size);
+    --h1-mobile-size: var(--h1-size);
+    --h2-mobile-size: var(--h2-size);
+    --h3-mobile-size: var(--h3-size);
+    --h4-mobile-size: var(--h4-size);
+    --h5-mobile-size: var(--h5-size);
+    --h6-mobile-size: var(--h6-size);
+
+    /* Paragraph font sizes */
+
+    --paragraph-sm: 0.875rem;
+    --paragraph-lg: 1.125rem;
+
+}
+
+
+
+
+/* Button and link Config */
+:root,
+[class*="color-scheme"]{
+    /* Default Button */
+    --btn-padding-x: 1.5rem;
+    --btn-padding-y: 14px;
+    --btn-border-width: var(--button-border-width);
+    --btn-border-style: solid;
+    --btn-border-radius: var(--button-border-radius);
+    --btn-font-weight: 600;
+    --btn-shadow-opacity: var(--button-shadow-opacity);
+    --btn-shadow-horizontal-offset: var(--button-shadow-horizontal-offset);
+    --btn-shadow-vertical-offset: var(--button-shadow-vertical-offset);
+    --btn-shadow-blur: var(--button-shadow-blur);
+
+    /* Primary Button customize */
+    --primary-btn-border-color: rgba(var(--primary-btn-bg-rgb), var(--button-border-opacity));
+    --primary-btn-font-size: inherit;
+    --primary-btn-hover-bg-color: var(--primary-btn-bg-color-variant);
+    --primary-btn-hover-text-color: var(--primary-btn-text-color);
+    --primary-btn-active-bg-color: var(--primary-btn-bg-color-variant);
+    --primary-btn-active-text-color: var(--primary-btn-text-color);
+
+    /* Secondary Button customize */
+    --secondary-btn-border-color: rgba(var(--secondary-btn-bg-rgb), var(--button-border-opacity));
+    --secondary-btn-font-size: inherit;
+    --secondary-btn-hover-bg-color: var(--secondary-btn-bg-color-variant);
+    --secondary-btn-hover-text-color: var(--secondary-btn-text-color);
+    --secondary-btn-active-bg-color: var(--secondary-btn-bg-color-variant);
+    --secondary-btn-active-text-color: var(--secondary-btn-text-color);
+
+    /* Tertiary Button customize */
+    --tertiary-btn-border-color: var(--tertiary-border-color);
+    --tertiary-btn-font-size: inherit;
+    --tertiary-btn-hover-bg-color: var(--tertiary-hover-color);
+    --tertiary-btn-hover-text-color: var(--tertiary-btn-bg-color);
+    --tertiary-btn-active-bg-color: var(--tertiary-hover-color);
+    --tertiary-btn-active-text-color: var(--tertiary-btn-bg-color);
+}
+
+/* Shadows */
+
+:root{
+    --box-shadow-color:rgba(0, 0, 0, 0.1);
+}
+
+/* Layout */
+
+:root{
+    --container-left-padding: 22px;
+    --container-right-padding: 22px;
+}
+
+/* Video Section */
+:root {
+    --video-ratio: 56.25%;
+}

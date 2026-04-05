@@ -1,0 +1,43 @@
+{% liquid
+  assign specs = nil
+  if specifications != ''
+  assign namespace = specifications | split: '.' | first
+  assign key = specifications | split: '.' | last
+  assign specs = product.metafields[namespace][key].value
+  endif
+%}
+{% if collapse_content != '' or specs != nil %}
+  <collapsible-content class="collapsible-detail {{ class }}" aria-expanded="{{ collapse_state }}" {{ attr }}>
+      <button type="button" class="collapsible-toggle">
+        <span class="text">{{ toggle_text }}</span>
+        <span class="icon closed">{% render 'icon-plus-light' %}</span>
+        <span class="icon opened">{% render 'icon-minus-light' %}</span>
+      </button>
+    <div class="collapsible-content" {% if opened %}style="height: 0px;"{% endif %}>
+      <div class="collapsible-content-inner {% if specs != nil %}specification-container{% else %}richtext-container{% endif %}">
+          {% if specs != nil %}
+            {% liquid
+              assign namespace = specifications | split: '.' | first
+              assign key = specifications | split: '.' | last
+              assign specs = product.metafields[namespace][key].value
+            %}
+            <ul>
+              {% for spec in specs %}
+                {% liquid
+                  assign spec_name = spec | split: ':' | first | strip
+                  assign spec_value = spec | split: ':' | last | strip
+                %}
+                <li>
+                  <p class="spec-name">{{ spec_name }}</p>
+                  <p class="spec-value">{{ spec_value }}</p>
+                </li>
+              {% endfor %}
+            </ul>
+            
+          {% else %}
+            {{ collapse_content }}
+          {% endif %}
+      </div>
+    </div>
+  </collapsible-content>
+{% endif %}

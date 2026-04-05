@@ -1,0 +1,268 @@
+{% comment %}
+  ============================================================
+  snippets/global-schema.liquid
+  Injected once in <head> via theme.liquid  {% render 'global-schema' %}
+
+  Schemas covered:
+  1. WebSite + SiteLinksSearchBox
+  2. Organization (Knowledge Panel)
+  3. BreadcrumbList (per page type)
+  4. CollectionPage ItemList  ← NEW (collection pages only)
+  5. Per-product Product + Offer ← NEW (collection pages only)
+
+  All values pulled from live Shopify variables — no hardcoding
+  except business details (phone, address, social links).
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign site_url = request.origin
+  assign site_name = shop.name
+  assign site_desc = shop.description | default: 'Managed IT Services Perth — EvoTech Digital'
+-%}
+
+{%- comment -%} ── 1. WEBSITE + SITELINKS SEARCHBOX ── {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "{{ site_url }}/#website",
+  "url": "{{ site_url }}/",
+  "name": {{ site_name | json }},
+  "description": {{ site_desc | json }},
+  "potentialAction": [
+    {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "{{ site_url }}/search?q={search_term_string}&type=product"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  ],
+  "inLanguage": "en-AU"
+}
+</script>
+
+{%- comment -%} ── 2. ORGANIZATION ── {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "{{ site_url }}/#organization",
+  "name": {{ site_name | json }},
+  "url": "{{ site_url }}/",
+  "logo": {
+    "@type": "ImageObject",
+    "@id": "{{ site_url }}/#logo",
+    "url": "{{ site_url }}/cdn/shop/files/evotech-digital-logo.png",
+    "width": 400,
+    "height": 120,
+    "caption": {{ site_name | json }}
+  },
+  "image": { "@id": "{{ site_url }}/#logo" },
+  "description": "Perth-based managed IT services provider offering IT support, cyber security, cloud solutions and IT consulting for small to medium businesses across Western Australia.",
+  "telephone": "+61466911816",
+  "email": "info@evotech.au",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Perth",
+    "addressRegion": "WA",
+    "addressCountry": "AU"
+  },
+  "areaServed": {
+    "@type": "State",
+    "name": "Western Australia"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+61466911816",
+      "contactType": "customer support",
+      "areaServed": "AU",
+      "availableLanguage": "English",
+      "contactOption": "TollFree",
+      "hoursAvailable": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "08:00",
+        "closes": "18:00"
+      }
+    },
+    {
+      "@type": "ContactPoint",
+      "telephone": "+61466911816",
+      "contactType": "sales",
+      "areaServed": "AU",
+      "availableLanguage": "English"
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/company/evotech-digital",
+    "https://www.facebook.com/evotechdigital",
+    "https://g.page/evotech-digital"
+  ],
+  "foundingDate": "2014",
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "minValue": 5,
+    "maxValue": 20
+  },
+  "knowsAbout": [
+    "Managed IT Services",
+    "Cyber Security",
+    "Microsoft 365",
+    "Cloud Migration",
+    "IT Support Perth",
+    "Network Design",
+    "IT Consulting"
+  ]
+}
+</script>
+
+{%- comment -%} ── 3. BREADCRUMBLIST (per page type) ── {%- endcomment -%}
+{%- if request.page_type == 'product' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site_url }}/"},
+    {"@type": "ListItem", "position": 2, "name": {{ product.type | default: 'Products' | json }}, "item": "{{ site_url }}/collections/{% if product.collections.first %}{{ product.collections.first.handle }}{% else %}all{% endif %}"},
+    {"@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": "{{ site_url }}{{ product.url }}"}
+  ]
+}
+</script>
+{%- elsif request.page_type == 'collection' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site_url }}/"},
+    {"@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": "{{ site_url }}{{ collection.url }}"}
+  ]
+}
+</script>
+{%- elsif request.page_type == 'page' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site_url }}/"},
+    {"@type": "ListItem", "position": 2, "name": {{ page.title | json }}, "item": "{{ site_url }}{{ page.url }}"}
+  ]
+}
+</script>
+{%- elsif request.page_type == 'article' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site_url }}/"},
+    {"@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": "{{ site_url }}/blogs/{{ blog.handle }}"},
+    {"@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": "{{ site_url }}{{ article.url }}"}
+  ]
+}
+</script>
+{%- elsif request.page_type == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site_url }}/"}
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%}
+  ── 4 + 5. COLLECTION PAGE: ItemList + Per-product Product/Offer schemas ──
+
+  These only render on collection pages. Placing them in global-schema.liquid
+  (injected in <head>) keeps template-collection.liquid clean and avoids
+  any Liquid linter warnings from schema blocks in section files.
+
+  FIX NOTES:
+  • image_url: width: N  (img_url was deprecated in Shopify 2.0)
+  • next_year assigned BEFORE JSON block  (| plus on date string = string concat)
+  • price: money_without_currency | remove: ',' | remove: ' '  (locale-safe)
+  • ItemList ListItem has NO nested Offer  (invalid per schema.org spec)
+{%- endcomment -%}
+
+{%- if request.page_type == 'collection' -%}
+
+  {%- comment -%} Compute next year once, correctly, before any JSON output {%- endcomment -%}
+  {%- assign next_year = 'now' | date: '%Y' | plus: 1 -%}
+
+  {%- paginate collection.products by 12 -%}
+
+  {%- comment -%} ── 4. ITEMLIST (GSC collection-page rich result) ── {%- endcomment -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": {{ collection.title | json }},
+    "description": {{ collection.description | strip_html | truncatewords: 50 | json }},
+    "url": "{{ site_url }}{{ collection.url }}",
+    "numberOfItems": {{ collection.products_count }},
+    "itemListElement": [
+      {%- for product in collection.products -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index | plus: paginate.current_offset }},
+        "url": "{{ site_url }}{{ product.url }}",
+        "name": {{ product.title | json }},
+        "image": "{{ product.featured_image | image_url: width: 800 }}"
+      }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+
+  {%- comment -%} ── 5. PER-PRODUCT SCHEMAS (Google Merchant Center) ── {%- endcomment -%}
+  {%- for product in collection.products -%}
+  {%- assign product_price = product.price | money_without_currency | remove: ',' | remove: ' ' -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "{{ site_url }}{{ product.url }}#product",
+    "name": {{ product.title | json }},
+    "description": {{ product.description | strip_html | truncatewords: 160 | json }},
+    "url": "{{ site_url }}{{ product.url }}",
+    "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+    "brand": {
+      "@type": "Brand",
+      "name": {{ product.vendor | default: shop.name | json }}
+    },
+    "image": [
+      {%- for media in product.media limit: 3 -%}
+      "{{ media | image_url: width: 800 }}"{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    "offers": {
+      "@type": "Offer",
+      "url": "{{ site_url }}{{ product.url }}",
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": "{{ product_price }}",
+      {%- if product.compare_at_price > product.price -%}
+      "priceValidUntil": "{{ next_year }}-12-31",
+      {%- endif -%}
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+      "seller": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }}
+      }
+    }
+  }
+  </script>
+  {%- endfor -%}
+
+  {%- endpaginate -%}
+
+{%- endif -%}

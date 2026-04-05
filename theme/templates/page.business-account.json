@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "business_account_application": {
+      "type": "business-account-application",
+      "settings": {
+        "color_scheme": "scheme_1"
+      }
+    }
+  },
+  "order": [
+    "business_account_application"
+  ]
+}

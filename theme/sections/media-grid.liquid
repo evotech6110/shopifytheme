@@ -1,0 +1,383 @@
+{{ 'media-grid.css' | asset_url | stylesheet_tag: preload: true }}
+<section class="media-grid ic-py-14 color-{{ section.settings.color_scheme }} gradient-enabled">
+  {% if section.settings.bg-image != blank %}
+    {% liquid
+      if section.settings.bg-image.alt != null
+        assign alt = section.settings.bg-image.alt
+      else
+        assign alt = section.settings.bg-image.src | split: '/' | last | split: '.' | first
+      endif
+    %}
+    {{
+      section.settings.bg-image
+      | image_url: width: 3840
+      | image_tag:
+        loading: 'lazy',
+        sizes: '(max-width: 639px) 100vw, (max-width: 767px) 850px, (max-width: 899px) 1100px, (max-width: 1023px) 1500px, (max-width: 1279px) 2000px, (max-width: 1535px) 3000px, 3840px',
+        widths: '375, 500, 600, 750, 850, 1100, 1500, 1780, 2000, 3000, 3840',
+        alt: alt,
+        class: "background-image"
+    }}
+  {% endif %}
+  <div class="ic-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="ic-break-words ic-text-center ic-mb-10">{{ section.settings.heading }}</h2>
+    {% endif %}
+    <div class="grid-wrapper" style="--grid-aspect-ratio: {{ section.settings.grid-ratio }}">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'media' %}
+            {% liquid
+              assign blockRow = block.settings.media-row | times: 1
+              assign blockColumn = block.settings.media-column | times: 1
+              assign assignedRow = blockRow
+              assign assignedColumn = blockColumn
+              assign sum = blockRow | plus: blockColumn
+
+              if blockRow == blockColumn
+                assign assignedRow = 2 
+                assign assignedColumn = 2
+              elsif blockColumn == 3 
+                if  sum > 4
+                  assign assignedRow = blockRow | times: 0.75
+                  assign assignedColumn = blockColumn | minus : 1
+                else
+                  assign assignedRow = blockRow | times: 1.25 
+                  assign assignedColumn = blockColumn | times: 1.5 | floor
+                endif
+              elsif blockColumn == 1 or blockColumn == 2
+                assign assignedRow = blockRow | times: 2
+                assign assignedColumn = blockColumn | times: 2
+                if sum == 5 and blockColumn == 2 
+                  assign assignedRow = blockRow 
+                  assign assignedColumn = blockColumn 
+                endif
+              elsif blockColumn == 4
+                if sum > 6
+                  assign assignedRow = blockRow | divided_by: 2.0
+                  assign assignedColumn = blockColumn | divided_by: 2
+                else 
+                  assign assignedRow = blockRow
+                  assign assignedColumn = blockColumn
+                endif
+              endif
+            %}
+            <div class="grid-media" style="--grid-media-column: {{ block.settings.media-column }}; --grid-media-row: {{ block.settings.media-row }}; --grid-tablet-column: {{ assignedColumn }}; --grid-tablet-row: {{ assignedRow }};--grid-mobile-column: {{ block.settings.media-column-mobile }}; --grid-mobile-row: {{ block.settings.media-row-mobile }};" {{ block.shopify_attributes }}>
+              <div class="media-container">
+                {% liquid
+                  assign media_inner_class = block.settings.grid-image-style
+                  if block.settings.grid-image-mobile != blank
+                  assign media_inner_class = media_inner_class | append: " " | append: block.settings.grid-image-style-mobile
+                  endif
+                %}
+                <div class="media-inner {{ media_inner_class }}">
+                  {% if block.settings.grid-image != blank or block.settings.grid-image-mobile != blank %}
+                    {% liquid
+                      if block.settings.grid-image.alt != null
+                        assign alt = block.settings.grid-image.alt
+                      else
+                        assign alt = block.settings.grid-image.src | split: '/' | last | split: '.' | first
+                      endif
+
+                      if block.settings.grid-image-mobile.alt != null
+                        assign mobile_alt = block.settings.grid-image-mobile.alt
+                      else
+                        assign mobile_alt = block.settings.grid-image-mobile.src | split: '/' | last | split: '.' | first
+                      endif
+
+                      if block.settings.grid-image-style == 'fit'
+                      assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 605px, (max-width: 899px) 730px, (max-width: 1023px) 865px, (max-width: 1279px) 990px, (max-width: 1535px) 1245px, 1500px'
+                      assign srcset = '250, 375, 500, 610, 750, 900, 1000, 1300, 1500'
+                      assign largets_media_width = 1500
+                      else
+                      assign sizes = '(max-width: 639px) calc(200vw - 40px), (max-width: 767px) 1210px, (max-width: 899px) 1460px, (max-width: 1023px) 1730px, (max-width: 1279px) 1880px, (max-width: 1535px) 2490px, 3000px'
+                      assign srcset = '250, 300, 400, 500, 750, 1000, 1220, 1500, 1800, 2000, 2600, 3000'
+                      assign largets_media_width = 3000
+                      endif
+                    %}
+
+                    {% if block.settings.grid-image != blank %}
+                      {{
+                        block.settings.grid-image
+                        | image_url: width: largets_media_width
+                        | image_tag:
+                          loading: 'lazy',
+                          sizes: sizes,
+                          widths: srcset,
+                          alt: alt,
+                          class: 'grid-image desktop-image'
+                      }}
+                    {% endif %}
+
+                    {% if block.settings.grid-image-mobile != blank %}
+                      {% liquid
+                        if block.settings.grid-image-style-mobile == 'fit-mobile'
+                        assign mobile_sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 605px, (max-width: 899px) 730px, (max-width: 1023px) 865px, (max-width: 1279px) 990px, (max-width: 1535px) 1245px, 1500px'
+                        assign mobile_srcset = '250, 375, 500, 610, 750, 900, 1000, 1300, 1500'
+                        assign mobile_largets_media_width = 1500
+                        else
+                        assign mobile_sizes = '(max-width: 639px) calc(200vw - 40px), (max-width: 767px) 1210px, (max-width: 899px) 1460px, (max-width: 1023px) 1730px, (max-width: 1279px) 1880px, (max-width: 1535px) 2490px, 3000px'
+                        assign mobile_srcset = '250, 300, 400, 500, 750, 1000, 1220, 1500, 1800, 2000, 2600, 3000'
+                        assign mobile_largets_media_width = 3000
+                        endif
+                      %}
+                      {{
+                        block.settings.grid-image-mobile
+                        | image_url: width: mobile_largets_media_width
+                        | image_tag:
+                          loading: 'lazy',
+                          sizes: mobile_sizes,
+                          widths: mobile_srcset,
+                          alt: mobile_alt,
+                          class: 'grid-image mobile-image'
+                      }}
+                    {% endif %}
+
+                  {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'grid-image' }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.media_grid.name",
+  "class": "section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings_schema.general.settings.color_scheme.label",
+      "default": "scheme_1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.media_grid.settings.title.label",
+      "default": "Heading",
+      "placeholder": "t:sections.media_grid.settings.title.placeholder"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg-image",
+      "label": "t:sections.media_grid.settings.bg_image.label"
+    },
+    {
+      "type": "range",
+      "id": "grid-ratio",
+      "min": 0.5,
+      "max": 2,
+      "step": 0.1,
+      "label":"t:sections.media_grid.settings.grid_ratio.label",
+      "default": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "t:sections.media_grid.blocks.grid.name",
+      "limit": 16,
+      "settings": [
+        {
+          "type":"header",
+          "content": "t:sections.media_grid.blocks.grid.settings.desktop.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid-image",
+          "label": "t:sections.media_grid.blocks.grid.settings.grid_image.label"
+        },
+        {
+          "type": "select",
+          "id": "grid-image-style",
+          "options": [
+            {
+              "value": "fit",
+              "label": "t:sections.media_grid.blocks.grid.settings.grid_image_style.option_1"
+            },
+            {
+              "value": "fill",
+              "label": "t:sections.media_grid.blocks.grid.settings.grid_image_style.option_2"
+            }
+          ],
+          "default": "fit",
+          "label": "t:sections.media_grid.blocks.grid.settings.grid_image_style.label"
+        },
+        {
+          "type": "select",
+          "id": "media-column",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ],
+          "label": "t:sections.media_grid.blocks.grid.settings.column.label",
+          "default": "1"
+        },
+        {
+          "type": "select",
+          "id": "media-row",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            }
+          ],
+          "label": "t:sections.media_grid.blocks.grid.settings.row.label",
+          "default": "1"
+        },
+        {
+          "type":"header",
+          "content": "t:sections.media_grid.blocks.grid.settings.mobile.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid-image-mobile",
+          "label": "t:sections.media_grid.blocks.grid.settings.grid_image.label"
+        },
+        {
+          "type": "select",
+          "id": "grid-image-style-mobile",
+          "options": [
+            {
+              "value": "fit-mobile",
+              "label": "t:sections.media_grid.blocks.grid.settings.grid_image_style.option_1"
+            },
+            {
+              "value": "fill-mobile",
+              "label": "t:sections.media_grid.blocks.grid.settings.grid_image_style.option_2"
+            }
+          ],
+          "default": "fit-mobile",
+          "label": "t:sections.media_grid.blocks.grid.settings.grid_image_style.label"
+        },
+        {
+          "type": "select",
+          "id": "media-column-mobile",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            }
+          ],
+          "label": "t:sections.media_grid.blocks.grid.settings.column.label",
+          "default": "1"
+        },
+        {
+          "type": "select",
+          "id": "media-row-mobile",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            }
+          ],
+          "label": "t:sections.media_grid.blocks.grid.settings.row.label",
+          "default": "1"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "t:sections.media_grid.name",
+      "blocks": [
+        {
+          "type": "media",
+          "settings": {
+              "media-column": "3",
+              "media-row": "1",
+              "media-column-mobile": "2",
+              "media-row-mobile": "1"
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+              "media-column": "1",
+              "media-row": "1",
+              "media-column-mobile": "1",
+              "media-row-mobile": "1"
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+              "media-column": "2",
+              "media-row": "2",
+              "media-column-mobile": "1",
+              "media-row-mobile": "1"
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+              "media-column": "2",
+              "media-row": "1",
+              "media-column-mobile": "2",
+              "media-row-mobile": "1"
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+              "media-column": "1",
+              "media-row": "1",
+              "media-column-mobile": "1",
+              "media-row-mobile": "1"
+          }
+        },
+        {
+          "type": "media",
+          "settings": {
+              "media-column": "1",
+              "media-row": "1",
+              "media-column-mobile": "1",
+              "media-row-mobile": "1"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["*"]
+  }
+}
+{% endschema %}

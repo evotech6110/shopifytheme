@@ -1,0 +1,13 @@
+{% for group in robots.default_groups %}
+  {{- group.user_agent -}}
+
+  {% for rule in group.rules %}
+    {% unless rule.directive == 'Disallow' and rule.value contains '/policies/' %}
+      {{- rule.directive -}}: {{ rule.value -}}
+    {% endunless %}
+  {% endfor %}
+
+  {%- if group.sitemap != blank -%}
+    Sitemap: {{ group.sitemap }}
+  {%- endif -%}
+{% endfor %}

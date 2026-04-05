@@ -1,0 +1,154 @@
+<div class="ic-py-14 video-section color-{{ section.settings.color_scheme }} gradient-enabled" data-id="{{ section.id }}">
+  <div class="ic-container video-section-container" style="width:{{ section.settings.video_width }}%;">
+    {%- unless section.settings.heading == blank -%}
+      <div class="ic-flex ic-justify-content-center ic-align-items-center">
+        <div class="title-wrapper title-wrapper--no-top-margin">
+          <h2 class="ic-break-words ic-mb-10">{{ section.settings.heading }}</h2>
+        </div>
+      </div>
+    {%- endunless -%}
+    <deferred-media id="deferred-media-{{ section.id }}" class="video-ratio">
+      <button
+        id="video-section-btn-{{ section.id }}"
+        class="ic-w-100 ic-relative ic-border-0 video-button"
+        type="button"
+        aria-label="{{ 'sections.video.load_video' | t: description: section.settings.description | escape }}"
+      >
+        {%- if section.settings.video_cover_image != blank -%}
+          {%- assign alt = 'sections.video.load_video' | t: description: section.settings.description | escape -%}
+          {{
+            section.settings.video_cover_image
+            | image_url: width: 3840
+            | image_tag:
+              width: nil,
+              loading: 'lazy',
+              sizes: '(min-width: 1536px) 1600px, (min-width: 750px) calc(100vw - 40px), 100vw',
+              widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+              alt: alt,
+              class: section.settings.video_cover_image_style
+          }}
+        {%- else -%}
+          {% assign svg_class = 'ic-w-100 ic-h-100 ic-object-center '
+            | append: section.settings.video_cover_image_style
+          %}
+          {{ 'lifestyle-2' | placeholder_svg_tag: svg_class }}
+        {%- endif -%}
+        <span class="ic-block ic-absolute ic-w80px ic-h80px video-section--playicon">
+          {%- render 'icon-play' -%}
+        </span>
+      </button>
+      <template id="template-{{ section.id }}">
+        {%- if section.settings.video_url.type == 'youtube' -%}
+          <iframe
+            src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?enablejsapi=1"
+            class="video-iframe"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+            title="{{ section.settings.description | escape }}"
+          ></iframe>
+        {%- else -%}
+          <iframe
+            src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}"
+            class="video-iframe"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+            title="{{ section.settings.description | escape }}"
+          ></iframe>
+        {%- endif -%}
+      </template>
+      <div id="video-{{ section.id }}"></div>
+    </deferred-media>
+  </div>
+</div>
+{% javascript %}
+  let vedio_count = document.querySelectorAll('.video-section');
+  for (i = 0; i < vedio_count.length; i++) {
+    let section_id = vedio_count[i].dataset.id;
+    let button = document.querySelector('#video-section-btn-' + section_id);
+    let template = document.querySelector('#template-' + section_id).content;
+    let targetDiv = document.querySelector('#video-' + section_id);
+    let deferred_media = document.querySelector('#deferred-media-' + section_id);
+
+    button.addEventListener('click', function () {
+      let clonedTemplate = template.cloneNode(true);
+      targetDiv.appendChild(clonedTemplate);
+      deferred_media.setAttribute('loaded', true);
+    });
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.video.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings_schema.general.settings.color_scheme.label",
+      "default": "scheme_1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Video",
+      "label": "t:sections.video.settings.heading.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_cover_image",
+      "label": "t:sections.video.settings.video_cover_image.label"
+    },
+    {
+      "type": "select",
+      "id": "video_cover_image_style",
+      "options": [
+        {
+          "value": "ic-object-cover",
+          "label": "t:sections.video.settings.video_cover_image_style.option_1.label"
+        },
+        {
+          "value": "ic-object-contain",
+          "label": "t:sections.video.settings.video_cover_image_style.option_2.label"
+        }
+      ],
+      "default": "ic-object-cover",
+      "label": "t:sections.video.settings.video_cover_image_style.label"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": ["youtube", "vimeo"],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+      "label": "t:sections.video.settings.video_url.label",
+      "info": "t:sections.video.settings.video_url.info"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "t:sections.video.settings.description.label",
+      "default": "Video Alt text",
+      "info": "t:sections.video.settings.description.info"
+    },
+    {
+      "type": "range",
+      "id": "video_width",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "t:sections.video.settings.video_width.label",
+      "default": 50,
+      "info": "t:sections.video.settings.video_width.info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.video.name"
+    }
+  ],
+  "disabled_on": {
+      "groups": ["*"]
+  }
+}
+{% endschema %}
