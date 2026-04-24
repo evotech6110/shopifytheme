@@ -70,11 +70,19 @@
         <div class="evo-header-right">
           <nav class="evo-header-nav" aria-label="Main Navigation">
             <ul class="evo-header-nav-list">
-              {%- for link in nav.links -%}
-                <li class="evo-header-nav-item">
-                  <a href="{{ link.url }}" class="evo-header-nav-link">{{ link.title }}</a>
-                </li>
-              {%- endfor -%}
+              {%- if nav.links.size > 0 -%}
+                {%- for link in nav.links -%}
+                  <li class="evo-header-nav-item">
+                    <a href="{{ link.url }}" class="evo-header-nav-link">{{ link.title }}</a>
+                  </li>
+                {%- endfor -%}
+              {%- else -%}
+                {%- comment -%} Fallback links if menu is empty {%- endcomment -%}
+                <li class="evo-header-nav-item"><a href="/pages/solutions" class="evo-header-nav-link">Solutions</a></li>
+                <li class="evo-header-nav-item"><a href="/pages/services" class="evo-header-nav-link">Services</a></li>
+                <li class="evo-header-nav-item"><a href="/collections/all" class="evo-header-nav-link">Hardware</a></li>
+                <li class="evo-header-nav-item"><a href="/pages/contact" class="evo-header-nav-link">Contact</a></li>
+              {%- endif -%}
             </ul>
           </nav>
           <div class="evo-header-actions">
@@ -99,11 +107,18 @@
       <button class="evo-header-drawer-close" id="EvoDrawerClose">&times;</button>
     </div>
     <nav class="evo-header-drawer-nav">
-      {% for link in nav.links %}
-        <div class="evo-header-drawer-item">
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        </div>
-      {% endfor %}
+      {% if nav.links.size > 0 %}
+        {% for link in nav.links %}
+          <div class="evo-header-drawer-item">
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="evo-header-drawer-item"><a href="/pages/solutions">Solutions</a></div>
+        <div class="evo-header-drawer-item"><a href="/pages/services">Services</a></div>
+        <div class="evo-header-drawer-item"><a href="/collections/all">Hardware</a></div>
+        <div class="evo-header-drawer-item"><a href="/pages/contact">Contact</a></div>
+      {% endif %}
     </nav>
   </div>
 </div>
@@ -223,33 +238,24 @@
     width: 100%;
     position: relative;
     min-height: 80px;
+    position: relative;
   }
 
-  /* Centerpiece placeholder removed — now using .evo-header-center flex column */
-
-  .evo-header-left, .evo-header-right {
+  .evo-header-left, 
+  .evo-header-center, 
+  .evo-header-right {
     display: flex;
     align-items: center;
-    z-index: 20;
-  }
-
-  .evo-header-left { 
-    flex: 1; 
-    display: flex;
-    justify-content: flex-start;
-  }
-  .evo-header-center {
     flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 100%;
   }
-  .evo-header-right { 
-    flex: 1; 
-    display: flex;
-    justify-content: flex-end; 
-    gap: 30px;
-  }
+
+  .evo-header-left { justify-content: flex-start; }
+  .evo-header-center { justify-content: center; }
+  .evo-header-right { justify-content: flex-end; gap: 24px; }
+
+  /* Centerpiece removal */
+  .evo-header-centerpiece { display: none; }
 
   /* Logo */
   .evo-header-logo {
