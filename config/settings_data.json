@@ -1,5 +1,15 @@
 {
   "current": {
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "main-menu",
+          "cta_text": "Get Support",
+          "cta_link": "https://support.evotech.au"
+        }
+      }
+    },
     "color_bg": "#05040C",
     "color_bg2": "#0B0820",
     "color_ink": "#FFFFFF",
@@ -10,7 +20,21 @@
     "social_facebook_link": "",
     "social_instagram_link": "",
     "social_linkedin_link": "",
-    "social_twitter_link": ""
+    "social_twitter_link": "",
+    "color_schemes": [
+      {
+        "id": "scheme-1",
+        "settings": {
+          "background": "#05040C",
+          "background_gradient": "",
+          "text": "#FFFFFF",
+          "button": "#3D2EDE",
+          "button_label": "#FFFFFF",
+          "secondary_button_label": "#A8E898",
+          "shadow": "#000000"
+        }
+      }
+    ]
   },
   "presets": {
     "Default": {
@@ -20,7 +44,21 @@
       "color_dim": "#B6B5C6",
       "color_mint": "#A8E898",
       "color_indigo": "#3D2EDE",
-      "color_peach": "#FF7A4A"
+      "color_peach": "#FF7A4A",
+      "color_schemes": [
+        {
+          "id": "scheme-1",
+          "settings": {
+            "background": "#05040C",
+            "background_gradient": "",
+            "text": "#FFFFFF",
+            "button": "#3D2EDE",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#A8E898",
+            "shadow": "#000000"
+          }
+        }
+      ]
     }
   }
 }
