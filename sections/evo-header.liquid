@@ -1,0 +1,609 @@
+{%- comment -%}
+  Evotech "Sanity-Inspired" Neural Header
+  Refactored for absolute centerpiece stability and homepage compatibility.
+{%- endcomment -%}
+
+{%- assign nav = linklists[section.settings.menu] -%}
+{%- if nav == blank -%}{%- assign nav = linklists['main-menu'] -%}{%- endif -%}
+
+{%- assign utility = linklists[section.settings.utility_menu] -%}
+{%- if utility == blank -%}{%- assign utility = linklists['top-utility'] -%}{%- endif -%}
+
+<header class="evo-header-root" id="EvoHeader" role="banner">
+  {%- comment -%} Top Utility Bar {%- endcomment -%}
+  <div class="evo-header-util">
+    <div class="evo-header-container">
+      <div class="evo-header-util-inner">
+        <div class="evo-header-util-msg">
+          <div class="neural-beam"></div>
+          <span class="evo-header-util-dot"></span>
+          <span>Australian Hosted AI Multi-Model API</span>
+        </div>
+        <nav class="evo-header-util-nav">
+          {%- for link in utility.links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Main Header {%- endcomment -%}
+  <div class="evo-header-main">
+    <div class="evo-header-container">
+      <div class="evo-header-main-inner">
+        
+        {%- comment -%} Left: Logo {%- endcomment -%}
+        <div class="evo-header-left">
+          <a href="/" class="evo-header-logo">
+            <div class="evo-header-logo-mark">
+              <svg viewBox="0 0 44 44" fill="none">
+                <circle cx="22" cy="22" r="20" stroke="url(#logoGrad)" stroke-width="2"/>
+                <path d="M22 12L14 22L22 32L30 22L22 12Z" fill="#A8E898"/>
+                <circle cx="22" cy="22" r="4" fill="#fff"/>
+                <defs>
+                  <linearGradient id="logoGrad" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#A8E898"/><stop offset="1" stop-color="#3D2EDE"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="evo-header-logo-text">
+              <span class="evo-header-brand">EVOTECH</span>
+              <span class="evo-header-tagline">INSPIRE . AUTOMATE . EVOLVE</span>
+            </div>
+          </a>
+        </div>
+
+        {%- comment -%} Center: Brain Centerpiece {%- endcomment -%}
+        <div class="evo-header-center">
+          <div class="evo-header-brain">
+            <svg class="evo-header-brain-viz" viewBox="0 0 56 40" fill="none">
+              <path class="brain-halo" d="M28 35C41.2548 35 52 28.2843 52 20C52 11.7157 41.2548 5 28 5C14.7452 5 4 11.7157 4 20C4 28.2843 14.7452 35 28 35Z" stroke="#A8E898" stroke-opacity="0.2"/>
+              <circle class="brain-node core" cx="28" cy="20" r="4" fill="#A8E898"/><circle class="brain-node n1" cx="15" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n2" cx="41" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n3" cx="15" cy="25" r="2" fill="#A8E898"/><circle class="brain-node n4" cx="41" cy="25" r="2" fill="#A8E898"/>
+            </svg>
+            <span class="evo-header-brain-label">EVOLVE <span class="dim">AI</span></span>
+          </div>
+        </div>
+
+        {%- comment -%} Right: Navigation & Actions {%- endcomment -%}
+        <div class="evo-header-right">
+          <nav class="evo-header-nav" aria-label="Main Navigation">
+            <ul class="evo-header-nav-list">
+              {%- if nav.links.size > 0 -%}
+                {%- for link in nav.links -%}
+                  <li class="evo-header-nav-item">
+                    <a href="{{ link.url }}" class="evo-header-nav-link">{{ link.title }}</a>
+                  </li>
+                {%- endfor -%}
+              {%- else -%}
+                {%- comment -%} Fallback links if menu is empty {%- endcomment -%}
+                <li class="evo-header-nav-item"><a href="/pages/solutions" class="evo-header-nav-link">Solutions</a></li>
+                <li class="evo-header-nav-item"><a href="/pages/services" class="evo-header-nav-link">Services</a></li>
+                <li class="evo-header-nav-item"><a href="/collections/all" class="evo-header-nav-link">Hardware</a></li>
+                <li class="evo-header-nav-item"><a href="/pages/contact" class="evo-header-nav-link">Contact</a></li>
+              {%- endif -%}
+            </ul>
+          </nav>
+          <div class="evo-header-actions">
+            <a href="/cart" class="evo-header-icon-btn" aria-label="Cart">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </a>
+            <a href="{{ section.settings.cta_link | default: '#' }}" class="evo-header-cta pulse-btn">{{ section.settings.cta_text | default: 'Get Support' }}</a>
+          </div>
+          <button class="evo-header-burger" aria-label="Menu" id="EvoBurger"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{%- comment -%} Mobile Drawer {%- endcomment -%}
+<div class="evo-header-drawer" id="EvoDrawer">
+  <div class="evo-header-drawer-overlay" id="EvoDrawerOverlay"></div>
+  <div class="evo-header-drawer-content">
+    <div class="evo-header-drawer-header">
+      <span class="evo-header-logo-name">EVOTECH</span>
+      <button class="evo-header-drawer-close" id="EvoDrawerClose">&times;</button>
+    </div>
+    <nav class="evo-header-drawer-nav">
+      {% if nav.links.size > 0 %}
+        {% for link in nav.links %}
+          <div class="evo-header-drawer-item">
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="evo-header-drawer-item"><a href="/pages/solutions">Solutions</a></div>
+        <div class="evo-header-drawer-item"><a href="/pages/services">Services</a></div>
+        <div class="evo-header-drawer-item"><a href="/collections/all">Hardware</a></div>
+        <div class="evo-header-drawer-item"><a href="/pages/contact">Contact</a></div>
+      {% endif %}
+    </nav>
+  </div>
+</div>
+
+<style>
+  .evo-header-root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999 !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: 'Satoshi', sans-serif;
+    color: #ffffff !important;
+  }
+
+  .evo-header-root.is-scrolled {
+    background: rgba(5, 4, 12, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .evo-header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Utility Bar */
+  .evo-header-util {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    height: 36px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    transition: height 0.3s ease, opacity 0.3s ease;
+  }
+
+  .is-scrolled .evo-header-util {
+    height: 0;
+    opacity: 0;
+  }
+
+  .evo-header-util-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .evo-header-util-msg {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+
+  .neural-beam {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(168, 232, 152, 0.1), transparent);
+    animation: beam-slide 4s infinite linear;
+  }
+
+  @keyframes beam-slide {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  .evo-header-util-dot {
+    width: 6px;
+    height: 6px;
+    background: #A8E898;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #A8E898;
+  }
+
+  .evo-header-util-nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  .evo-header-util-nav a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .evo-header-util-nav a:hover { color: #fff; }
+
+  /* Main Header */
+  .evo-header-main {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    transition: height 0.3s ease;
+  }
+
+  .is-scrolled .evo-header-main {
+    height: 70px;
+  }
+
+  .evo-header-main-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    min-height: 80px;
+    position: relative;
+  }
+
+  .evo-header-left, 
+  .evo-header-center, 
+  .evo-header-right {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+  }
+
+  .evo-header-left { justify-content: flex-start; }
+  .evo-header-center { justify-content: center; }
+  .evo-header-right { justify-content: flex-end; gap: 24px; }
+
+  /* Centerpiece removal */
+  .evo-header-centerpiece { display: none; }
+
+  /* Logo */
+  .evo-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #ffffff !important;
+  }
+
+  .evo-header-logo-mark {
+    width: 44px;
+    height: 44px;
+  }
+
+  .evo-header-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .evo-header-brand {
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .evo-header-tagline {
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+  }
+
+  /* Navigation */
+  .evo-header-nav-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 8px;
+  }
+
+  .evo-header-nav-link {
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85) !important;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: all 0.2s ease;
+  }
+
+  .evo-header-nav-link:hover {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Actions */
+  .evo-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .evo-header-icon-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+
+  .evo-header-icon-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .evo-header-cta {
+    background: #FF7A4A;
+    color: #05040C !important;
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 122, 74, 0.3);
+  }
+
+  .evo-header-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 122, 74, 0.5);
+  }
+
+  .pulse-btn {
+    animation: btn-pulse 3s infinite;
+  }
+
+  @keyframes btn-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 122, 74, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 122, 74, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 122, 74, 0); }
+  }
+
+  /* Brain Centerpiece */
+  .evo-header-brain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(168, 232, 152, 0.15);
+    border-radius: 100px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .evo-header-brain-viz {
+    width: 44px;
+    height: 32px;
+    animation: brainBreath 4s ease-in-out infinite;
+  }
+
+  .evo-header-brain-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: #A8E898;
+    text-transform: uppercase;
+  }
+
+  .evo-header-brain-label .dim { color: rgba(255,255,255,0.4); }
+
+  @keyframes brainBreath {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(168, 232, 152, 0.2)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(168, 232, 152, 0.4)); }
+  }
+
+  .brain-node { animation: nodePulse 2s ease-in-out infinite; }
+  .brain-node.n1 { animation-delay: 0.2s; }
+  .brain-node.n2 { animation-delay: 0.4s; }
+  .brain-node.n3 { animation-delay: 0.6s; }
+  .brain-node.n4 { animation-delay: 0.8s; }
+  @keyframes nodePulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .brain-halo { animation: haloPulse 3s ease-in-out infinite; transform-origin: center; }
+  @keyframes haloPulse {
+    0%, 100% { opacity: 0.1; transform: scale(0.9); }
+    50% { opacity: 0.3; transform: scale(1.1); }
+  }
+
+  /* Burger */
+  .evo-header-burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  .evo-header-burger span {
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 1024px) {
+    .evo-header-nav { display: none; }
+    .evo-header-burger { display: flex; }
+    .evo-header-cta { display: none; }
+    .evo-header-centerpiece { display: none; }
+  }
+
+  /* Brain Centerpiece */
+  .evo-header-brain-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    flex-shrink: 0;
+  }
+  .evo-header-brain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(168, 232, 152, 0.25);
+    border-radius: 100px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 0 20px rgba(168, 232, 152, 0.1);
+  }
+  .evo-header-brain-viz {
+    width: 44px;
+    height: 32px;
+    animation: brainBreath 4s ease-in-out infinite;
+  }
+  .evo-header-brain-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: #A8E898;
+    text-transform: uppercase;
+  }
+  .evo-header-brain-label .dim { color: rgba(255,255,255,0.4); }
+
+  @keyframes brainBreath {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(168, 232, 152, 0.2)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(168, 232, 152, 0.4)); }
+  }
+  .brain-node { animation: nodePulse 2s ease-in-out infinite; }
+  .brain-node.n1 { animation-delay: 0.2s; }
+  .brain-node.n2 { animation-delay: 0.4s; }
+  .brain-node.n3 { animation-delay: 0.6s; }
+  .brain-node.n4 { animation-delay: 0.8s; }
+  @keyframes nodePulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  .brain-halo { animation: haloPulse 3s ease-in-out infinite; transform-origin: center; }
+  @keyframes haloPulse {
+    0%, 100% { opacity: 0.1; transform: scale(0.9); }
+    50% { opacity: 0.3; transform: scale(1.1); }
+  }
+
+  /* Mobile Drawer */
+  .evo-header-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .evo-header-drawer.is-open {
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .evo-header-drawer-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .is-open .evo-header-drawer-overlay { opacity: 1; }
+
+  .evo-header-drawer-content {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 100%; max-width: 350px;
+    background: #05040C;
+    padding: 40px;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .is-open .evo-header-drawer-content { transform: translateX(0); }
+
+  .evo-header-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .evo-header-drawer-close {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 32px;
+    cursor: pointer;
+  }
+
+  .evo-header-drawer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .evo-header-drawer-nav a {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const header = document.getElementById('EvoHeader');
+    const burger = document.getElementById('EvoBurger');
+    const drawer = document.getElementById('EvoDrawer');
+    const close = document.getElementById('EvoDrawerClose');
+    const overlay = document.getElementById('EvoDrawerOverlay');
+
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+    });
+
+    function toggleMenu() {
+      drawer.classList.toggle('is-open');
+      document.body.classList.toggle('no-scroll');
+    }
+
+    if (burger) burger.addEventListener('click', toggleMenu);
+    if (close) close.addEventListener('click', toggleMenu);
+    if (overlay) overlay.addEventListener('click', toggleMenu);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "section",
+  "class": "section-header",
+  "settings": [
+    { "type": "header", "content": "Brand" },
+    { "type": "image_picker", "id": "logo", "label": "Custom logo" },
+    { "type": "header", "content": "Navigation" },
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" },
+    { "type": "link_list", "id": "utility_menu", "label": "Utility bar links", "default": "top-utility" },
+    { "type": "header", "content": "CTA button" },
+    { "type": "text", "id": "cta_text", "label": "CTA button text", "default": "Get Support" },
+    { "type": "url",  "id": "cta_link", "label": "CTA button link" }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

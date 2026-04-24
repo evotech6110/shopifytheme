@@ -1,0 +1,463 @@
+{%- comment -%}
+  Evotech Footer — matches live evotech.au footer.
+  Logo + tagline + newsletter · contact column · 3 link columns · bottom bar · SEO keyword row.
+{%- endcomment -%}
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700,800&f[]=satoshi@400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  .evo-ft-{{ section.id }} {
+    --bg:        #05040C;
+    --bg-2:      #0B0820;
+    --ink:       #FFFFFF;
+    --ink-dim:   #B6B5C6;
+    --ink-muted: #7A7A8F;
+    --mint:      #A8E898;
+    --peach:     #FF7A4A;
+    --line:      rgba(255,255,255,0.08);
+    --font-d:    'Clash Display','Satoshi','Inter',sans-serif;
+    --font-s:    'Satoshi','Inter',system-ui,sans-serif;
+    --font-m:    'JetBrains Mono',ui-monospace,monospace;
+
+    position: relative;
+    background:
+      radial-gradient(900px 400px at 10% 0%, rgba(61,46,222,0.12), transparent 55%),
+      linear-gradient(180deg, #0A0820 0%, #05040C 100%);
+    color: var(--ink);
+    font-family: var(--font-s);
+    padding: clamp(56px, 7vw, 96px) 0 24px;
+    border-top: 1px solid var(--line);
+  }
+  .evo-ft-{{ section.id }} a { color: inherit; text-decoration: none; }
+  .evo-ft-{{ section.id }} .evo-ft__wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+
+  .evo-ft-{{ section.id }} .evo-ft__top {
+    display: grid;
+    grid-template-columns: 1.4fr 1.1fr 1fr 1fr 1fr;
+    gap: clamp(28px, 3vw, 56px);
+    align-items: start;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 1100px) {
+    .evo-ft-{{ section.id }} .evo-ft__top { grid-template-columns: 1fr 1fr 1fr; }
+    .evo-ft-{{ section.id }} .evo-ft__brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 640px) {
+    .evo-ft-{{ section.id }} .evo-ft__top { grid-template-columns: 1fr 1fr; }
+    .evo-ft-{{ section.id }} .evo-ft__brand,
+    .evo-ft-{{ section.id }} .evo-ft__contact { grid-column: 1 / -1; }
+  }
+
+  /* Brand column */
+  .evo-ft-{{ section.id }} .evo-ft__logo {
+    display: inline-flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__logo-mark {
+    width: 44px; height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__logo-mark svg { width: 100%; height: 100%; }
+  .evo-ft-{{ section.id }} .evo-ft__logo-text {
+    display: flex; flex-direction: column; line-height: 1;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__logo-name {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: 22px; letter-spacing: -0.01em;
+    color: #fff;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__logo-sub {
+    font-family: var(--font-m);
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 6px;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__tagline {
+    color: var(--ink-dim);
+    font-size: 14px; line-height: 1.6;
+    max-width: 320px;
+    margin: 0 0 24px 0;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__news-title {
+    font-family: var(--font-d); font-weight: 600;
+    font-size: 18px; color: #fff;
+    margin: 0 0 12px 0;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__news-form {
+    display: flex;
+    max-width: 360px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__news-form:focus-within { border-color: rgba(168,232,152,0.4); }
+  .evo-ft-{{ section.id }} .evo-ft__news-input {
+    flex: 1;
+    padding: 12px 14px;
+    background: transparent;
+    border: none; outline: none;
+    color: #fff;
+    font-family: var(--font-s);
+    font-size: 14px;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__news-input::placeholder { color: var(--ink-muted); }
+  .evo-ft-{{ section.id }} .evo-ft__news-btn {
+    width: 42px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--peach);
+    border: none;
+    color: #110A04;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__news-btn:hover { background: #FF8E62; }
+  .evo-ft-{{ section.id }} .evo-ft__news-btn svg { width: 16px; height: 16px; }
+
+  /* Column heading */
+  .evo-ft-{{ section.id }} .evo-ft__col-title {
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--mint);
+    margin: 0 0 18px 0;
+    font-weight: 700;
+  }
+
+  /* Contact column */
+  .evo-ft-{{ section.id }} .evo-ft__contact-lede {
+    color: var(--ink-dim);
+    font-size: 14px; line-height: 1.6;
+    margin: 0 0 14px 0;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__contact-list {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 8px;
+    font-size: 13px; color: var(--ink-dim);
+    line-height: 1.5;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__contact-list li {
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__contact-list a { color: #fff; border-bottom: 1px dotted rgba(168,232,152,0.3); transition: border-color 0.2s, color 0.2s; }
+  .evo-ft-{{ section.id }} .evo-ft__contact-list a:hover { color: var(--mint); border-color: var(--mint); }
+  .evo-ft-{{ section.id }} .evo-ft__contact-abn {
+    margin-top: 10px;
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  /* Pay icons */
+  .evo-ft-{{ section.id }} .evo-ft__pay {
+    margin-top: 18px;
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 8px;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__pay-label {
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-right: 6px;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__pay-icon {
+    width: 34px; height: 22px;
+    border-radius: 4px;
+    background: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__pay-icon svg { width: 100%; height: 100%; }
+
+  /* Link columns */
+  .evo-ft-{{ section.id }} .evo-ft__links {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 10px;
+    font-size: 14px;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__links a {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--ink-dim);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__links a::before {
+    content: "›";
+    color: var(--mint);
+    font-weight: 600;
+    transition: transform 0.2s;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__links a:hover { color: #fff; }
+  .evo-ft-{{ section.id }} .evo-ft__links a:hover::before { transform: translateX(3px); }
+
+  /* Divider */
+  .evo-ft-{{ section.id }} .evo-ft__divider {
+    margin: 8px 0 20px;
+    border: none; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  }
+
+  /* Bottom row */
+  .evo-ft-{{ section.id }} .evo-ft__bottom {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+  }
+  @media (max-width: 780px) {
+    .evo-ft-{{ section.id }} .evo-ft__bottom { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+  }
+  .evo-ft-{{ section.id }} .evo-ft__copy {
+    font-size: 13px; color: var(--ink-muted);
+    margin: 0;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__copy strong { color: var(--ink-dim); font-weight: 600; }
+  .evo-ft-{{ section.id }} .evo-ft__bottom-links {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__bottom-links a {
+    color: var(--ink-muted);
+    transition: color 0.2s;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__bottom-links a:hover { color: var(--mint); }
+
+  /* SEO row */
+  .evo-ft-{{ section.id }} .evo-ft__seo {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-m);
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-muted);
+    text-align: center;
+    line-height: 1.8;
+  }
+  .evo-ft-{{ section.id }} .evo-ft__seo span { display: inline-block; margin: 0 6px; }
+  .evo-ft-{{ section.id }} .evo-ft__seo-sep { color: rgba(168,232,152,0.4); }
+</style>
+
+<footer class="evo-ft-{{ section.id }}" role="contentinfo">
+  <div class="evo-ft__wrap">
+
+    <div class="evo-ft__top">
+
+      {%- comment -%} ========= Brand / Newsletter ========= {%- endcomment -%}
+      <div class="evo-ft__brand">
+        <a href="/" class="evo-ft__logo" aria-label="{{ shop.name | default: 'EvoTech Digital' }} — home">
+          <span class="evo-ft__logo-mark">
+            {%- if section.settings.logo != blank -%}
+              {{ section.settings.logo | image_url: width: 88 | image_tag: loading: 'lazy', alt: section.settings.logo.alt | default: shop.name }}
+            {%- else -%}
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="ft-logo-{{ section.id }}" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#A8E898"/>
+                    <stop offset="100%" stop-color="#5ED066"/>
+                  </linearGradient>
+                </defs>
+                <path d="M10 18 L32 6 L54 18 L54 46 L32 58 L10 46 Z" stroke="url(#ft-logo-{{ section.id }})" stroke-width="3" stroke-linejoin="round"/>
+                <path d="M22 26 L32 20 L42 26 L42 38 L32 44 L22 38 Z" fill="url(#ft-logo-{{ section.id }})" opacity="0.9"/>
+              </svg>
+            {%- endif -%}
+          </span>
+          <span class="evo-ft__logo-text">
+            <span class="evo-ft__logo-name">{{ section.settings.brand_name | default: 'EvoTech' }}</span>
+            <span class="evo-ft__logo-sub">{{ section.settings.brand_sub | default: 'Digital' }}</span>
+          </span>
+        </a>
+
+        {%- if section.settings.tagline != blank -%}
+          <p class="evo-ft__tagline">{{ section.settings.tagline }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.newsletter_title != blank -%}
+          <h3 class="evo-ft__news-title">{{ section.settings.newsletter_title }}</h3>
+        {%- endif -%}
+
+        {%- if section.settings.show_newsletter -%}
+          {%- form 'customer', class: 'evo-ft__news-form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input
+              type="email"
+              name="contact[email]"
+              class="evo-ft__news-input"
+              placeholder="{{ section.settings.newsletter_placeholder | default: 'Email' }}"
+              aria-label="{{ section.settings.newsletter_placeholder | default: 'Email' }}"
+              required>
+            <button type="submit" class="evo-ft__news-btn" aria-label="Subscribe">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ========= Contact column ========= {%- endcomment -%}
+      <div class="evo-ft__contact">
+        <h3 class="evo-ft__col-title">{{ section.settings.contact_title | default: 'EvoTech Digital' }}</h3>
+        {%- if section.settings.contact_lede != blank -%}
+          <p class="evo-ft__contact-lede">{{ section.settings.contact_lede }}</p>
+        {%- endif -%}
+        <ul class="evo-ft__contact-list">
+          {%- if section.settings.address != blank -%}
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A8E898" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>{{ section.settings.address }}</span>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.phone != blank -%}
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A8E898" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <a href="tel:{{ section.settings.phone | replace: ' ', '' | replace: '+', '+' }}">{{ section.settings.phone }}</a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.email != blank -%}
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A8E898" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.hours != blank -%}
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A8E898" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>{{ section.settings.hours }}</span>
+            </li>
+          {%- endif -%}
+        </ul>
+        {%- if section.settings.abn != blank -%}
+          <p class="evo-ft__contact-abn">ABN: {{ section.settings.abn }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.show_payment_icons -%}
+          <div class="evo-ft__pay" aria-label="We accept">
+            <span class="evo-ft__pay-label">We accept</span>
+            {%- comment -%} Prefer Shopify's enabled_payment_types if populated; fall back to defaults. {%- endcomment -%}
+            {%- assign pay_types = 'american_express,apple_pay,google_pay,master,paypal,shopify_pay,unionpay,visa' | split: ',' -%}
+            {%- if shop.enabled_payment_types != blank -%}
+              {%- assign pay_types = shop.enabled_payment_types -%}
+            {%- endif -%}
+            {%- for t in pay_types -%}
+              <span class="evo-ft__pay-icon">
+                {{ t | payment_type_svg_tag: class: 'payment-icon' }}
+              </span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ========= Menu columns (blocks) ========= {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu_column' -%}
+          <div class="evo-ft__menu-col" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <h3 class="evo-ft__col-title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            <ul class="evo-ft__links">
+              {%- assign menu_handle = block.settings.menu -%}
+              {%- if menu_handle != blank and linklists[menu_handle].links.size > 0 -%}
+                {%- for link in linklists[menu_handle].links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              {%- else -%}
+                {%- comment -%} Fallback — manual link list {%- endcomment -%}
+                {%- assign labels = block.settings.manual_labels | newline_to_br | replace: '<br />', '|' | replace: '<br>', '|' | split: '|' -%}
+                {%- assign urls   = block.settings.manual_urls   | newline_to_br | replace: '<br />', '|' | replace: '<br>', '|' | split: '|' -%}
+                {%- for label in labels -%}
+                  {%- assign url = urls[forloop.index0] | default: '#' -%}
+                  {%- if label != blank -%}
+                    <li><a href="{{ url | strip }}">{{ label | strip }}</a></li>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+
+    <hr class="evo-ft__divider">
+
+    <div class="evo-ft__bottom">
+      <p class="evo-ft__copy">
+        {%- assign yr = 'now' | date: '%Y' -%}
+        © {{ section.settings.copyright_year | default: yr }} <strong>{{ section.settings.copyright_brand | default: 'EvoTech Digital' }}</strong>
+        {%- if section.settings.abn != blank -%} — ABN: {{ section.settings.abn }}.{%- endif -%}
+        {{ section.settings.copyright_suffix | default: ' All rights reserved.' }}
+      </p>
+
+      <div class="evo-ft__bottom-links">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'bottom_link' -%}
+            {%- if block.settings.label != blank -%}
+              <a href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if section.settings.seo_keywords != blank -%}
+      <div class="evo-ft__seo">
+        {%- assign kws = section.settings.seo_keywords | split: '·' -%}
+        {%- for kw in kws -%}
+          <span>{{ kw | strip }}</span>{%- unless forloop.last -%}<span class="evo-ft__seo-sep">·</span>{%- endunless -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "section",
+  "class": "evotech-footer-section",
+  "settings": [
+    { "type": "header", "content": "Brand" },
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "text", "id": "brand_name", "label": "Brand name", "default": "EvoTech" },
+    { "type": "text", "id": "brand_sub", "label": "Brand sub-label", "default": "Digital" },
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Perth's trusted MSP." },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter", "default": true },
+    { "type": "text", "id": "newsletter_title", "label": "Heading", "default": "Subscribe" },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "contact_title", "label": "Title", "default": "Contact Us" },
+    { "type": "textarea", "id": "contact_lede", "label": "Intro", "default": "Get in touch." },
+    { "type": "text", "id": "address", "label": "Address" },
+    { "type": "text", "id": "phone", "label": "Phone" },
+    { "type": "text", "id": "email", "label": "Email" },
+    { "type": "text", "id": "hours", "label": "Hours" },
+    { "type": "text", "id": "abn", "label": "ABN" },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payments", "default": true },
+    { "type": "header", "content": "Bottom bar" },
+    { "type": "text", "id": "copyright_brand", "label": "Brand", "default": "EvoTech" },
+    { "type": "text", "id": "copyright_suffix", "label": "Suffix", "default": " All rights reserved." },
+    { "type": "textarea", "id": "seo_keywords", "label": "SEO keywords" }
+  ],
+  "blocks": [
+    {
+      "type": "menu_column",
+      "name": "Menu column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "link_list", "id": "menu", "label": "Menu" },
+        { "type": "textarea", "id": "manual_labels", "label": "Manual labels" },
+        { "type": "textarea", "id": "manual_urls", "label": "Manual URLs" }
+      ]
+    },
+    {
+      "type": "bottom_link",
+      "name": "Bottom link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "url", "id": "url", "label": "URL" }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["footer"] }
+}
+{% endschema %}
