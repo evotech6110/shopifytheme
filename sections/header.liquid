@@ -55,19 +55,21 @@
           </a>
         </div>
 
+        {%- comment -%} Center: Brain Centerpiece {%- endcomment -%}
+        <div class="evo-header-center">
+          <div class="evo-header-brain">
+            <svg class="evo-header-brain-viz" viewBox="0 0 56 40" fill="none">
+              <path class="brain-halo" d="M28 35C41.2548 35 52 28.2843 52 20C52 11.7157 41.2548 5 28 5C14.7452 5 4 11.7157 4 20C4 28.2843 14.7452 35 28 35Z" stroke="#A8E898" stroke-opacity="0.2"/>
+              <circle class="brain-node core" cx="28" cy="20" r="4" fill="#A8E898"/><circle class="brain-node n1" cx="15" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n2" cx="41" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n3" cx="15" cy="25" r="2" fill="#A8E898"/><circle class="brain-node n4" cx="41" cy="25" r="2" fill="#A8E898"/>
+            </svg>
+            <span class="evo-header-brain-label">EVOLVE <span class="dim">AI</span></span>
+          </div>
+        </div>
+
         {%- comment -%} Right: Navigation & Actions {%- endcomment -%}
         <div class="evo-header-right">
           <nav class="evo-header-nav" aria-label="Main Navigation">
             <ul class="evo-header-nav-list">
-              <li class="evo-header-brain-item">
-                <div class="evo-header-brain">
-                  <svg class="evo-header-brain-viz" viewBox="0 0 56 40" fill="none">
-                    <path class="brain-halo" d="M28 35C41.2548 35 52 28.2843 52 20C52 11.7157 41.2548 5 28 5C14.7452 5 4 11.7157 4 20C4 28.2843 14.7452 35 28 35Z" stroke="#A8E898" stroke-opacity="0.2"/>
-                    <circle class="brain-node core" cx="28" cy="20" r="4" fill="#A8E898"/><circle class="brain-node n1" cx="15" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n2" cx="41" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n3" cx="15" cy="25" r="2" fill="#A8E898"/><circle class="brain-node n4" cx="41" cy="25" r="2" fill="#A8E898"/>
-                  </svg>
-                  <span class="evo-header-brain-label">EVOLVE <span class="dim">AI</span></span>
-                </div>
-              </li>
               {%- for link in nav.links -%}
                 <li class="evo-header-nav-item">
                   <a href="{{ link.url }}" class="evo-header-nav-link">{{ link.title }}</a>
@@ -223,14 +225,7 @@
     min-height: 80px;
   }
 
-  .evo-header-centerpiece {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    pointer-events: none;
-  }
+  /* Centerpiece placeholder removed — now using .evo-header-center flex column */
 
   .evo-header-left, .evo-header-right {
     display: flex;
@@ -238,9 +233,20 @@
     z-index: 20;
   }
 
-  .evo-header-left { flex: 0 0 auto; }
+  .evo-header-left { 
+    flex: 1; 
+    display: flex;
+    justify-content: flex-start;
+  }
+  .evo-header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .evo-header-right { 
     flex: 1; 
+    display: flex;
     justify-content: flex-end; 
     gap: 30px;
   }
