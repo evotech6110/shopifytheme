@@ -89,6 +89,22 @@
                   </div>
                 {% endif %}
               </li>
+              {%- if forloop.index == 2 -%}
+                {%- comment -%} Insert Neural Brain in the middle {%- endcomment -%}
+                <li class="evo-header-brain-item">
+                  <div class="evo-header-brain">
+                    <svg class="evo-header-brain-viz" viewBox="0 0 56 40" fill="none">
+                      <path class="brain-halo" d="M28 35C41.2548 35 52 28.2843 52 20C52 11.7157 41.2548 5 28 5C14.7452 5 4 11.7157 4 20C4 28.2843 14.7452 35 28 35Z" stroke="#A8E898" stroke-opacity="0.2"/>
+                      <circle class="brain-node core" cx="28" cy="20" r="4" fill="#A8E898"/>
+                      <circle class="brain-node n1" cx="15" cy="15" r="2" fill="#A8E898"/>
+                      <circle class="brain-node n2" cx="41" cy="15" r="2" fill="#A8E898"/>
+                      <circle class="brain-node n3" cx="15" cy="25" r="2" fill="#A8E898"/>
+                      <circle class="brain-node n4" cx="41" cy="25" r="2" fill="#A8E898"/>
+                    </svg>
+                    <span class="evo-header-brain-label">EVOLVE <span class="dim">AI</span></span>
+                  </div>
+                </li>
+              {%- endif -%}
             {%- endfor -%}
           </ul>
         </nav>
@@ -489,11 +505,54 @@
     .evo-header-cta { display: none; }
   }
 
-  .evo-header-burger span {
-    width: 24px;
-    height: 2px;
-    background: #fff;
-    border-radius: 2px;
+  /* Brain Centerpiece */
+  .evo-header-brain-item {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  .evo-header-brain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(168, 232, 152, 0.2);
+    border-radius: 100px;
+    backdrop-filter: blur(10px);
+  }
+  .evo-header-brain-viz {
+    width: 44px;
+    height: 32px;
+    animation: brainBreath 4s ease-in-out infinite;
+  }
+  .evo-header-brain-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: #A8E898;
+    text-transform: uppercase;
+  }
+  .evo-header-brain-label .dim { color: rgba(255,255,255,0.4); }
+
+  @keyframes brainBreath {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(168, 232, 152, 0.2)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(168, 232, 152, 0.5)); }
+  }
+  .brain-node { animation: nodePulse 2s ease-in-out infinite; }
+  .brain-node.n1 { animation-delay: 0.2s; }
+  .brain-node.n2 { animation-delay: 0.4s; }
+  .brain-node.n3 { animation-delay: 0.6s; }
+  .brain-node.n4 { animation-delay: 0.8s; }
+  @keyframes nodePulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  .brain-halo { animation: haloPulse 3s ease-in-out infinite; transform-origin: center; }
+  @keyframes haloPulse {
+    0%, 100% { opacity: 0.1; transform: scale(0.9); }
+    50% { opacity: 0.3; transform: scale(1.1); }
   }
 
   /* Mobile Drawer */
