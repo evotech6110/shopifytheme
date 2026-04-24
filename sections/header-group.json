@@ -1,0 +1,16 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "evo-header": {
+      "type": "evo-header",
+      "settings": {
+        "menu": "main-menu",
+        "utility_menu": "top-utility",
+        "cta_text": "Get Support",
+        "cta_link": "https://support.evotech.au"
+      }
+    }
+  },
+  "order": ["evo-header"]
+}

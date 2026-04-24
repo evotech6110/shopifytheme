@@ -1,0 +1,59 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "evo-footer": {
+      "type": "evo-footer",
+      "settings": {
+        "brand_name": "EvoTech",
+        "brand_sub": "Digital",
+        "tagline": "Perth's trusted MSP — Proactive IT, Cyber Security & Cloud Solutions for WA businesses.",
+        "show_newsletter": true,
+        "newsletter_title": "IT Tips & Security Alerts",
+        "newsletter_placeholder": "Email",
+        "contact_title": "EvoTech Digital",
+        "contact_lede": "Perth's trusted Managed IT Services provider for small to medium businesses across Western Australia.",
+        "address": "30 Tenterden Way, Gosnells, WA 6110",
+        "phone": "+61 466 911 816",
+        "email": "info@evotech.au",
+        "hours": "Monday - Friday: 9:00 AM - 5:00 PM AWST",
+        "abn": "72 375 743 898",
+        "show_payment_icons": true,
+        "copyright_brand": "EvoTech Digital",
+        "copyright_suffix": " All rights reserved.",
+        "seo_keywords": "Managed IT Services Perth · IT Support Perth · Cyber Security Perth · Cloud Migration Perth · IT Consulting Perth WA · Microsoft 365 Perth · Network Security Perth"
+      },
+      "blocks": {
+        "col1": {
+          "type": "menu_column",
+          "settings": {
+            "title": "IT Services Perth",
+            "manual_labels": "Managed IT Services\nCyber Security Solutions\nIT Support Perth\nCloud & Microsoft 365\nIT Consulting & vCIO\nNetwork Design & Security",
+            "manual_urls": "/pages/managed-it-services-perth\n/pages/cyber-security-perth\n/pages/business-it-support\n/pages/cloud-migration-services\n/pages/it-consulting-vcio\n/pages/network-design-security"
+          }
+        },
+        "col2": {
+          "type": "menu_column",
+          "settings": {
+            "title": "Company",
+            "manual_labels": "Home\nContact Us\nIT Catalog\nBlog & IT Tips\nAbout Us",
+            "manual_urls": "/\n/pages/contact\n/collections/all\n/blogs/news\n/pages/about"
+          }
+        },
+        "col3": {
+          "type": "menu_column",
+          "settings": {
+            "title": "Legal",
+            "manual_labels": "Privacy Policy\nRefund Policy\nShipping Policy\nTerms of Service",
+            "manual_urls": "/policies/privacy-policy\n/policies/refund-policy\n/policies/shipping-policy\n/policies/terms-of-service"
+          }
+        },
+        "bl1": { "type": "bottom_link", "settings": { "label": "Privacy Policy", "url": "/policies/privacy-policy" } },
+        "bl2": { "type": "bottom_link", "settings": { "label": "Refund Policy", "url": "/policies/refund-policy" } },
+        "bl3": { "type": "bottom_link", "settings": { "label": "Terms of Service", "url": "/policies/terms-of-service" } }
+      },
+      "block_order": ["col1","col2","col3","bl1","bl2","bl3"]
+    }
+  },
+  "order": ["evo-footer"]
+}

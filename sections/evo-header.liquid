@@ -304,7 +304,7 @@
 
 {% schema %}
 {
-  "name": "Header",
+  "name": "EvoTech Header",
   "tag": "section",
   "class": "section-header",
   "settings": [
@@ -312,20 +312,19 @@
     { "type": "image_picker", "id": "logo", "label": "Custom logo" },
 
     { "type": "header", "content": "Navigation" },
-    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu",
-      "info": "Edit items in Online Store > Navigation > Main menu. Nested items become mega menu columns." },
-    { "type": "link_list", "id": "utility_menu", "label": "Utility bar menu (top-right links)", "default": "top-utility" },
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" },
+    { "type": "link_list", "id": "utility_menu", "label": "Utility bar links", "default": "top-utility" },
 
-    { "type": "header", "content": "Mega menu promo (optional)" },
+    { "type": "header", "content": "Mega menu promo" },
     { "type": "image_picker", "id": "mega_promo_image", "label": "Promo image" },
     { "type": "text", "id": "mega_promo_title", "label": "Promo title" },
     { "type": "text", "id": "mega_promo_cta_text", "label": "Promo CTA text", "default": "Talk to us" },
     { "type": "url",  "id": "mega_promo_cta_link", "label": "Promo CTA link" },
 
-    { "type": "header", "content": "Header CTA button" },
+    { "type": "header", "content": "CTA button" },
     { "type": "text", "id": "cta_text", "label": "CTA button text", "default": "Get Support" },
     { "type": "url",  "id": "cta_link", "label": "CTA button link" }
   ],
-  "presets": [{ "name": "EvoTech Header" }]
+  "enabled_on": { "groups": ["header"] }
 }
 {% endschema %}
