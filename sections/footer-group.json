@@ -2,8 +2,8 @@
   "type": "footer",
   "name": "Footer group",
   "sections": {
-    "evo-footer": {
-      "type": "evo-footer",
+    "footer": {
+      "type": "footer",
       "settings": {
         "brand_name": "EvoTech",
         "brand_sub": "Digital",
@@ -55,5 +55,5 @@
       "block_order": ["col1","col2","col3","bl1","bl2","bl3"]
     }
   },
-  "order": ["evo-footer"]
+  "order": ["footer"]
 }

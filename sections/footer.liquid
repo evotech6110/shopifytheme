@@ -412,55 +412,49 @@
 
 {% schema %}
 {
-  "name": "Evotech · Footer",
+  "name": "Footer",
   "tag": "section",
   "class": "evotech-footer-section",
   "settings": [
     { "type": "header", "content": "Brand" },
-    { "type": "image_picker", "id": "logo",       "label": "Logo image (optional, replaces SVG)" },
-    { "type": "text",         "id": "brand_name", "label": "Brand name",     "default": "EvoTech" },
-    { "type": "text",         "id": "brand_sub",  "label": "Brand sub-label", "default": "Digital" },
-    { "type": "textarea",     "id": "tagline",    "label": "Tagline",        "default": "Perth's trusted MSP — Proactive IT, Cyber Security & Cloud Solutions for WA businesses." },
-
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "text", "id": "brand_name", "label": "Brand name", "default": "EvoTech" },
+    { "type": "text", "id": "brand_sub", "label": "Brand sub-label", "default": "Digital" },
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Perth's trusted MSP." },
     { "type": "header", "content": "Newsletter" },
-    { "type": "checkbox", "id": "show_newsletter",        "label": "Show newsletter signup", "default": true },
-    { "type": "text",     "id": "newsletter_title",       "label": "Heading",                "default": "IT Tips & Security Alerts" },
-    { "type": "text",     "id": "newsletter_placeholder", "label": "Input placeholder",      "default": "Email" },
-
-    { "type": "header", "content": "Contact column" },
-    { "type": "text",     "id": "contact_title", "label": "Column title",    "default": "EvoTech Digital" },
-    { "type": "textarea", "id": "contact_lede",  "label": "Intro copy",      "default": "Perth's trusted Managed IT Services provider for small to medium businesses across Western Australia." },
-    { "type": "text",     "id": "address",       "label": "Address",         "default": "30 Tenterden Way, Gosnells, WA 6110" },
-    { "type": "text",     "id": "phone",         "label": "Phone",           "default": "+61 466 911 816" },
-    { "type": "text",     "id": "email",         "label": "Email",           "default": "info@evotech.au" },
-    { "type": "text",     "id": "hours",         "label": "Hours",           "default": "Monday – Friday: 9:00 AM – 5:00 PM AWST" },
-    { "type": "text",     "id": "abn",           "label": "ABN",             "default": "72 375 743 898" },
-    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true },
-
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter", "default": true },
+    { "type": "text", "id": "newsletter_title", "label": "Heading", "default": "Subscribe" },
+    { "type": "header", "content": "Contact" },
+    { "type": "text", "id": "contact_title", "label": "Title", "default": "Contact Us" },
+    { "type": "textarea", "id": "contact_lede", "label": "Intro", "default": "Get in touch." },
+    { "type": "text", "id": "address", "label": "Address" },
+    { "type": "text", "id": "phone", "label": "Phone" },
+    { "type": "text", "id": "email", "label": "Email" },
+    { "type": "text", "id": "hours", "label": "Hours" },
+    { "type": "text", "id": "abn", "label": "ABN" },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payments", "default": true },
     { "type": "header", "content": "Bottom bar" },
-    { "type": "text", "id": "copyright_brand",  "label": "Brand shown in copyright", "default": "EvoTech Digital" },
-    { "type": "text", "id": "copyright_year",   "label": "Year (blank = current)",   "default": "" },
-    { "type": "text", "id": "copyright_suffix", "label": "Suffix",                   "default": " All rights reserved." },
-    { "type": "textarea", "id": "seo_keywords", "label": "SEO keyword row (· separated)", "default": "Managed IT Services Perth · IT Support Perth · Cyber Security Perth · Cloud Migration Perth · IT Consulting Perth WA · Microsoft 365 Perth · Network Security Perth" }
+    { "type": "text", "id": "copyright_brand", "label": "Brand", "default": "EvoTech" },
+    { "type": "text", "id": "copyright_suffix", "label": "Suffix", "default": " All rights reserved." },
+    { "type": "textarea", "id": "seo_keywords", "label": "SEO keywords" }
   ],
   "blocks": [
     {
       "type": "menu_column",
       "name": "Menu column",
       "settings": [
-        { "type": "text",      "id": "title", "label": "Column title", "default": "IT Services Perth" },
-        { "type": "link_list", "id": "menu",  "label": "Shopify menu (recommended)", "info": "Pick a Shopify menu — overrides the manual links below." },
-        { "type": "header",    "content": "Fallback — manual links (if menu is blank)" },
-        { "type": "textarea",  "id": "manual_labels", "label": "Labels (one per line)" },
-        { "type": "textarea",  "id": "manual_urls",   "label": "URLs (one per line, same order)" }
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "link_list", "id": "menu", "label": "Menu" },
+        { "type": "textarea", "id": "manual_labels", "label": "Manual labels" },
+        { "type": "textarea", "id": "manual_urls", "label": "Manual URLs" }
       ]
     },
     {
       "type": "bottom_link",
-      "name": "Bottom-bar link",
+      "name": "Bottom link",
       "settings": [
         { "type": "text", "id": "label", "label": "Label" },
-        { "type": "url",  "id": "url",   "label": "URL" }
+        { "type": "url", "id": "url", "label": "URL" }
       ]
     }
   ],
