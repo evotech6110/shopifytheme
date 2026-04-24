@@ -1,0 +1,51 @@
+{%- comment -%} Gift card template {%- endcomment -%}
+<section class="evo-gc">
+  <div class="evo-gc__card">
+    <p class="evo-gc__eyebrow">{{ shop.name | upcase }} · GIFT CARD</p>
+    <h1 class="evo-gc__amount">{{ gift_card.initial_value | money }}</h1>
+    {%- if gift_card.expired -%}
+      <p class="evo-gc__status evo-gc__status--expired">Expired</p>
+    {%- elsif gift_card.enabled == false -%}
+      <p class="evo-gc__status evo-gc__status--disabled">Disabled</p>
+    {%- elsif gift_card.balance != gift_card.initial_value -%}
+      <p class="evo-gc__status">Remaining balance: <strong>{{ gift_card.balance | money }}</strong></p>
+    {%- endif -%}
+
+    <div class="evo-gc__code-wrap">
+      <p class="evo-gc__code-label">GIFT CARD CODE</p>
+      <p class="evo-gc__code">{{ gift_card.code | format_code }}</p>
+    </div>
+
+    {%- if gift_card.qr_identifier -%}
+      <div class="evo-gc__qr">
+        <img src="{{ gift_card.qr_identifier | image_url: width: 240, height: 240 }}" alt="Gift card QR code" width="180" height="180">
+      </div>
+    {%- endif -%}
+
+    <div class="evo-gc__actions">
+      <a class="evo-gc__btn evo-gc__btn--primary" href="{{ shop.url }}">Redeem at {{ shop.name }}</a>
+      <a class="evo-gc__btn evo-gc__btn--ghost" href="{{ gift_card.pass_url }}" target="_blank" rel="noopener">Add to Apple Wallet</a>
+      <button class="evo-gc__btn evo-gc__btn--ghost" onclick="window.print()">Print</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  html, body { margin: 0; padding: 0; }
+  .evo-gc { min-height: 100vh; display: grid; place-items: center; padding: 40px 24px; background: radial-gradient(1200px 600px at 50% -10%, rgba(168,232,152,.18), transparent), #05040C; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; text-align: center; }
+  .evo-gc__card { max-width: 520px; width: 100%; background: linear-gradient(135deg, #0B0820, #14103a); border: 1px solid rgba(168,232,152,.3); border-radius: 20px; padding: 48px 36px; box-shadow: 0 30px 90px rgba(0,0,0,.5); }
+  .evo-gc__eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 18px; }
+  .evo-gc__amount { font-family: 'Clash Display', sans-serif; font-size: clamp(48px, 10vw, 84px); line-height: 1; letter-spacing: -0.03em; margin: 0 0 14px; background: linear-gradient(135deg, #A8E898, #FFFFFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .evo-gc__status { color: #B6B5C6; font-size: 14px; margin: 0 0 24px; }
+  .evo-gc__status--expired, .evo-gc__status--disabled { color: #FF7A4A; font-weight: 600; }
+  .evo-gc__code-wrap { background: rgba(0,0,0,.3); border: 1px dashed rgba(168,232,152,.4); border-radius: 12px; padding: 18px; margin-bottom: 22px; }
+  .evo-gc__code-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .2em; color: #A8E898; margin: 0 0 8px; }
+  .evo-gc__code { font-family: 'JetBrains Mono', monospace; font-size: clamp(16px, 3vw, 22px); letter-spacing: .15em; margin: 0; word-break: break-all; }
+  .evo-gc__qr { margin: 20px 0; display: grid; place-items: center; }
+  .evo-gc__qr img { border-radius: 12px; background: #FFFFFF; padding: 12px; }
+  .evo-gc__actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+  .evo-gc__btn { padding: 12px 20px; border-radius: 999px; font-weight: 700; font-size: 14px; border: 0; cursor: pointer; text-decoration: none; font-family: inherit; }
+  .evo-gc__btn--primary { background: #FF7A4A; color: #0A0A0A; }
+  .evo-gc__btn--ghost { background: transparent; color: #FFFFFF; border: 1px solid rgba(255,255,255,.22); }
+  @media print { body { background: #FFFFFF !important; color: #000000 !important; } .evo-gc { background: #FFFFFF !important; } .evo-gc__card { color: #000000; background: #FFFFFF; border-color: #000000; box-shadow: none; } .evo-gc__amount { color: #000000; background: none; -webkit-text-fill-color: #000000; } .evo-gc__actions { display: none; } }
+</style>

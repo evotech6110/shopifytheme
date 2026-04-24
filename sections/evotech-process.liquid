@@ -1,0 +1,76 @@
+{%- comment -%}
+  EvoTech — Numbered process cards (Evoluxia-style)
+  4 big numbered cards with icon + headline + body. Big outlined number sits in corner.
+{%- endcomment -%}
+
+<section class="evo evo-process">
+  <div class="evo-container">
+    <header class="evo-saasgrid__head" style="margin-bottom:56px;">
+      {%- if section.settings.eyebrow != blank -%}<div class="evo-kicker">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      <h2 class="evo-display evo-h2">{{ section.settings.headline | default: 'How EvoTech ships AI-grade outcomes.' }}</h2>
+      {%- if section.settings.lede != blank -%}<p class="evo-lede" style="margin:16px auto 0;">{{ section.settings.lede }}</p>{%- endif -%}
+    </header>
+
+    <div class="evo-process__grid">
+      {%- for block in section.blocks -%}
+        <article class="evo-step" {{ block.shopify_attributes }}>
+          <div class="evo-step__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+          <div class="evo-step__icon">
+            {%- case block.settings.icon -%}
+              {%- when 'ai' -%}{% render 'evotech-illustration', name: 'ai-core' %}
+              {%- when 'network' -%}{% render 'evotech-illustration', name: 'network-mesh' %}
+              {%- when 'shield' -%}{% render 'evotech-illustration', name: 'shield-pulse' %}
+              {%- when 'data' -%}{% render 'evotech-illustration', name: 'data-flow' %}
+              {%- when 'check' -%}{% render 'evotech-illustration', name: 'compliance-check' %}
+              {%- else -%}{% render 'evotech-illustration', name: 'grid-orbit' %}
+            {%- endcase -%}
+          </div>
+          <h3 class="evo-step__title">{{ block.settings.title }}</h3>
+          <p class="evo-step__body">{{ block.settings.body }}</p>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Process",
+  "tag": "section",
+  "class": "evo-section-process",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "HOW IT WORKS" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Four steps from sign-up to outcome." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Onboarding is fast — most customers go from free-trial to first automated workflow in under 30 minutes." }
+  ],
+  "blocks": [
+    { "type": "step", "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Generate Workflow" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Pick a template or describe an outcome. EvolveAI-Engine assembles the workflow." },
+        { "type": "select", "id": "icon", "label": "Icon", "default": "ai",
+          "options": [
+            { "value": "ai", "label": "AI core" },
+            { "value": "network", "label": "Network mesh" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "data", "label": "Data flow" },
+            { "value": "check", "label": "Compliance check" },
+            { "value": "orbit", "label": "Grid orbit" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "EvoTech — Process",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Generate Workflow", "body": "Pick a template or describe an outcome. EvolveAI-Engine assembles the workflow.", "icon": "ai" } },
+        { "type": "step", "settings": { "title": "Create APIs", "body": "One-click OAuth into 400+ apps — no auth code to write.", "icon": "network" } },
+        { "type": "step", "settings": { "title": "Collect Data", "body": "Real-time observability on every run with full audit trail.", "icon": "data" } },
+        { "type": "step", "settings": { "title": "Analyse Outcomes", "body": "Exec-ready dashboards — and compliance packs ready to export.", "icon": "check" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

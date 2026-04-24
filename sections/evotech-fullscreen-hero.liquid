@@ -1,0 +1,118 @@
+{%- comment -%}
+  EvoTech — Full-screen hero (Evoluxia-inspired)
+  Split layout: big headline left with accent-highlighted last word, visual on right.
+  Accent word and subhead are configurable. Includes optional particle canvas.
+{%- endcomment -%}
+
+<section class="evo evo-fshero" data-evo-fshero>
+  <canvas class="evo-fshero__canvas" data-evo-particles></canvas>
+
+  <div class="evo-container evo-fshero__inner">
+    <div class="evo-fshero__copy">
+      {%- if section.settings.kicker != blank -%}
+        <span class="evo-fshero__kicker">
+          <span style="width:6px;height:6px;border-radius:999px;background:var(--evo-mint);box-shadow:0 0 10px var(--evo-mint);"></span>
+          {{ section.settings.kicker }}
+        </span>
+      {%- endif -%}
+
+      <h1 class="evo-fshero__title">
+        {%- if section.settings.headline_line1 != blank -%}
+          <span class="evo-fshero__title-line">{{ section.settings.headline_line1 }}</span>
+        {%- endif -%}
+        {%- if section.settings.headline_line2 != blank -%}
+          <span class="evo-fshero__title-line">{{ section.settings.headline_line2 }}</span>
+        {%- endif -%}
+        {%- if section.settings.accent_word != blank -%}
+          <span class="evo-fshero__title-line"><span class="evo-fshero__title-accent">{{ section.settings.accent_word }}</span></span>
+        {%- endif -%}
+      </h1>
+
+      {%- if section.settings.subhead != blank -%}
+        <p class="evo-fshero__subhead">{{ section.settings.subhead }}</p>
+      {%- endif -%}
+
+      <div class="evo-fshero__ctas">
+        {%- if section.settings.cta_primary_text != blank -%}
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-btn evo-btn--primary">
+            {{ section.settings.cta_primary_text }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_text != blank -%}
+          <a href="{{ section.settings.cta_secondary_link }}" class="evo-btn evo-btn--ghost">{{ section.settings.cta_secondary_text }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="evo-fshero__visual" aria-hidden="true">
+      {%- if section.settings.visual_image != blank -%}
+        {{ section.settings.visual_image | image_url: width: 1200 | image_tag: loading: 'eager', widths: '400,800,1200', alt: 'EvoTech AI' }}
+      {%- else -%}
+        <svg class="evo-fshero__visual-glyph" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="evoHeroGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"  stop-color="#A8E898"/>
+              <stop offset="100%" stop-color="#3D2EDE"/>
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="100" r="80" fill="none" stroke="url(#evoHeroGrad)" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="100" cy="100" r="60" fill="none" stroke="#A8E898" stroke-width="1" opacity="0.5"/>
+          <circle cx="100" cy="100" r="40" fill="none" stroke="#A8E898" stroke-width="1.5" opacity="0.8"/>
+          <circle cx="100" cy="100" r="12" fill="#A8E898"/>
+          <circle cx="100" cy="100" r="5"  fill="#FFFFFF"/>
+          <g stroke="#A8E898" stroke-width="1" opacity="0.6">
+            <line x1="100" y1="20"  x2="100" y2="40"/>
+            <line x1="100" y1="160" x2="100" y2="180"/>
+            <line x1="20"  y1="100" x2="40"  y2="100"/>
+            <line x1="160" y1="100" x2="180" y2="100"/>
+            <line x1="44"  y1="44"  x2="60"  y2="60"/>
+            <line x1="156" y1="44"  x2="140" y2="60"/>
+            <line x1="44"  y1="156" x2="60"  y2="140"/>
+            <line x1="156" y1="156" x2="140" y2="140"/>
+          </g>
+        </svg>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.show_toast -%}
+    <div class="evo-toast" data-evo-toast data-show="false" role="status" aria-live="polite">
+      <div class="evo-toast__thumb"></div>
+      <div>
+        <div class="evo-toast__kicker">{{ section.settings.toast_kicker | default: 'Just now' }}</div>
+        <div class="evo-toast__title">{{ section.settings.toast_title | default: 'Perth SMB activated EvolveAI-Engine' }}</div>
+        <div class="evo-toast__meta">{{ section.settings.toast_meta | default: 'Perth, WA · 2 min ago' }}</div>
+      </div>
+      <button class="evo-toast__close" aria-label="Dismiss" data-evo-toast-close>×</button>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Full-screen hero",
+  "tag": "section",
+  "class": "evo-section-fshero",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker (chip above title)", "default": "Six SaaS apps · One AI engine · Built in Perth" },
+    { "type": "text", "id": "headline_line1", "label": "Headline — line 1", "default": "Artificial Intelligence" },
+    { "type": "text", "id": "headline_line2", "label": "Headline — line 2", "default": "Meets" },
+    { "type": "text", "id": "accent_word",    "label": "Accent word (highlighted green)", "default": "Australian IT." },
+    { "type": "textarea", "id": "subhead", "label": "Sub-headline", "default": "Run your hardware, Managed IT and six autonomous SaaS apps from one login — powered by EvolveAI-Engine." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "cta_primary_text", "label": "Primary button label", "default": "Get Started" },
+    { "type": "url",  "id": "cta_primary_link", "label": "Primary button link" },
+    { "type": "text", "id": "cta_secondary_text", "label": "Secondary button label", "default": "Explore the suite" },
+    { "type": "url",  "id": "cta_secondary_link", "label": "Secondary button link" },
+    { "type": "header", "content": "Visual" },
+    { "type": "image_picker", "id": "visual_image", "label": "Hero visual (optional)", "info": "Replaces the built-in SVG glyph." },
+    { "type": "header", "content": "Social-proof toast" },
+    { "type": "checkbox", "id": "show_toast", "label": "Show social-proof toast", "default": true },
+    { "type": "text", "id": "toast_kicker", "label": "Toast kicker", "default": "Just now" },
+    { "type": "text", "id": "toast_title",  "label": "Toast title",  "default": "Perth SMB activated EvolveAI-Engine" },
+    { "type": "text", "id": "toast_meta",   "label": "Toast meta",   "default": "Perth, WA · 2 min ago" }
+  ],
+  "presets": [ { "name": "EvoTech — Full-screen hero" } ]
+}
+{% endschema %}

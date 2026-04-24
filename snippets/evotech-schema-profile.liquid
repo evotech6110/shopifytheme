@@ -1,0 +1,54 @@
+{%- comment -%}
+  ProfilePage + Person schema — qualifies for Google rich "people" results.
+  Usage:
+    {%- render 'evotech-schema-profile',
+        person_name: 'Manoj Kumar',
+        job_title: 'Founder & Principal Engineer',
+        bio: 'Founder of EvoTech Digital. MSP + SaaS builder based in Perth.',
+        image_url: '/cdn/shop/files/manoj.jpg'
+    -%}
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "dateCreated": "2022-01-01T09:00:00+08:00",
+  "dateModified": "{{ 'now' | date: '%Y-%m-%dT%H:%M:%S+08:00' }}",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "{{ person_name | default: 'Manoj Kumar' }}",
+    "alternateName": "{{ alternate_name | default: 'Manoj' }}",
+    "description": "{{ bio | default: 'Founder of EvoTech Digital — managed IT services and SaaS for Australian businesses.' }}",
+    "image": "{{ image_url | default: shop.url | append: '/cdn/shop/files/profile.jpg' }}",
+    "sameAs": [
+      "https://github.com/evotech6110",
+      "https://www.linkedin.com/in/evotech",
+      "https://evotech.au"
+    ],
+    "jobTitle": "{{ job_title | default: 'Founder' }}",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "EvoTech Digital",
+      "url": "{{ shop.url }}"
+    },
+    "knowsAbout": [
+      "Managed IT services",
+      "Cyber security",
+      "ACSC Essential Eight",
+      "AI automation",
+      "SaaS architecture",
+      "Shopify theme development"
+    ],
+    "hasCredential": [
+      { "@type": "EducationalOccupationalCredential", "name": "Microsoft 365 Certified" },
+      { "@type": "EducationalOccupationalCredential", "name": "CompTIA Security+" }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Perth",
+      "addressRegion": "WA",
+      "addressCountry": "AU"
+    }
+  }
+}
+</script>

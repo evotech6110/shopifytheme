@@ -1,0 +1,91 @@
+{%- comment -%}
+  Central SaaS catalogue for the EvoTech ecosystem.
+  Single source of truth — included by header, solutions page, and per-product templates.
+  Flagship product "EvolveAI-Engine" lives at evolve.evotech.au (external subdomain).
+  Usage:
+    {%- render 'evotech-saas-catalog' -%}
+  Produces variable `evotech_saas_products_raw` consumable via `parse_json`.
+{%- endcomment -%}
+
+{%- capture evotech_saas_products_raw -%}
+[
+  {
+    "key": "evolveai",
+    "name": "EvolveAI-Engine",
+    "tagline": "Multi-model AI through a single endpoint. Claude, GPT-4o, Gemini — routed automatically.",
+    "category": "AI Engine · Flagship",
+    "price_from": "A$29/mo",
+    "icon": "sparkles",
+    "accent": "lime",
+    "handle": "evolveai-engine",
+    "url": "https://evolve.evotech.au",
+    "external": true,
+    "flagship": true
+  },
+  {
+    "key": "supportbot",
+    "name": "SupportBot",
+    "tagline": "Paste your FAQ URL. Get a trained chatbot you can embed in one line of JavaScript.",
+    "category": "Customer Support",
+    "price_from": "A$39/mo",
+    "icon": "chat",
+    "accent": "lavender",
+    "handle": "supportbot",
+    "url": "/products/supportbot",
+    "external": false,
+    "flagship": false
+  },
+  {
+    "key": "gethired",
+    "name": "Get Hired",
+    "tagline": "AI-tailored resumes optimised for SEEK and Australian ATS systems. Built for the AU job market.",
+    "category": "Career",
+    "price_from": "A$19/mo",
+    "icon": "document",
+    "accent": "mint",
+    "handle": "get-hired",
+    "url": "/products/get-hired",
+    "external": false,
+    "flagship": false
+  },
+  {
+    "key": "pulse",
+    "name": "Pulse",
+    "tagline": "Describe your business once. AI writes, schedules, and posts across every platform.",
+    "category": "Social Media",
+    "price_from": "A$29/mo",
+    "icon": "calendar",
+    "accent": "sky",
+    "handle": "pulse",
+    "url": "/products/pulse",
+    "external": false,
+    "flagship": false
+  },
+  {
+    "key": "buildai",
+    "name": "Build.ai",
+    "tagline": "Describe your business in plain English. Get a live website in 60 seconds.",
+    "category": "Website Builder",
+    "price_from": "A$19/mo",
+    "icon": "cube",
+    "accent": "peach",
+    "handle": "build-ai",
+    "url": "/products/build-ai",
+    "external": false,
+    "flagship": false
+  },
+  {
+    "key": "docgen",
+    "name": "DocGen",
+    "tagline": "AI contracts, NDAs, and service agreements — aware of Australian law. Export to PDF or e-sign.",
+    "category": "Legal",
+    "price_from": "A$25/mo",
+    "icon": "shield",
+    "accent": "cyan",
+    "handle": "docgen",
+    "url": "/products/docgen",
+    "external": false,
+    "flagship": false
+  }
+]
+{%- endcapture -%}

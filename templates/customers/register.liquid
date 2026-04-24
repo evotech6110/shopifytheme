@@ -1,0 +1,33 @@
+{%- comment -%} Customer register {%- endcomment -%}
+<section class="evo-cust">
+  <div class="evo-cust__card">
+    <p class="evo-cust__eyebrow">CREATE ACCOUNT</p>
+    <h1 class="evo-cust__title">Join EvoTech.</h1>
+    <p class="evo-cust__lede">Faster checkout, order history, and saved addresses. One minute to create.</p>
+
+    {%- form 'create_customer', class: 'evo-cust__form' -%}
+      {%- if form.errors -%}
+        <p class="evo-cust__error">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+      <div class="evo-cust__grid-2">
+        <label>First name
+          <input type="text" name="customer[first_name]" required>
+        </label>
+        <label>Last name
+          <input type="text" name="customer[last_name]" required>
+        </label>
+      </div>
+      <label>Email
+        <input type="email" name="customer[email]" required autocomplete="email">
+      </label>
+      <label>Password
+        <input type="password" name="customer[password]" required autocomplete="new-password">
+      </label>
+      <button type="submit">Create account</button>
+      <div class="evo-cust__links">
+        <a href="{{ routes.account_login_url }}">Already have one? Sign in</a>
+      </div>
+    {%- endform -%}
+  </div>
+</section>
+{% render 'evotech-customer-styles' %}

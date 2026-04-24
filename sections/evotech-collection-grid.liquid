@@ -1,0 +1,328 @@
+{%- comment -%}
+  Evotech Animated Collection Grid
+  ---------------------------------
+  Horizontal snap-scroll rail of category cards with orbital rings and
+  per-category animated SVG icons (router, switch, ap, nas, hdd, gpu,
+  laptop, cpu, mobo — or "generic" fallback). Progress bar under the rail
+  tracks scroll position; prev/next arrows page through the cards.
+
+  Each category is a block. Set `icon_preset` to match one of the animated
+  icons. `collection` links the card to a Shopify collection, and the SKU
+  count is auto-pulled from `collection.all_products_count` unless overridden.
+{%- endcomment -%}
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700,800&f[]=satoshi@400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  .evo-cat-{{ section.id }} { --mint:#A8E898; --mint-2:#CDFFBF; --indigo-2:#5B4DFF; --ink:#FFFFFF; --ink-dim:#B6B5C6; --ink-muted:#7A7A8F; --line:rgba(255,255,255,0.08); --font-d:'Clash Display','Satoshi','Inter',sans-serif; --font-s:'Satoshi','Inter',system-ui,sans-serif; --font-m:'JetBrains Mono',ui-monospace,monospace; --ease:cubic-bezier(.21,.83,.33,1); position:relative; padding:clamp(60px,8vw,110px) 0 clamp(80px,10vw,140px); background:radial-gradient(1200px 500px at 15% -10%, rgba(61,46,222,0.18), transparent 55%),radial-gradient(900px 400px at 85% 110%, rgba(168,232,152,0.10), transparent 60%),linear-gradient(180deg,#05040C 0%,#0A0820 100%); overflow:hidden; font-family:var(--font-s); color:var(--ink); }
+  .evo-cat-{{ section.id }} a { color:inherit; text-decoration:none; }
+  .evo-cat-{{ section.id }}::before { content:""; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.5), transparent),radial-gradient(1.5px 1.5px at 70% 50%, rgba(168,232,152,.4), transparent),radial-gradient(1px 1px at 45% 80%, rgba(255,255,255,.6), transparent),radial-gradient(1px 1px at 85% 20%, rgba(205,255,191,.45), transparent),radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,.5), transparent); background-size:900px 900px; background-repeat:repeat; opacity:.6; animation:catTwinkle{{ section.id }} 8s linear infinite; }
+  @keyframes catTwinkle{{ section.id }} { 0%,100%{opacity:.6} 50%{opacity:.35} }
+  .evo-cat-{{ section.id }} .cat-head { position:relative; z-index:2; max-width:1320px; margin:0 auto; display:grid; grid-template-columns:1fr auto; gap:28px; align-items:end; padding:0 clamp(20px,4vw,48px); }
+  .evo-cat-{{ section.id }} .cat-kicker { font-family:var(--font-m); font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--mint); margin:0 0 16px 0; }
+  .evo-cat-{{ section.id }} .cat-title { font-family:var(--font-d); font-weight:700; font-size:clamp(36px,5vw,72px); line-height:1.02; letter-spacing:-0.02em; color:#fff; margin:0; }
+  .evo-cat-{{ section.id }} .cat-title em { color:var(--mint); font-style:normal; font-family:'Caveat',cursive; font-weight:500; }
+  .evo-cat-{{ section.id }} .cat-subtitle { max-width:380px; color:var(--ink-dim); font-size:15px; line-height:1.6; }
+  @media (max-width:860px) { .evo-cat-{{ section.id }} .cat-head{grid-template-columns:1fr} .evo-cat-{{ section.id }} .cat-subtitle{max-width:none} }
+  .evo-cat-{{ section.id }} .cat-rail-wrap { position:relative; z-index:2; margin-top:clamp(40px,6vw,72px); }
+  .evo-cat-{{ section.id }} .cat-rail { display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; padding:12px clamp(20px,4vw,48px) 28px; scroll-padding-left:clamp(20px,4vw,48px); scrollbar-width:none; }
+  .evo-cat-{{ section.id }} .cat-rail::-webkit-scrollbar { display:none; }
+  .evo-cat-{{ section.id }} .cat-card { flex:0 0 auto; width:190px; scroll-snap-align:start; display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:28px 12px 20px; border-radius:24px; border:1px solid var(--line); background:linear-gradient(180deg,rgba(20,18,43,0.55) 0%,rgba(11,8,32,0.55) 100%); transition:transform .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease); cursor:pointer; }
+  .evo-cat-{{ section.id }} .cat-card:hover { transform:translateY(-6px); border-color:rgba(168,232,152,0.35); background:linear-gradient(180deg,rgba(35,28,80,0.7) 0%,rgba(15,11,46,0.7) 100%); }
+  .evo-cat-{{ section.id }} .cat-card:hover .cat-ring { box-shadow:0 0 0 1px rgba(168,232,152,0.6) inset,0 0 28px rgba(168,232,152,0.35); }
+  .evo-cat-{{ section.id }} .cat-ring { position:relative; width:124px; height:124px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 30% 25%, rgba(168,232,152,0.22), transparent 60%),radial-gradient(circle at 70% 75%, rgba(61,46,222,0.28), transparent 65%),linear-gradient(160deg,#14122B 0%,#08061A 100%); box-shadow:0 0 0 1px rgba(168,232,152,0.18) inset,0 0 24px rgba(168,232,152,0.08); transition:box-shadow .35s var(--ease); }
+  .evo-cat-{{ section.id }} .cat-ring::after { content:""; position:absolute; inset:-4px; border-radius:inherit; border:1px dashed rgba(168,232,152,0.18); animation:catRingSpin{{ section.id }} 22s linear infinite; }
+  .evo-cat-{{ section.id }} .cat-card:hover .cat-ring::after { animation-duration:8s; border-color:rgba(168,232,152,0.45); }
+  @keyframes catRingSpin{{ section.id }} { to{transform:rotate(360deg)} }
+  .evo-cat-{{ section.id }} .cat-icon { width:74px; height:74px; position:relative; z-index:2; }
+  .evo-cat-{{ section.id }} .cat-label { font-family:var(--font-s); font-weight:600; font-size:14px; color:#fff; line-height:1.3; }
+  .evo-cat-{{ section.id }} .cat-count { font-family:var(--font-m); font-size:10px; letter-spacing:0.22em; color:var(--ink-muted); text-transform:uppercase; }
+  .evo-cat-{{ section.id }} .cat-progress { max-width:1320px; margin:6px auto 0; padding:0 clamp(20px,4vw,48px); display:flex; align-items:center; gap:16px; }
+  .evo-cat-{{ section.id }} .cat-progress-track { flex:1; height:3px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; position:relative; }
+  .evo-cat-{{ section.id }} .cat-progress-bar { position:absolute; left:0; top:0; bottom:0; width:22%; background:linear-gradient(90deg,var(--mint) 0%,var(--indigo-2) 100%); border-radius:3px; transition:width .25s var(--ease),transform .25s var(--ease); }
+  .evo-cat-{{ section.id }} .cat-progress-ctrls { display:inline-flex; gap:8px; }
+  .evo-cat-{{ section.id }} .cat-progress-ctrls button { width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; background:transparent; border:1px solid rgba(255,255,255,0.12); border-radius:999px; color:#fff; cursor:pointer; transition:background .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease); }
+  .evo-cat-{{ section.id }} .cat-progress-ctrls button:hover { background:rgba(168,232,152,0.08); border-color:rgba(168,232,152,0.5); transform:scale(1.05); }
+  .evo-cat-{{ section.id }} .cat-progress-ctrls svg { width:16px; height:16px; }
+
+  /* Per-icon animations */
+  .evo-cat-{{ section.id }} .ico-router .wave { opacity:0; animation:routerWave{{ section.id }} 2.4s ease-out infinite; transform-origin:37px 40px; }
+  .evo-cat-{{ section.id }} .ico-router .wave.w1{animation-delay:0} .evo-cat-{{ section.id }} .ico-router .wave.w2{animation-delay:.6s} .evo-cat-{{ section.id }} .ico-router .wave.w3{animation-delay:1.2s}
+  @keyframes routerWave{{ section.id }} { 0%{opacity:.9; transform:scale(.6)} 100%{opacity:0; transform:scale(1.8)} }
+  .evo-cat-{{ section.id }} .ico-router .led { animation:catPulseLed{{ section.id }} 1.2s ease-in-out infinite alternate; }
+  .evo-cat-{{ section.id }} .ico-router .led.l2{animation-delay:.2s} .evo-cat-{{ section.id }} .ico-router .led.l3{animation-delay:.4s} .evo-cat-{{ section.id }} .ico-router .led.l4{animation-delay:.6s}
+  .evo-cat-{{ section.id }} .ico-switch .port-led { opacity:0.2; animation:switchFlow{{ section.id }} 2s linear infinite; }
+  .evo-cat-{{ section.id }} .ico-switch .port-led.p2{animation-delay:.15s} .evo-cat-{{ section.id }} .ico-switch .port-led.p3{animation-delay:.3s} .evo-cat-{{ section.id }} .ico-switch .port-led.p4{animation-delay:.45s} .evo-cat-{{ section.id }} .ico-switch .port-led.p5{animation-delay:.6s} .evo-cat-{{ section.id }} .ico-switch .port-led.p6{animation-delay:.75s} .evo-cat-{{ section.id }} .ico-switch .port-led.p7{animation-delay:.9s} .evo-cat-{{ section.id }} .ico-switch .port-led.p8{animation-delay:1.05s}
+  @keyframes switchFlow{{ section.id }} { 0%{opacity:.1} 20%{opacity:1} 60%{opacity:1} 100%{opacity:.1} }
+  .evo-cat-{{ section.id }} .ico-ap .arc { opacity:0; animation:apArc{{ section.id }} 2.6s ease-out infinite; transform-origin:37px 48px; }
+  .evo-cat-{{ section.id }} .ico-ap .arc.a1{animation-delay:0} .evo-cat-{{ section.id }} .ico-ap .arc.a2{animation-delay:.65s} .evo-cat-{{ section.id }} .ico-ap .arc.a3{animation-delay:1.3s}
+  @keyframes apArc{{ section.id }} { 0%{opacity:.9; transform:scale(.4)} 100%{opacity:0; transform:scale(1.8)} }
+  .evo-cat-{{ section.id }} .ico-nas .drive-led { animation:nasSync{{ section.id }} 1.6s ease-in-out infinite; }
+  .evo-cat-{{ section.id }} .ico-nas .drive-led.d2{animation-delay:.2s} .evo-cat-{{ section.id }} .ico-nas .drive-led.d3{animation-delay:.4s} .evo-cat-{{ section.id }} .ico-nas .drive-led.d4{animation-delay:.6s}
+  @keyframes nasSync{{ section.id }} { 0%,100%{opacity:.3; fill:#A8E898} 50%{opacity:1; fill:#CDFFBF} }
+  .evo-cat-{{ section.id }} .ico-hdd .platter { transform-origin:37px 37px; animation:hddSpin{{ section.id }} 4s linear infinite; }
+  @keyframes hddSpin{{ section.id }} { to{transform:rotate(360deg)} }
+  .evo-cat-{{ section.id }} .ico-hdd .head-arm { transform-origin:58px 18px; animation:hddArm{{ section.id }} 3s ease-in-out infinite alternate; }
+  @keyframes hddArm{{ section.id }} { 0%{transform:rotate(-10deg)} 100%{transform:rotate(15deg)} }
+  .evo-cat-{{ section.id }} .ico-gpu .fan { transform-origin:37px 37px; animation:gpuFan{{ section.id }} 1.6s linear infinite; }
+  @keyframes gpuFan{{ section.id }} { to{transform:rotate(360deg)} }
+  .evo-cat-{{ section.id }} .ico-lap .screen-wave { animation:lapWave{{ section.id }} 3s ease-in-out infinite; }
+  @keyframes lapWave{{ section.id }} { 0%,100%{opacity:.3} 50%{opacity:1} }
+  .evo-cat-{{ section.id }} .ico-cpu .core { animation:cpuCore{{ section.id }} 1.8s ease-in-out infinite; }
+  .evo-cat-{{ section.id }} .ico-cpu .core.c2{animation-delay:.3s} .evo-cat-{{ section.id }} .ico-cpu .core.c3{animation-delay:.6s} .evo-cat-{{ section.id }} .ico-cpu .core.c4{animation-delay:.9s}
+  @keyframes cpuCore{{ section.id }} { 0%,100%{opacity:.3} 50%{opacity:1} }
+  .evo-cat-{{ section.id }} .ico-mobo .trace { stroke-dasharray:3 4; animation:moboTrace{{ section.id }} 1.8s linear infinite; }
+  .evo-cat-{{ section.id }} .ico-mobo .trace.t2 { animation-duration:2.4s; animation-direction:reverse; }
+  @keyframes moboTrace{{ section.id }} { from{stroke-dashoffset:0} to{stroke-dashoffset:-14} }
+  .evo-cat-{{ section.id }} .ico-mobo .chip-led { animation:catPulseLed{{ section.id }} 1.4s ease-in-out infinite alternate; }
+  @keyframes catPulseLed{{ section.id }} { 0%{opacity:.4} 100%{opacity:1} }
+</style>
+
+<section class="evo-cat-{{ section.id }}" aria-label="{{ section.settings.aria_label | default: 'Explore expertise categories' }}">
+  <div class="cat-head">
+    <div>
+      {%- if section.settings.kicker != blank -%}
+        <p class="cat-kicker">{{ section.settings.kicker }}</p>
+      {%- endif -%}
+      <h2 class="cat-title">{{ section.settings.title }}</h2>
+    </div>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="cat-subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="cat-rail-wrap">
+    <div class="cat-rail" id="catRail-{{ section.id }}" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'category' -%}
+          {%- assign coll = collections[block.settings.collection] -%}
+          {%- assign href = block.settings.custom_url | default: coll.url -%}
+          {%- if href == blank -%}{%- assign href = '#' -%}{%- endif -%}
+          {%- assign sku_text = block.settings.count_override -%}
+          {%- if sku_text == blank and coll.all_products_count > 0 -%}
+            {%- assign sku_text = coll.all_products_count | append: ' SKUs' -%}
+          {%- endif -%}
+          <a class="cat-card" href="{{ href }}" role="listitem" {{ block.shopify_attributes }}>
+            <div class="cat-ring">
+              {%- case block.settings.icon_preset -%}
+              {%- when 'router' -%}
+                <svg class="cat-icon ico-router" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <g stroke="#A8E898" stroke-width="1.5" fill="none" stroke-linecap="round">
+                    <path class="wave w1" d="M25 28 Q37 18 49 28"/><path class="wave w2" d="M22 30 Q37 15 52 30"/><path class="wave w3" d="M19 32 Q37 12 55 32"/>
+                  </g>
+                  <rect x="14" y="40" width="46" height="18" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+                  <rect x="14" y="40" width="46" height="4" rx="1" fill="rgba(168,232,152,0.15)"/>
+                  <circle class="led l1" cx="22" cy="51" r="2" fill="#A8E898"/>
+                  <circle class="led l2" cx="30" cy="51" r="2" fill="#A8E898"/>
+                  <circle class="led l3" cx="38" cy="51" r="2" fill="#CDFFBF"/>
+                  <circle class="led l4" cx="46" cy="51" r="2" fill="#A8E898"/>
+                  <line x1="22" y1="40" x2="16" y2="26" stroke="#A8E898" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="52" y1="40" x2="58" y2="26" stroke="#A8E898" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              {%- when 'switch' -%}
+                <svg class="cat-icon ico-switch" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="8" y="26" width="58" height="22" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+                  <rect x="8" y="26" width="58" height="4" rx="1" fill="rgba(168,232,152,0.15)"/>
+                  <g fill="none" stroke="rgba(168,232,152,0.5)" stroke-width="1">
+                    <rect x="12" y="34" width="6" height="8" rx="1"/><rect x="19" y="34" width="6" height="8" rx="1"/><rect x="26" y="34" width="6" height="8" rx="1"/><rect x="33" y="34" width="6" height="8" rx="1"/><rect x="40" y="34" width="6" height="8" rx="1"/><rect x="47" y="34" width="6" height="8" rx="1"/><rect x="54" y="34" width="6" height="8" rx="1"/><rect x="61" y="34" width="2" height="8" rx="1"/>
+                  </g>
+                  <circle class="port-led p1" cx="15" cy="52" r="1.8" fill="#A8E898"/><circle class="port-led p2" cx="22" cy="52" r="1.8" fill="#A8E898"/><circle class="port-led p3" cx="29" cy="52" r="1.8" fill="#A8E898"/><circle class="port-led p4" cx="36" cy="52" r="1.8" fill="#A8E898"/><circle class="port-led p5" cx="43" cy="52" r="1.8" fill="#A8E898"/><circle class="port-led p6" cx="50" cy="52" r="1.8" fill="#A8E898"/><circle class="port-led p7" cx="57" cy="52" r="1.8" fill="#A8E898"/><circle class="port-led p8" cx="62" cy="52" r="1.8" fill="#CDFFBF"/>
+                </svg>
+              {%- when 'ap' -%}
+                <svg class="cat-icon ico-ap" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <g stroke="#A8E898" stroke-width="1.5" fill="none" stroke-linecap="round">
+                    <path class="arc a1" d="M22 52 Q37 36 52 52"/><path class="arc a2" d="M17 52 Q37 28 57 52"/><path class="arc a3" d="M12 52 Q37 22 62 52"/>
+                  </g>
+                  <ellipse cx="37" cy="52" rx="16" ry="4" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+                  <circle cx="37" cy="48" r="3" fill="#CDFFBF"/>
+                </svg>
+              {%- when 'nas' -%}
+                <svg class="cat-icon ico-nas" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="16" y="14" width="42" height="46" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+                  <g stroke="rgba(168,232,152,0.4)" stroke-width="1">
+                    <rect x="20" y="19" width="34" height="8" rx="1" fill="rgba(168,232,152,0.05)"/><rect x="20" y="29" width="34" height="8" rx="1" fill="rgba(168,232,152,0.05)"/><rect x="20" y="39" width="34" height="8" rx="1" fill="rgba(168,232,152,0.05)"/><rect x="20" y="49" width="34" height="8" rx="1" fill="rgba(168,232,152,0.05)"/>
+                  </g>
+                  <circle class="drive-led d1" cx="49" cy="23" r="1.8" fill="#A8E898"/><circle class="drive-led d2" cx="49" cy="33" r="1.8" fill="#A8E898"/><circle class="drive-led d3" cx="49" cy="43" r="1.8" fill="#A8E898"/><circle class="drive-led d4" cx="49" cy="53" r="1.8" fill="#A8E898"/>
+                  <line x1="23" y1="23" x2="27" y2="23" stroke="rgba(168,232,152,0.4)" stroke-width="1.5"/><line x1="23" y1="33" x2="27" y2="33" stroke="rgba(168,232,152,0.4)" stroke-width="1.5"/><line x1="23" y1="43" x2="27" y2="43" stroke="rgba(168,232,152,0.4)" stroke-width="1.5"/><line x1="23" y1="53" x2="27" y2="53" stroke="rgba(168,232,152,0.4)" stroke-width="1.5"/>
+                </svg>
+              {%- when 'hdd' -%}
+                <svg class="cat-icon ico-hdd" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="8" y="8" width="58" height="58" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+                  <defs><radialGradient id="hddPlatter-{{ block.id }}" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#2A2460"/><stop offset="1" stop-color="#0A0820"/></radialGradient></defs>
+                  <g class="platter">
+                    <circle cx="37" cy="37" r="24" fill="url(#hddPlatter-{{ block.id }})" stroke="rgba(168,232,152,0.5)"/>
+                    <circle cx="37" cy="37" r="18" fill="none" stroke="rgba(168,232,152,0.25)"/>
+                    <circle cx="37" cy="37" r="12" fill="none" stroke="rgba(168,232,152,0.2)"/>
+                    <circle cx="37" cy="37" r="6" fill="#A8E898"/>
+                    <circle cx="37" cy="37" r="2" fill="#14122B"/>
+                    <line x1="37" y1="15" x2="37" y2="22" stroke="#CDFFBF" stroke-width="1.5"/>
+                  </g>
+                  <g class="head-arm"><rect x="56" y="17" width="4" height="30" rx="1" fill="rgba(168,232,152,0.6)"/><circle cx="58" cy="18" r="3" fill="#A8E898"/></g>
+                </svg>
+              {%- when 'gpu' -%}
+                <svg class="cat-icon ico-gpu" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="6" y="24" width="62" height="26" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+                  <rect x="6" y="48" width="20" height="4" fill="rgba(205,255,191,0.8)"/>
+                  <circle cx="37" cy="37" r="13" fill="#0A0820" stroke="#A8E898" stroke-width="1.5"/>
+                  <g class="fan">
+                    <path d="M37 37 L37 27 Q40 30 37 37 Z" fill="rgba(168,232,152,0.5)"/><path d="M37 37 L47 37 Q44 40 37 37 Z" fill="rgba(168,232,152,0.5)"/><path d="M37 37 L37 47 Q34 44 37 37 Z" fill="rgba(168,232,152,0.5)"/><path d="M37 37 L27 37 Q30 34 37 37 Z" fill="rgba(168,232,152,0.5)"/>
+                  </g>
+                  <circle cx="37" cy="37" r="3" fill="#CDFFBF"/>
+                  <rect x="56" y="30" width="10" height="3" rx="1" fill="rgba(168,232,152,0.3)"/><rect x="56" y="35" width="10" height="3" rx="1" fill="rgba(168,232,152,0.3)"/><rect x="56" y="40" width="10" height="3" rx="1" fill="rgba(168,232,152,0.3)"/>
+                </svg>
+              {%- when 'laptop' -%}
+                <svg class="cat-icon ico-lap" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="14" y="16" width="46" height="30" rx="2" fill="#0A0820" stroke="#A8E898" stroke-width="1.5"/>
+                  <g class="screen-wave">
+                    <path d="M18 38 Q24 30 30 36 T42 32 T56 36" fill="none" stroke="#A8E898" stroke-width="1.2"/>
+                    <path d="M18 42 Q24 36 30 40 T42 36 T56 40" fill="none" stroke="#CDFFBF" stroke-width="1" opacity="0.6"/>
+                  </g>
+                  <path d="M8 50 L66 50 L62 62 L12 62 Z" fill="#14122B" stroke="#A8E898" stroke-width="1.5" stroke-linejoin="round"/>
+                  <line x1="28" y1="56" x2="46" y2="56" stroke="rgba(168,232,152,0.5)" stroke-width="1"/>
+                </svg>
+              {%- when 'cpu' -%}
+                <svg class="cat-icon ico-cpu" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="14" y="14" width="46" height="46" rx="2" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+                  <rect x="22" y="22" width="30" height="30" rx="1" fill="#0A0820" stroke="#A8E898" stroke-width="1"/>
+                  <rect class="core c1" x="26" y="26" width="10" height="10" rx="1" fill="#A8E898"/><rect class="core c2" x="38" y="26" width="10" height="10" rx="1" fill="#A8E898"/><rect class="core c3" x="26" y="38" width="10" height="10" rx="1" fill="#A8E898"/><rect class="core c4" x="38" y="38" width="10" height="10" rx="1" fill="#A8E898"/>
+                  <g fill="rgba(168,232,152,0.5)">
+                    <rect x="18" y="10" width="1.5" height="4"/><rect x="26" y="10" width="1.5" height="4"/><rect x="34" y="10" width="1.5" height="4"/><rect x="42" y="10" width="1.5" height="4"/><rect x="50" y="10" width="1.5" height="4"/>
+                    <rect x="18" y="60" width="1.5" height="4"/><rect x="26" y="60" width="1.5" height="4"/><rect x="34" y="60" width="1.5" height="4"/><rect x="42" y="60" width="1.5" height="4"/><rect x="50" y="60" width="1.5" height="4"/>
+                    <rect x="10" y="18" width="4" height="1.5"/><rect x="10" y="26" width="4" height="1.5"/><rect x="10" y="34" width="4" height="1.5"/><rect x="10" y="42" width="4" height="1.5"/><rect x="10" y="50" width="4" height="1.5"/>
+                    <rect x="60" y="18" width="4" height="1.5"/><rect x="60" y="26" width="4" height="1.5"/><rect x="60" y="34" width="4" height="1.5"/><rect x="60" y="42" width="4" height="1.5"/><rect x="60" y="50" width="4" height="1.5"/>
+                  </g>
+                </svg>
+              {%- when 'mobo' -%}
+                <svg class="cat-icon ico-mobo" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="8" y="10" width="58" height="54" rx="3" fill="#0A1A0C" stroke="#A8E898" stroke-width="1.5"/>
+                  <rect x="16" y="18" width="16" height="16" rx="1" fill="#14122B" stroke="#A8E898" stroke-width="1"/>
+                  <circle cx="24" cy="26" r="2" fill="#CDFFBF" class="chip-led"/>
+                  <rect x="38" y="18" width="3" height="20" rx="0.5" fill="rgba(168,232,152,0.4)"/><rect x="43" y="18" width="3" height="20" rx="0.5" fill="rgba(168,232,152,0.4)"/><rect x="48" y="18" width="3" height="20" rx="0.5" fill="rgba(168,232,152,0.4)"/><rect x="53" y="18" width="3" height="20" rx="0.5" fill="rgba(168,232,152,0.4)"/>
+                  <rect x="16" y="42" width="40" height="4" rx="1" fill="rgba(168,232,152,0.3)"/><rect x="16" y="50" width="28" height="4" rx="1" fill="rgba(168,232,152,0.3)"/>
+                  <g class="trace" stroke="#A8E898" stroke-width="0.8" fill="none"><path d="M24 34 L24 42"/><path d="M56 26 L60 26 L60 46"/><path d="M30 46 L30 58"/></g>
+                  <g class="trace t2" stroke="#CDFFBF" stroke-width="0.8" fill="none"><path d="M44 38 L44 50"/><path d="M50 54 L58 54 L58 58"/></g>
+                  <rect x="56" y="48" width="6" height="6" rx="0.5" fill="#14122B" stroke="rgba(168,232,152,0.3)"/>
+                  <circle cx="59" cy="51" r="1" fill="#A8E898" class="chip-led"/>
+                </svg>
+              {%- else -%}
+                {%- if coll.image -%}
+                  {{ coll | image_url: width: 148 | image_tag: class: 'cat-icon', loading: 'lazy', alt: coll.title }}
+                {%- else -%}
+                  <svg class="cat-icon" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect x="14" y="14" width="46" height="46" rx="6" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+                    <circle cx="37" cy="37" r="10" fill="rgba(168,232,152,0.4)"/>
+                    <circle cx="37" cy="37" r="4" fill="#CDFFBF"/>
+                  </svg>
+                {%- endif -%}
+              {%- endcase -%}
+            </div>
+            <div class="cat-label">{{ block.settings.label | default: coll.title | default: 'Category' }}</div>
+            {%- if sku_text != blank -%}
+              <div class="cat-count">{{ sku_text }}</div>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="cat-progress">
+      <div class="cat-progress-track">
+        <div class="cat-progress-bar" id="catBar-{{ section.id }}"></div>
+      </div>
+      <div class="cat-progress-ctrls">
+        <button type="button" aria-label="Previous categories" data-nav="prev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" aria-label="Next categories" data-nav="next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var rail = document.getElementById('catRail-{{ section.id }}');
+    var bar  = document.getElementById('catBar-{{ section.id }}');
+    if (!rail || !bar) return;
+    function updateBar() {
+      var max = rail.scrollWidth - rail.clientWidth;
+      var pct = max > 0 ? (rail.scrollLeft / max) : 0;
+      var barWidthPct = Math.max(18, (rail.clientWidth / rail.scrollWidth) * 100);
+      bar.style.width = barWidthPct + '%';
+      bar.style.transform = 'translateX(' + (pct * (100 - barWidthPct)) + '%)';
+    }
+    rail.addEventListener('scroll', updateBar, { passive: true });
+    window.addEventListener('resize', updateBar);
+    updateBar();
+    rail.parentElement.querySelectorAll('[data-nav]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var dir = btn.getAttribute('data-nav') === 'next' ? 1 : -1;
+        rail.scrollBy({ left: dir * 420, behavior: 'smooth' });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Evotech Collection Grid",
+  "tag": "section",
+  "class": "evotech-collection-section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "SHOP BY CATEGORY · 4,800+ SKUs" },
+    { "type": "html", "id": "title", "label": "Title (HTML — use <em> for script accent)", "default": "Explore <em>expertise</em><br>categories." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Browse our full range of enterprise-grade networking, storage, compute and workstation hardware — curated, warranty-backed, stocked for Perth." },
+    { "type": "text", "id": "aria_label", "label": "Section aria-label", "default": "Explore expertise categories" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection (auto-pulls title, URL, SKU count)" },
+        { "type": "text", "id": "label", "label": "Label override" },
+        { "type": "url", "id": "custom_url", "label": "Custom link (overrides collection URL)" },
+        { "type": "text", "id": "count_override", "label": "SKU count override", "info": "e.g. '214 SKUs'. Leave blank to use collection product count." },
+        {
+          "type": "select",
+          "id": "icon_preset",
+          "label": "Animated icon",
+          "default": "router",
+          "options": [
+            { "value": "router", "label": "Router & Gateway (wifi waves)" },
+            { "value": "switch", "label": "Switch & Hub (LED traffic)" },
+            { "value": "ap", "label": "Access Point (dome signals)" },
+            { "value": "nas", "label": "NAS (sync drives)" },
+            { "value": "hdd", "label": "HDD (spinning platter)" },
+            { "value": "gpu", "label": "GPU (spinning fan)" },
+            { "value": "laptop", "label": "Laptop (screen waves)" },
+            { "value": "cpu", "label": "CPU (pulsing cores)" },
+            { "value": "mobo", "label": "Motherboard (traces)" },
+            { "value": "generic", "label": "Generic / use collection image" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Evotech Collection Grid",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Routers & Gateways", "count_override": "214 SKUs", "icon_preset": "router" } },
+        { "type": "category", "settings": { "label": "Switches & Hubs",  "count_override": "362 SKUs", "icon_preset": "switch" } },
+        { "type": "category", "settings": { "label": "Access Points",    "count_override": "198 SKUs", "icon_preset": "ap" } },
+        { "type": "category", "settings": { "label": "NAS Systems",      "count_override": "127 SKUs", "icon_preset": "nas" } },
+        { "type": "category", "settings": { "label": "Enterprise HDDs",  "count_override": "445 SKUs", "icon_preset": "hdd" } },
+        { "type": "category", "settings": { "label": "Graphics Cards",   "count_override": "289 SKUs", "icon_preset": "gpu" } },
+        { "type": "category", "settings": { "label": "Workstation Laptops", "count_override": "178 SKUs", "icon_preset": "laptop" } },
+        { "type": "category", "settings": { "label": "Processors (CPU)", "count_override": "156 SKUs", "icon_preset": "cpu" } },
+        { "type": "category", "settings": { "label": "Motherboards",     "count_override": "203 SKUs", "icon_preset": "mobo" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

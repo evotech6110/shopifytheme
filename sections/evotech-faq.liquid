@@ -1,0 +1,71 @@
+{%- comment -%}
+  FAQ section. Renders accessible <details>/<summary> accordion AND
+  emits valid FAQPage JSON-LD via the schema snippet.
+{%- endcomment -%}
+
+<section class="evo evo-section evo-section--white">
+  <div class="evo-container">
+    <div style="text-align: center; max-width: 680px; margin: 0 auto;">
+      <p class="evo-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="evo-h2" data-aos="fade-up">{{ section.settings.headline }}</h2>
+      <p class="evo-lede evo-center" style="margin: 0 auto;" data-aos="fade-up" data-aos-delay="100">{{ section.settings.lede }}</p>
+    </div>
+
+    <div class="evo-faq">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq' -%}
+          <details class="evo-faq__item" {{ block.shopify_attributes }} {% if forloop.first and section.settings.open_first %}open{% endif %}>
+            <summary class="evo-faq__q">
+              <span>{{ block.settings.question }}</span>
+            </summary>
+            <div class="evo-faq__a">{{ block.settings.answer }}</div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- render 'evotech-schema-faq', items: section.blocks -%}
+
+{% schema %}
+{
+  "name": "EvoTech — FAQ (schema)",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "COMMON QUESTIONS" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Everything you wanted to ask before you buy." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Pricing, data residency, integrations, onboarding — all answered below. Still stuck? Our Perth team replies in under an hour." },
+    { "type": "checkbox", "id": "open_first", "label": "Open first item by default", "default": false }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text",     "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer",   "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EvoTech FAQ",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "What is the EvoTech SaaS Ecosystem?", "answer": "<p>A suite of six integrated Australian-built SaaS products covering cyber security, IT operations, governance, procurement, and compliance. Each works standalone or together under single sign-on.</p>" } },
+        { "type": "faq", "settings": { "question": "Is my data stored in Australia?", "answer": "<p>Yes. All customer data is hosted in Australian AWS regions (ap-southeast-2 Sydney and ap-southeast-4 Melbourne) with optional single-tenant isolation for regulated industries.</p>" } },
+        { "type": "faq", "settings": { "question": "How does Essential8 Compass help with Australian compliance?", "answer": "<p>It continuously tests your environment against the eight ACSC mitigation strategies, captures audit evidence automatically, and exports auditor-ready packs for ML1, ML2, and ML3 maturity levels.</p>" } },
+        { "type": "faq", "settings": { "question": "Can I use one EvoTech app without buying the rest?", "answer": "<p>Yes. Every product is sold standalone. You only pay for what you use, and you can add apps later with no migration.</p>" } },
+        { "type": "faq", "settings": { "question": "What does pricing start at?", "answer": "<p>From A$59/month (ProcureIQ) to A$499/month (SentryOps). Annual plans save 20%. Every app includes a 14-day free trial — no credit card required.</p>" } },
+        { "type": "faq", "settings": { "question": "How fast can SentryOps be deployed?", "answer": "<p>Median time to live threat monitoring is 48 hours, including endpoint agent rollout and alert routing configuration.</p>" } },
+        { "type": "faq", "settings": { "question": "Do you integrate with Microsoft 365 and Google Workspace?", "answer": "<p>Yes — native OAuth connectors for Microsoft 365, Entra ID, Google Workspace, Okta, plus 400+ other apps via EvolveAI Autopilot.</p>" } },
+        { "type": "faq", "settings": { "question": "Is support included?", "answer": "<p>All plans include Perth-based human support. Paid plans add onboarding, quarterly business reviews, and a 1-hour response SLA during Australian business hours.</p>" } },
+        { "type": "faq", "settings": { "question": "Can I bring my existing hardware?", "answer": "<p>Yes. NetPulse and SentryOps work with any vendor — we're hardware-neutral. EvoTech also sells curated hardware if you need it.</p>" } },
+        { "type": "faq", "settings": { "question": "Is there a money-back guarantee?", "answer": "<p>Yes. A 30-day unconditional refund on any annual plan.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

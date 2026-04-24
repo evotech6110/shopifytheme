@@ -1,0 +1,21 @@
+{%- comment -%} Customer activate account {%- endcomment -%}
+<section class="evo-cust">
+  <div class="evo-cust__card">
+    <p class="evo-cust__eyebrow">ACTIVATE ACCOUNT</p>
+    <h1 class="evo-cust__title">Welcome.</h1>
+    <p class="evo-cust__lede">Create a password to activate your account.</p>
+
+    {%- form 'activate_customer_password', class: 'evo-cust__form' -%}
+      {%- if form.errors -%}<p class="evo-cust__error">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <label>Password
+        <input type="password" name="customer[password]" required autocomplete="new-password">
+      </label>
+      <label>Confirm password
+        <input type="password" name="customer[password_confirmation]" required autocomplete="new-password">
+      </label>
+      <button type="submit">Activate</button>
+      <button type="submit" name="decline" class="ghost">Decline invitation</button>
+    {%- endform -%}
+  </div>
+</section>
+{% render 'evotech-customer-styles' %}

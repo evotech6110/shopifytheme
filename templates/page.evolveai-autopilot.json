@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "hero": {
+      "type": "evotech-saas-product-hero",
+      "settings": {
+        "product_name": "EvolveAI Autopilot",
+        "category": "AI Automation",
+        "price_display": "A$149/mo",
+        "price_amount": "149.00",
+        "schema_category": "BusinessApplication",
+        "headline": "Autonomous AI agents that run your operations while you sleep.",
+        "subhead": "Ship AI workflows in hours, not weeks. Connects to 400+ apps. Australian-hosted data. Every run is auditable.",
+        "cta_primary_text": "Start 14-day free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "See live workflows",
+        "cta_secondary_link": "/pages/contact",
+        "trust_metric": "400+ integrations",
+        "trust_rating": "4.9 / 5 · 210 reviews"
+      }
+    },
+    "feature_1": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "HOW IT WORKS",
+        "headline": "From trigger to outcome — no code required.",
+        "body": "Compose agents from templates, approve them once, then let EvolveAI run them across your apps — quote-to-cash, onboarding, IT tickets, finance reconciliation, and more.",
+        "placeholder_metric": "400+",
+        "placeholder_label": "Integrations",
+        "cta_text": "Browse the template gallery",
+        "cta_link": "/pages/contact"
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "400+ prebuilt integrations" } },
+        "c2": { "type": "check", "settings": { "text": "Visual workflow builder (no code)" } },
+        "c3": { "type": "check", "settings": { "text": "Role-based approvals & audit trail" } },
+        "c4": { "type": "check", "settings": { "text": "Australian data residency" } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    },
+    "faq": {
+      "type": "evotech-faq",
+      "settings": {
+        "eyebrow": "EVOLVEAI FAQ",
+        "headline": "Operational questions answered.",
+        "lede": "Everything you want to know before you automate."
+      },
+      "blocks": {
+        "f1": { "type": "faq", "settings": { "question": "Which LLM powers EvolveAI?", "answer": "<p>Choose between Anthropic Claude, OpenAI GPT, and open-source models — with enterprise data-not-used-for-training agreements.</p>" } },
+        "f2": { "type": "faq", "settings": { "question": "Is my data ever sent outside Australia?", "answer": "<p>No. All inference and storage is pinned to AU regions for customers on the Business plan and above.</p>" } },
+        "f3": { "type": "faq", "settings": { "question": "Can I bring my own model?", "answer": "<p>Yes — BYO-Model support for Azure OpenAI, AWS Bedrock, and on-prem Llama models.</p>" } }
+      },
+      "block_order": ["f1","f2","f3"]
+    },
+    "cta_band": {
+      "type": "evotech-cta-band",
+      "settings": {
+        "eyebrow": "EVOLVEAI AUTOPILOT",
+        "headline": "Stop doing work a machine can do.",
+        "lede": "14-day free trial. No credit card. Templates ready in minutes.",
+        "cta_primary_text": "Start free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Talk to an AI specialist",
+        "cta_secondary_link": "/pages/contact"
+      }
+    }
+  },
+  "order": ["hero","feature_1","faq","cta_band"]
+}

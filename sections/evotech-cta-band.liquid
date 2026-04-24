@@ -1,0 +1,39 @@
+{%- comment -%}
+  EvoTech — CTA band (Evoluxia-styled, dark gradient tile).
+{%- endcomment -%}
+
+<section class="evo evo-ctaband">
+  <div class="evo-container">
+    <div class="evo-ctaband__inner">
+      {%- if section.settings.eyebrow != blank -%}<div class="evo-kicker">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      <h2 class="evo-ctaband__title">{{ section.settings.headline | replace: '*', '<span class="evo-accent-word">' | replace: '~', '</span>' }}</h2>
+      {%- if section.settings.lede != blank -%}<p class="evo-ctaband__body">{{ section.settings.lede }}</p>{%- endif -%}
+      <div class="evo-ctaband__actions">
+        {%- if section.settings.cta_primary_text != blank -%}
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-btn evo-btn--primary">{{ section.settings.cta_primary_text }}</a>
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_text != blank -%}
+          <a href="{{ section.settings.cta_secondary_link }}" class="evo-btn evo-btn--ghost">{{ section.settings.cta_secondary_text }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — CTA band",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "READY WHEN YOU ARE" },
+    { "type": "text", "id": "headline", "label": "Headline (wrap accent word with *…~ e.g. Let's modernise your *entire stack.~)", "default": "Let's modernise your *entire stack.~" },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "From hardware to Managed IT to six AI-powered SaaS apps — one conversation is all it takes." },
+    { "type": "text", "id": "cta_primary_text", "label": "Primary CTA text", "default": "Book a 20-min consult" },
+    { "type": "url",  "id": "cta_primary_link", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta_secondary_text", "label": "Secondary CTA text", "default": "Explore the suite" },
+    { "type": "url",  "id": "cta_secondary_link", "label": "Secondary CTA link" }
+  ],
+  "presets": [ { "name": "EvoTech CTA band" } ]
+}
+{% endschema %}

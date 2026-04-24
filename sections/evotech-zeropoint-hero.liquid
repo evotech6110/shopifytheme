@@ -1,0 +1,447 @@
+{%- comment -%}
+  Evotech Zero-Point Hero
+  -----------------------
+  3-slide animated hero with:
+  - Animated Evolve AI neural-engine brain in the header
+  - Support pill linking to https://support.evotech.au (or any URL set in theme editor)
+  - Starfield + moon ambient background
+  - Ghost display-type behind each slide
+  - Autoplay, tracker buttons, left/right arrow nav, keyboard arrows
+  All slide copy, CTAs and right-column descriptions are editable in the theme editor.
+{%- endcomment -%}
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700,800&f[]=satoshi@400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  .evo-zp-{{ section.id }} { --bg:#05040C; --bg-2:#0B0820; --bg-3:#14122B; --ink:#FFFFFF; --ink-dim:#B6B5C6; --ink-muted:#7A7A8F; --mint:#A8E898; --mint-2:#CDFFBF; --indigo:#3D2EDE; --indigo-2:#5B4DFF; --peach:#FF7A4A; --font-d:'Clash Display','Satoshi','Inter',sans-serif; --font-s:'Satoshi','Inter',system-ui,sans-serif; --font-m:'JetBrains Mono',ui-monospace,monospace; --ease:cubic-bezier(.21,.83,.33,1); position:relative; min-height:100vh; overflow:hidden; background:radial-gradient(1200px 600px at 20% 10%, rgba(61,46,222,0.22), transparent 55%),radial-gradient(900px 500px at 80% 20%, rgba(168,232,152,0.10), transparent 60%),linear-gradient(180deg,#05040C 0%,#0A0820 55%,#14122B 100%); font-family:var(--font-s); color:var(--ink); }
+  .evo-zp-{{ section.id }} a { color:inherit; text-decoration:none; }
+  .evo-zp-{{ section.id }}::before, .evo-zp-{{ section.id }}::after { content:""; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.7), transparent),radial-gradient(1px 1px at 70% 50%, rgba(255,255,255,.55), transparent),radial-gradient(1.5px 1.5px at 45% 80%, rgba(255,255,255,.8), transparent),radial-gradient(1px 1px at 85% 20%, rgba(168,232,152,.65), transparent),radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,.6), transparent),radial-gradient(2px 2px at 60% 15%, rgba(205,255,191,.7), transparent),radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,.5), transparent),radial-gradient(1px 1px at 90% 85%, rgba(255,255,255,.7), transparent); background-size:800px 800px; background-repeat:repeat; opacity:.85; animation:zpTwinkle{{ section.id }} 6s linear infinite; }
+  .evo-zp-{{ section.id }}::after { background-size:1100px 1100px; opacity:.45; animation-duration:11s; animation-direction:reverse; }
+  @keyframes zpTwinkle{{ section.id }} { 0%,100%{opacity:.85} 50%{opacity:.55} }
+  .evo-zp-{{ section.id }} .zp-moon { position:absolute; left:0; right:0; bottom:-40px; height:220px; background:radial-gradient(ellipse at 20% 10%, rgba(255,255,255,0.06), transparent 60%),radial-gradient(ellipse at 80% 30%, rgba(168,232,152,0.08), transparent 60%),radial-gradient(ellipse at 50% 100%, rgba(61,46,222,0.25), transparent 70%),linear-gradient(180deg, rgba(30,26,60,0.2), rgba(5,4,12,1)); filter:blur(1px); pointer-events:none; z-index:1; mask-image:radial-gradient(ellipse 120% 90% at 50% 100%, #000 60%, transparent 85%); -webkit-mask-image:radial-gradient(ellipse 120% 90% at 50% 100%, #000 60%, transparent 85%); }
+  .evo-zp-{{ section.id }} .zp-header { position:relative; z-index:18; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:28px clamp(20px,4vw,56px) 24px; gap:20px; }
+  .evo-zp-{{ section.id }} .zp-logo { display:inline-flex; align-items:center; gap:12px; justify-self:start; }
+  .evo-zp-{{ section.id }} .zp-logo-mark { width:44px; height:44px; }
+  .evo-zp-{{ section.id }} .zp-logo-wordmark { font-family:var(--font-d); font-weight:800; font-size:20px; letter-spacing:0.02em; color:#fff; line-height:1; }
+  .evo-zp-{{ section.id }} .zp-logo-wordmark em { color:var(--mint); font-style:normal; }
+  .evo-zp-{{ section.id }} .zp-logo-tagline { display:block; font-size:9px; letter-spacing:0.32em; text-transform:uppercase; color:var(--ink-muted); margin-top:4px; font-weight:500; }
+  .evo-zp-{{ section.id }} .zp-brain { justify-self:center; display:inline-flex; flex-direction:column; align-items:center; gap:6px; padding:4px 18px; border:1px solid rgba(168,232,152,0.2); border-radius:999px; background:rgba(10,8,26,0.55); backdrop-filter:blur(6px); }
+  .evo-zp-{{ section.id }} .zp-brain-viz { width:56px; height:40px; filter:drop-shadow(0 0 10px rgba(168,232,152,0.45)); animation:zpBrainBreath{{ section.id }} 4.5s ease-in-out infinite; }
+  @keyframes zpBrainBreath{{ section.id }} { 0%,100%{transform:scale(1); filter:drop-shadow(0 0 6px rgba(168,232,152,0.35))} 50%{transform:scale(1.06); filter:drop-shadow(0 0 16px rgba(168,232,152,0.75))} }
+  .evo-zp-{{ section.id }} .zp-brain-label { font-family:var(--font-m); font-size:10px; letter-spacing:0.28em; text-transform:uppercase; color:var(--mint); padding-bottom:4px; white-space:nowrap; }
+  .evo-zp-{{ section.id }} .zp-brain-label .dim { color:var(--ink-muted); }
+  .evo-zp-{{ section.id }} .brain-node { animation:zpBrainNode{{ section.id }} 2.2s ease-in-out infinite; transform-origin:center; }
+  .evo-zp-{{ section.id }} .brain-node.n1{animation-delay:0} .evo-zp-{{ section.id }} .brain-node.n2{animation-delay:.3s} .evo-zp-{{ section.id }} .brain-node.n3{animation-delay:.6s} .evo-zp-{{ section.id }} .brain-node.n4{animation-delay:.9s} .evo-zp-{{ section.id }} .brain-node.n5{animation-delay:.15s} .evo-zp-{{ section.id }} .brain-node.n6{animation-delay:.45s} .evo-zp-{{ section.id }} .brain-node.n7{animation-delay:.75s} .evo-zp-{{ section.id }} .brain-node.n8{animation-delay:1.05s} .evo-zp-{{ section.id }} .brain-node.core{animation-duration:1.4s}
+  @keyframes zpBrainNode{{ section.id }} { 0%,100%{opacity:.35} 50%{opacity:1} }
+  .evo-zp-{{ section.id }} .brain-synapse line { stroke-dasharray:2 4; animation:zpBrainFlow{{ section.id }} 1.6s linear infinite; }
+  .evo-zp-{{ section.id }} .brain-synapse line:nth-child(2n) { animation-duration:2.2s; animation-direction:reverse; }
+  .evo-zp-{{ section.id }} .brain-synapse line:nth-child(3n) { animation-duration:1.9s; }
+  @keyframes zpBrainFlow{{ section.id }} { from{stroke-dashoffset:0} to{stroke-dashoffset:-12} }
+  .evo-zp-{{ section.id }} .brain-halo { transform-origin:center; animation:zpBrainHalo{{ section.id }} 3s ease-in-out infinite; }
+  @keyframes zpBrainHalo{{ section.id }} { 0%,100%{opacity:.35; transform:scale(.85)} 50%{opacity:.9; transform:scale(1.1)} }
+  .evo-zp-{{ section.id }} .zp-nav { justify-self:end; display:inline-flex; gap:2px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+  .evo-zp-{{ section.id }} .zp-nav a { font-family:var(--font-m); font-size:12px; letter-spacing:0.22em; color:#fff; padding:10px 14px; border:1px solid transparent; border-radius:6px; transition:color .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease); }
+  .evo-zp-{{ section.id }} .zp-nav a:hover, .evo-zp-{{ section.id }} .zp-nav a[aria-current="page"] { color:var(--mint); border-color:rgba(168,232,152,0.3); background:rgba(168,232,152,0.06); }
+  .evo-zp-{{ section.id }} .zp-nav a.is-support { background:linear-gradient(90deg,#A8E898 0%,#CDFFBF 100%); color:#0A0A0A; margin-left:6px; font-weight:700; }
+  .evo-zp-{{ section.id }} .zp-nav a.is-support:hover { background:linear-gradient(90deg,#CDFFBF 0%,#A8E898 100%); color:#0A0A0A; border-color:transparent; transform:translateY(-1px); }
+  @media (max-width:1100px) { .evo-zp-{{ section.id }} .zp-header{grid-template-columns:1fr auto} .evo-zp-{{ section.id }} .zp-brain{grid-column:1/-1; order:3; margin:8px auto 0} .evo-zp-{{ section.id }} .zp-nav a{padding:8px 10px; font-size:11px; letter-spacing:0.16em} }
+  @media (max-width:640px) { .evo-zp-{{ section.id }} .zp-nav a:not(.is-support){display:none} .evo-zp-{{ section.id }} .zp-nav a.is-support{display:inline-flex} }
+  .evo-zp-{{ section.id }} .zp-stage { position:relative; z-index:5; min-height:calc(100vh - 140px); display:flex; align-items:center; justify-content:center; padding:0 clamp(20px,4vw,56px); }
+  .evo-zp-{{ section.id }} .zp-slide { position:absolute; inset:0; display:grid; grid-template-columns:280px 1fr 280px; align-items:center; gap:36px; padding:0 clamp(20px,4vw,56px) 120px; opacity:0; transform:translateY(30px); transition:opacity .6s var(--ease),transform .6s var(--ease); pointer-events:none; }
+  .evo-zp-{{ section.id }} .zp-slide[data-active="true"] { opacity:1; transform:translateY(0); pointer-events:auto; }
+  @media (max-width:1050px) { .evo-zp-{{ section.id }} .zp-slide{grid-template-columns:1fr; gap:20px; text-align:center; padding-bottom:160px} }
+  .evo-zp-{{ section.id }} .zp-ghost { position:absolute; left:50%; top:50%; transform:translate(-50%,-52%); font-family:var(--font-d); font-weight:800; font-size:clamp(18vw,22vw,28vw); letter-spacing:-0.04em; color:transparent; -webkit-text-stroke:1.5px rgba(255,255,255,0.07); white-space:nowrap; pointer-events:none; z-index:1; line-height:1; user-select:none; }
+  .evo-zp-{{ section.id }} .zp-copy-left { position:relative; z-index:10; }
+  .evo-zp-{{ section.id }} .zp-eyebrow { font-family:var(--font-m); font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:18px; }
+  .evo-zp-{{ section.id }} .zp-chevrons { margin-top:26px; margin-bottom:28px; font-family:var(--font-m); font-size:18px; letter-spacing:0.22em; color:var(--mint); }
+  .evo-zp-{{ section.id }} .zp-headline { font-family:var(--font-d); font-weight:800; font-size:clamp(22px,2vw,30px); line-height:1.1; letter-spacing:-0.01em; color:#fff; margin:0; text-transform:uppercase; }
+  .evo-zp-{{ section.id }} .zp-cta { display:inline-flex; align-items:center; gap:10px; padding:16px 28px; font-family:var(--font-m); font-size:12px; letter-spacing:0.22em; text-transform:uppercase; font-weight:700; background:var(--peach); color:#110A04; border-radius:6px; transition:transform .25s var(--ease),background .25s var(--ease),box-shadow .25s var(--ease); box-shadow:0 8px 28px rgba(255,122,74,0.35); }
+  .evo-zp-{{ section.id }} .zp-cta:hover { transform:translateY(-2px); background:#FF8E62; box-shadow:0 12px 36px rgba(255,122,74,0.55); }
+  .evo-zp-{{ section.id }} .zp-visual { position:relative; display:flex; align-items:center; justify-content:center; min-height:clamp(360px,48vh,560px); z-index:5; }
+  .evo-zp-{{ section.id }} .zp-visual svg { width:min(420px,55vw); height:auto; filter:drop-shadow(0 0 80px rgba(168,232,152,0.35)) drop-shadow(0 30px 60px rgba(0,0,0,.55)); animation:zpFloat{{ section.id }} 6s ease-in-out infinite; }
+  @keyframes zpFloat{{ section.id }} { 0%,100%{transform:translateY(-6px) rotate(-2deg)} 50%{transform:translateY(8px) rotate(2deg)} }
+  .evo-zp-{{ section.id }} .zp-orbit { position:absolute; inset:0; pointer-events:none; }
+  .evo-zp-{{ section.id }} .zp-orbit span { position:absolute; width:10px; height:10px; border-radius:999px; background:var(--mint); box-shadow:0 0 18px var(--mint); animation:zpOrbit{{ section.id }} 9s linear infinite; }
+  .evo-zp-{{ section.id }} .zp-orbit span:nth-child(1){top:10%; left:18%; width:14px; height:14px; background:var(--indigo-2); box-shadow:0 0 22px var(--indigo-2); animation-duration:13s}
+  .evo-zp-{{ section.id }} .zp-orbit span:nth-child(2){top:28%; left:82%; width:10px; height:10px; animation-duration:10s; animation-direction:reverse}
+  .evo-zp-{{ section.id }} .zp-orbit span:nth-child(3){top:70%; left:12%; width:8px; height:8px; background:#fff; box-shadow:0 0 12px #fff; animation-duration:15s}
+  .evo-zp-{{ section.id }} .zp-orbit span:nth-child(4){top:78%; left:78%; width:12px; height:12px; background:var(--mint-2); box-shadow:0 0 20px var(--mint-2); animation-duration:11s; animation-direction:reverse}
+  .evo-zp-{{ section.id }} .zp-orbit span:nth-child(5){top:42%; left:94%; width:6px; height:6px; background:#fff; opacity:.7; animation-duration:17s}
+  @keyframes zpOrbit{{ section.id }} { 0%{transform:translate(0,0)} 25%{transform:translate(20px,-14px)} 50%{transform:translate(0,-24px)} 75%{transform:translate(-20px,-14px)} 100%{transform:translate(0,0)} }
+  .evo-zp-{{ section.id }} .zp-copy-right { position:relative; z-index:10; font-family:var(--font-m); font-size:13px; line-height:1.7; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.06em; justify-self:end; text-align:right; max-width:260px; }
+  @media (max-width:1050px) { .evo-zp-{{ section.id }} .zp-copy-right, .evo-zp-{{ section.id }} .zp-copy-left { text-align:center; justify-self:center; max-width:420px } }
+  .evo-zp-{{ section.id }} .zp-tracker { position:absolute; z-index:20; left:clamp(20px,4vw,56px); bottom:32px; display:flex; flex-direction:column; gap:6px; }
+  .evo-zp-{{ section.id }} .zp-tracker button { display:inline-flex; align-items:center; gap:10px; background:transparent; border:none; cursor:pointer; padding:6px 2px; color:var(--ink-muted); font-family:var(--font-m); font-size:13px; letter-spacing:0.22em; text-transform:uppercase; transition:color .2s var(--ease); text-align:left; }
+  .evo-zp-{{ section.id }} .zp-tracker button::before { content:""; width:18px; height:1px; background:currentColor; opacity:.4; transition:width .3s var(--ease),opacity .3s var(--ease),background .3s var(--ease); }
+  .evo-zp-{{ section.id }} .zp-tracker button:hover { color:var(--ink); }
+  .evo-zp-{{ section.id }} .zp-tracker button[aria-current="true"] { color:#fff; font-weight:700; }
+  .evo-zp-{{ section.id }} .zp-tracker button[aria-current="true"]::before { width:36px; opacity:1; background:var(--mint); }
+  .evo-zp-{{ section.id }} .zp-social { position:absolute; z-index:20; right:clamp(20px,4vw,56px); bottom:32px; display:inline-flex; gap:6px; }
+  .evo-zp-{{ section.id }} .zp-social a { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border:1px solid rgba(255,255,255,0.15); border-radius:4px; font-family:var(--font-m); font-size:11px; letter-spacing:0.1em; color:var(--ink-dim); transition:color .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease); }
+  .evo-zp-{{ section.id }} .zp-social a:hover { color:var(--mint); border-color:rgba(168,232,152,0.5); background:rgba(168,232,152,0.06); }
+  .evo-zp-{{ section.id }} .zp-arrow { position:absolute; z-index:15; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:999px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); color:#fff; cursor:pointer; transition:background .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease); }
+  .evo-zp-{{ section.id }} .zp-arrow:hover { background:rgba(168,232,152,0.1); border-color:rgba(168,232,152,0.5); transform:translateY(-50%) scale(1.05); }
+  .evo-zp-{{ section.id }} .zp-arrow--prev { left:clamp(10px,2vw,28px); }
+  .evo-zp-{{ section.id }} .zp-arrow--next { right:clamp(10px,2vw,28px); }
+  .evo-zp-{{ section.id }} .zp-arrow svg { width:16px; height:16px; }
+</style>
+
+<section class="evo-zp-{{ section.id }}" id="zpHero-{{ section.id }}" aria-label="{{ section.settings.aria_label | default: 'Evotech homepage hero' }}">
+  <div class="zp-moon" aria-hidden="true"></div>
+
+  <header class="zp-header">
+    <a href="{{ routes.root_url }}" class="zp-logo" aria-label="{{ shop.name | escape }} home">
+      <svg class="zp-logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="zpLogoGrad-{{ section.id }}" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#A8E898"/>
+            <stop offset="1" stop-color="#3D2EDE"/>
+          </linearGradient>
+        </defs>
+        <rect x="3" y="3" width="34" height="34" rx="9" fill="url(#zpLogoGrad-{{ section.id }})"/>
+        <path d="M20 9 L31 20 L20 31 L9 20 Z" fill="rgba(5,4,12,0.94)"/>
+        <circle cx="20" cy="20" r="3.4" fill="#A8E898"/>
+      </svg>
+      <span>
+        <span class="zp-logo-wordmark">EVO<em>TECH</em></span>
+        <span class="zp-logo-tagline">{{ section.settings.logo_tagline | default: 'INSPIRE · AUTOMATE · EVOLVE' }}</span>
+      </span>
+    </a>
+
+    <div class="zp-brain" role="img" aria-label="{{ section.settings.brain_aria | default: 'Evolve AI neural engine — live' }}">
+      <svg class="zp-brain-viz" viewBox="0 0 100 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="brainOutline-{{ section.id }}" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#A8E898"/>
+            <stop offset="1" stop-color="#3D2EDE"/>
+          </linearGradient>
+          <radialGradient id="brainGlow-{{ section.id }}" cx="50%" cy="50%" r="55%">
+            <stop offset="0" stop-color="#CDFFBF" stop-opacity="0.65"/>
+            <stop offset="1" stop-color="#CDFFBF" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle class="brain-halo" cx="50" cy="36" r="32" fill="url(#brainGlow-{{ section.id }})"/>
+        <path d="M48 8 Q28 8 22 22 Q10 26 12 40 Q10 54 22 58 Q30 68 48 64 Z" fill="none" stroke="url(#brainOutline-{{ section.id }})" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M52 8 Q72 8 78 22 Q90 26 88 40 Q90 54 78 58 Q70 68 52 64 Z" fill="none" stroke="url(#brainOutline-{{ section.id }})" stroke-width="1.8" stroke-linejoin="round"/>
+        <line x1="50" y1="10" x2="50" y2="64" stroke="#A8E898" stroke-width="0.8" stroke-dasharray="2 3" opacity="0.6"/>
+        <path d="M24 28 Q34 30 30 40 Q24 50 34 54" fill="none" stroke="#A8E898" stroke-width="0.9" stroke-opacity="0.45"/>
+        <path d="M76 28 Q66 30 70 40 Q76 50 66 54" fill="none" stroke="#A8E898" stroke-width="0.9" stroke-opacity="0.45"/>
+        <g class="brain-synapse" stroke="#A8E898" stroke-width="0.8" stroke-opacity="0.55" fill="none">
+          <line x1="28" y1="24" x2="40" y2="34"/><line x1="40" y1="34" x2="50" y2="36"/><line x1="50" y1="36" x2="60" y2="34"/><line x1="60" y1="34" x2="72" y2="24"/>
+          <line x1="22" y1="42" x2="40" y2="34"/><line x1="78" y1="42" x2="60" y2="34"/><line x1="36" y1="52" x2="50" y2="36"/><line x1="64" y1="52" x2="50" y2="36"/>
+        </g>
+        <circle class="brain-node n1" cx="28" cy="24" r="1.8" fill="#CDFFBF"/>
+        <circle class="brain-node n2" cx="40" cy="34" r="1.8" fill="#A8E898"/>
+        <circle class="brain-node n3" cx="22" cy="42" r="1.8" fill="#A8E898"/>
+        <circle class="brain-node n4" cx="36" cy="52" r="1.8" fill="#CDFFBF"/>
+        <circle class="brain-node n5" cx="72" cy="24" r="1.8" fill="#CDFFBF"/>
+        <circle class="brain-node n6" cx="60" cy="34" r="1.8" fill="#A8E898"/>
+        <circle class="brain-node n7" cx="78" cy="42" r="1.8" fill="#A8E898"/>
+        <circle class="brain-node n8" cx="64" cy="52" r="1.8" fill="#CDFFBF"/>
+        <circle class="brain-node core" cx="50" cy="36" r="3" fill="#5B4DFF" stroke="#CDFFBF" stroke-width="0.8"/>
+      </svg>
+      <span class="zp-brain-label">{{ section.settings.brain_label | default: 'EVOLVE AI' }} <span class="dim">· {{ section.settings.brain_sublabel | default: 'NEURAL ENGINE' }}</span></span>
+    </div>
+
+    <nav class="zp-nav" aria-label="Primary">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | upcase }}</a>
+      {%- else -%}
+        <a href="#" data-slide-link="solutions" aria-current="page">SOLUTIONS</a>
+        <a href="#" data-slide-link="services">SERVICES</a>
+        <a href="#" data-slide-link="products">PRODUCTS</a>
+        <a href="/pages/contact">CONTACT</a>
+      {%- endfor -%}
+      {%- if section.settings.support_url != blank -%}
+        <a href="{{ section.settings.support_url }}" class="is-support" target="_blank" rel="noopener">{{ section.settings.support_label | default: 'SUPPORT →' }}</a>
+      {%- endif -%}
+    </nav>
+  </header>
+
+  <div class="zp-stage" id="zpStage-{{ section.id }}">
+    {%- assign slide_index = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'slide' -%}
+        {%- assign slide_key = block.settings.slide_key | default: block.id -%}
+        <article class="zp-slide" data-slide="{{ slide_key }}" {% if slide_index == 0 %}data-active="true"{% endif %} aria-label="{{ block.settings.aria | default: block.settings.eyebrow }}" {{ block.shopify_attributes }}>
+          <div class="zp-ghost" aria-hidden="true">{{ block.settings.ghost_text | default: block.settings.eyebrow | upcase }}</div>
+          <div class="zp-copy-left">
+            <div class="zp-eyebrow">{{ block.settings.eyebrow }}</div>
+            <h{% if slide_index == 0 %}1{% else %}2{% endif %} class="zp-headline">{{ block.settings.headline }}</h{% if slide_index == 0 %}1{% else %}2{% endif %}>
+            <div class="zp-chevrons">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</div>
+            {%- if block.settings.cta_label != blank -%}
+              <a href="{{ block.settings.cta_url | default: '#' }}" class="zp-cta">{{ block.settings.cta_label }}</a>
+            {%- endif -%}
+          </div>
+
+          <div class="zp-visual">
+            <div class="zp-orbit" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+            {%- case block.settings.visual_preset -%}
+            {%- when 'services' -%}
+              <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five-node Tailscale mesh feeding the Evolve engine">
+                <defs>
+                  <linearGradient id="zpSrvCrystal1-{{ block.id }}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B4DFF"/><stop offset="1" stop-color="#1E1648"/></linearGradient>
+                  <linearGradient id="zpSrvCrystal2-{{ block.id }}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8876FF"/><stop offset="1" stop-color="#3D2EDE"/></linearGradient>
+                  <radialGradient id="zpSrvGlow-{{ block.id }}" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#A8E898" stop-opacity="0.5"/><stop offset="1" stop-color="#A8E898" stop-opacity="0"/></radialGradient>
+                </defs>
+                <circle cx="240" cy="240" r="180" fill="url(#zpSrvGlow-{{ block.id }})"/>
+                <g>
+                  <polygon points="240,100 340,200 280,340 200,340 140,200" fill="url(#zpSrvCrystal1-{{ block.id }})" stroke="#A8E898" stroke-width="1.5" stroke-opacity="0.6"/>
+                  <polygon points="240,100 340,200 280,340" fill="url(#zpSrvCrystal2-{{ block.id }})" opacity="0.9"/>
+                  <line x1="240" y1="100" x2="240" y2="340" stroke="#A8E898" stroke-width="1" stroke-opacity="0.6"/>
+                  <line x1="140" y1="200" x2="340" y2="200" stroke="#A8E898" stroke-width="1" stroke-opacity="0.5"/>
+                  <line x1="240" y1="340" x2="140" y2="200" stroke="#A8E898" stroke-width="1" stroke-opacity="0.5"/>
+                  <line x1="240" y1="340" x2="340" y2="200" stroke="#A8E898" stroke-width="1" stroke-opacity="0.5"/>
+                </g>
+                <g stroke="#A8E898" stroke-width="1.5" stroke-linecap="round" opacity="0.7">
+                  <path d="M30 120 Q130 180 180 200" fill="none" stroke-dasharray="4 6"/>
+                  <path d="M450 120 Q350 180 300 200" fill="none" stroke-dasharray="4 6"/>
+                  <path d="M30 360 Q130 310 200 340" fill="none" stroke-dasharray="4 6"/>
+                  <path d="M450 360 Q350 310 280 340" fill="none" stroke-dasharray="4 6"/>
+                </g>
+                <g fill="#CDFFBF"><circle cx="30" cy="120" r="4"/><circle cx="450" cy="120" r="4"/><circle cx="30" cy="360" r="4"/><circle cx="450" cy="360" r="4"/></g>
+                <circle cx="240" cy="220" r="9" fill="#CDFFBF"/>
+                <circle cx="240" cy="220" r="18" stroke="#A8E898" stroke-width="1" opacity="0.5"/>
+                <g><circle cx="140" cy="400" r="5" fill="#A8E898"/><circle cx="190" cy="420" r="5" fill="#A8E898"/><circle cx="240" cy="430" r="5" fill="#A8E898"/><circle cx="290" cy="420" r="5" fill="#A8E898"/><circle cx="340" cy="400" r="5" fill="#A8E898"/><path d="M140 400 L190 420 L240 430 L290 420 L340 400" stroke="rgba(168,232,152,0.35)" stroke-width="1" fill="none"/></g>
+              </svg>
+            {%- when 'products' -%}
+              <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Evotech Pro subscription card">
+                <defs>
+                  <linearGradient id="zpProdCard-{{ block.id }}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A8E898"/><stop offset="0.5" stop-color="#5B4DFF"/><stop offset="1" stop-color="#3D2EDE"/></linearGradient>
+                  <linearGradient id="zpProdGlare-{{ block.id }}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,255,255,0.5)"/><stop offset="0.5" stop-color="rgba(255,255,255,0.1)"/><stop offset="1" stop-color="rgba(255,255,255,0.4)"/></linearGradient>
+                </defs>
+                <ellipse cx="240" cy="260" rx="180" ry="40" fill="#A8E898" opacity="0.08"/>
+                <g transform="rotate(-8 240 240)">
+                  <rect x="110" y="140" width="260" height="180" rx="16" fill="url(#zpProdCard-{{ block.id }})" stroke="#CDFFBF" stroke-width="1.5"/>
+                  <rect x="110" y="140" width="260" height="180" rx="16" fill="url(#zpProdGlare-{{ block.id }})" opacity="0.45"/>
+                  <rect x="130" y="170" width="44" height="32" rx="5" fill="rgba(255,255,255,0.28)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+                  <line x1="138" y1="178" x2="166" y2="178" stroke="rgba(255,255,255,0.6)"/>
+                  <line x1="138" y1="186" x2="166" y2="186" stroke="rgba(255,255,255,0.6)"/>
+                  <line x1="138" y1="194" x2="166" y2="194" stroke="rgba(255,255,255,0.6)"/>
+                  <text x="130" y="228" font-family="Clash Display,Satoshi" font-size="22" font-weight="800" fill="#fff">{{ block.settings.card_brand | default: 'EVOTECH PRO' }}</text>
+                  <text x="130" y="246" font-family="JetBrains Mono" font-size="10" letter-spacing="2" fill="rgba(255,255,255,0.82)">{{ block.settings.card_sub | default: 'EVOLVE AI · ACCESS KEY' }}</text>
+                  <text x="130" y="298" font-family="Clash Display,Satoshi" font-size="28" font-weight="800" fill="#fff">{{ block.settings.card_price | default: 'A$79' }}</text>
+                  <text x="190" y="298" font-family="JetBrains Mono" font-size="11" letter-spacing="1" fill="rgba(255,255,255,0.72)">{{ block.settings.card_cadence | default: '/MO · GST INC.' }}</text>
+                  <rect x="296" y="168" width="60" height="22" rx="11" fill="#CDFFBF"/>
+                  <text x="326" y="183" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="800" fill="#0A0A0A" letter-spacing="1.5">{{ block.settings.card_badge | default: 'POPULAR' }}</text>
+                </g>
+                <g transform="rotate(12 380 130)">
+                  <circle cx="380" cy="130" r="38" fill="rgba(168,232,152,0.14)" stroke="#A8E898" stroke-width="1.5" stroke-dasharray="3 4"/>
+                  <text x="380" y="124" text-anchor="middle" font-family="JetBrains Mono" font-size="8" font-weight="700" fill="#A8E898" letter-spacing="1.5">SHOPIFY</text>
+                  <text x="380" y="136" text-anchor="middle" font-family="JetBrains Mono" font-size="8" font-weight="700" fill="#A8E898" letter-spacing="1.5">CHECKOUT</text>
+                  <text x="380" y="148" text-anchor="middle" font-family="JetBrains Mono" font-size="8" font-weight="700" fill="#A8E898" letter-spacing="1.5">60 SEC</text>
+                </g>
+                <g transform="translate(100 360)"><rect x="0" y="0" width="62" height="30" rx="6" fill="rgba(168,232,152,0.12)" stroke="#A8E898" stroke-width="1"/><text x="31" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#A8E898" letter-spacing="2">AUD</text></g>
+                <g transform="translate(320 360)"><rect x="0" y="0" width="62" height="30" rx="6" fill="rgba(168,232,152,0.12)" stroke="#A8E898" stroke-width="1"/><text x="31" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#A8E898" letter-spacing="2">GST</text></g>
+              </svg>
+            {%- else -%}
+              <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six SaaS apps orbiting the Evolve AI neural engine">
+                <defs>
+                  <radialGradient id="zpSolGlow-{{ block.id }}" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#CDFFBF" stop-opacity="0.95"/><stop offset="0.55" stop-color="#A8E898" stop-opacity="0.45"/><stop offset="1" stop-color="#A8E898" stop-opacity="0"/></radialGradient>
+                  <linearGradient id="zpSolCore-{{ block.id }}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B4DFF"/><stop offset="1" stop-color="#3D2EDE"/></linearGradient>
+                  <radialGradient id="zpSolNode-{{ block.id }}" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#A8E898"/><stop offset="1" stop-color="#8EDC78"/></radialGradient>
+                </defs>
+                <circle cx="240" cy="240" r="200" stroke="rgba(168,232,152,0.18)" stroke-width="1" stroke-dasharray="4 6"/>
+                <circle cx="240" cy="240" r="150" stroke="rgba(168,232,152,0.28)" stroke-width="1"/>
+                <circle cx="240" cy="240" r="100" stroke="rgba(168,232,152,0.45)" stroke-width="1"/>
+                <circle cx="240" cy="240" r="80" fill="url(#zpSolGlow-{{ block.id }})"/>
+                <path d="M240 180 L300 240 L240 300 L180 240 Z" fill="url(#zpSolCore-{{ block.id }})" stroke="#A8E898" stroke-width="1.5"/>
+                <circle cx="240" cy="240" r="8" fill="#CDFFBF"/>
+                <g>
+                  <circle cx="240" cy="90" r="18" fill="url(#zpSolNode-{{ block.id }})"/>
+                  <text x="240" y="95" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#0A0A0A">EVO</text>
+                  <circle cx="370" cy="165" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+                  <text x="370" y="169" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">BOT</text>
+                  <circle cx="370" cy="315" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+                  <text x="370" y="319" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">HIR</text>
+                  <circle cx="240" cy="390" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+                  <text x="240" y="394" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">PUL</text>
+                  <circle cx="110" cy="315" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+                  <text x="110" y="319" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">BLD</text>
+                  <circle cx="110" cy="165" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+                  <text x="110" y="169" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">DOC</text>
+                </g>
+                <g stroke="rgba(168,232,152,0.25)" stroke-width="1" stroke-dasharray="2 5">
+                  <line x1="240" y1="240" x2="240" y2="90"/><line x1="240" y1="240" x2="370" y2="165"/><line x1="240" y1="240" x2="370" y2="315"/>
+                  <line x1="240" y1="240" x2="240" y2="390"/><line x1="240" y1="240" x2="110" y2="315"/><line x1="240" y1="240" x2="110" y2="165"/>
+                </g>
+              </svg>
+            {%- endcase -%}
+          </div>
+
+          <div class="zp-copy-right">{{ block.settings.description }}</div>
+        </article>
+        {%- assign slide_index = slide_index | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="zp-tracker" role="tablist" aria-label="Hero slides">
+    {%- assign ti = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'slide' -%}
+        {%- assign ti_plus = ti | plus: 1 -%}
+        {%- assign slide_key = block.settings.slide_key | default: block.id -%}
+        <button type="button" data-tracker="{{ slide_key }}"{% if ti == 0 %} aria-current="true"{% endif %}>
+          {%- if ti_plus < 10 %}0{% endif %}{{ ti_plus }} · {{ block.settings.tracker_label | default: block.settings.eyebrow | upcase | truncate: 16, '' }}
+        </button>
+        {%- assign ti = ti | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="zp-social">
+    {%- if section.settings.social_linkedin != blank -%}<a href="{{ section.settings.social_linkedin }}" aria-label="LinkedIn" target="_blank" rel="noopener">LI</a>{%- endif -%}
+    {%- if section.settings.social_x != blank -%}<a href="{{ section.settings.social_x }}" aria-label="X" target="_blank" rel="noopener">X</a>{%- endif -%}
+    {%- if section.settings.social_instagram != blank -%}<a href="{{ section.settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">IG</a>{%- endif -%}
+  </div>
+
+  <button class="zp-arrow zp-arrow--prev" type="button" aria-label="Previous slide" data-nav="prev">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="zp-arrow zp-arrow--next" type="button" aria-label="Next slide" data-nav="next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('zpHero-{{ section.id }}');
+    if (!root) return;
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.zp-slide'));
+    if (!slides.length) return;
+    var slideKeys = slides.map(function (s) { return s.getAttribute('data-slide'); });
+    var idx = 0;
+    var autoplayMs = {{ section.settings.autoplay_ms | default: 7000 }};
+    var timer = null;
+    function go(toIdx) {
+      idx = (toIdx + slideKeys.length) % slideKeys.length;
+      var key = slideKeys[idx];
+      slides.forEach(function (el) { el.setAttribute('data-active', el.getAttribute('data-slide') === key ? 'true' : 'false'); });
+      root.querySelectorAll('[data-tracker]').forEach(function (btn) { btn.setAttribute('aria-current', btn.getAttribute('data-tracker') === key ? 'true' : 'false'); });
+      root.querySelectorAll('[data-slide-link]').forEach(function (a) { if (a.getAttribute('data-slide-link') === key) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+    }
+    function restartAutoplay() { if (timer) clearInterval(timer); if (autoplayMs > 0) timer = setInterval(function () { go(idx + 1); }, autoplayMs); }
+    root.querySelectorAll('[data-tracker]').forEach(function (btn) { btn.addEventListener('click', function () { go(slideKeys.indexOf(btn.getAttribute('data-tracker'))); restartAutoplay(); }); });
+    root.querySelectorAll('[data-slide-link]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); go(slideKeys.indexOf(a.getAttribute('data-slide-link'))); restartAutoplay(); }); });
+    var prevBtn = root.querySelector('[data-nav="prev"]'); var nextBtn = root.querySelector('[data-nav="next"]');
+    if (prevBtn) prevBtn.addEventListener('click', function () { go(idx - 1); restartAutoplay(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { go(idx + 1); restartAutoplay(); });
+    root.addEventListener('mouseenter', function () { if (timer) { clearInterval(timer); timer = null; } });
+    root.addEventListener('mouseleave', restartAutoplay);
+    restartAutoplay();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Evotech Zero-Point Hero",
+  "tag": "section",
+  "class": "evotech-zeropoint-section",
+  "settings": [
+    { "type": "header", "content": "Header & brain" },
+    { "type": "text", "id": "logo_tagline", "label": "Logo tagline", "default": "INSPIRE · AUTOMATE · EVOLVE" },
+    { "type": "text", "id": "brain_label", "label": "Brain label", "default": "EVOLVE AI" },
+    { "type": "text", "id": "brain_sublabel", "label": "Brain sublabel", "default": "NEURAL ENGINE" },
+    { "type": "text", "id": "brain_aria", "label": "Brain aria-label", "default": "Evolve AI neural engine — live" },
+    { "type": "link_list", "id": "menu", "label": "Nav menu", "info": "Pick a Shopify main menu. Leave empty to use the built-in Solutions/Services/Products defaults." },
+    { "type": "url", "id": "support_url", "label": "Support link URL", "default": "https://support.evotech.au" },
+    { "type": "text", "id": "support_label", "label": "Support link label", "default": "SUPPORT →" },
+
+    { "type": "header", "content": "Autoplay & ARIA" },
+    { "type": "range", "id": "autoplay_ms", "label": "Autoplay (ms)", "min": 0, "max": 15000, "step": 500, "default": 7000, "info": "0 disables autoplay." },
+    { "type": "text", "id": "aria_label", "label": "Section aria-label", "default": "Evotech homepage hero" },
+
+    { "type": "header", "content": "Social (bottom-right)" },
+    { "type": "url", "id": "social_linkedin", "label": "LinkedIn URL" },
+    { "type": "url", "id": "social_x", "label": "X / Twitter URL" },
+    { "type": "url", "id": "social_instagram", "label": "Instagram URL" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "slide_key", "label": "Slug (url-safe key)", "info": "e.g. solutions, services, products. Used by nav-link matching." },
+        { "type": "text", "id": "tracker_label", "label": "Tracker label", "default": "SOLUTIONS" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow / kicker", "default": "AUSTRALIAN AI SAAS · EVOLVE AI NEURAL ENGINE" },
+        { "type": "html", "id": "headline", "label": "Headline (HTML — use <br> for line breaks)", "default": "Every AI model.<br>One Australian API.<br>Zero lock-in." },
+        { "type": "text", "id": "ghost_text", "label": "Ghost text behind visual", "default": "SOLUTIONS" },
+        { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Explore the ecosystem" },
+        { "type": "url", "id": "cta_url", "label": "CTA link" },
+        { "type": "textarea", "id": "description", "label": "Right-column description (uppercase)", "default": "ROUTE CLAUDE, GPT & GEMINI THROUGH ONE AUSTRALIAN-HOSTED ENDPOINT. SIX SAAS APPS BUILT ON TOP." },
+        {
+          "type": "select",
+          "id": "visual_preset",
+          "label": "Visual preset",
+          "default": "solutions",
+          "options": [
+            { "value": "solutions", "label": "Solutions (6-app constellation)" },
+            { "value": "services", "label": "Services (crystal + Tailscale mesh)" },
+            { "value": "products", "label": "Products (subscription card)" }
+          ]
+        },
+        { "type": "header", "content": "Products-preset card overrides (only used if visual = products)" },
+        { "type": "text", "id": "card_brand", "label": "Card brand", "default": "EVOTECH PRO" },
+        { "type": "text", "id": "card_sub", "label": "Card sub-text", "default": "EVOLVE AI · ACCESS KEY" },
+        { "type": "text", "id": "card_price", "label": "Card price", "default": "A$79" },
+        { "type": "text", "id": "card_cadence", "label": "Card price cadence", "default": "/MO · GST INC." },
+        { "type": "text", "id": "card_badge", "label": "Card badge text", "default": "POPULAR" },
+        { "type": "text", "id": "aria", "label": "Slide aria-label" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Evotech Zero-Point Hero",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "slide_key": "solutions",
+            "tracker_label": "SOLUTIONS",
+            "eyebrow": "AUSTRALIAN AI SAAS · EVOLVE AI NEURAL ENGINE",
+            "headline": "Every AI model.<br>One Australian API.<br>Zero lock-in.",
+            "ghost_text": "SOLUTIONS",
+            "cta_label": "Explore the ecosystem",
+            "cta_url": "/collections/all",
+            "description": "ROUTE CLAUDE, GPT & GEMINI THROUGH ONE AUSTRALIAN-HOSTED ENDPOINT. SIX SAAS APPS BUILT ON TOP — EVOLVE, SUPPORTBOT, GET HIRED, PULSE, BUILD.AI, DOCGEN. ONE INVOICE. ONE API KEY.",
+            "visual_preset": "solutions"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "slide_key": "services",
+            "tracker_label": "SERVICES",
+            "eyebrow": "FOUNDER-LED · BUILT IN PERTH",
+            "headline": "We run the<br>cluster.<br>You ship<br>the product.",
+            "ghost_text": "SERVICES",
+            "cta_label": "Meet the founder",
+            "cta_url": "/pages/infrastructure",
+            "description": "PERSONAL FIVE-NODE CLUSTER IN AUSTRALIA · 60+ POOLED API KEYS ACROSS PROVIDERS · AUTOMATIC FAILOVER · DIRECT FOUNDER SUPPORT — NO OFFSHORE TICKET QUEUES.",
+            "visual_preset": "services"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "slide_key": "products",
+            "tracker_label": "PRODUCTS",
+            "eyebrow": "SHOPIFY STOREFRONT · EVOTECH.AU",
+            "headline": "Priced in AUD.<br>GST inclusive.<br>API key in<br>60 seconds.",
+            "ghost_text": "PRODUCTS",
+            "cta_label": "Browse plans",
+            "cta_url": "/collections/plans",
+            "description": "EVERY PLAN LIVE ON EVOTECH.AU · PAY WITH CARD, PAYPAL OR APPLE PAY IN AUD · API KEY AUTO-EMAILED · CANCEL ANYTIME FROM SHOPIFY'S CUSTOMER PORTAL.",
+            "visual_preset": "products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

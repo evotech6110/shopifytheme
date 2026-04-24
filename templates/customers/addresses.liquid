@@ -1,0 +1,66 @@
+{%- comment -%} Customer addresses {%- endcomment -%}
+<section class="evo-cust">
+  <div class="evo-cust__card evo-cust__wide">
+    <p class="evo-cust__eyebrow">ADDRESSES</p>
+    <h1 class="evo-cust__title">Your addresses</h1>
+    <div class="evo-cust__links"><a href="{{ routes.account_url }}">← Back to account</a></div>
+
+    <div class="evo-cust__section">
+      <h2>Add a new address</h2>
+      {%- form 'customer_address', customer.new_address, class: 'evo-cust__form' -%}
+        {%- if form.errors -%}<p class="evo-cust__error">{{ form.errors | default_errors }}</p>{%- endif -%}
+        <div class="evo-cust__grid-2">
+          <label>First name<input type="text" name="address[first_name]"></label>
+          <label>Last name<input type="text" name="address[last_name]"></label>
+        </div>
+        <label>Company<input type="text" name="address[company]"></label>
+        <label>Address 1<input type="text" name="address[address1]"></label>
+        <label>Address 2<input type="text" name="address[address2]"></label>
+        <div class="evo-cust__grid-2">
+          <label>City<input type="text" name="address[city]"></label>
+          <label>Postcode<input type="text" name="address[zip]"></label>
+        </div>
+        <div class="evo-cust__grid-2">
+          <label>Country
+            <select name="address[country]" data-default="{{ form.country }}">{{ country_option_tags }}</select>
+          </label>
+          <label>Province / State
+            <select name="address[province]" data-default="{{ form.province }}"></select>
+          </label>
+        </div>
+        <label>Phone<input type="tel" name="address[phone]"></label>
+        <label style="flex-direction:row;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-family:inherit;color:#D8D7E3;">
+          <input type="checkbox" name="address[default]" style="width:auto;"> Set as default address
+        </label>
+        <button type="submit">Save address</button>
+      {%- endform -%}
+    </div>
+
+    <div class="evo-cust__section">
+      <h2>Saved addresses ({{ customer.addresses_count }})</h2>
+      {%- if customer.addresses.size > 0 -%}
+        {%- paginate customer.addresses by 10 -%}
+          {%- for address in customer.addresses -%}
+            <div style="border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 18px;margin-bottom:12px;background:#0B0820;">
+              <div style="color:#D8D7E3;font-size:14px;line-height:1.6;">{{ address | format_address }}</div>
+              <div class="evo-cust__links" style="margin-top:10px;">
+                <a href="{{ address.url }}" onclick="Shopify.CustomerAddress.toggleForm('{{ address.id }}');return false;">Edit</a>
+                <a href="{{ address.url }}" data-method="delete" onclick="return confirm('Delete this address?');">Delete</a>
+              </div>
+            </div>
+          {%- endfor -%}
+          {%- if paginate.pages > 1 -%}
+            <nav style="margin-top:18px;color:#B6B5C6;font-family:'JetBrains Mono',monospace;font-size:13px;display:flex;gap:14px;">
+              {%- if paginate.previous -%}<a style="color:#A8E898;" href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}
+              <span>Page {{ paginate.current_page }} / {{ paginate.pages }}</span>
+              {%- if paginate.next -%}<a style="color:#A8E898;" href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- else -%}
+        <p style="color:#B6B5C6;">No saved addresses yet.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% render 'evotech-customer-styles' %}

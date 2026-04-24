@@ -1,0 +1,65 @@
+{%- comment -%}
+  EvoTech — SaaS product grid (Evoluxia-styled).
+  Renders the full catalogue from the central snippet. Flagship card (EvolveAI-Engine) gets a special treatment and links to external subdomain.
+{%- endcomment -%}
+
+{%- render 'evotech-saas-catalog' -%}
+{%- assign _products = evotech_saas_products_raw | parse_json -%}
+
+<section class="evo evo-saasgrid">
+  <div class="evo-container">
+    <header class="evo-saasgrid__head">
+      {%- if section.settings.eyebrow != blank -%}<div class="evo-kicker">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      <h2 class="evo-display evo-h2">
+        {{ section.settings.headline_prefix }}
+        {%- if section.settings.accent_word != blank -%} <span class="evo-accent-word">{{ section.settings.accent_word }}</span>{%- endif -%}
+      </h2>
+      {%- if section.settings.lede != blank -%}<p class="evo-lede" style="margin:16px auto 0;">{{ section.settings.lede }}</p>{%- endif -%}
+    </header>
+
+    <div class="evo-saasgrid__grid">
+      {%- for p in _products -%}
+        <a href="{{ p.url }}"
+           class="evo-saascard{% if p.flagship %} evo-saascard--flagship{% endif %}"
+           {% if p.external %}target="_blank" rel="noopener"{% endif %}>
+          <div class="evo-saascard__icon">
+            {%- case p.key -%}
+              {%- when 'evolveai' -%}{% render 'evotech-illustration', name: 'ai-core' %}
+              {%- when 'sentryops' -%}{% render 'evotech-illustration', name: 'shield-pulse' %}
+              {%- when 'netpulse' -%}{% render 'evotech-illustration', name: 'network-mesh' %}
+              {%- when 'vcio' -%}{% render 'evotech-illustration', name: 'grid-orbit' %}
+              {%- when 'procureiq' -%}{% render 'evotech-illustration', name: 'data-flow' %}
+              {%- when 'essential8' -%}{% render 'evotech-illustration', name: 'audit-scroll' %}
+              {%- else -%}{% render 'evotech-illustration', name: 'ai-core' %}
+            {%- endcase -%}
+          </div>
+          <div class="evo-saascard__category">{{ p.category }}</div>
+          <h3 class="evo-saascard__name">{{ p.name }}</h3>
+          <p class="evo-saascard__tagline">{{ p.tagline }}</p>
+          <div class="evo-saascard__foot">
+            <span class="evo-saascard__price">from {{ p.price_from }}</span>
+            <span class="evo-saascard__cta">
+              {% if p.external %}Launch app{% else %}Explore{% endif %}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — SaaS product grid",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE SUITE" },
+    { "type": "text", "id": "headline_prefix", "label": "Headline prefix", "default": "Six products." },
+    { "type": "text", "id": "accent_word", "label": "Accent word (green italic)", "default": "One ecosystem." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Every EvoTech SaaS application is sold standalone or bundled — all powered by EvolveAI-Engine. Start with one, grow into the full stack without a migration." }
+  ],
+  "presets": [ { "name": "EvoTech SaaS grid" } ]
+}
+{% endschema %}

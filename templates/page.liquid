@@ -1,0 +1,30 @@
+{%- comment -%} Default page template {%- endcomment -%}
+<article class="evo-page">
+  <header class="evo-page__head">
+    <p class="evo-page__eyebrow">{{ shop.name }}</p>
+    <h1 class="evo-page__title">{{ page.title }}</h1>
+  </header>
+  <div class="evo-page__body rte">
+    {{ page.content }}
+  </div>
+</article>
+
+<style>
+  .evo-page { max-width: 820px; margin: 0 auto; padding: 72px 24px 120px; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; }
+  .evo-page__head { margin-bottom: 36px; }
+  .evo-page__eyebrow { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 12px; text-transform: uppercase; }
+  .evo-page__title { font-family: 'Clash Display', 'Satoshi', sans-serif; font-size: clamp(34px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .evo-page__body { color: #D8D7E3; font-size: 17px; line-height: 1.7; }
+  .evo-page__body h2 { font-family: 'Clash Display', 'Satoshi', sans-serif; font-size: 28px; line-height: 1.15; margin: 36px 0 14px; color: #FFFFFF; }
+  .evo-page__body h3 { font-family: 'Clash Display', 'Satoshi', sans-serif; font-size: 22px; margin: 28px 0 10px; color: #FFFFFF; }
+  .evo-page__body p { margin: 0 0 16px; }
+  .evo-page__body a { color: #A8E898; text-decoration: underline; text-underline-offset: 3px; }
+  .evo-page__body ul, .evo-page__body ol { padding-left: 22px; margin: 0 0 16px; }
+  .evo-page__body li { margin-bottom: 8px; }
+  .evo-page__body img { max-width: 100%; border-radius: 12px; margin: 18px 0; }
+  .evo-page__body blockquote { border-left: 3px solid #A8E898; margin: 20px 0; padding: 6px 18px; color: #B6B5C6; font-style: italic; }
+  .evo-page__body code { background: rgba(255,255,255,.06); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .92em; }
+  .evo-page__body pre { background: #0B0820; padding: 16px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(255,255,255,.08); }
+  .evo-page__body table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .evo-page__body th, .evo-page__body td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.1); }
+</style>

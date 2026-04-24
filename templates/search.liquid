@@ -1,0 +1,78 @@
+{%- comment -%} Default search results {%- endcomment -%}
+{%- paginate search.results by 20 -%}
+<section class="evo-search">
+  <header class="evo-search__head">
+    <p class="evo-search__eyebrow">SEARCH</p>
+    <h1 class="evo-search__title">Results for "{{ search.terms | escape }}"</h1>
+    <form class="evo-search__form" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="hidden" name="type" value="product,article,page">
+      <input class="evo-search__input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Try 'laptop', 'cybersecurity', 'router'…" aria-label="Search">
+      <button class="evo-search__submit" type="submit">Search</button>
+    </form>
+    <p class="evo-search__count">{{ search.results_count }} result{% unless search.results_count == 1 %}s{% endunless %}</p>
+  </header>
+
+  {%- if search.results.size > 0 -%}
+    <ul class="evo-search__list">
+      {%- for result in search.results -%}
+        <li class="evo-search__item">
+          {%- if result.object_type == 'product' -%}
+            <a class="evo-search__link" href="{{ result.url }}">
+              <span class="evo-search__kind">PRODUCT</span>
+              <h3>{{ result.title }}</h3>
+              <p>{{ result.description | strip_html | truncate: 160 }}</p>
+              <span class="evo-search__meta">{{ result.price | money }}</span>
+            </a>
+          {%- elsif result.object_type == 'article' -%}
+            <a class="evo-search__link" href="{{ result.url }}">
+              <span class="evo-search__kind">ARTICLE</span>
+              <h3>{{ result.title }}</h3>
+              <p>{{ result.excerpt_or_content | strip_html | truncate: 160 }}</p>
+              <span class="evo-search__meta">{{ result.published_at | date: '%b %d, %Y' }}</span>
+            </a>
+          {%- else -%}
+            <a class="evo-search__link" href="{{ result.url }}">
+              <span class="evo-search__kind">PAGE</span>
+              <h3>{{ result.title }}</h3>
+              <p>{{ result.content | strip_html | truncate: 160 }}</p>
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="evo-search__pager">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}
+        <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- elsif search.performed -%}
+    <p class="evo-search__empty">No results. Try a different search term.</p>
+  {%- endif -%}
+</section>
+
+<style>
+  .evo-search { max-width: 920px; margin: 0 auto; padding: 48px 24px 120px; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; }
+  .evo-search__head { margin-bottom: 32px; }
+  .evo-search__eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 12px; }
+  .evo-search__title { font-family: 'Clash Display', sans-serif; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 20px; word-break: break-word; }
+  .evo-search__form { display: flex; gap: 8px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 6px; margin-bottom: 12px; }
+  .evo-search__input { flex: 1; background: transparent; border: 0; color: #FFFFFF; padding: 12px 14px; font-size: 15px; outline: none; font-family: inherit; }
+  .evo-search__input::placeholder { color: #B6B5C6; }
+  .evo-search__submit { background: #A8E898; color: #0A0A0A; border: 0; border-radius: 8px; padding: 0 18px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .evo-search__count { font-family: 'JetBrains Mono', monospace; color: #B6B5C6; font-size: 13px; letter-spacing: .08em; margin: 0; }
+  .evo-search__list { list-style: none; padding: 0; margin: 0; }
+  .evo-search__item { border-bottom: 1px solid rgba(255,255,255,.08); }
+  .evo-search__link { display: block; padding: 18px 0; text-decoration: none; color: inherit; }
+  .evo-search__link:hover h3 { color: #A8E898; }
+  .evo-search__kind { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .16em; color: #A8E898; background: rgba(168,232,152,.12); padding: 3px 8px; border-radius: 4px; margin-bottom: 8px; }
+  .evo-search__link h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; transition: color .2s; }
+  .evo-search__link p { margin: 0 0 6px; color: #B6B5C6; font-size: 14px; line-height: 1.55; }
+  .evo-search__meta { color: #B6B5C6; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+  .evo-search__pager { margin-top: 36px; display: flex; justify-content: space-between; align-items: center; color: #B6B5C6; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .evo-search__pager a { color: #A8E898; text-decoration: none; }
+  .evo-search__empty { color: #B6B5C6; font-size: 16px; padding: 40px 0; }
+</style>
+{%- endpaginate -%}

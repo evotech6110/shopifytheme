@@ -1,0 +1,29 @@
+{%- comment -%}
+  HEAD-injection snippet. Include this once in layout/theme.liquid, directly
+  after {{ content_for_header }} so that every page gets the EvoTech SaaS
+  stylesheet, JS, typography, and site-wide Organization/WebSite schema.
+
+  Install:  {%- render 'evotech-head-inject' -%}
+{%- endcomment -%}
+
+{%- comment -%} Preconnect for fast font + asset loading {%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+
+{%- comment -%}
+  Evoluxia-inspired typography stack:
+  — Clash Display (display headings) via Fontshare
+  — Satoshi (body + UI) via Fontshare
+  — Inter (fallback body) via Google Fonts
+  — Caveat (handwritten accent for blockquotes / kickers) via Google Fonts
+{%- endcomment -%}
+<link rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap">
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+{{ 'evotech-saas.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'evotech-saas.js' | asset_url }}" defer="defer"></script>
+{%- render 'evotech-schema-organization' -%}

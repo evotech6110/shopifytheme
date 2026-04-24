@@ -1,0 +1,35 @@
+{%- comment -%} Not Found page — EvoTech dark theme {%- endcomment -%}
+<section class="evo-404">
+  <div class="evo-404__inner">
+    <p class="evo-404__eyebrow">404 · PAGE NOT FOUND</p>
+    <h1 class="evo-404__title">That page has evolved elsewhere.</h1>
+    <p class="evo-404__lede">The page you're looking for doesn't exist or has moved. Let's get you back on track.</p>
+    <div class="evo-404__ctas">
+      <a class="evo-404__btn evo-404__btn--primary" href="{{ routes.root_url }}">Back to home</a>
+      <a class="evo-404__btn evo-404__btn--ghost" href="{{ routes.search_url }}">Search the store</a>
+    </div>
+    <form class="evo-404__search" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="hidden" name="type" value="product">
+      <input class="evo-404__input" type="search" name="q" placeholder="Search products, services, guides…" aria-label="Search">
+      <button class="evo-404__submit" type="submit" aria-label="Submit search">Search</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .evo-404 { min-height: 70vh; display: grid; place-items: center; padding: 80px 24px; background: radial-gradient(1200px 600px at 50% -10%, rgba(61,46,222,.18), transparent), #05040C; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; }
+  .evo-404__inner { max-width: 640px; text-align: center; }
+  .evo-404__eyebrow { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 18px; }
+  .evo-404__title { font-family: 'Clash Display', 'Satoshi', sans-serif; font-size: clamp(36px, 6vw, 64px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 14px; }
+  .evo-404__lede { color: #B6B5C6; font-size: 17px; margin: 0 0 32px; }
+  .evo-404__ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+  .evo-404__btn { display: inline-flex; align-items: center; padding: 14px 22px; border-radius: 999px; font-weight: 600; text-decoration: none; font-size: 15px; transition: transform .18s ease, background .18s ease; }
+  .evo-404__btn--primary { background: #FF7A4A; color: #0A0A0A; }
+  .evo-404__btn--primary:hover { transform: translateY(-1px); background: #ff9068; }
+  .evo-404__btn--ghost { background: transparent; color: #FFFFFF; border: 1px solid rgba(255,255,255,.22); }
+  .evo-404__btn--ghost:hover { background: rgba(255,255,255,.06); }
+  .evo-404__search { display: flex; gap: 8px; max-width: 520px; margin: 0 auto; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 6px; }
+  .evo-404__input { flex: 1; background: transparent; border: 0; color: #FFFFFF; padding: 12px 14px; font-size: 15px; outline: none; }
+  .evo-404__input::placeholder { color: #B6B5C6; }
+  .evo-404__submit { background: #A8E898; color: #0A0A0A; border: 0; border-radius: 8px; padding: 0 18px; font-weight: 600; cursor: pointer; }
+</style>

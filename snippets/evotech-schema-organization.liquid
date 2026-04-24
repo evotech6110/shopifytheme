@@ -1,0 +1,61 @@
+{%- comment -%}
+  Site-wide Organization + WebSite schema. Include once in layout/theme.liquid <head>.
+  Usage: {%- render 'evotech-schema-organization' -%}
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "{{ shop.url }}#organization",
+      "name": "EvoTech Digital",
+      "legalName": "EvoTech Digital Pty Ltd",
+      "url": "{{ shop.url }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ shop.url }}{% if settings.logo %}{{ settings.logo | image_url: width: 512 }}{% else %}/favicon.ico{% endif %}",
+        "width": 512,
+        "height": 512
+      },
+      "description": "Australian managed IT services and SaaS ecosystem provider — hardware, cyber security, AI automation, and ACSC Essential Eight compliance.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Gosnells",
+        "addressLocality": "Perth",
+        "addressRegion": "WA",
+        "postalCode": "6110",
+        "addressCountry": "AU"
+      },
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "areaServed": "AU",
+        "availableLanguage": ["English"],
+        "email": "support@evotech.au"
+      }],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "ABN",
+        "value": "72 375 743 898"
+      },
+      "sameAs": [
+        "https://github.com/evotech6110",
+        "https://evotech.au"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{ shop.url }}#website",
+      "url": "{{ shop.url }}",
+      "name": "EvoTech Digital",
+      "publisher": { "@id": "{{ shop.url }}#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ shop.url }}/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+</script>

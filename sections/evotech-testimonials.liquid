@@ -1,0 +1,64 @@
+{%- comment -%}
+  Testimonials / social proof. Up to 6 blocks.
+{%- endcomment -%}
+
+<section class="evo evo-section">
+  <div class="evo-container">
+    <div style="max-width: 680px;">
+      <p class="evo-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="evo-h2" data-aos="fade-up">{{ section.settings.headline }}</h2>
+      <p class="evo-lede" data-aos="fade-up" data-aos-delay="100">{{ section.settings.lede }}</p>
+    </div>
+
+    <div class="evo-testi">
+      {%- for block in section.blocks -%}
+        <figure class="evo-testi__card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 80 }}" {{ block.shopify_attributes }}>
+          <blockquote class="evo-testi__quote">“{{ block.settings.quote }}”</blockquote>
+          <figcaption class="evo-testi__who">
+            <span class="evo-testi__avatar" {% if block.settings.avatar %}style="background-image:url({{ block.settings.avatar | image_url: width: 96 }});"{% endif %}></span>
+            <span>
+              <span class="evo-testi__name">{{ block.settings.name }}</span><br>
+              <span class="evo-testi__role">{{ block.settings.role }}</span>
+            </span>
+          </figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Testimonials",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "CUSTOMERS" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Trusted by 600+ Australian businesses." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Perth to Parramatta — here's what our customers say about replacing their legacy ops with the EvoTech SaaS ecosystem." }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea",    "id": "quote", "label": "Quote", "default": "EvoTech is how we replaced a two-person IT team with a platform our accountant approves." },
+        { "type": "text",        "id": "name",  "label": "Name", "default": "Dana L." },
+        { "type": "text",        "id": "role",  "label": "Role + company", "default": "Ops Lead, Perth logistics SMB" },
+        { "type": "image_picker","id": "avatar","label": "Avatar" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EvoTech Testimonials",
+      "blocks": [
+        { "type": "testimonial", "settings": { "quote": "SentryOps contained a ransomware attempt in 9 minutes — at 2am on a Saturday. We didn't even lose a file.", "name": "Priya S.", "role": "CFO, health-tech startup" } },
+        { "type": "testimonial", "settings": { "quote": "Essential8 Compass turned a 6-week audit cycle into a 2-day export. Our assessor literally said 'wish everyone used this'.", "name": "Marcus T.", "role": "IT Manager, legal practice" } },
+        { "type": "testimonial", "settings": { "quote": "We cut A$42,000 from our first-year hardware spend using ProcureIQ. The renewal-alerts feature paid for itself in Q1.", "name": "Dana L.", "role": "Ops Lead, Perth logistics SMB" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

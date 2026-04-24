@@ -1,0 +1,33 @@
+{%- comment -%}
+  Inline SVG icon helper. Usage: {%- render 'evotech-icon', name: 'shield', size: 24 -%}
+  All icons are Lucide-style, currentColor-friendly, no external dependency.
+{%- endcomment -%}
+{%- assign _size = size | default: 24 -%}
+{%- case name -%}
+  {%- when 'sparkles' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.4L5 10l5.1 2 1.9 5 1.9-5 5.1-2-5.1-1.6Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+  {%- when 'shield' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+  {%- when 'activity' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+  {%- when 'compass' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88"/></svg>
+  {%- when 'receipt' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-4-2Z"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/></svg>
+  {%- when 'badge-check' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+  {%- when 'arrow-right' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  {%- when 'map-pin' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+  {%- when 'zap' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+  {%- when 'star' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.1 8.3 22 9.3 17 14.2 18.2 21 12 17.8 5.8 21 7 14.2 2 9.3 8.9 8.3 12 2"/></svg>
+  {%- when 'lock' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  {%- when 'building' -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M8 14h.01"/><path d="M16 14h.01"/></svg>
+  {%- else -%}
+    <svg xmlns="http://www.w3.org/2000/svg" width="{{ _size }}" height="{{ _size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+{%- endcase -%}

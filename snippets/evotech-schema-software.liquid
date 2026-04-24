@@ -1,0 +1,40 @@
+{%- comment -%}
+  SoftwareApplication schema for a single SaaS product.
+  Usage:
+    {%- render 'evotech-schema-software',
+        name: 'SentryOps',
+        description: 'A managed SOC reimagined for small teams.',
+        url: shop.url,
+        price: '499.00',
+        price_currency: 'AUD',
+        category: 'SecurityApplication',
+        rating_value: '4.9',
+        rating_count: '128'
+    -%}
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{ name }}",
+  "description": "{{ description }}",
+  "url": "{{ url }}",
+  "applicationCategory": "{{ category | default: 'BusinessApplication' }}",
+  "operatingSystem": "Web, iOS, Android",
+  "publisher": { "@type": "Organization", "name": "EvoTech Digital" },
+  "offers": {
+    "@type": "Offer",
+    "price": "{{ price | default: '0.00' }}",
+    "priceCurrency": "{{ price_currency | default: 'AUD' }}",
+    "availability": "https://schema.org/InStock",
+    "url": "{{ url }}"
+  }{% if rating_value %},
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ rating_value }}",
+    "reviewCount": "{{ rating_count | default: '100' }}",
+    "bestRating": "5",
+    "worstRating": "1"
+  }{% endif %}
+}
+</script>

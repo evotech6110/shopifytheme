@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "hero": {
+      "type": "evotech-saas-product-hero",
+      "settings": {}
+    }
+  },
+  "order": ["hero"]
+}

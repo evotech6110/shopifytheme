@@ -1,0 +1,31 @@
+{%- comment -%}
+  EvoTech — "Powered by EvolveAI-Engine" attribution strip.
+  Sits near the footer of every page to reinforce the brand promise.
+{%- endcomment -%}
+
+<section class="evo evo-poweredby">
+  <div class="evo-container evo-poweredby__inner">
+    <span class="evo-poweredby__label">{{ section.settings.label | default: 'Powered by' }}</span>
+    <a href="{{ section.settings.link | default: 'https://evolve.evotech.au' }}" class="evo-poweredby__brand" target="_blank" rel="noopener">
+      <span class="evo-mint-dot" aria-hidden="true"></span>
+      Evolve<em>AI-Engine</em>
+    </a>
+    {%- if section.settings.meta != blank -%}
+      <span class="evo-poweredby__label">{{ section.settings.meta }}</span>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Powered by",
+  "tag": "section",
+  "class": "evo-section-poweredby",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Prefix label", "default": "POWERED BY" },
+    { "type": "text", "id": "meta",  "label": "Suffix label", "default": "RUNS AT EVOLVE.EVOTECH.AU" },
+    { "type": "url",  "id": "link",  "label": "Brand link" }
+  ],
+  "presets": [ { "name": "EvoTech — Powered by" } ]
+}
+{% endschema %}

@@ -1,0 +1,43 @@
+{%- comment -%}
+  EvoTech — inline SVG logo + wordmark.
+  Usage: {% render 'evotech-logo' %} or {% render 'evotech-logo', variant: 'mark' %}
+  Variants: 'full' (default — mark + wordmark + tagline), 'mark' (glyph only), 'wordmark' (text only), 'footer' (inverted).
+{%- endcomment -%}
+
+{%- assign v = variant | default: 'full' -%}
+
+{%- if v == 'mark' -%}
+  <svg class="evo-logo evo-logo--mark" viewBox="0 0 44 44" width="44" height="44" role="img" aria-label="EvoTech">
+    <defs>
+      <linearGradient id="evoLogoGrad1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%"  stop-color="#A8E898"/>
+        <stop offset="100%" stop-color="#3D2EDE"/>
+      </linearGradient>
+    </defs>
+    <circle cx="22" cy="22" r="20" fill="none" stroke="url(#evoLogoGrad1)" stroke-width="2.2"/>
+    <path d="M14 22 L22 14 L30 22 L22 30 Z" fill="none" stroke="#A8E898" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="22" cy="22" r="3" fill="#A8E898"/>
+  </svg>
+
+{%- elsif v == 'wordmark' -%}
+  <span class="evo-logo evo-logo--wordmark">EVO<span class="evo-logo__accent">TECH</span></span>
+
+{%- else -%}
+  <a class="evo-logo evo-logo--full" href="/" aria-label="EvoTech home">
+    <svg class="evo-logo__mark" viewBox="0 0 44 44" width="40" height="40" aria-hidden="true">
+      <defs>
+        <linearGradient id="evoLogoGradFull" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"  stop-color="#A8E898"/>
+          <stop offset="100%" stop-color="#3D2EDE"/>
+        </linearGradient>
+      </defs>
+      <circle cx="22" cy="22" r="20" fill="none" stroke="url(#evoLogoGradFull)" stroke-width="2.2"/>
+      <path d="M14 22 L22 14 L30 22 L22 30 Z" fill="none" stroke="#A8E898" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="22" cy="22" r="3" fill="#A8E898"/>
+    </svg>
+    <span class="evo-logo__text">
+      <span class="evo-logo__wordmark">EVO<span class="evo-logo__accent">TECH</span></span>
+      <span class="evo-logo__tagline">INSPIRE · AUTOMATE · EVOLVE</span>
+    </span>
+  </a>
+{%- endif -%}

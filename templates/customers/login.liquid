@@ -1,0 +1,38 @@
+{%- comment -%} Customer login {%- endcomment -%}
+<section class="evo-cust">
+  <div class="evo-cust__card">
+    <p class="evo-cust__eyebrow">ACCOUNT</p>
+    <h1 class="evo-cust__title">Sign in</h1>
+    <p class="evo-cust__lede">Welcome back. Sign in to view your orders and saved items.</p>
+
+    {%- form 'customer_login', class: 'evo-cust__form' -%}
+      {%- if form.errors -%}
+        <p class="evo-cust__error">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+      <label>Email
+        <input type="email" name="customer[email]" required autocomplete="email">
+      </label>
+      <label>Password
+        <input type="password" name="customer[password]" required autocomplete="current-password">
+      </label>
+      <button type="submit">Sign in</button>
+      <div class="evo-cust__links">
+        <a href="#recover" onclick="document.getElementById('recover').style.display='block';return false;">Forgot password?</a>
+        <a href="{{ routes.account_register_url }}">Create account</a>
+      </div>
+    {%- endform -%}
+
+    <div id="recover" style="display:none;margin-top:24px;">
+      <h2 class="evo-cust__subtitle">Reset your password</h2>
+      {%- form 'recover_customer_password', class: 'evo-cust__form' -%}
+        {%- if form.posted_successfully? -%}<p class="evo-cust__ok">We've sent you an email with a reset link.</p>{%- endif -%}
+        <label>Email
+          <input type="email" name="email" required>
+        </label>
+        <button type="submit">Send reset link</button>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% render 'evotech-customer-styles' %}

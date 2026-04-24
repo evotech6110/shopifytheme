@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "profile": {
+      "type": "evotech-profile-about",
+      "settings": {
+        "eyebrow": "MEET THE FOUNDER",
+        "headline": "Built by engineers who run the stack they sell.",
+        "person_name": "Manoj Kumar",
+        "job_title": "Founder & Principal Engineer",
+        "bio": "Manoj founded EvoTech Digital in 2022 after a decade of running managed IT for Australian SMBs. Based in Perth, he leads product, architecture, and the team behind the EvoTech SaaS ecosystem.",
+        "linkedin": "https://www.linkedin.com/in/evotech",
+        "github": "https://github.com/evotech6110"
+      },
+      "blocks": {
+        "c1": { "type": "credential", "settings": { "text": "Microsoft 365 Certified" } },
+        "c2": { "type": "credential", "settings": { "text": "CompTIA Security+" } },
+        "c3": { "type": "credential", "settings": { "text": "10+ years managed IT for Australian SMBs" } },
+        "c4": { "type": "credential", "settings": { "text": "Speaker — AusCERT, WA CyberCon" } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    },
+    "cta_band": {
+      "type": "evotech-cta-band",
+      "settings": {
+        "eyebrow": "LET'S BUILD",
+        "headline": "Work with us.",
+        "lede": "From a single SaaS app to a full managed IT transformation — talk to a specialist today.",
+        "cta_primary_text": "Book a 20-min call",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Browse Solutions",
+        "cta_secondary_link": "/pages/solutions"
+      }
+    }
+  },
+  "order": ["profile","cta_band"]
+}

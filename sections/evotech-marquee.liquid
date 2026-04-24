@@ -1,0 +1,31 @@
+{%- comment -%}
+  EvoTech — Outlined marquee text row.
+  Animated scrolling row of big outlined words separated by sparkle ✦ accent.
+  Direct homage to the Evoluxia "AI Quality ✦ AI Tech" pattern, styled for EvoTech.
+{%- endcomment -%}
+
+{%- assign words_csv = section.settings.words | default: 'AI Automation|Cyber Security|Observability|Compliance|Governance|Procurement' -%}
+{%- assign words = words_csv | split: '|' -%}
+
+<section class="evo evo-marquee" aria-hidden="true">
+  <div class="evo-marquee__track">
+    {%- for i in (1..2) -%}
+      {%- for w in words -%}
+        <span class="evo-marquee__word">{{ w }}</span>
+        <span class="evo-marquee__star">✦</span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Marquee",
+  "tag": "section",
+  "class": "evo-section-marquee",
+  "settings": [
+    { "type": "text", "id": "words", "label": "Words (pipe-separated)", "default": "AI Automation|Cyber Security|Observability|Compliance|Governance|Procurement" }
+  ],
+  "presets": [ { "name": "EvoTech — Marquee" } ]
+}
+{% endschema %}

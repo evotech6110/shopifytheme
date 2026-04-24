@@ -1,0 +1,1002 @@
+{%- comment -%}
+  Evotech Custom AI Agents section — hero + tiles + use cases + pricing tiers + process + data callout.
+  Fully configurable via theme editor. Scoped CSS via .evo-ag-{{ section.id }} prefix.
+{%- endcomment -%}
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700,800&f[]=satoshi@400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  .evo-ag-{{ section.id }} {
+    --bg:        #05040C;
+    --bg-2:      #0B0820;
+    --bg-3:      #14122B;
+    --ink:       #FFFFFF;
+    --ink-dim:   #B6B5C6;
+    --ink-muted: #7A7A8F;
+    --mint:      #A8E898;
+    --mint-2:    #CDFFBF;
+    --indigo:    #3D2EDE;
+    --indigo-2:  #5B4DFF;
+    --peach:     #FF7A4A;
+    --amber:     #FFC566;
+    --line:      rgba(255,255,255,0.08);
+    --font-d:    'Clash Display','Satoshi','Inter',sans-serif;
+    --font-s:    'Satoshi','Inter',system-ui,sans-serif;
+    --font-m:    'JetBrains Mono',ui-monospace,monospace;
+    --ease:      cubic-bezier(.21,.83,.33,1);
+
+    position: relative;
+    padding: clamp(64px, 8vw, 120px) 0;
+    background:
+      radial-gradient(1200px 500px at 15% -10%, rgba(61,46,222,0.16), transparent 55%),
+      radial-gradient(900px 400px at 85% 110%, rgba(168,232,152,0.08), transparent 60%),
+      linear-gradient(180deg, #05040C 0%, #0A0820 100%);
+    overflow: hidden;
+    color: var(--ink);
+    font-family: var(--font-s);
+  }
+  .evo-ag-{{ section.id }}::before {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1.5px 1.5px at 70% 50%, rgba(168,232,152,.4), transparent),
+      radial-gradient(1px 1px at 45% 80%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 85% 20%, rgba(205,255,191,.45), transparent);
+    background-size: 900px 900px;
+    background-repeat: repeat;
+    opacity: .55;
+    animation: evo-ag-twinkle-{{ section.id }} 8s linear infinite;
+  }
+  @keyframes evo-ag-twinkle-{{ section.id }} { 0%,100% { opacity:.55; } 50% { opacity:.3; } }
+
+  .evo-ag-{{ section.id }} .evo-ag__wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); position: relative; z-index: 2; }
+  .evo-ag-{{ section.id }} a { color: inherit; text-decoration: none; }
+
+  .evo-ag-{{ section.id }} .evo-ag {
+    display: grid; grid-template-columns: 1fr 1.05fr;
+    gap: clamp(36px, 5vw, 72px);
+    align-items: start;
+  }
+  @media (max-width: 1020px) { .evo-ag-{{ section.id }} .evo-ag { grid-template-columns: 1fr; } }
+
+  .evo-ag-{{ section.id }} .evo-ag__kicker {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 22px;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__kicker-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 10px var(--mint);
+    animation: evo-ag-pulse-{{ section.id }} 1.6s ease-in-out infinite;
+  }
+  @keyframes evo-ag-pulse-{{ section.id }} { 0%,100% { transform: scale(1); } 50% { transform: scale(1.4); } }
+
+  .evo-ag-{{ section.id }} .evo-ag__title {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: clamp(40px, 5.2vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0 0 22px 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__title em { color: var(--mint); font-style: normal; font-family: 'Caveat', cursive; font-weight: 500; }
+  .evo-ag-{{ section.id }} .evo-ag__title-grad {
+    background: linear-gradient(90deg, #A8E898 0%, #5B4DFF 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .evo-ag-{{ section.id }} .evo-ag__desc {
+    color: var(--ink-dim);
+    font-size: 17px; line-height: 1.65;
+    max-width: 540px;
+    margin: 0 0 28px 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__desc strong { color: #fff; font-weight: 600; }
+
+  .evo-ag-{{ section.id }} .evo-ag__cta-row {
+    display: inline-flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    margin-bottom: 32px;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 26px;
+    font-family: var(--font-m);
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 700;
+    background: var(--peach);
+    color: #110A04;
+    border: none; border-radius: 10px;
+    transition: transform .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    box-shadow: 0 8px 26px rgba(255,122,74,0.35);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__btn-primary:hover { transform: translateY(-2px); background: #FF8E62; box-shadow: 0 14px 34px rgba(255,122,74,0.55); }
+  .evo-ag-{{ section.id }} .evo-ag__btn-ghost {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 26px;
+    font-family: var(--font-m);
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 700;
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    transition: border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__btn-ghost:hover { border-color: rgba(168,232,152,0.55); background: rgba(168,232,152,0.06); color: var(--mint); }
+
+  .evo-ag-{{ section.id }} .evo-ag__trust {
+    display: flex; flex-wrap: wrap; gap: 18px 28px;
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__trust-item { display: inline-flex; align-items: center; gap: 8px; }
+  .evo-ag-{{ section.id }} .evo-ag__trust-item svg { width: 14px; height: 14px; color: var(--mint); flex-shrink: 0; }
+
+  .evo-ag-{{ section.id }} .evo-ag__tiles {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    position: relative;
+  }
+  @media (max-width: 560px) { .evo-ag-{{ section.id }} .evo-ag__tiles { grid-template-columns: 1fr; } }
+
+  .evo-ag-{{ section.id }} .evo-ag__tile {
+    border-radius: 20px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(20,18,43,0.7) 0%, rgba(11,8,32,0.7) 100%);
+    transition: transform .3s var(--ease), border-color .3s var(--ease);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tile:hover { transform: translateY(-4px); border-color: rgba(168,232,152,0.35); }
+  .evo-ag-{{ section.id }} .evo-ag__tile-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(168,232,152,0.18), rgba(61,46,222,0.28));
+    border: 1px solid rgba(168,232,152,0.2);
+    margin-bottom: 16px;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tile-icon svg { width: 20px; height: 20px; color: var(--mint); }
+  .evo-ag-{{ section.id }} .evo-ag__tile-name {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: 18px; line-height: 1.2;
+    color: #fff;
+    margin: 0 0 8px 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tile-desc {
+    color: var(--ink-dim);
+    font-size: 13px; line-height: 1.55;
+    margin: 0;
+  }
+
+  .evo-ag-{{ section.id }} .evo-ag__price-card {
+    position: absolute; top: -8px; right: -8px;
+    z-index: 4;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #A8E898 0%, #CDFFBF 100%);
+    color: #0A0A0A;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(168,232,152,0.3), 0 0 0 1px rgba(255,255,255,0.4) inset;
+    animation: evo-ag-float-{{ section.id }} 5s ease-in-out infinite;
+    transform: rotate(3deg);
+  }
+  @keyframes evo-ag-float-{{ section.id }} {
+    0%,100% { transform: rotate(3deg) translateY(-4px); }
+    50%     { transform: rotate(3deg) translateY(6px); }
+  }
+  .evo-ag-{{ section.id }} .evo-ag__price-card-label {
+    font-family: var(--font-m);
+    font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase;
+    font-weight: 700;
+    opacity: 0.7;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__price-card-amount {
+    font-family: var(--font-d);
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 1;
+    margin-top: 4px;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__price-card-amount sup { font-size: 16px; vertical-align: top; margin-right: 2px; font-weight: 700; }
+  .evo-ag-{{ section.id }} .evo-ag__price-card-sub {
+    font-family: var(--font-m);
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+  @media (max-width: 560px) {
+    .evo-ag-{{ section.id }} .evo-ag__price-card { position: static; transform: none; margin-bottom: 16px; display: inline-block; animation: none; }
+  }
+
+  .evo-ag-{{ section.id }} .evo-ag__cases { margin-top: clamp(64px, 8vw, 100px); }
+  .evo-ag-{{ section.id }} .evo-ag__cases-head {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 24px; align-items: end;
+    margin-bottom: 32px;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__cases-title {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__cases-link {
+    font-family: var(--font-m); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mint);
+    border-bottom: 1px solid rgba(168,232,152,0.4);
+    padding-bottom: 4px;
+    white-space: nowrap;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 920px) { .evo-ag-{{ section.id }} .evo-ag__cases-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .evo-ag-{{ section.id }} .evo-ag__cases-grid { grid-template-columns: 1fr; } }
+
+  .evo-ag-{{ section.id }} .evo-ag__case {
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(11,8,32,0.5);
+    display: flex; flex-direction: column; gap: 10px;
+    transition: transform .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__case:hover { transform: translateY(-3px); border-color: rgba(168,232,152,0.3); background: rgba(20,18,43,0.7); }
+  .evo-ag-{{ section.id }} .evo-ag__case-emoji {
+    font-size: 20px;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(168,232,152,0.1);
+    border: 1px solid rgba(168,232,152,0.25);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__case-emoji svg { width: 20px; height: 20px; color: var(--mint); }
+  .evo-ag-{{ section.id }} .evo-ag__case-name {
+    font-family: var(--font-d); font-weight: 700; font-size: 16px;
+    color: #fff; margin: 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__case-desc {
+    color: var(--ink-dim); font-size: 13px; line-height: 1.55;
+    margin: 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__case-tag {
+    align-self: flex-start;
+    font-family: var(--font-m); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mint);
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(168,232,152,0.08);
+    border: 1px solid rgba(168,232,152,0.25);
+    margin-top: auto;
+  }
+
+  .evo-ag-{{ section.id }} .evo-ag__pricing { margin-top: clamp(64px, 8vw, 100px); }
+  .evo-ag-{{ section.id }} .evo-ag__pricing-head { text-align: center; margin-bottom: 40px; }
+  .evo-ag-{{ section.id }} .evo-ag__pricing-head .evo-ag__kicker { justify-content: center; }
+  .evo-ag-{{ section.id }} .evo-ag__pricing-title {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: clamp(28px, 3.6vw, 48px); line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__pricing-title em { color: var(--mint); font-style: normal; font-family: 'Caveat', cursive; font-weight: 500; }
+  .evo-ag-{{ section.id }} .evo-ag__pricing-sub {
+    color: var(--ink-dim);
+    font-size: 16px; line-height: 1.6;
+    max-width: 560px; margin: 14px auto 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tiers {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 980px) { .evo-ag-{{ section.id }} .evo-ag__tiers { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; } }
+
+  .evo-ag-{{ section.id }} .evo-ag__tier {
+    position: relative;
+    padding: 32px 28px 36px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(20,18,43,0.7) 0%, rgba(11,8,32,0.7) 100%);
+    display: flex; flex-direction: column;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier--featured {
+    border-color: rgba(168,232,152,0.4);
+    background:
+      radial-gradient(600px 400px at 100% 0%, rgba(168,232,152,0.14), transparent 60%),
+      linear-gradient(180deg, rgba(35,28,80,0.7) 0%, rgba(15,11,46,0.7) 100%);
+    box-shadow: 0 30px 70px rgba(61,46,222,0.25);
+    transform: translateY(-8px);
+  }
+  @media (max-width: 980px) { .evo-ag-{{ section.id }} .evo-ag__tier--featured { transform: none; } }
+
+  .evo-ag-{{ section.id }} .evo-ag__tier-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    padding: 6px 14px;
+    background: linear-gradient(90deg, #A8E898 0%, #CDFFBF 100%);
+    color: #0A0A0A;
+    border-radius: 999px;
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.22em; font-weight: 700; text-transform: uppercase;
+    box-shadow: 0 4px 14px rgba(168,232,152,0.4);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-name {
+    font-family: var(--font-m); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--mint);
+    margin: 0 0 8px 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-title {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: 26px; line-height: 1.1;
+    color: #fff;
+    margin: 0 0 16px 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-price {
+    font-family: var(--font-d); font-weight: 800;
+    font-size: 48px; line-height: 1;
+    color: #fff;
+    margin: 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-price sup { font-size: 22px; font-weight: 700; vertical-align: top; margin-right: 2px; }
+  .evo-ag-{{ section.id }} .evo-ag__tier-price-plus { font-size: 20px; font-weight: 600; color: var(--ink-muted); }
+  .evo-ag-{{ section.id }} .evo-ag__tier-price-sub {
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 6px;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-hr {
+    border: none; border-top: 1px solid var(--line);
+    margin: 22px 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-list {
+    list-style: none; padding: 0; margin: 0 0 28px 0;
+    display: flex; flex-direction: column; gap: 12px;
+    font-size: 14px; color: var(--ink-dim);
+    line-height: 1.5;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-list li {
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-list li::before {
+    content: ""; margin-top: 6px;
+    width: 14px; height: 14px; flex-shrink: 0;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'><path d='M3 7l3 3 5-6' stroke='%23A8E898' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center / 14px;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-cta {
+    margin-top: auto;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 20px;
+    font-family: var(--font-m); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+    border-radius: 10px;
+    background: transparent; color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier-cta:hover { border-color: rgba(168,232,152,0.5); background: rgba(168,232,152,0.06); color: var(--mint); }
+  .evo-ag-{{ section.id }} .evo-ag__tier--featured .evo-ag__tier-cta {
+    background: var(--peach); color: #110A04; border-color: transparent;
+    box-shadow: 0 8px 22px rgba(255,122,74,0.3);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__tier--featured .evo-ag__tier-cta:hover { background: #FF8E62; color: #110A04; box-shadow: 0 12px 28px rgba(255,122,74,0.5); }
+
+  .evo-ag-{{ section.id }} .evo-ag__process { margin-top: clamp(64px, 8vw, 100px); }
+  .evo-ag-{{ section.id }} .evo-ag__steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    position: relative;
+  }
+  @media (max-width: 980px) { .evo-ag-{{ section.id }} .evo-ag__steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .evo-ag-{{ section.id }} .evo-ag__steps { grid-template-columns: 1fr; } }
+
+  .evo-ag-{{ section.id }} .evo-ag__step {
+    position: relative;
+    padding: 28px 24px 26px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(11,8,32,0.55);
+    display: flex; flex-direction: column; gap: 10px;
+    overflow: hidden;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__step::before {
+    content: attr(data-step);
+    position: absolute; top: -6px; right: 18px;
+    font-family: var(--font-d); font-weight: 800;
+    font-size: 88px; line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(168,232,152,0.18);
+    pointer-events: none;
+    user-select: none;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__step-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(168,232,152,0.2), rgba(61,46,222,0.25));
+    border: 1px solid rgba(168,232,152,0.28);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__step-icon svg { width: 22px; height: 22px; color: var(--mint); }
+  .evo-ag-{{ section.id }} .evo-ag__step-name {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: 18px; line-height: 1.2; color: #fff; margin: 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__step-desc {
+    color: var(--ink-dim); font-size: 13px; line-height: 1.55; margin: 0;
+    position: relative; z-index: 2;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__step-meta {
+    margin-top: auto;
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mint);
+    padding-top: 6px;
+  }
+
+  .evo-ag-{{ section.id }} .evo-ag__data {
+    margin-top: clamp(48px, 6vw, 72px);
+    padding: 28px clamp(24px, 3vw, 40px);
+    border-radius: 20px;
+    background:
+      radial-gradient(800px 300px at 100% 50%, rgba(168,232,152,0.12), transparent 60%),
+      linear-gradient(90deg, rgba(20,18,43,0.8) 0%, rgba(11,8,32,0.8) 100%);
+    border: 1px dashed rgba(168,232,152,0.3);
+    display: grid; grid-template-columns: auto 1fr auto; gap: 24px;
+    align-items: center;
+  }
+  @media (max-width: 780px) {
+    .evo-ag-{{ section.id }} .evo-ag__data { grid-template-columns: 1fr; text-align: center; }
+  }
+  .evo-ag-{{ section.id }} .evo-ag__data-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(168,232,152,0.12);
+    border: 1px solid rgba(168,232,152,0.3);
+  }
+  .evo-ag-{{ section.id }} .evo-ag__data-icon svg { width: 28px; height: 28px; color: var(--mint); }
+  @media (max-width: 780px) {
+    .evo-ag-{{ section.id }} .evo-ag__data-icon { margin: 0 auto; }
+  }
+  .evo-ag-{{ section.id }} .evo-ag__data-title {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: 20px; line-height: 1.2; color: #fff;
+    margin: 0 0 6px 0;
+  }
+  .evo-ag-{{ section.id }} .evo-ag__data-desc {
+    color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0;
+  }
+</style>
+
+{%- liquid
+  assign price_card_href = section.settings.price_card_url | default: section.settings.pricing_anchor_href
+  assign has_cases = false
+  assign has_tiers = false
+  assign has_steps = false
+  assign has_tiles = false
+  for block in section.blocks
+    case block.type
+      when 'tile'
+        assign has_tiles = true
+      when 'case'
+        assign has_cases = true
+      when 'tier'
+        assign has_tiers = true
+      when 'step'
+        assign has_steps = true
+    endcase
+  endfor
+-%}
+
+<section class="evo-ag-{{ section.id }}" aria-label="{{ section.settings.aria_label | default: 'Custom AI Agents by Evotech' | escape }}">
+  <div class="evo-ag__wrap">
+
+    {%- comment -%} ==================== HERO ==================== {%- endcomment -%}
+    <div class="evo-ag">
+      <div class="evo-ag__intro">
+        {%- if section.settings.kicker != blank -%}
+          <div class="evo-ag__kicker">
+            <span class="evo-ag__kicker-dot"></span>
+            {{ section.settings.kicker }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.title_html != blank -%}
+          <h2 class="evo-ag__title">{{ section.settings.title_html }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.description_html != blank -%}
+          <p class="evo-ag__desc">{{ section.settings.description_html }}</p>
+        {%- endif -%}
+
+        <div class="evo-ag__cta-row">
+          {%- if section.settings.primary_cta_label != blank -%}
+            <a class="evo-ag__btn-primary" href="{{ section.settings.primary_cta_url | default: '#' }}">
+              {{ section.settings.primary_cta_label }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.secondary_cta_label != blank -%}
+            <a class="evo-ag__btn-ghost" href="{{ section.settings.secondary_cta_url | default: '#pricing' }}">
+              {{ section.settings.secondary_cta_label }}
+            </a>
+          {%- endif -%}
+        </div>
+
+        <div class="evo-ag__trust">
+          {%- if section.settings.trust_1 != blank -%}
+            <span class="evo-ag__trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 0 1 16 0C20 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>
+              {{ section.settings.trust_1 }}
+            </span>
+          {%- endif -%}
+          {%- if section.settings.trust_2 != blank -%}
+            <span class="evo-ag__trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              {{ section.settings.trust_2 }}
+            </span>
+          {%- endif -%}
+          {%- if section.settings.trust_3 != blank -%}
+            <span class="evo-ag__trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              {{ section.settings.trust_3 }}
+            </span>
+          {%- endif -%}
+          {%- if section.settings.trust_4 != blank -%}
+            <span class="evo-ag__trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              {{ section.settings.trust_4 }}
+            </span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if has_tiles or section.settings.price_card_amount != blank -%}
+      <div class="evo-ag__tiles">
+        {%- if section.settings.price_card_amount != blank -%}
+          <div class="evo-ag__price-card" aria-label="Starting from {{ section.settings.price_card_currency }}{{ section.settings.price_card_amount }}">
+            <div class="evo-ag__price-card-label">{{ section.settings.price_card_label | default: 'FROM' }}</div>
+            <div class="evo-ag__price-card-amount"><sup>{{ section.settings.price_card_currency | default: 'A$' }}</sup>{{ section.settings.price_card_amount }}</div>
+            <div class="evo-ag__price-card-sub">{{ section.settings.price_card_sub | default: 'BUILD · ONE-OFF' }}</div>
+          </div>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tile' -%}
+            <article class="evo-ag__tile" {{ block.shopify_attributes }}>
+              <div class="evo-ag__tile-icon">
+                {%- case block.settings.icon -%}
+                  {%- when 'agent' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+                  {%- when 'dashboard' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><circle cx="7" cy="10" r="1" fill="currentColor"/><line x1="10" y1="10" x2="17" y2="10"/></svg>
+                  {%- when 'hosting' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="12" x2="22" y2="12"/><circle cx="6" cy="15" r="1" fill="currentColor"/><circle cx="10" cy="15" r="1" fill="currentColor"/></svg>
+                  {%- when 'training' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                  {%- when 'shield' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 0 1 16 0C20 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>
+                  {%- when 'chat' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  {%- else -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+                {%- endcase -%}
+              </div>
+              {%- if block.settings.title != blank -%}
+                <h3 class="evo-ag__tile-name">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="evo-ag__tile-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ==================== USE CASES ==================== {%- endcomment -%}
+    {%- if has_cases -%}
+    <div class="evo-ag__cases">
+      <div class="evo-ag__cases-head">
+        {%- if section.settings.cases_title != blank -%}
+          <h3 class="evo-ag__cases-title">{{ section.settings.cases_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.cases_link_label != blank and section.settings.cases_link_url != blank -%}
+          <a href="{{ section.settings.cases_link_url }}" class="evo-ag__cases-link">{{ section.settings.cases_link_label }}</a>
+        {%- endif -%}
+      </div>
+      <div class="evo-ag__cases-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'case' -%}
+            <article class="evo-ag__case" {{ block.shopify_attributes }}>
+              <span class="evo-ag__case-emoji">
+                {%- case block.settings.icon -%}
+                  {%- when 'chat' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  {%- when 'calendar' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  {%- when 'cart' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  {%- when 'docs' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+                  {%- when 'phone' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  {%- when 'cube' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                  {%- else -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                {%- endcase -%}
+              </span>
+              {%- if block.settings.title != blank -%}
+                <h4 class="evo-ag__case-name">{{ block.settings.title }}</h4>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="evo-ag__case-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+              {%- if block.settings.tag != blank -%}
+                <span class="evo-ag__case-tag">{{ block.settings.tag }}</span>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
+
+    {%- comment -%} ==================== PRICING TIERS ==================== {%- endcomment -%}
+    {%- if has_tiers -%}
+    <div class="evo-ag__pricing" id="{{ section.settings.pricing_anchor | default: 'pricing' }}">
+      <div class="evo-ag__pricing-head">
+        {%- if section.settings.pricing_kicker != blank -%}
+          <p class="evo-ag__kicker">
+            <span class="evo-ag__kicker-dot"></span>
+            {{ section.settings.pricing_kicker }}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.pricing_title_html != blank -%}
+          <h3 class="evo-ag__pricing-title">{{ section.settings.pricing_title_html }}</h3>
+        {%- endif -%}
+        {%- if section.settings.pricing_sub != blank -%}
+          <p class="evo-ag__pricing-sub">{{ section.settings.pricing_sub }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="evo-ag__tiers">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tier' -%}
+            {%- assign tier_class = 'evo-ag__tier' -%}
+            {%- if block.settings.featured -%}
+              {%- assign tier_class = 'evo-ag__tier evo-ag__tier--featured' -%}
+            {%- endif -%}
+            <article class="{{ tier_class }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.featured and block.settings.badge != blank -%}
+                <span class="evo-ag__tier-badge">{{ block.settings.badge }}</span>
+              {%- endif -%}
+              {%- if block.settings.eyebrow != blank -%}
+                <p class="evo-ag__tier-name">{{ block.settings.eyebrow }}</p>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h4 class="evo-ag__tier-title">{{ block.settings.title }}</h4>
+              {%- endif -%}
+              {%- if block.settings.price != blank -%}
+                <p class="evo-ag__tier-price"><sup>{{ block.settings.price_prefix | default: 'A$' }}</sup>{{ block.settings.price }}<span class="evo-ag__tier-price-plus">{{ block.settings.price_suffix | default: '+' }}</span></p>
+              {%- endif -%}
+              {%- if block.settings.price_sub != blank -%}
+                <p class="evo-ag__tier-price-sub">{{ block.settings.price_sub }}</p>
+              {%- endif -%}
+              <hr class="evo-ag__tier-hr">
+              {%- if block.settings.features != blank -%}
+                <ul class="evo-ag__tier-list">
+                  {{ block.settings.features }}
+                </ul>
+              {%- endif -%}
+              {%- if block.settings.cta_label != blank -%}
+                <a class="evo-ag__tier-cta" href="{{ block.settings.cta_url | default: '#' }}">{{ block.settings.cta_label }}</a>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
+
+    {%- comment -%} ==================== PROCESS ==================== {%- endcomment -%}
+    {%- if has_steps -%}
+    <div class="evo-ag__process">
+      <div class="evo-ag__cases-head">
+        {%- if section.settings.process_title != blank -%}
+          <h3 class="evo-ag__cases-title">{{ section.settings.process_title }}</h3>
+        {%- endif -%}
+      </div>
+      <div class="evo-ag__steps">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            <article class="evo-ag__step" data-step="{{ block.settings.number | default: forloop.index | prepend: '0' | slice: -2, 2 }}" {{ block.shopify_attributes }}>
+              <div class="evo-ag__step-icon">
+                {%- case block.settings.icon -%}
+                  {%- when 'chat' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  {%- when 'upload' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
+                  {%- when 'training' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                  {%- when 'check' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  {%- else -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                {%- endcase -%}
+              </div>
+              {%- if block.settings.title != blank -%}
+                <h4 class="evo-ag__step-name">{{ block.settings.title }}</h4>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="evo-ag__step-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+              {%- if block.settings.timing != blank -%}
+                <span class="evo-ag__step-meta">{{ block.settings.timing }}</span>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
+
+    {%- comment -%} ==================== DATA CALLOUT ==================== {%- endcomment -%}
+    {%- if section.settings.data_title != blank or section.settings.data_desc != blank -%}
+    <div class="evo-ag__data">
+      <div class="evo-ag__data-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+      </div>
+      <div>
+        {%- if section.settings.data_title != blank -%}
+          <h4 class="evo-ag__data-title">{{ section.settings.data_title }}</h4>
+        {%- endif -%}
+        {%- if section.settings.data_desc != blank -%}
+          <p class="evo-ag__data-desc">{{ section.settings.data_desc }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.data_cta_label != blank -%}
+        <a class="evo-ag__btn-primary" href="{{ section.settings.data_cta_url | default: '#' }}" style="white-space:nowrap;">
+          {{ section.settings.data_cta_label }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Evotech · AI Agents",
+  "tag": "section",
+  "class": "evotech-ai-agents-section",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text",    "id": "aria_label",       "label": "Aria label",          "default": "Custom AI Agents by Evotech" },
+    { "type": "text",    "id": "kicker",           "label": "Kicker text",         "default": "CUSTOM AI AGENTS · POWERED BY EVOLVE AI" },
+    { "type": "html",    "id": "title_html",       "label": "Title (HTML allowed)", "default": "Your business.<br><span class=\"evo-ag__title-grad\">Your own AI agent.</span><br>From <em>A$999.</em>" },
+    { "type": "html",    "id": "description_html", "label": "Description (HTML)",  "default": "<strong>Stop renting generic chatbots.</strong> We build, host, and train a custom AI agent that speaks your brand voice, knows your products, and runs on an <strong>Australian VPS</strong> — all powered by the <strong>Evolve AI neural engine</strong>. One upfront build fee, optional monthly hosting, zero vendor lock-in." },
+
+    { "type": "header", "content": "Hero CTAs" },
+    { "type": "text", "id": "primary_cta_label",   "label": "Primary CTA label",   "default": "Book a strategy call" },
+    { "type": "url",  "id": "primary_cta_url",     "label": "Primary CTA URL" },
+    { "type": "text", "id": "secondary_cta_label", "label": "Secondary CTA label", "default": "See build packages" },
+    { "type": "url",  "id": "secondary_cta_url",   "label": "Secondary CTA URL"  },
+    { "type": "text", "id": "pricing_anchor",      "label": "Pricing anchor id (for #link)", "default": "pricing" },
+
+    { "type": "header", "content": "Trust strip (4 items)" },
+    { "type": "text", "id": "trust_1", "label": "Trust 1", "default": "Hosted in Australia" },
+    { "type": "text", "id": "trust_2", "label": "Trust 2", "default": "AUD · GST invoiced" },
+    { "type": "text", "id": "trust_3", "label": "Trust 3", "default": "2-week build" },
+    { "type": "text", "id": "trust_4", "label": "Trust 4", "default": "Founder-led build" },
+
+    { "type": "header", "content": "Floating price card" },
+    { "type": "text", "id": "price_card_label",    "label": "Label",    "default": "FROM" },
+    { "type": "text", "id": "price_card_currency", "label": "Currency", "default": "A$" },
+    { "type": "text", "id": "price_card_amount",   "label": "Amount",   "default": "999" },
+    { "type": "text", "id": "price_card_sub",      "label": "Sub",      "default": "BUILD · ONE-OFF" },
+
+    { "type": "header", "content": "Use cases section" },
+    { "type": "text", "id": "cases_title",     "label": "Title",      "default": "Agents we build most often." },
+    { "type": "text", "id": "cases_link_label","label": "Link label", "default": "View examples" },
+    { "type": "url",  "id": "cases_link_url",  "label": "Link URL" },
+
+    { "type": "header", "content": "Pricing section heading" },
+    { "type": "text", "id": "pricing_kicker",    "label": "Kicker",      "default": "BUILD PACKAGES · ONE-OFF FEE + OPTIONAL HOSTING" },
+    { "type": "html", "id": "pricing_title_html","label": "Title (HTML)", "default": "Three tiers. <em>No long contracts.</em>" },
+    { "type": "textarea", "id": "pricing_sub",   "label": "Sub-copy",    "default": "Every build fee includes VPS provisioning, front-panel setup, and agent training rounds. Monthly hosting is optional — host it yourself if you prefer." },
+
+    { "type": "header", "content": "Process section heading" },
+    { "type": "text", "id": "process_title", "label": "Title", "default": "From brief to live agent — in about two weeks." },
+
+    { "type": "header", "content": "Data callout" },
+    { "type": "text",     "id": "data_title",     "label": "Title", "default": "You bring the data. We bring the brain." },
+    { "type": "textarea", "id": "data_desc",      "label": "Description", "default": "We don't pretend to know your business better than you do. You hand over the FAQs, policies, past conversations, product specs, or SOPs you want the agent to know — we handle the cleaning, embedding, training, and hosting. Your raw data stays in Australia and is never used to train any external model." },
+    { "type": "text",     "id": "data_cta_label", "label": "CTA label", "default": "Start your agent" },
+    { "type": "url",      "id": "data_cta_url",   "label": "CTA URL" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Feature tile",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "agent",     "label": "AI agent" },
+            { "value": "dashboard", "label": "Dashboard" },
+            { "value": "hosting",   "label": "Hosting / server" },
+            { "value": "training",  "label": "Training (spark)" },
+            { "value": "shield",    "label": "Shield" },
+            { "value": "chat",      "label": "Chat bubble" }
+          ],
+          "default": "agent"
+        },
+        { "type": "text",     "id": "title",       "label": "Title" },
+        { "type": "textarea", "id": "description", "label": "Description" }
+      ]
+    },
+    {
+      "type": "case",
+      "name": "Use case card",
+      "limit": 9,
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "chat",     "label": "Chat bubble" },
+            { "value": "calendar", "label": "Calendar" },
+            { "value": "cart",     "label": "Shopping cart" },
+            { "value": "docs",     "label": "Document" },
+            { "value": "phone",    "label": "Phone" },
+            { "value": "cube",     "label": "Cube / custom" }
+          ],
+          "default": "chat"
+        },
+        { "type": "text",     "id": "title",       "label": "Title" },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "text",     "id": "tag",         "label": "Tag line" }
+      ]
+    },
+    {
+      "type": "tier",
+      "name": "Pricing tier",
+      "limit": 3,
+      "settings": [
+        { "type": "checkbox", "id": "featured",    "label": "Feature this tier", "default": false },
+        { "type": "text",     "id": "badge",       "label": "Badge text (if featured)", "default": "MOST POPULAR" },
+        { "type": "text",     "id": "eyebrow",     "label": "Eyebrow (uppercase)" },
+        { "type": "text",     "id": "title",       "label": "Tier title" },
+        { "type": "text",     "id": "price_prefix","label": "Price prefix", "default": "A$" },
+        { "type": "text",     "id": "price",       "label": "Price" },
+        { "type": "text",     "id": "price_suffix","label": "Price suffix", "default": "+" },
+        { "type": "text",     "id": "price_sub",   "label": "Price sub-copy" },
+        { "type": "html",     "id": "features",    "label": "Features (use <li>...</li>)" },
+        { "type": "text",     "id": "cta_label",   "label": "CTA label" },
+        { "type": "url",      "id": "cta_url",     "label": "CTA URL" }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Process step",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "number", "label": "Step number (2-digit)", "default": "01" },
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "chat",     "label": "Chat bubble" },
+            { "value": "upload",   "label": "Upload / docs" },
+            { "value": "training", "label": "Training (spark)" },
+            { "value": "check",    "label": "Check (go live)" }
+          ],
+          "default": "chat"
+        },
+        { "type": "text",     "id": "title",       "label": "Step title" },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "text",     "id": "timing",      "label": "Timing meta", "default": "Day 1" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Evotech · AI Agents",
+      "blocks": [
+        { "type": "tile", "settings": { "icon": "agent",     "title": "Your own AI agent",      "description": "Custom-trained on your business data. Answers questions like your best employee would — 24/7, in your brand voice." } },
+        { "type": "tile", "settings": { "icon": "dashboard", "title": "Front-panel dashboard",  "description": "A web control panel where you view every conversation, edit replies, retrain on corrections and track analytics." } },
+        { "type": "tile", "settings": { "icon": "hosting",   "title": "Australian VPS hosting", "description": "Deployed on a Perth-located VPS. Sovereign data residency, AUD billed, low-latency for Australian users." } },
+        { "type": "tile", "settings": { "icon": "training",  "title": "Training & tuning",      "description": "We ingest your docs, train the agent, and run two refinement rounds with you before go-live. Post-launch support included." } },
+
+        { "type": "case", "settings": { "icon": "chat",     "title": "Customer Support Agent",   "description": "Answers FAQs, troubleshoots common issues, escalates hard tickets to a human. Replies on your site, WhatsApp, and Messenger.", "tag": "Most requested · E-commerce · SaaS" } },
+        { "type": "case", "settings": { "icon": "calendar", "title": "Booking & Qualification Agent", "description": "Qualifies leads, books meetings straight into your calendar (Google / Microsoft 365) and captures intake forms conversationally.", "tag": "Trades · Clinics · Agencies" } },
+        { "type": "case", "settings": { "icon": "cart",     "title": "Shopify Product Advisor",  "description": "Reads your catalogue, recommends the right product, answers spec questions, and hands over to checkout. Fully Shopify-native.", "tag": "Shopify stores · Retail" } },
+        { "type": "case", "settings": { "icon": "docs",     "title": "Internal Knowledge Agent", "description": "Your staff's private ChatGPT, trained on your SOPs, HR handbook, and internal docs. Saves induction time and tribal knowledge loss.", "tag": "Growing teams · MSPs · Trades" } },
+        { "type": "case", "settings": { "icon": "phone",    "title": "Reception / Intake Agent", "description": "Handles after-hours enquiries, triages jobs, and routes urgent ones to SMS. Ideal for tradies and service businesses.", "tag": "Tradies · Services · Night-shift" } },
+        { "type": "case", "settings": { "icon": "cube",     "title": "Custom Build",             "description": "Got something specific? A voice-note transcriber, a quoting agent, an onboarding bot — if you can brief it, we'll scope it.", "tag": "Anything workable on data" } },
+
+        { "type": "tier", "settings": {
+          "featured": false,
+          "eyebrow": "STARTER",
+          "title":   "Single-channel agent",
+          "price_prefix": "A$",
+          "price":   "999",
+          "price_suffix": "+",
+          "price_sub": "One-off · GST inc. · +A$49/mo hosting opt.",
+          "features": "<li>One custom-trained agent</li><li>Deployed on one channel (website widget)</li><li>Front-panel dashboard (view + edit)</li><li>Australian VPS provisioned & handed over</li><li>Training on your provided data (up to ~50 pages)</li><li>2 refinement rounds pre-launch</li><li>14 days post-launch support</li>",
+          "cta_label": "Start with Starter",
+          "cta_url":   "/products/agent-starter"
+        } },
+        { "type": "tier", "settings": {
+          "featured": true,
+          "badge":   "MOST POPULAR",
+          "eyebrow": "GROWTH",
+          "title":   "Multi-channel agent",
+          "price_prefix": "A$",
+          "price":   "2,499",
+          "price_suffix": "+",
+          "price_sub": "One-off · GST inc. · +A$99/mo hosting opt.",
+          "features": "<li>Everything in Starter</li><li>Up to 3 channels (web + WhatsApp + email/Messenger)</li><li>Brand-voice training from your past content</li><li>Analytics dashboard (conversations, CSAT, conversions)</li><li>Calendar booking integration</li><li>Shopify / Xero read access (optional)</li><li>30 days post-launch support</li>",
+          "cta_label": "Choose Growth",
+          "cta_url":   "/products/agent-growth"
+        } },
+        { "type": "tier", "settings": {
+          "featured": false,
+          "eyebrow": "SCALE",
+          "title":   "Business integration",
+          "price_prefix": "A$",
+          "price":   "4,999",
+          "price_suffix": "+",
+          "price_sub": "One-off · GST inc. · +A$199/mo hosting opt.",
+          "features": "<li>Everything in Growth</li><li>Up to 3 linked agents (e.g. Support + Sales + Intake)</li><li>Custom integrations (CRM, ticketing, Google Workspace)</li><li>White-label front panel for your team</li><li>Handoff-to-human workflow with routing rules</li><li>Role-based access for staff</li><li>90 days post-launch support + quarterly retraining</li>",
+          "cta_label": "Talk to us",
+          "cta_url":   "/products/agent-scale"
+        } },
+
+        { "type": "step", "settings": { "number": "01", "icon": "chat",     "title": "Brief",          "description": "30-minute strategy call. We define the agent's job, success metric and channel.",                    "timing": "Day 1" } },
+        { "type": "step", "settings": { "number": "02", "icon": "upload",   "title": "Data hand-off",  "description": "You upload FAQs, docs, website content, policies. We clean, chunk and embed it.",                   "timing": "Days 2-3" } },
+        { "type": "step", "settings": { "number": "03", "icon": "training", "title": "Train & deploy", "description": "We train the agent on Evolve AI, provision the VPS and wire the front panel.",                      "timing": "Days 4-10" } },
+        { "type": "step", "settings": { "number": "04", "icon": "check",    "title": "Go live",        "description": "Two refinement rounds with you, then launch on your website, WhatsApp or channel of choice.",          "timing": "Days 11-14" } }
+      ],
+      "settings": {
+        "kicker": "CUSTOM AI AGENTS · POWERED BY EVOLVE AI",
+        "title_html": "Your business.<br><span class=\"evo-ag__title-grad\">Your own AI agent.</span><br>From <em>A$999.</em>",
+        "description_html": "<strong>Stop renting generic chatbots.</strong> We build, host, and train a custom AI agent that speaks your brand voice, knows your products, and runs on an <strong>Australian VPS</strong> — all powered by the <strong>Evolve AI neural engine</strong>. One upfront build fee, optional monthly hosting, zero vendor lock-in.",
+        "primary_cta_label":   "Book a strategy call",
+        "primary_cta_url":     "/pages/book-strategy-call",
+        "secondary_cta_label": "See build packages",
+        "secondary_cta_url":   "#pricing",
+        "pricing_anchor":      "pricing",
+        "trust_1": "Hosted in Australia",
+        "trust_2": "AUD · GST invoiced",
+        "trust_3": "2-week build",
+        "trust_4": "Founder-led build",
+        "price_card_label":    "FROM",
+        "price_card_currency": "A$",
+        "price_card_amount":   "999",
+        "price_card_sub":      "BUILD · ONE-OFF",
+        "cases_title":      "Agents we build most often.",
+        "cases_link_label": "View examples",
+        "cases_link_url":   "/pages/ai-agents-examples",
+        "pricing_kicker":     "BUILD PACKAGES · ONE-OFF FEE + OPTIONAL HOSTING",
+        "pricing_title_html": "Three tiers. <em>No long contracts.</em>",
+        "pricing_sub":        "Every build fee includes VPS provisioning, front-panel setup, and agent training rounds. Monthly hosting is optional — host it yourself if you prefer.",
+        "process_title":      "From brief to live agent — in about two weeks.",
+        "data_title":         "You bring the data. We bring the brain.",
+        "data_desc":          "We don't pretend to know your business better than you do. You hand over the FAQs, policies, past conversations, product specs, or SOPs you want the agent to know — we handle the cleaning, embedding, training, and hosting. Your raw data stays in Australia and is never used to train any external model.",
+        "data_cta_label":     "Start your agent",
+        "data_cta_url":       "/pages/book-strategy-call"
+      }
+    }
+  ]
+}
+{% endschema %}

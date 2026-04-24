@@ -1,0 +1,125 @@
+{%- comment -%} Default product template {%- endcomment -%}
+<section class="evo-product">
+  <div class="evo-product__grid">
+    <div class="evo-product__media">
+      {%- if product.featured_media -%}
+        <div class="evo-product__media-main">
+          {{ product.featured_media | image_url: width: 1200 | image_tag: loading: 'eager', widths: '400,600,800,1200,1600', sizes: '(min-width: 900px) 50vw, 100vw', alt: product.featured_media.alt | default: product.title }}
+        </div>
+      {%- else -%}
+        <div class="evo-product__media-empty">No image</div>
+      {%- endif -%}
+      {%- if product.media.size > 1 -%}
+        <ul class="evo-product__thumbs">
+          {%- for media in product.media -%}
+            <li>{{ media | image_url: width: 200 | image_tag: loading: 'lazy', widths: '120,200', alt: media.alt | default: product.title }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div class="evo-product__info">
+      <p class="evo-product__vendor">{{ product.vendor }}</p>
+      <h1 class="evo-product__title">{{ product.title }}</h1>
+
+      <div class="evo-product__price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="evo-product__price-compare">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+        <span class="evo-product__price-current">{{ product.price | money }}</span>
+        <span class="evo-product__price-note">AUD · Incl. GST</span>
+      </div>
+
+      {%- form 'product', product, class: 'evo-product__form' -%}
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="evo-product__option">
+              <label class="evo-product__option-label" for="Option{{ forloop.index }}">{{ option.name }}</label>
+              <select class="evo-product__option-select" id="Option{{ forloop.index }}" name="options[{{ option.name | escape }}]">
+                {%- for value in option.values -%}
+                  <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <select name="id" class="evo-product__variant-select" hidden>
+          {%- for variant in product.variants -%}
+            <option value="{{ variant.id }}"{% if variant == product.selected_or_first_available_variant %} selected="selected"{% endif %}{% unless variant.available %} disabled{% endunless %}>
+              {{ variant.title }} — {{ variant.price | money }}
+            </option>
+          {%- endfor -%}
+        </select>
+
+        <div class="evo-product__qty-row">
+          <label class="evo-product__qty-label" for="Quantity">Qty</label>
+          <input class="evo-product__qty" type="number" id="Quantity" name="quantity" value="1" min="1">
+        </div>
+
+        <button class="evo-product__add" type="submit" name="add"{% unless product.selected_or_first_available_variant.available %} disabled{% endunless %}>
+          {%- if product.selected_or_first_available_variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+        </button>
+      {%- endform -%}
+
+      {%- if product.description != blank -%}
+        <div class="evo-product__desc rte">
+          {{ product.description }}
+        </div>
+      {%- endif -%}
+
+      <ul class="evo-product__trust">
+        <li>Shipped from Perth, WA</li>
+        <li>AUD · GST invoice</li>
+        <li>Backed by Perth-based support</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .evo-product { max-width: 1240px; margin: 0 auto; padding: 48px 24px 120px; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; }
+  .evo-product__grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+  @media (min-width: 900px) { .evo-product__grid { grid-template-columns: 1.1fr 1fr; gap: 56px; } }
+  .evo-product__media-main { background: #0B0820; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+  .evo-product__media-main img { width: 100%; height: auto; display: block; }
+  .evo-product__media-empty { aspect-ratio: 1; background: #0B0820; border-radius: 16px; display: grid; place-items: center; color: #B6B5C6; border: 1px solid rgba(255,255,255,.08); }
+  .evo-product__thumbs { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 10px; }
+  .evo-product__thumbs img { width: 100%; border-radius: 10px; border: 1px solid rgba(255,255,255,.08); background: #0B0820; }
+  .evo-product__vendor { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 10px; text-transform: uppercase; }
+  .evo-product__title { font-family: 'Clash Display', 'Satoshi', sans-serif; font-size: clamp(30px, 4.5vw, 44px); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 18px; }
+  .evo-product__price { display: flex; align-items: baseline; gap: 10px; margin: 0 0 24px; flex-wrap: wrap; }
+  .evo-product__price-current { font-family: 'Clash Display', 'Satoshi', sans-serif; font-size: 28px; font-weight: 600; }
+  .evo-product__price-compare { color: #B6B5C6; text-decoration: line-through; font-size: 18px; }
+  .evo-product__price-note { color: #B6B5C6; font-size: 13px; }
+  .evo-product__form { display: flex; flex-direction: column; gap: 16px; }
+  .evo-product__option { display: flex; flex-direction: column; gap: 6px; }
+  .evo-product__option-label { font-size: 13px; color: #B6B5C6; text-transform: uppercase; letter-spacing: .1em; }
+  .evo-product__option-select, .evo-product__qty { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); color: #FFFFFF; padding: 12px 14px; border-radius: 10px; font-size: 15px; font-family: inherit; }
+  .evo-product__qty-row { display: flex; align-items: center; gap: 12px; }
+  .evo-product__qty { width: 100px; text-align: center; }
+  .evo-product__add { background: #FF7A4A; color: #0A0A0A; border: 0; border-radius: 999px; padding: 16px 28px; font-weight: 700; font-size: 15px; cursor: pointer; transition: transform .18s ease, background .18s ease; }
+  .evo-product__add:hover:not(:disabled) { transform: translateY(-1px); background: #ff9068; }
+  .evo-product__add:disabled { opacity: .4; cursor: not-allowed; }
+  .evo-product__desc { margin-top: 24px; color: #D8D7E3; font-size: 16px; line-height: 1.7; }
+  .evo-product__desc a { color: #A8E898; }
+  .evo-product__trust { list-style: none; padding: 0; margin: 24px 0 0; display: flex; gap: 18px; flex-wrap: wrap; color: #B6B5C6; font-size: 13px; font-family: 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .04em; }
+  .evo-product__trust li { position: relative; padding-left: 14px; }
+  .evo-product__trust li::before { content: "✓"; position: absolute; left: 0; color: #A8E898; }
+</style>
+
+<script>
+  (function(){
+    var variantSelect = document.querySelector('.evo-product__variant-select');
+    var optionSelects = document.querySelectorAll('.evo-product__option-select');
+    if (!variantSelect || !optionSelects.length) return;
+    optionSelects.forEach(function(sel){
+      sel.addEventListener('change', function(){
+        var chosen = Array.prototype.map.call(optionSelects, function(s){ return s.value; });
+        Array.prototype.forEach.call(variantSelect.options, function(opt){
+          if (opt.textContent.split(' — ')[0].trim() === chosen.join(' / ')) { variantSelect.value = opt.value; }
+        });
+      });
+    });
+  })();
+</script>

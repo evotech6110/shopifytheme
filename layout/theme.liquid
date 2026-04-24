@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#05040C">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+
+  <title>
+    {{ page_title }}
+    {%- if current_tags -%}{%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{%- endif -%}
+    {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{%- endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{%- endunless -%}
+  </title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  {%- render 'evotech-head-inject' -%}
+
+  {{ 'evotech-saas.css' | asset_url | stylesheet_tag }}
+
+  {{ content_for_header }}
+</head>
+<body class="template-{{ template | replace: '.', '-' | handle }} page-{{ request.page_type | replace: '.', '-' | handle }}">
+
+  <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
+
+  {% sections 'header-group' %}
+
+  <main id="MainContent" role="main" class="main-content">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+
+  <script src="{{ 'evotech-saas.js' | asset_url }}" defer></script>
+
+  <style>
+    .skip-link {
+      position: absolute; left: -9999px; top: 8px;
+      padding: 8px 16px; background: #A8E898; color: #0A0A0A;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 12px; text-decoration: none; border-radius: 4px;
+      z-index: 10000;
+    }
+    .skip-link:focus { left: 8px; }
+    html.no-js .no-js-hide { display: none !important; }
+  </style>
+  <script>document.documentElement.classList.remove('no-js');</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+{%- comment -%}
+  Alternating feature row — copy left / visual right, or reversed.
+  Add multiple instances on a page for "zig-zag" layout.
+{%- endcomment -%}
+
+<section class="evo evo-section evo-section--white">
+  <div class="evo-container">
+    <div class="evo-feat{% if section.settings.reverse %} evo-feat--reverse{% endif %}">
+      <div>
+        <p class="evo-eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2 class="evo-h2" data-aos="fade-up">{{ section.settings.headline }}</h2>
+        <p class="evo-lede" data-aos="fade-up" data-aos-delay="100">{{ section.settings.body }}</p>
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="evo-feat__checks">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'check' -%}
+                <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.cta_text != blank -%}
+          <a href="{{ section.settings.cta_link }}" class="evo-btn evo-btn--primary" style="margin-top: 28px;">
+            {{ section.settings.cta_text }}
+            {%- render 'evotech-icon', name: 'arrow-right', size: 16 -%}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="evo-feat__media" data-aos="fade-up" data-aos-delay="200">
+        {%- if section.settings.image -%}
+          <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.headline | escape }}" loading="lazy" width="900" height="675">
+        {%- else -%}
+          <div style="padding: 48px; color: var(--evo-ink); text-align: center;">
+            <div style="font-family: var(--evo-font-mono); font-size: 11px; letter-spacing: .12em; opacity: .6;">PRODUCT PREVIEW</div>
+            <div style="font-size: 56px; font-weight: 800; margin-top: 8px; letter-spacing: -.02em;">{{ section.settings.placeholder_metric | default: '99.98%' }}</div>
+            <div style="margin-top: 4px;">{{ section.settings.placeholder_label | default: 'Platform uptime' }}</div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Feature row",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FEATURE" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Autonomous agents. Auditable outcomes." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Every AI workflow ships with a step-by-step audit trail, role-based approvals, and Essential Eight-aligned logging." },
+    { "type": "image_picker", "id": "image", "label": "Preview image" },
+    { "type": "text", "id": "placeholder_metric", "label": "Placeholder metric (when no image)", "default": "99.98%" },
+    { "type": "text", "id": "placeholder_label", "label": "Placeholder label", "default": "Platform uptime" },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "See how it works" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "checkbox", "id": "reverse", "label": "Reverse layout (image left)", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "check",
+      "name": "Check item",
+      "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "400+ native integrations" } ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EvoTech Feature row",
+      "blocks": [
+        { "type": "check", "settings": { "text": "400+ native app integrations" } },
+        { "type": "check", "settings": { "text": "Essential Eight aligned logging" } },
+        { "type": "check", "settings": { "text": "Role-based approvals + audit trail" } },
+        { "type": "check", "settings": { "text": "Australian data residency" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

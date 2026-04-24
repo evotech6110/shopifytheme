@@ -1,0 +1,105 @@
+{%- comment -%}
+  Hero section — bento-grid-ready, aligned with the SaaS ecosystem landing page.
+  Editable in theme customizer: kicker, headline, lede, primary/secondary CTAs.
+{%- endcomment -%}
+
+<section class="evo evo-hero" data-aos="fade-up">
+  <div class="evo-hero__bg"></div>
+  <div class="evo-hero__grid"></div>
+  <div class="evo-container evo-hero__inner">
+
+    {%- if section.settings.show_kicker -%}
+      <span class="evo-hero__kicker">
+        <span class="dot"></span>
+        {{ section.settings.kicker | escape }}
+      </span>
+    {%- endif -%}
+
+    <h1 class="evo-h1" data-aos="fade-up" data-aos-delay="100">{{ section.settings.headline }}</h1>
+
+    {%- if section.settings.subhead != blank -%}
+      <p class="evo-lede evo-hero__lede" data-aos="fade-up" data-aos-delay="200">{{ section.settings.subhead }}</p>
+    {%- endif -%}
+
+    <div class="evo-hero__ctas" data-aos="fade-up" data-aos-delay="300">
+      {%- if section.settings.cta_primary_text != blank -%}
+        <a href="{{ section.settings.cta_primary_link }}" class="evo-btn evo-btn--primary">
+          {{ section.settings.cta_primary_text }}
+          {%- render 'evotech-icon', name: 'arrow-right', size: 16 -%}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_secondary_text != blank -%}
+        <a href="{{ section.settings.cta_secondary_link }}" class="evo-btn evo-btn--ghost">
+          {{ section.settings.cta_secondary_text }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_trust -%}
+      <div style="margin-top: 48px; display: flex; justify-content: center;" data-aos="fade-up" data-aos-delay="400">
+        <div class="evo-trust">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trust' -%}
+              <span class="evo-trust__item" {{ block.shopify_attributes }}>
+                {%- render 'evotech-icon', name: block.settings.icon, size: 18 -%}
+                {{ block.settings.label }}
+              </span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Hero",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "checkbox", "id": "show_kicker", "label": "Show kicker badge", "default": true },
+    { "type": "text",     "id": "kicker",      "label": "Kicker text", "default": "New — The EvoTech SaaS Ecosystem is live" },
+    { "type": "textarea", "id": "headline",    "label": "Headline (H1)", "default": "Enterprise-grade software. Built for Australian businesses that move fast." },
+    { "type": "textarea", "id": "subhead",     "label": "Subhead", "default": "The EvoTech SaaS ecosystem — six tightly integrated applications for cyber security, IT operations, governance, and automation. Trusted by Perth teams. Ready in minutes." },
+    { "type": "text",     "id": "cta_primary_text", "label": "Primary CTA text", "default": "Explore the suite" },
+    { "type": "url",      "id": "cta_primary_link", "label": "Primary CTA link" },
+    { "type": "text",     "id": "cta_secondary_text", "label": "Secondary CTA text", "default": "Book a 20-min walkthrough" },
+    { "type": "url",      "id": "cta_secondary_link", "label": "Secondary CTA link" },
+    { "type": "checkbox", "id": "show_trust", "label": "Show trust bar", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust signal",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon", "default": "shield",
+          "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "map-pin", "label": "Map pin" },
+            { "value": "zap", "label": "Lightning" },
+            { "value": "star", "label": "Star" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "building", "label": "Building" }
+          ]
+        },
+        { "type": "text", "id": "label", "label": "Label", "default": "Australian-owned & hosted" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EvoTech Hero",
+      "blocks": [
+        { "type": "trust", "settings": { "icon": "map-pin", "label": "Australian-owned & hosted" } },
+        { "type": "trust", "settings": { "icon": "shield",  "label": "ACSC Essential Eight aligned" } },
+        { "type": "trust", "settings": { "icon": "zap",     "label": "99.98% uptime" } },
+        { "type": "trust", "settings": { "icon": "star",    "label": "4.9 / 5 · 280+ reviews" } },
+        { "type": "trust", "settings": { "icon": "building","label": "600+ WA businesses" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

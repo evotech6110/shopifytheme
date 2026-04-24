@@ -1,0 +1,153 @@
+{
+  "sections": {
+    "hero": {
+      "type": "evotech-fullscreen-hero",
+      "settings": {
+        "kicker": "The EvoTech SaaS Ecosystem · Live in 2026",
+        "headline_prefix": "Run an IT operation that's",
+        "typewriter_words": "autonomous|resilient|compliant|intelligent|unstoppable",
+        "subhead": "Six Australian-built SaaS apps covering cyber, ops, governance, and compliance — in one ecosystem. Trusted by Perth teams. Ready in minutes.",
+        "cta_primary_text": "Explore the suite",
+        "cta_primary_link": "#saas_grid",
+        "cta_secondary_text": "Book a 20-min walkthrough",
+        "cta_secondary_link": "/pages/contact",
+        "scroll_target": "saas_grid"
+      },
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value_number": "600",   "value_suffix": "+", "label": "WA businesses" } },
+        "s2": { "type": "stat", "settings": { "value_number": "99.98", "value_suffix": "%", "label": "Platform uptime" } },
+        "s3": { "type": "stat", "settings": { "value_number": "11",    "value_suffix": "m", "label": "Median threat containment" } },
+        "s4": { "type": "stat", "settings": { "value_number": "4.9",   "value_suffix": "★", "label": "Avg review rating" } }
+      },
+      "block_order": ["s1","s2","s3","s4"]
+    },
+    "logos": {
+      "type": "evotech-logo-strip",
+      "settings": { "label": "TRUSTED BY TEAMS AT" },
+      "blocks": {
+        "l1": { "type": "logo", "settings": { "name": "Perth Logistics Co" } },
+        "l2": { "type": "logo", "settings": { "name": "WA HealthTech" } },
+        "l3": { "type": "logo", "settings": { "name": "Legal Suite 9" } },
+        "l4": { "type": "logo", "settings": { "name": "North Ridge Mining" } },
+        "l5": { "type": "logo", "settings": { "name": "Fremantle Finance" } },
+        "l6": { "type": "logo", "settings": { "name": "Bunbury Schools" } }
+      },
+      "block_order": ["l1","l2","l3","l4","l5","l6"]
+    },
+    "bento": {
+      "type": "evotech-bento",
+      "settings": {
+        "eyebrow": "THE ECOSYSTEM",
+        "headline": "One login. Six apps. Zero ops chaos.",
+        "lede": "From AI automation to Australian cyber compliance, every EvoTech app is built to work standalone — or together through a single identity layer."
+      },
+      "blocks": {
+        "b1": { "type": "tile", "settings": { "label": "FLAGSHIP", "title": "EvolveAI Autopilot", "body": "Autonomous AI agents that run repetitive operations across 400+ apps — in minutes." } },
+        "b2": { "type": "tile", "settings": { "label": "CYBER", "title": "SentryOps", "body": "24/7 human + AI SOC for small teams. Essential Eight aligned." } },
+        "b3": { "type": "tile", "settings": { "metric": "99.98%", "title": "Platform uptime", "body": "Measured across all six EvoTech SaaS apps — last 12 months." } },
+        "b4": { "type": "tile", "settings": { "label": "NETWORKS", "title": "NetPulse", "body": "See every device, every packet, every outage — before users do." } },
+        "b5": { "type": "tile", "settings": { "metric": "11 min", "title": "Median threat containment", "body": "SentryOps p50 time-to-contain (2026 YTD)." } },
+        "b6": { "type": "tile", "settings": { "label": "AUSTRALIA", "title": "Built local. Hosted local.", "body": "All data stays in AU regions. Essential Eight aligned. 24/7 Perth support." } },
+        "b7": { "type": "tile", "settings": { "label": "GOVERNANCE", "title": "vCIO Console", "body": "Quarterly IT business reviews and budgets, auto-assembled from your stack." } }
+      },
+      "block_order": ["b1","b2","b3","b4","b5","b6","b7"]
+    },
+    "saas_grid": {
+      "type": "evotech-saas-grid",
+      "settings": {
+        "eyebrow": "THE SUITE",
+        "headline": "Six products. One ecosystem.",
+        "lede": "Every EvoTech SaaS application is sold standalone or bundled. Start with one — grow into the full stack without a migration."
+      }
+    },
+    "feature_1": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "EVOLVEAI AUTOPILOT",
+        "headline": "Autonomous agents. Auditable outcomes.",
+        "body": "Ship AI workflows in hours, not weeks. Every run is logged, approvable, and exportable for audit.",
+        "placeholder_metric": "400+",
+        "placeholder_label": "Native integrations",
+        "cta_text": "Open EvolveAI",
+        "cta_link": "/pages/evolveai-autopilot",
+        "reverse": false
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "400+ native app integrations" } },
+        "c2": { "type": "check", "settings": { "text": "Essential Eight aligned logging" } },
+        "c3": { "type": "check", "settings": { "text": "Role-based approvals + audit trail" } },
+        "c4": { "type": "check", "settings": { "text": "Australian data residency" } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    },
+    "feature_2": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "SENTRYOPS",
+        "headline": "Your SOC, in a dashboard.",
+        "body": "Human analysts backed by AI triage, available 24/7. Median time-to-contain: 11 minutes.",
+        "placeholder_metric": "11 min",
+        "placeholder_label": "Median time to contain",
+        "cta_text": "Open SentryOps",
+        "cta_link": "/pages/sentryops",
+        "reverse": true
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "24/7 Perth-based human analysts" } },
+        "c2": { "type": "check", "settings": { "text": "ACSC Essential Eight aligned" } },
+        "c3": { "type": "check", "settings": { "text": "Deployed in under 48 hours" } },
+        "c4": { "type": "check", "settings": { "text": "Hardware-neutral — bring your stack" } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    },
+    "testimonials": {
+      "type": "evotech-testimonials",
+      "settings": {
+        "eyebrow": "CUSTOMERS",
+        "headline": "Trusted by 600+ Australian businesses.",
+        "lede": "Perth to Parramatta — here's what our customers say about replacing their legacy ops with the EvoTech SaaS ecosystem."
+      },
+      "blocks": {
+        "q1": { "type": "testimonial", "settings": { "quote": "SentryOps contained a ransomware attempt in 9 minutes — at 2am on a Saturday. We didn't even lose a file.", "name": "Priya S.", "role": "CFO, health-tech startup" } },
+        "q2": { "type": "testimonial", "settings": { "quote": "Essential8 Compass turned a 6-week audit cycle into a 2-day export. Our assessor literally said 'wish everyone used this'.", "name": "Marcus T.", "role": "IT Manager, legal practice" } },
+        "q3": { "type": "testimonial", "settings": { "quote": "We cut A$42,000 from our first-year hardware spend using ProcureIQ. The renewal-alerts feature paid for itself in Q1.", "name": "Dana L.", "role": "Ops Lead, Perth logistics SMB" } }
+      },
+      "block_order": ["q1","q2","q3"]
+    },
+    "faq": {
+      "type": "evotech-faq",
+      "settings": {
+        "eyebrow": "COMMON QUESTIONS",
+        "headline": "Everything you wanted to ask before you buy.",
+        "lede": "Pricing, data residency, integrations, onboarding — all answered below.",
+        "open_first": false
+      },
+      "blocks": {
+        "f1":  { "type": "faq", "settings": { "question": "What is the EvoTech SaaS Ecosystem?", "answer": "<p>A suite of six integrated Australian-built SaaS products covering cyber security, IT operations, governance, procurement, and compliance.</p>" } },
+        "f2":  { "type": "faq", "settings": { "question": "Is my data stored in Australia?", "answer": "<p>Yes — all data hosted in Australian AWS regions with optional single-tenant isolation.</p>" } },
+        "f3":  { "type": "faq", "settings": { "question": "How does Essential8 Compass help with compliance?", "answer": "<p>It continuously tests your environment against ACSC's eight strategies and exports auditor-ready packs for ML1–ML3.</p>" } },
+        "f4":  { "type": "faq", "settings": { "question": "Can I use one app without buying the rest?", "answer": "<p>Yes. Every product is sold standalone. Add more later with no migration.</p>" } },
+        "f5":  { "type": "faq", "settings": { "question": "What does pricing start at?", "answer": "<p>From A$59/month (ProcureIQ) to A$499/month (SentryOps). Annual plans save 20%.</p>" } },
+        "f6":  { "type": "faq", "settings": { "question": "How fast can SentryOps be deployed?", "answer": "<p>Median time to live threat monitoring is 48 hours.</p>" } },
+        "f7":  { "type": "faq", "settings": { "question": "Do you integrate with Microsoft 365?", "answer": "<p>Yes — native OAuth for Microsoft 365, Entra ID, Google Workspace, Okta, plus 400+ apps.</p>" } },
+        "f8":  { "type": "faq", "settings": { "question": "Is support included?", "answer": "<p>Yes — Perth-based human support on every plan, with 1-hour SLA on paid tiers.</p>" } },
+        "f9":  { "type": "faq", "settings": { "question": "Can I bring my existing hardware?", "answer": "<p>Yes. NetPulse and SentryOps are hardware-neutral.</p>" } },
+        "f10": { "type": "faq", "settings": { "question": "Is there a money-back guarantee?", "answer": "<p>Yes — 30-day unconditional refund on any annual plan.</p>" } }
+      },
+      "block_order": ["f1","f2","f3","f4","f5","f6","f7","f8","f9","f10"]
+    },
+    "cta_band": {
+      "type": "evotech-cta-band",
+      "settings": {
+        "eyebrow": "READY WHEN YOU ARE",
+        "headline": "Move your IT operation to the next decade.",
+        "lede": "Start with one app, grow into six. 14-day free trial. No credit card. Perth support from day one.",
+        "cta_primary_text": "Start free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Talk to a specialist",
+        "cta_secondary_link": "/pages/contact"
+      }
+    }
+  },
+  "order": ["hero","logos","bento","saas_grid","feature_1","feature_2","testimonials","faq","cta_band"]
+}

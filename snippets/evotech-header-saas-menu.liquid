@@ -1,0 +1,37 @@
+{%- comment -%}
+  Drop-in mega-menu "Solutions" dropdown for the primary header.
+  Include this snippet inside your existing header section, alongside the
+  Products and Services nav links.
+
+  Usage (in sections/header.liquid or equivalent):
+    <nav class="evo-primary-nav">
+      <a href="/collections/all" class="evo-nav__link">Products</a>
+      <a href="/pages/managed-it-services-perth" class="evo-nav__link">Services</a>
+      {%- render 'evotech-header-saas-menu' -%}
+      <a href="/pages/about" class="evo-nav__link">About</a>
+      <a href="/pages/contact" class="evo-nav__link">Contact</a>
+    </nav>
+{%- endcomment -%}
+
+{%- render 'evotech-saas-catalog' -%}
+{%- assign _products = evotech_saas_products_raw | parse_json -%}
+
+<div class="evo-menu" data-evo-menu aria-expanded="false">
+  <button type="button" class="evo-menu__trigger evo-nav__link">
+    Solutions
+    {%- render 'evotech-icon', name: 'arrow-right', size: 14 -%}
+  </button>
+  <div class="evo-menu__panel" role="menu" aria-label="SaaS solutions">
+    {%- for p in _products -%}
+      <a href="{{ p.url }}" class="evo-menu__link" role="menuitem">
+        <span class="evo-menu__icon" style="background: var(--evo-{{ p.accent }}, var(--evo-lavender));">
+          {%- render 'evotech-icon', name: p.icon, size: 22 -%}
+        </span>
+        <span>
+          <span class="evo-menu__name">{{ p.name }}</span>
+          <span class="evo-menu__tag">{{ p.tagline }}</span>
+        </span>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>

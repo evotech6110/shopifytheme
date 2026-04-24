@@ -1,0 +1,61 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "brand_name": "Evotech Pty Ltd",
+        "brand_sub": "",
+        "tagline": "Australian AI SaaS, built in Perth. Multi-model API + six apps. Powered by Evolve AI Engine.",
+        "show_newsletter": false,
+        "newsletter_title": "",
+        "newsletter_placeholder": "Email",
+        "contact_title": "Evotech",
+        "contact_lede": "A solo operator. A 5-node cluster. No VC, no PR, no BS.",
+        "address": "",
+        "phone": "",
+        "email": "support@evotech.au",
+        "hours": "",
+        "abn": "",
+        "show_payment_icons": true,
+        "copyright_brand": "Evotech Pty Ltd",
+        "copyright_year": "2026",
+        "copyright_suffix": " · Perth, Western Australia · ABN pending | Prices in AUD · GST included · Billed via Shopify | Evotech is an independent Australian business.",
+        "seo_keywords": "AI API Australia · Australian AI SaaS · Claude API Australia AUD · multi-model AI router · AI API GST invoice Australia · sovereign AI Australia"
+      },
+      "blocks": {
+        "svc": {
+          "type": "menu_column",
+          "settings": {
+            "title": "Products",
+            "manual_labels": "Evolve AI Engine\nSupportBot\nGet Hired\nPulse\nBuild.ai\nDocGen",
+            "manual_urls": "https://evolve.evotech.au\n/products/supportbot\n/products/get-hired\n/products/pulse\n/products/build-ai\n/products/docgen"
+          }
+        },
+        "co": {
+          "type": "menu_column",
+          "settings": {
+            "title": "Company",
+            "manual_labels": "About\nBlog (build-in-public)\nRoadmap\nContact",
+            "manual_urls": "/pages/about\n/blogs/news\n/pages/roadmap\n/pages/contact"
+          }
+        },
+        "pol": {
+          "type": "menu_column",
+          "settings": {
+            "title": "Resources",
+            "manual_labels": "Developer docs\nStatus page\nAPI key management\nCancel subscription\nAI Support Portal",
+            "manual_urls": "/pages/docs\n/pages/status\n/pages/api-keys\n/account\nhttps://support.evotech.au"
+          }
+        },
+        "b1": { "type": "bottom_link", "settings": { "label": "Privacy Policy",         "url": "/policies/privacy-policy"  } },
+        "b2": { "type": "bottom_link", "settings": { "label": "Return & Refund Policy", "url": "/policies/refund-policy"   } },
+        "b3": { "type": "bottom_link", "settings": { "label": "Shipping Policy",        "url": "/policies/shipping-policy" } },
+        "b4": { "type": "bottom_link", "settings": { "label": "Terms of Service",       "url": "/policies/terms-of-service" } }
+      },
+      "block_order": ["svc", "co", "pol", "b1", "b2", "b3", "b4"]
+    }
+  },
+  "order": ["footer"]
+}

@@ -1,0 +1,84 @@
+{%- comment -%}
+  About / founder profile section. Emits ProfilePage + Person schema for Google
+  rich "people" results.
+{%- endcomment -%}
+
+<section class="evo evo-section evo-section--white">
+  <div class="evo-container">
+    <div class="evo-feat">
+      <div>
+        <p class="evo-eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2 class="evo-h2" data-aos="fade-up">{{ section.settings.headline }}</h2>
+        <p class="evo-lede" data-aos="fade-up" data-aos-delay="100">{{ section.settings.bio }}</p>
+
+        <ul class="evo-feat__checks">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'credential' -%}
+              <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        <div style="margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap;">
+          {%- if section.settings.linkedin != blank -%}
+            <a href="{{ section.settings.linkedin }}" class="evo-btn evo-btn--ghost" target="_blank" rel="noopener">LinkedIn</a>
+          {%- endif -%}
+          {%- if section.settings.github != blank -%}
+            <a href="{{ section.settings.github }}" class="evo-btn evo-btn--ghost" target="_blank" rel="noopener">GitHub</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="evo-feat__media" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(135deg, var(--evo-peach), var(--evo-lavender));">
+        {%- if section.settings.image -%}
+          <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.person_name | escape }}" loading="lazy" width="900" height="675" style="object-fit: cover; width: 100%; height: 100%; border-radius: var(--evo-radius);">
+        {%- else -%}
+          <div style="font-size: 96px;">👋</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- render 'evotech-schema-profile',
+    person_name: section.settings.person_name,
+    job_title: section.settings.job_title,
+    bio: section.settings.bio,
+    image_url: section.settings.image
+-%}
+
+{% schema %}
+{
+  "name": "EvoTech — Profile (Person schema)",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "MEET THE FOUNDER" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Built by engineers who run the stack they sell." },
+    { "type": "text", "id": "person_name", "label": "Full name", "default": "Manoj Kumar" },
+    { "type": "text", "id": "job_title",  "label": "Job title", "default": "Founder & Principal Engineer" },
+    { "type": "textarea", "id": "bio", "label": "Bio", "default": "Manoj founded EvoTech Digital in 2022 after a decade of running managed IT for Australian SMBs. Based in Perth, he leads product, architecture, and the team behind the EvoTech SaaS ecosystem." },
+    { "type": "image_picker", "id": "image", "label": "Portrait image" },
+    { "type": "url", "id": "linkedin", "label": "LinkedIn URL" },
+    { "type": "url", "id": "github",   "label": "GitHub URL" }
+  ],
+  "blocks": [
+    {
+      "type": "credential",
+      "name": "Credential / fact",
+      "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Microsoft 365 Certified" } ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EvoTech Profile",
+      "blocks": [
+        { "type": "credential", "settings": { "text": "Microsoft 365 Certified" } },
+        { "type": "credential", "settings": { "text": "CompTIA Security+" } },
+        { "type": "credential", "settings": { "text": "10+ years managed IT for Australian SMBs" } },
+        { "type": "credential", "settings": { "text": "Speaker — AusCERT, WA CyberCon" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,26 @@
+{
+  "current": {
+    "color_bg": "#05040C",
+    "color_bg2": "#0B0820",
+    "color_ink": "#FFFFFF",
+    "color_dim": "#B6B5C6",
+    "color_mint": "#A8E898",
+    "color_indigo": "#3D2EDE",
+    "color_peach": "#FF7A4A",
+    "social_facebook_link": "",
+    "social_instagram_link": "",
+    "social_linkedin_link": "",
+    "social_twitter_link": ""
+  },
+  "presets": {
+    "Default": {
+      "color_bg": "#05040C",
+      "color_bg2": "#0B0820",
+      "color_ink": "#FFFFFF",
+      "color_dim": "#B6B5C6",
+      "color_mint": "#A8E898",
+      "color_indigo": "#3D2EDE",
+      "color_peach": "#FF7A4A"
+    }
+  }
+}

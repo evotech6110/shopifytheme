@@ -1,0 +1,63 @@
+{%- comment -%} Default blog listing {%- endcomment -%}
+{%- paginate blog.articles by 12 -%}
+<section class="evo-blog">
+  <header class="evo-blog__head">
+    <p class="evo-blog__eyebrow">BLOG · IT TIPS & SECURITY ALERTS</p>
+    <h1 class="evo-blog__title">{{ blog.title }}</h1>
+  </header>
+
+  {%- if blog.articles.size > 0 -%}
+    <div class="evo-blog__grid">
+      {%- for article in blog.articles -%}
+        <article class="evo-blog__card">
+          {%- if article.image -%}
+            <a class="evo-blog__thumb" href="{{ article.url }}">
+              {{ article | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', alt: article.title }}
+            </a>
+          {%- endif -%}
+          <div class="evo-blog__body">
+            <p class="evo-blog__meta">{{ article.published_at | date: '%b %d, %Y' }} · {{ article.author }}</p>
+            <h3 class="evo-blog__name"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+            {%- if article.excerpt_or_content -%}
+              <p class="evo-blog__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 160 }}</p>
+            {%- endif -%}
+            <a class="evo-blog__read" href="{{ article.url }}">Read more →</a>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="evo-blog__pager">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}
+        <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- else -%}
+    <p class="evo-blog__empty">No posts yet.</p>
+  {%- endif -%}
+</section>
+
+<style>
+  .evo-blog { max-width: 1200px; margin: 0 auto; padding: 48px 24px 120px; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; }
+  .evo-blog__head { margin-bottom: 40px; }
+  .evo-blog__eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 12px; }
+  .evo-blog__title { font-family: 'Clash Display', sans-serif; font-size: clamp(34px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .evo-blog__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
+  .evo-blog__card { background: #0B0820; border: 1px solid rgba(255,255,255,.06); border-radius: 16px; overflow: hidden; transition: transform .2s ease, border-color .2s ease; }
+  .evo-blog__card:hover { transform: translateY(-3px); border-color: rgba(168,232,152,.3); }
+  .evo-blog__thumb { display: block; aspect-ratio: 16/9; overflow: hidden; background: #05040C; }
+  .evo-blog__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .evo-blog__body { padding: 20px; }
+  .evo-blog__meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #A8E898; text-transform: uppercase; letter-spacing: .12em; margin: 0 0 10px; }
+  .evo-blog__name { margin: 0 0 10px; font-size: 19px; line-height: 1.25; font-weight: 600; }
+  .evo-blog__name a { color: #FFFFFF; text-decoration: none; }
+  .evo-blog__name a:hover { color: #A8E898; }
+  .evo-blog__excerpt { color: #B6B5C6; font-size: 14px; line-height: 1.55; margin: 0 0 14px; }
+  .evo-blog__read { color: #A8E898; font-size: 13px; font-family: 'JetBrains Mono', monospace; letter-spacing: .06em; text-decoration: none; }
+  .evo-blog__pager { margin-top: 48px; display: flex; justify-content: space-between; align-items: center; color: #B6B5C6; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .evo-blog__pager a { color: #A8E898; text-decoration: none; }
+  .evo-blog__empty { color: #B6B5C6; font-size: 16px; padding: 40px 0; }
+</style>
+{%- endpaginate -%}

@@ -1,0 +1,79 @@
+{
+  "sections": {
+    "hero": {
+      "type": "evotech-saas-product-hero",
+      "settings": {
+        "product_name": "EvolveAI-Engine",
+        "category": "Flagship · Autonomous AI Engine",
+        "price_display": "Live at evolve.evotech.au",
+        "price_amount": "0",
+        "schema_category": "BusinessApplication",
+        "headline": "The autonomous-AI engine powering every EvoTech workflow.",
+        "subhead": "EvolveAI-Engine is the flagship intelligence layer inside every EvoTech SaaS app — from SentryOps to Essential8 Compass. Launch agents, orchestrate APIs, collect data, and analyse outcomes from one command plane.",
+        "cta_primary_text": "Launch EvolveAI-Engine",
+        "cta_primary_link": "https://evolve.evotech.au",
+        "cta_secondary_text": "Book a 20-min consult",
+        "cta_secondary_link": "/pages/contact",
+        "trust_metric": "400+ integrations",
+        "trust_rating": "Australian-hosted · Essential Eight aligned"
+      }
+    },
+    "feature_1": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "HOW IT WORKS",
+        "headline": "Generate. Connect. Collect. Analyse.",
+        "body": "EvolveAI-Engine turns plain-English outcomes into production-grade workflows. One-click OAuth into 400+ apps. Real-time observability on every run. Exec-ready dashboards and compliance packs ready to export.",
+        "placeholder_metric": "400+",
+        "placeholder_label": "Integrations",
+        "cta_text": "Open the engine console",
+        "cta_link": "https://evolve.evotech.au"
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "Autonomous agents with role-based approvals" } },
+        "c2": { "type": "check", "settings": { "text": "400+ prebuilt integrations (OAuth, SCIM, SAML)" } },
+        "c3": { "type": "check", "settings": { "text": "Full audit trail for every run (Essential Eight aligned)" } },
+        "c4": { "type": "check", "settings": { "text": "Australian-hosted inference and storage" } },
+        "c5": { "type": "check", "settings": { "text": "BYO-Model: Claude, GPT, Llama, Bedrock, Azure OpenAI" } }
+      },
+      "block_order": ["c1","c2","c3","c4","c5"]
+    },
+    "faq": {
+      "type": "evotech-faq",
+      "settings": {
+        "eyebrow": "ENGINE FAQ",
+        "headline": "Operational questions, answered.",
+        "lede": "Everything you want to know before you automate with EvolveAI-Engine."
+      },
+      "blocks": {
+        "f1": { "type": "faq", "settings": { "question": "What does EvolveAI-Engine actually do?", "answer": "<p>EvolveAI-Engine is the core autonomous-AI layer inside every EvoTech SaaS product. It turns natural-language outcomes into running workflows — triaging SOC alerts, running compliance checks, procuring hardware, reconciling invoices — across 400+ integrated apps.</p>" } },
+        "f2": { "type": "faq", "settings": { "question": "Where is it hosted?", "answer": "<p>Live at <a href='https://evolve.evotech.au' target='_blank' rel='noopener'>evolve.evotech.au</a> on AWS Sydney and Melbourne regions. Optional single-tenant deployments available on the Scale plan.</p>" } },
+        "f3": { "type": "faq", "settings": { "question": "Which LLMs does it support?", "answer": "<p>Anthropic Claude, OpenAI GPT, AWS Bedrock (Llama, Titan), Azure OpenAI, and on-prem open-source models. Enterprise data-not-used-for-training agreements on every vendor.</p>" } },
+        "f4": { "type": "faq", "settings": { "question": "Is my data ever sent outside Australia?", "answer": "<p>No. All inference, memory, and storage is pinned to AU regions on the Business plan and above.</p>" } },
+        "f5": { "type": "faq", "settings": { "question": "Can I embed EvolveAI-Engine in my own app?", "answer": "<p>Yes — we expose REST and event-stream APIs so you can invoke any agent from your own product. See the developer docs at <a href='https://evolve.evotech.au/docs' target='_blank' rel='noopener'>evolve.evotech.au/docs</a>.</p>" } }
+      },
+      "block_order": ["f1","f2","f3","f4","f5"]
+    },
+    "cta_band": {
+      "type": "evotech-cta-band",
+      "settings": {
+        "eyebrow": "POWERED BY EVOLVEAI-ENGINE",
+        "headline": "Stop doing work a *machine can do.~",
+        "lede": "Live now at evolve.evotech.au — the flagship engine behind every EvoTech SaaS app.",
+        "cta_primary_text": "Launch the engine",
+        "cta_primary_link": "https://evolve.evotech.au",
+        "cta_secondary_text": "Talk to an AI specialist",
+        "cta_secondary_link": "/pages/contact"
+      }
+    },
+    "powered_by": {
+      "type": "evotech-powered-by",
+      "settings": {
+        "label": "LIVE AT",
+        "meta": "EVOLVE.EVOTECH.AU",
+        "link": "https://evolve.evotech.au"
+      }
+    }
+  },
+  "order": ["hero","feature_1","faq","cta_band","powered_by"]
+}

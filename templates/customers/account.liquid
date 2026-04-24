@@ -1,0 +1,53 @@
+{%- comment -%} Customer account home {%- endcomment -%}
+<section class="evo-cust">
+  <div class="evo-cust__card evo-cust__wide">
+    <p class="evo-cust__eyebrow">ACCOUNT</p>
+    <h1 class="evo-cust__title">Hi, {{ customer.first_name | default: 'there' }}.</h1>
+    <div class="evo-cust__links"><a href="{{ routes.account_addresses_url }}">Manage addresses</a> <a href="{{ routes.account_logout_url }}">Log out</a></div>
+
+    <div class="evo-cust__section">
+      <h2>Order history</h2>
+      {%- if customer.orders.size > 0 -%}
+        {%- paginate customer.orders by 20 -%}
+          <table class="evo-cust__table">
+            <thead>
+              <tr><th>Order</th><th>Date</th><th>Status</th><th>Fulfillment</th><th>Total</th></tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+                  <td>{{ order.financial_status_label }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                  <td>{{ order.total_price | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+          {%- if paginate.pages > 1 -%}
+            <nav style="margin-top:18px;color:#B6B5C6;font-family:'JetBrains Mono',monospace;font-size:13px;display:flex;gap:14px;">
+              {%- if paginate.previous -%}<a style="color:#A8E898;" href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}
+              <span>Page {{ paginate.current_page }} / {{ paginate.pages }}</span>
+              {%- if paginate.next -%}<a style="color:#A8E898;" href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- else -%}
+        <p style="color:#B6B5C6;">You haven't placed any orders yet.</p>
+      {%- endif -%}
+    </div>
+
+    <div class="evo-cust__section">
+      <h2>Default address</h2>
+      {%- if customer.default_address -%}
+        <div style="color:#D8D7E3;font-size:14px;line-height:1.6;">
+          {{ customer.default_address | format_address }}
+        </div>
+      {%- else -%}
+        <p style="color:#B6B5C6;"><a href="{{ routes.account_addresses_url }}">Add an address</a> to speed up checkout.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% render 'evotech-customer-styles' %}

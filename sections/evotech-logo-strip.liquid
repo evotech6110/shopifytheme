@@ -1,0 +1,52 @@
+{%- comment -%}
+  Social-proof logo strip. Optional — fill with partner/customer logos.
+{%- endcomment -%}
+
+<section class="evo evo-section" style="padding: 40px 0;">
+  <div class="evo-container">
+    <p class="evo-eyebrow evo-center">{{ section.settings.label }}</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 32px 48px; align-items: center; justify-content: center; margin-top: 18px;">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.image -%}
+          <img src="{{ block.settings.image | image_url: width: 180 }}" alt="{{ block.settings.name | escape }}" loading="lazy" style="height: 28px; width: auto; opacity: .7; filter: grayscale(1);">
+        {%- else -%}
+          <span style="font-family: var(--evo-font-display); font-weight: 700; font-size: 18px; color: var(--evo-slate-2);">{{ block.settings.name | default: 'Customer' }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Logo strip",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "TRUSTED BY TEAMS AT" }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Logo image" },
+        { "type": "text",         "id": "name",  "label": "Name (fallback)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EvoTech Logo strip",
+      "blocks": [
+        { "type": "logo", "settings": { "name": "Perth Logistics Co" } },
+        { "type": "logo", "settings": { "name": "WA HealthTech" } },
+        { "type": "logo", "settings": { "name": "Legal Suite 9" } },
+        { "type": "logo", "settings": { "name": "North Ridge Mining" } },
+        { "type": "logo", "settings": { "name": "Fremantle Finance" } },
+        { "type": "logo", "settings": { "name": "Bunbury Schools" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

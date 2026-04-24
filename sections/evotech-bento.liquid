@@ -1,0 +1,78 @@
+{%- comment -%}
+  Bento-grid feature section. 7 tiles, mixed sizes. Editable headline + 7 blocks.
+{%- endcomment -%}
+
+<section class="evo evo-section evo-section--white">
+  <div class="evo-container">
+    <div style="max-width: 760px;">
+      <p class="evo-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="evo-h2" data-aos="fade-up">{{ section.settings.headline }}</h2>
+      <p class="evo-lede" data-aos="fade-up" data-aos-delay="100">{{ section.settings.lede }}</p>
+    </div>
+
+    <div class="evo-bento">
+      {%- for block in section.blocks -%}
+        {%- assign _cls = '' -%}
+        {%- case forloop.index -%}
+          {%- when 1 -%}{%- assign _cls = 'evo-bento__tile--a' -%}
+          {%- when 2 -%}{%- assign _cls = 'evo-bento__tile--b' -%}
+          {%- when 3 -%}{%- assign _cls = 'evo-bento__tile--c' -%}
+          {%- when 4 -%}{%- assign _cls = 'evo-bento__tile--d' -%}
+          {%- when 5 -%}{%- assign _cls = 'evo-bento__tile--e' -%}
+          {%- when 6 -%}{%- assign _cls = 'evo-bento__tile--f' -%}
+          {%- when 7 -%}{%- assign _cls = 'evo-bento__tile--g' -%}
+        {%- endcase -%}
+        <div class="evo-bento__tile {{ _cls }}" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 60 }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.label != blank -%}<div class="evo-bento__label">{{ block.settings.label }}</div>{%- endif -%}
+          {%- if block.settings.metric != blank -%}
+            <div class="evo-bento__metric">{{ block.settings.metric }}</div>
+          {%- endif -%}
+          <h3 class="evo-bento__title">{{ block.settings.title }}</h3>
+          {%- if block.settings.body != blank -%}
+            <p class="evo-bento__body">{{ block.settings.body }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Bento grid",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE ECOSYSTEM" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "One login. Six apps. Zero ops chaos." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "From AI automation to Australian cyber compliance, every EvoTech SaaS app is built to work standalone — or together through a single identity layer." }
+  ],
+  "max_blocks": 7,
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Bento tile",
+      "settings": [
+        { "type": "text",     "id": "label",  "label": "Label (short)" },
+        { "type": "text",     "id": "metric", "label": "Metric (optional, large number)" },
+        { "type": "text",     "id": "title",  "label": "Title", "default": "Feature title" },
+        { "type": "textarea", "id": "body",   "label": "Body" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "EvoTech Bento",
+      "blocks": [
+        { "type": "tile", "settings": { "label": "FLAGSHIP", "title": "EvolveAI Autopilot", "body": "Autonomous AI agents that run repetitive operations across 400+ apps — in minutes." } },
+        { "type": "tile", "settings": { "label": "CYBER", "title": "SentryOps", "body": "24/7 human + AI SOC for small teams. Essential Eight aligned." } },
+        { "type": "tile", "settings": { "metric": "99.98%", "title": "Platform uptime", "body": "Measured across all six EvoTech SaaS apps — last 12 months." } },
+        { "type": "tile", "settings": { "label": "NETWORKS", "title": "NetPulse", "body": "See every device, every packet, every outage — before users do." } },
+        { "type": "tile", "settings": { "metric": "11 min", "title": "Median threat containment", "body": "SentryOps p50 time-to-contain (2026 YTD)." } },
+        { "type": "tile", "settings": { "label": "AUSTRALIA", "title": "Built local. Hosted local.", "body": "All data stays in AU regions. Essential Eight aligned. 24/7 Perth support." } },
+        { "type": "tile", "settings": { "label": "GOVERNANCE", "title": "vCIO Console", "body": "Quarterly IT business reviews and budgets, auto-assembled from your stack." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

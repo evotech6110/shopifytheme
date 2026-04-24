@@ -1,0 +1,86 @@
+{%- comment -%}
+  Per-product hero for an individual SaaS landing page (e.g. /pages/sentryops).
+  Emits a SoftwareApplication JSON-LD block automatically.
+{%- endcomment -%}
+
+<section class="evo evo-hero" data-aos="fade-up">
+  <div class="evo-hero__bg"></div>
+  <div class="evo-hero__grid"></div>
+  <div class="evo-container evo-hero__inner">
+
+    <span class="evo-hero__kicker">
+      <span class="dot"></span>
+      {{ section.settings.category | escape }} · from {{ section.settings.price_display | escape }}
+    </span>
+
+    <h1 class="evo-h1" data-aos="fade-up" data-aos-delay="100">{{ section.settings.headline }}</h1>
+    <p class="evo-lede evo-hero__lede" data-aos="fade-up" data-aos-delay="200">{{ section.settings.subhead }}</p>
+
+    <div class="evo-hero__ctas" data-aos="fade-up" data-aos-delay="300">
+      {%- if section.settings.cta_primary_text != blank -%}
+        <a href="{{ section.settings.cta_primary_link | default: '#' }}" class="evo-btn evo-btn--primary">
+          {{ section.settings.cta_primary_text }}
+          {%- render 'evotech-icon', name: 'arrow-right', size: 16 -%}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_secondary_text != blank -%}
+        <a href="{{ section.settings.cta_secondary_link | default: '#' }}" class="evo-btn evo-btn--ghost">
+          {{ section.settings.cta_secondary_text }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div style="margin-top: 40px; display: flex; justify-content: center;" data-aos="fade-up" data-aos-delay="400">
+      <div class="evo-trust">
+        <span class="evo-trust__item">{%- render 'evotech-icon', name: 'map-pin', size: 18 -%} Hosted in Australia</span>
+        <span class="evo-trust__item">{%- render 'evotech-icon', name: 'shield', size: 18 -%} Essential Eight aligned</span>
+        <span class="evo-trust__item">{%- render 'evotech-icon', name: 'zap', size: 18 -%} {{ section.settings.trust_metric | default: '99.98% uptime' }}</span>
+        <span class="evo-trust__item">{%- render 'evotech-icon', name: 'star', size: 18 -%} {{ section.settings.trust_rating | default: '4.9 / 5 · 280+ reviews' }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- render 'evotech-schema-software',
+    name: section.settings.product_name,
+    description: section.settings.subhead,
+    url: request.origin,
+    price: section.settings.price_amount,
+    price_currency: 'AUD',
+    category: section.settings.schema_category,
+    rating_value: '4.9',
+    rating_count: '128'
+-%}
+
+{% schema %}
+{
+  "name": "EvoTech — Product hero (SaaS)",
+  "tag": "section",
+  "class": "evotech-section",
+  "settings": [
+    { "type": "text", "id": "product_name", "label": "Product name", "default": "SentryOps" },
+    { "type": "text", "id": "category", "label": "Category label", "default": "Cyber Security" },
+    { "type": "text", "id": "price_display", "label": "Price display", "default": "A$499/mo" },
+    { "type": "text", "id": "price_amount", "label": "Price (for schema)", "default": "499.00" },
+    {
+      "type": "select", "id": "schema_category", "label": "Schema applicationCategory", "default": "SecurityApplication",
+      "options": [
+        { "value": "SecurityApplication",  "label": "Security" },
+        { "value": "BusinessApplication",  "label": "Business" },
+        { "value": "DeveloperApplication", "label": "Developer" },
+        { "value": "UtilitiesApplication", "label": "Utilities" },
+        { "value": "FinanceApplication",   "label": "Finance" }
+      ]
+    },
+    { "type": "textarea", "id": "headline", "label": "Headline", "default": "A 24/7 security operations centre — without hiring one." },
+    { "type": "textarea", "id": "subhead", "label": "Subhead", "default": "Human analysts + AI triage. Essential Eight aligned. Median time-to-contain: 11 minutes." },
+    { "type": "text", "id": "cta_primary_text", "label": "Primary CTA text", "default": "Start 14-day free trial" },
+    { "type": "url",  "id": "cta_primary_link", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta_secondary_text", "label": "Secondary CTA text", "default": "Book a demo" },
+    { "type": "url",  "id": "cta_secondary_link", "label": "Secondary CTA link" },
+    { "type": "text", "id": "trust_metric", "label": "Trust metric", "default": "11-min median containment" },
+    { "type": "text", "id": "trust_rating", "label": "Trust rating", "default": "4.9 / 5 · 128 reviews" }
+  ],
+  "presets": [ { "name": "EvoTech Product hero" } ]
+}
+{% endschema %}

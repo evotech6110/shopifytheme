@@ -1,0 +1,15 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "cta_text": "Get Support",
+        "cta_link": "https://support.evotech.au"
+      }
+    }
+  },
+  "order": ["header"]
+}

@@ -1,0 +1,96 @@
+{%- comment -%}
+  EvoTech — Convenient Pricing Plans section.
+  Three-tier pricing with featured middle tier (indigo background).
+{%- endcomment -%}
+
+<section class="evo evo-pricing">
+  <div class="evo-container">
+    <header class="evo-pricing__head">
+      {%- if section.settings.eyebrow != blank -%}<div class="evo-kicker">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      <h2 class="evo-display evo-h2">
+        {{ section.settings.headline_prefix }}
+        {%- if section.settings.accent_word != blank -%} <span class="evo-accent-word">{{ section.settings.accent_word }}</span>{%- endif -%}
+      </h2>
+      {%- if section.settings.lede != blank -%}<p class="evo-lede" style="margin:16px auto 0;">{{ section.settings.lede }}</p>{%- endif -%}
+    </header>
+
+    <div class="evo-pricing__grid">
+      {%- for block in section.blocks -%}
+        {%- assign is_featured = block.settings.featured -%}
+        <article class="evo-plan{% if is_featured %} evo-plan--featured{% endif %}" {{ block.shopify_attributes }}>
+          {%- if is_featured and block.settings.badge != blank -%}
+            <div class="evo-plan__badge">{{ block.settings.badge }}</div>
+          {%- endif -%}
+          <div class="evo-plan__icon">{% render 'evotech-illustration', name: block.settings.illustration %}</div>
+          <div class="evo-plan__name">{{ block.settings.name }}</div>
+          <div class="evo-plan__price">
+            {{ block.settings.price }}<small>{{ block.settings.period }}</small>
+          </div>
+          <p class="evo-plan__body">{{ block.settings.subtitle }}</p>
+          <ul class="evo-plan__list">
+            {%- assign features = block.settings.features | newline_to_br | strip_newlines | split: '<br />' -%}
+            {%- for f in features -%}
+              {%- assign line = f | strip -%}
+              {%- if line != blank -%}
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>{{ line }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+          <a href="{{ block.settings.cta_link }}" class="evo-btn {% if is_featured %}evo-btn--accent{% else %}evo-btn--ghost{% endif %} evo-plan__cta">{{ block.settings.cta_text | default: 'Start free trial' }}</a>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "EvoTech — Pricing",
+  "tag": "section",
+  "class": "evo-section-pricing",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "PRICING" },
+    { "type": "text", "id": "headline_prefix", "label": "Headline prefix", "default": "Convenient" },
+    { "type": "text", "id": "accent_word", "label": "Accent word (green italic)", "default": "pricing plans" },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Start with one app or the full ecosystem. Annual plans save 20%." }
+  ],
+  "blocks": [
+    { "type": "plan", "name": "Plan",
+      "settings": [
+        { "type": "text",  "id": "name", "label": "Plan name", "default": "Starter" },
+        { "type": "text",  "id": "price", "label": "Price", "default": "Free" },
+        { "type": "text",  "id": "period", "label": "Period suffix", "default": " / 7-day trial" },
+        { "type": "text",  "id": "subtitle", "label": "Subtitle", "default": "Try EvolveAI-Engine with zero commitment." },
+        { "type": "textarea", "id": "features", "label": "Features (one per line)",
+          "default": "1 active workflow\n100 monthly tasks\nCommunity support\nAUS data residency" },
+        { "type": "checkbox", "id": "featured", "label": "Featured plan (indigo background)", "default": false },
+        { "type": "text", "id": "badge", "label": "Badge (if featured)", "default": "MOST POPULAR" },
+        { "type": "select", "id": "illustration", "label": "Illustration", "default": "ai-core",
+          "options": [
+            { "value": "ai-core", "label": "AI core" },
+            { "value": "network-mesh", "label": "Network mesh" },
+            { "value": "shield-pulse", "label": "Shield" },
+            { "value": "grid-orbit", "label": "Grid orbit" },
+            { "value": "compliance-check", "label": "Compliance check" }
+          ]
+        },
+        { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Start free trial" },
+        { "type": "url",  "id": "cta_link", "label": "CTA link" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "EvoTech — Pricing",
+      "blocks": [
+        { "type": "plan", "settings": { "name": "Starter", "price": "Free", "period": " / 7-day trial", "subtitle": "Try EvolveAI-Engine with zero commitment.", "features": "1 active workflow\n100 monthly tasks\nCommunity support\nAUS data residency", "illustration": "grid-orbit" } },
+        { "type": "plan", "settings": { "name": "Growth", "price": "A$149", "period": " / month", "subtitle": "For scaling Australian SMBs ready to automate.", "featured": true, "badge": "MOST POPULAR", "features": "Unlimited workflows\n10,000 monthly tasks\n1-hour human support\nAudit log + SSO\nEssential Eight aligned", "illustration": "ai-core" } },
+        { "type": "plan", "settings": { "name": "Scale", "price": "A$499", "period": " / month", "subtitle": "Enterprise-grade for multi-site operations.", "features": "Unlimited workflows\n100k+ monthly tasks\n24/7 Perth analysts\nDedicated vCIO\nSingle-tenant option", "illustration": "shield-pulse" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
