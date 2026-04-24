@@ -8,6 +8,13 @@
           "cta_text": "Get Support",
           "cta_link": "https://support.evotech.au"
         }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "brand_name": "EvoTech",
+          "tagline": "Perth's trusted MSP — Proactive IT, Cyber Security & Cloud Solutions."
+        }
       }
     },
     "color_bg": "#05040C",
