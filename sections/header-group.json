@@ -2,8 +2,8 @@
   "type": "header",
   "name": "Header group",
   "sections": {
-    "evo-header": {
-      "type": "evo-header",
+    "header": {
+      "type": "header",
       "settings": {
         "menu": "main-menu",
         "utility_menu": "top-utility",
@@ -12,5 +12,5 @@
       }
     }
   },
-  "order": ["evo-header"]
+  "order": ["header"]
 }
