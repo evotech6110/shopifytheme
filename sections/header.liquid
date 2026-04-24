@@ -59,21 +59,19 @@
         <div class="evo-header-right">
           <nav class="evo-header-nav" aria-label="Main Navigation">
             <ul class="evo-header-nav-list">
+              <li class="evo-header-brain-item">
+                <div class="evo-header-brain">
+                  <svg class="evo-header-brain-viz" viewBox="0 0 56 40" fill="none">
+                    <path class="brain-halo" d="M28 35C41.2548 35 52 28.2843 52 20C52 11.7157 41.2548 5 28 5C14.7452 5 4 11.7157 4 20C4 28.2843 14.7452 35 28 35Z" stroke="#A8E898" stroke-opacity="0.2"/>
+                    <circle class="brain-node core" cx="28" cy="20" r="4" fill="#A8E898"/><circle class="brain-node n1" cx="15" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n2" cx="41" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n3" cx="15" cy="25" r="2" fill="#A8E898"/><circle class="brain-node n4" cx="41" cy="25" r="2" fill="#A8E898"/>
+                  </svg>
+                  <span class="evo-header-brain-label">EVOLVE <span class="dim">AI</span></span>
+                </div>
+              </li>
               {%- for link in nav.links -%}
                 <li class="evo-header-nav-item">
                   <a href="{{ link.url }}" class="evo-header-nav-link">{{ link.title }}</a>
                 </li>
-                {%- if forloop.index == 2 -%}
-                  <li class="evo-header-brain-item">
-                    <div class="evo-header-brain">
-                      <svg class="evo-header-brain-viz" viewBox="0 0 56 40" fill="none">
-                        <path class="brain-halo" d="M28 35C41.2548 35 52 28.2843 52 20C52 11.7157 41.2548 5 28 5C14.7452 5 4 11.7157 4 20C4 28.2843 14.7452 35 28 35Z" stroke="#A8E898" stroke-opacity="0.2"/>
-                        <circle class="brain-node core" cx="28" cy="20" r="4" fill="#A8E898"/><circle class="brain-node n1" cx="15" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n2" cx="41" cy="15" r="2" fill="#A8E898"/><circle class="brain-node n3" cx="15" cy="25" r="2" fill="#A8E898"/><circle class="brain-node n4" cx="41" cy="25" r="2" fill="#A8E898"/>
-                      </svg>
-                      <span class="evo-header-brain-label">EVOLVE <span class="dim">AI</span></span>
-                    </div>
-                  </li>
-                {%- endif -%}
               {%- endfor -%}
             </ul>
           </nav>
