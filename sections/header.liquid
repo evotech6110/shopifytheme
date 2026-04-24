@@ -160,11 +160,11 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    z-index: 1000;
+    width: 100%;
+    z-index: 9999 !important;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     font-family: 'Satoshi', sans-serif;
-    color: #fff;
+    color: #ffffff !important;
   }
 
   .evo-header-root.is-scrolled {
@@ -275,6 +275,8 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    min-height: 80px;
+    gap: 20px;
   }
 
   /* Logo */
@@ -283,7 +285,9 @@
     align-items: center;
     gap: 12px;
     text-decoration: none;
-    color: inherit;
+    color: #ffffff !important;
+    flex-shrink: 0;
+    z-index: 10;
   }
 
   .evo-header-logo-mark {
@@ -319,9 +323,9 @@
 
   /* Navigation */
   .evo-header-nav {
-    flex: 1;
     display: flex;
     justify-content: center;
+    flex-grow: 1;
   }
 
   @media (max-width: 1024px) {
@@ -340,7 +344,7 @@
     padding: 10px 20px;
     font-size: 14px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.85) !important;
     text-decoration: none;
     border-radius: 100px;
     transition: all 0.2s ease;
@@ -425,6 +429,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-shrink: 0;
   }
 
   .evo-header-icon-btn {
