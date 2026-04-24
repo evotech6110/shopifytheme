@@ -38,7 +38,24 @@
   {% sections 'header-group' %}
 
   <main id="MainContent" role="main" class="main-content">
-    {{ content_for_layout }}
+    {%- if template.name == 'index' or request.page_type == 'index' -%}
+      {% section 'evotech-fullscreen-hero' %}
+      {% section 'evotech-marquee' %}
+      {% section 'evotech-saas-grid' %}
+      {% section 'evotech-process' %}
+      {% section 'evotech-logo-strip' %}
+      {% section 'evotech-feature' %}
+      {% section 'evotech-pricing' %}
+      {% section 'evotech-faq' %}
+      {% section 'evotech-cta-band' %}
+      {% section 'evotech-powered-by' %}
+      <!-- HIDDEN DB CACHE: Shopify is stuck on old index.json overrides. Hiding them here. -->
+      <div style="display: none !important;" aria-hidden="true">
+        {{ content_for_layout }}
+      </div>
+    {%- else -%}
+      {{ content_for_layout }}
+    {%- endif -%}
   </main>
 
   {% sections 'footer-group' %}
