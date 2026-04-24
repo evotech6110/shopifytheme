@@ -1,10 +1,6 @@
 {%- comment -%}
   Evotech "Sanity-Inspired" Neural Header
-  Features:
-  - Transparent-to-Glass transition on scroll
-  - Pulsing CTA for "Get Support"
-  - Clean, modern mega-menu
-  - SVG Logo with subtle glow
+  Refactored for absolute centerpiece stability and homepage compatibility.
 {%- endcomment -%}
 
 {%- assign nav = linklists[section.settings.menu] -%}
@@ -27,9 +23,6 @@
           {%- for link in utility.links -%}
             <a href="{{ link.url }}">{{ link.title }}</a>
           {%- endfor -%}
-          {%- if shop.customer_accounts_enabled -%}
-            <a href="/account">{% if customer %}Account{% else %}Login{% endif %}</a>
-          {%- endif -%}
         </nav>
       </div>
     </div>
@@ -39,91 +32,62 @@
   <div class="evo-header-main">
     <div class="evo-header-container">
       <div class="evo-header-main-inner">
-        {%- comment -%} Logo {%- endcomment -%}
-        <a href="/" class="evo-header-logo">
-          <div class="evo-header-logo-mark">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2" y="2" width="36" height="36" rx="10" stroke="url(#evoLogoGrad)" stroke-width="2"/>
-              <path d="M20 12L26 28H14L20 12Z" fill="url(#evoLogoGrad)" opacity="0.9"/>
-              <defs>
-                <linearGradient id="evoLogoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#A8E898"/>
-                  <stop offset="1" stop-color="#3D2EDE"/>
-                </linearGradient>
-              </defs>
+        
+        {%- comment -%} Left: Logo {%- endcomment -%}
+        <div class="evo-header-left">
+          <a href="/" class="evo-header-logo">
+            <div class="evo-header-logo-mark">
+              <svg viewBox="0 0 44 44" fill="none">
+                <circle cx="22" cy="22" r="20" stroke="url(#logoGrad)" stroke-width="2"/>
+                <path d="M22 12L14 22L22 32L30 22L22 12Z" fill="#A8E898"/>
+                <circle cx="22" cy="22" r="4" fill="#fff"/>
+                <defs>
+                  <linearGradient id="logoGrad" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#A8E898"/><stop offset="1" stop-color="#3D2EDE"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="evo-header-logo-text">
+              <span class="evo-header-brand">EVOTECH</span>
+              <span class="evo-header-tagline">INSPIRE . AUTOMATE . EVOLVE</span>
+            </div>
+          </a>
+        </div>
+
+        {%- comment -%} Absolute Center: Neural Brain {%- endcomment -%}
+        <div class="evo-header-centerpiece">
+          <div class="evo-header-brain">
+            <svg class="evo-header-brain-viz" viewBox="0 0 56 40" fill="none">
+              <path class="brain-halo" d="M28 35C41.2548 35 52 28.2843 52 20C52 11.7157 41.2548 5 28 5C14.7452 5 4 11.7157 4 20C4 28.2843 14.7452 35 28 35Z" stroke="#A8E898" stroke-opacity="0.2"/>
+              <circle class="brain-node core" cx="28" cy="20" r="4" fill="#A8E898"/>
+              <circle class="brain-node n1" cx="15" cy="15" r="2" fill="#A8E898"/>
+              <circle class="brain-node n2" cx="41" cy="15" r="2" fill="#A8E898"/>
+              <circle class="brain-node n3" cx="15" cy="25" r="2" fill="#A8E898"/>
+              <circle class="brain-node n4" cx="41" cy="25" r="2" fill="#A8E898"/>
             </svg>
+            <span class="evo-header-brain-label">EVOLVE <span class="dim">AI</span></span>
           </div>
-          <div class="evo-header-logo-text">
-            <span class="evo-header-logo-name">EVO<em>TECH</em></span>
-            <span class="evo-header-logo-tag">AI ECOSYSTEM</span>
-          </div>
-        </a>
+        </div>
 
-        {%- comment -%} Desktop Nav {%- endcomment -%}
-        <nav class="evo-header-nav" aria-label="Main Navigation">
-          <ul class="evo-header-nav-list">
-            {%- for link in nav.links -%}
-              <li class="evo-header-nav-item {% if link.links != blank %}has-dropdown{% endif %}">
-                <a href="{{ link.url }}" class="evo-header-nav-link">
-                  {{ link.title }}
-                  {% if link.links != blank %}
-                    <svg class="evo-header-nav-caret" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4L5 7L8 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  {% endif %}
-                </a>
-                {% if link.links != blank %}
-                  <div class="evo-header-dropdown">
-                    <div class="evo-header-dropdown-inner">
-                      {% for child in link.links %}
-                        <div class="evo-header-dropdown-col">
-                          <a href="{{ child.url }}" class="evo-header-dropdown-title">{{ child.title }}</a>
-                          {% if child.links != blank %}
-                            <ul class="evo-header-dropdown-list">
-                              {% for grandchild in child.links %}
-                                <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
-                              {% endfor %}
-                            </ul>
-                          {% endif %}
-                        </div>
-                      {% endfor %}
-                    </div>
-                  </div>
-                {% endif %}
-              </li>
-              {%- if forloop.index == 2 -%}
-                {%- comment -%} Insert Neural Brain in the middle {%- endcomment -%}
-                <li class="evo-header-brain-item">
-                  <div class="evo-header-brain">
-                    <svg class="evo-header-brain-viz" viewBox="0 0 56 40" fill="none">
-                      <path class="brain-halo" d="M28 35C41.2548 35 52 28.2843 52 20C52 11.7157 41.2548 5 28 5C14.7452 5 4 11.7157 4 20C4 28.2843 14.7452 35 28 35Z" stroke="#A8E898" stroke-opacity="0.2"/>
-                      <circle class="brain-node core" cx="28" cy="20" r="4" fill="#A8E898"/>
-                      <circle class="brain-node n1" cx="15" cy="15" r="2" fill="#A8E898"/>
-                      <circle class="brain-node n2" cx="41" cy="15" r="2" fill="#A8E898"/>
-                      <circle class="brain-node n3" cx="15" cy="25" r="2" fill="#A8E898"/>
-                      <circle class="brain-node n4" cx="41" cy="25" r="2" fill="#A8E898"/>
-                    </svg>
-                    <span class="evo-header-brain-label">EVOLVE <span class="dim">AI</span></span>
-                  </div>
+        {%- comment -%} Right: Navigation & Actions {%- endcomment -%}
+        <div class="evo-header-right">
+          <nav class="evo-header-nav" aria-label="Main Navigation">
+            <ul class="evo-header-nav-list">
+              {%- for link in nav.links -%}
+                <li class="evo-header-nav-item">
+                  <a href="{{ link.url }}" class="evo-header-nav-link">{{ link.title }}</a>
                 </li>
-              {%- endif -%}
-            {%- endfor -%}
-          </ul>
-        </nav>
-
-        {%- comment -%} Actions {%- endcomment -%}
-        <div class="evo-header-actions">
-          <a href="/search" class="evo-header-icon-btn" aria-label="Search">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </a>
-          <a href="/cart" class="evo-header-icon-btn" aria-label="Cart">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-            <span class="evo-header-cart-count">{{ cart.item_count }}</span>
-          </a>
-          <a href="{{ section.settings.cta_link | default: 'https://support.evotech.au' }}" class="evo-header-cta pulse-btn">
-            {{ section.settings.cta_text | default: 'Get Support' }}
-          </a>
-          <button class="evo-header-burger" aria-label="Open Menu" id="EvoBurger">
-            <span></span><span></span><span></span>
-          </button>
+              {%- endfor -%}
+            </ul>
+          </nav>
+          <div class="evo-header-actions">
+            <a href="/cart" class="evo-header-icon-btn" aria-label="Cart">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </a>
+            <a href="{{ section.settings.cta_link | default: '#' }}" class="evo-header-cta pulse-btn">{{ section.settings.cta_text | default: 'Get Support' }}</a>
+          </div>
+          <button class="evo-header-burger" aria-label="Menu" id="EvoBurger"><span></span><span></span><span></span></button>
         </div>
       </div>
     </div>
@@ -142,13 +106,6 @@
       {% for link in nav.links %}
         <div class="evo-header-drawer-item">
           <a href="{{ link.url }}">{{ link.title }}</a>
-          {% if link.links != blank %}
-            <div class="evo-header-drawer-sub">
-              {% for child in link.links %}
-                <a href="{{ child.url }}">{{ child.title }}</a>
-              {% endfor %}
-            </div>
-          {% endif %}
         </div>
       {% endfor %}
     </nav>
@@ -168,7 +125,7 @@
   }
 
   .evo-header-root.is-scrolled {
-    background: rgba(5, 4, 12, 0.8);
+    background: rgba(5, 4, 12, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
@@ -188,14 +145,13 @@
     height: 36px;
     display: flex;
     align-items: center;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+    transition: height 0.3s ease, opacity 0.3s ease;
   }
 
   .is-scrolled .evo-header-util {
-    transform: translateY(-100%);
-    opacity: 0;
-    pointer-events: none;
     height: 0;
+    opacity: 0;
   }
 
   .evo-header-util-inner {
@@ -214,7 +170,6 @@
     align-items: center;
     gap: 8px;
     position: relative;
-    overflow: hidden;
   }
 
   .neural-beam {
@@ -223,7 +178,7 @@
     left: -100%;
     width: 100px;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(168, 232, 152, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(168, 232, 152, 0.1), transparent);
     animation: beam-slide 4s infinite linear;
   }
 
@@ -237,16 +192,7 @@
     height: 6px;
     background: #A8E898;
     border-radius: 50%;
-    box-shadow: 0 0 12px #A8E898;
-    animation: pulse-dot 2s infinite;
-    position: relative;
-    z-index: 2;
-  }
-
-  @keyframes pulse-dot {
-    0% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.2); }
-    100% { opacity: 0.5; transform: scale(1); }
+    box-shadow: 0 0 10px #A8E898;
   }
 
   .evo-header-util-nav {
@@ -254,9 +200,13 @@
     gap: 20px;
   }
 
-  .evo-header-util-nav a:hover {
-    color: #fff;
+  .evo-header-util-nav a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
+
+  .evo-header-util-nav a:hover { color: #fff; }
 
   /* Main Header */
   .evo-header-main {
@@ -275,8 +225,30 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    position: relative;
     min-height: 80px;
-    gap: 20px;
+  }
+
+  .evo-header-centerpiece {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .evo-header-left, .evo-header-right {
+    display: flex;
+    align-items: center;
+    z-index: 20;
+  }
+
+  .evo-header-left { flex: 0 0 auto; }
+  .evo-header-right { 
+    flex: 1; 
+    justify-content: flex-end; 
+    gap: 30px;
   }
 
   /* Logo */
@@ -286,14 +258,11 @@
     gap: 12px;
     text-decoration: none;
     color: #ffffff !important;
-    flex-shrink: 0;
-    z-index: 10;
   }
 
   .evo-header-logo-mark {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
   }
 
   .evo-header-logo-text {
@@ -302,126 +271,42 @@
     line-height: 1.1;
   }
 
-  .evo-header-logo-name {
+  .evo-header-brand {
     font-family: 'Clash Display', sans-serif;
     font-weight: 700;
     font-size: 20px;
     letter-spacing: 0.02em;
   }
 
-  .evo-header-logo-name em {
-    color: #A8E898;
-    font-style: normal;
-  }
-
-  .evo-header-logo-tag {
-    font-size: 9px;
+  .evo-header-tagline {
+    font-size: 8px;
     letter-spacing: 0.3em;
     color: rgba(255, 255, 255, 0.4);
     text-transform: uppercase;
   }
 
   /* Navigation */
-  .evo-header-nav {
-    display: flex;
-    justify-content: center;
-    flex-grow: 1;
-  }
-
-  @media (max-width: 1024px) {
-    .evo-header-nav { display: none; }
-  }
-
   .evo-header-nav-list {
     display: flex;
     list-style: none;
     padding: 0;
     margin: 0;
-    gap: 10px;
+    gap: 8px;
   }
 
   .evo-header-nav-link {
-    padding: 10px 20px;
+    padding: 10px 16px;
     font-size: 14px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.85) !important;
     text-decoration: none;
     border-radius: 100px;
     transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 6px;
   }
 
   .evo-header-nav-link:hover {
-    color: #fff;
+    color: #fff !important;
     background: rgba(255, 255, 255, 0.05);
-  }
-
-  .evo-header-nav-caret {
-    transition: transform 0.2s ease;
-  }
-
-  .has-dropdown:hover .evo-header-nav-caret {
-    transform: rotate(180deg);
-  }
-
-  /* Dropdown / Mega Menu */
-  .evo-header-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: #0B0820;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 30px;
-    min-width: 600px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  }
-
-  .has-dropdown:hover .evo-header-dropdown {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(10px);
-  }
-
-  .evo-header-dropdown-inner {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-  }
-
-  .evo-header-dropdown-title {
-    font-family: 'Clash Display', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    color: #A8E898;
-    margin-bottom: 15px;
-    display: block;
-  }
-
-  .evo-header-dropdown-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .evo-header-dropdown-list a {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-
-  .evo-header-dropdown-list a:hover {
-    color: #fff;
   }
 
   /* Actions */
@@ -429,7 +314,6 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-shrink: 0;
   }
 
   .evo-header-icon-btn {
@@ -441,7 +325,6 @@
     color: rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     transition: all 0.2s ease;
-    position: relative;
   }
 
   .evo-header-icon-btn:hover {
@@ -449,26 +332,9 @@
     background: rgba(255, 255, 255, 0.1);
   }
 
-  .evo-header-cart-count {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: #FF7A4A;
-    color: #fff;
-    font-size: 9px;
-    font-weight: 700;
-    min-width: 15px;
-    height: 15px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 4px;
-  }
-
   .evo-header-cta {
     background: #FF7A4A;
-    color: #05040C;
+    color: #05040C !important;
     padding: 12px 24px;
     border-radius: 100px;
     font-weight: 700;
@@ -481,7 +347,6 @@
   .evo-header-cta:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(255, 122, 74, 0.5);
-    background: #FF8E62;
   }
 
   .pulse-btn {
@@ -489,9 +354,60 @@
   }
 
   @keyframes btn-pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 122, 74, 0.5); }
+    0% { box-shadow: 0 0 0 0 rgba(255, 122, 74, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(255, 122, 74, 0); }
     100% { box-shadow: 0 0 0 0 rgba(255, 122, 74, 0); }
+  }
+
+  /* Brain Centerpiece */
+  .evo-header-brain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(168, 232, 152, 0.15);
+    border-radius: 100px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .evo-header-brain-viz {
+    width: 44px;
+    height: 32px;
+    animation: brainBreath 4s ease-in-out infinite;
+  }
+
+  .evo-header-brain-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: #A8E898;
+    text-transform: uppercase;
+  }
+
+  .evo-header-brain-label .dim { color: rgba(255,255,255,0.4); }
+
+  @keyframes brainBreath {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(168, 232, 152, 0.2)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(168, 232, 152, 0.4)); }
+  }
+
+  .brain-node { animation: nodePulse 2s ease-in-out infinite; }
+  .brain-node.n1 { animation-delay: 0.2s; }
+  .brain-node.n2 { animation-delay: 0.4s; }
+  .brain-node.n3 { animation-delay: 0.6s; }
+  .brain-node.n4 { animation-delay: 0.8s; }
+  @keyframes nodePulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .brain-halo { animation: haloPulse 3s ease-in-out infinite; transform-origin: center; }
+  @keyframes haloPulse {
+    0%, 100% { opacity: 0.1; transform: scale(0.9); }
+    50% { opacity: 0.3; transform: scale(1.1); }
   }
 
   /* Burger */
@@ -505,66 +421,25 @@
     padding: 5px;
   }
 
+  .evo-header-burger span {
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+  }
+
   @media (max-width: 1024px) {
+    .evo-header-nav { display: none; }
     .evo-header-burger { display: flex; }
     .evo-header-cta { display: none; }
-  }
-
-  /* Brain Centerpiece */
-  .evo-header-brain-item {
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-  }
-  .evo-header-brain {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(168, 232, 152, 0.2);
-    border-radius: 100px;
-    backdrop-filter: blur(10px);
-  }
-  .evo-header-brain-viz {
-    width: 44px;
-    height: 32px;
-    animation: brainBreath 4s ease-in-out infinite;
-  }
-  .evo-header-brain-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 8px;
-    letter-spacing: 0.2em;
-    color: #A8E898;
-    text-transform: uppercase;
-  }
-  .evo-header-brain-label .dim { color: rgba(255,255,255,0.4); }
-
-  @keyframes brainBreath {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(168, 232, 152, 0.2)); }
-    50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(168, 232, 152, 0.5)); }
-  }
-  .brain-node { animation: nodePulse 2s ease-in-out infinite; }
-  .brain-node.n1 { animation-delay: 0.2s; }
-  .brain-node.n2 { animation-delay: 0.4s; }
-  .brain-node.n3 { animation-delay: 0.6s; }
-  .brain-node.n4 { animation-delay: 0.8s; }
-  @keyframes nodePulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
-  .brain-halo { animation: haloPulse 3s ease-in-out infinite; transform-origin: center; }
-  @keyframes haloPulse {
-    0%, 100% { opacity: 0.1; transform: scale(0.9); }
-    50% { opacity: 0.3; transform: scale(1.1); }
+    .evo-header-centerpiece { display: none; }
   }
 
   /* Mobile Drawer */
   .evo-header-drawer {
     position: fixed;
     inset: 0;
-    z-index: 2000;
+    z-index: 10000;
     visibility: hidden;
     pointer-events: none;
   }
@@ -583,26 +458,19 @@
     transition: opacity 0.4s ease;
   }
 
-  .is-open .evo-header-drawer-overlay {
-    opacity: 1;
-  }
+  .is-open .evo-header-drawer-overlay { opacity: 1; }
 
   .evo-header-drawer-content {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    max-width: 400px;
+    top: 0; right: 0; bottom: 0;
+    width: 100%; max-width: 350px;
     background: #05040C;
     padding: 40px;
     transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .is-open .evo-header-drawer-content {
-    transform: translateX(0);
-  }
+  .is-open .evo-header-drawer-content { transform: translateX(0); }
 
   .evo-header-drawer-header {
     display: flex;
@@ -622,31 +490,15 @@
   .evo-header-drawer-nav {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
   }
 
-  .evo-header-drawer-item a {
+  .evo-header-drawer-nav a {
     font-family: 'Clash Display', sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     color: #fff;
     text-decoration: none;
-  }
-
-  .evo-header-drawer-sub {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-left: 20px;
-    border-left: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .evo-header-drawer-sub a {
-    font-family: 'Satoshi', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.6);
   }
 </style>
 
@@ -658,7 +510,6 @@
     const close = document.getElementById('EvoDrawerClose');
     const overlay = document.getElementById('EvoDrawerOverlay');
 
-    // Scroll effect
     window.addEventListener('scroll', function() {
       if (window.scrollY > 50) {
         header.classList.add('is-scrolled');
@@ -667,7 +518,6 @@
       }
     });
 
-    // Mobile menu
     function toggleMenu() {
       drawer.classList.toggle('is-open');
       document.body.classList.toggle('no-scroll');
@@ -687,11 +537,9 @@
   "settings": [
     { "type": "header", "content": "Brand" },
     { "type": "image_picker", "id": "logo", "label": "Custom logo" },
-
     { "type": "header", "content": "Navigation" },
     { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" },
     { "type": "link_list", "id": "utility_menu", "label": "Utility bar links", "default": "top-utility" },
-
     { "type": "header", "content": "CTA button" },
     { "type": "text", "id": "cta_text", "label": "CTA button text", "default": "Get Support" },
     { "type": "url",  "id": "cta_link", "label": "CTA button link" }
