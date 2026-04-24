@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "hero": {
+      "type": "evotech-saas-product-hero",
+      "settings": {
+        "product_name": "Essential8 Compass",
+        "category": "Cyber Compliance",
+        "price_display": "A$199/mo",
+        "price_amount": "199.00",
+        "schema_category": "SecurityApplication",
+        "headline": "Pass ACSC Essential Eight audits on complete autopilot.",
+        "subhead": "Continuous controls. Evidence capture. Auditor-ready exports for Maturity Level 1, 2, and 3.",
+        "cta_primary_text": "Start 14-day free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Download a sample audit pack",
+        "cta_secondary_link": "/pages/contact",
+        "trust_metric": "94% audit pass-rate",
+        "trust_rating": "5.0 / 5 · 87 reviews"
+      }
+    },
+    "feature_1": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "THE 8 STRATEGIES",
+        "headline": "Continuous testing across all eight strategies.",
+        "body": "Application control, patching, Microsoft Office macros, user application hardening, admin privileges, operating system patching, MFA, and backups — tested every 15 minutes with auditor-ready evidence on tap.",
+        "placeholder_metric": "ML3",
+        "placeholder_label": "Maturity-ready",
+        "cta_text": "See a live dashboard",
+        "cta_link": "/pages/contact",
+        "reverse": true
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "All 8 ACSC strategies mapped automatically" } },
+        "c2": { "type": "check", "settings": { "text": "ML1, ML2, ML3 readiness scoring" } },
+        "c3": { "type": "check", "settings": { "text": "One-click auditor evidence export" } },
+        "c4": { "type": "check", "settings": { "text": "Works with Microsoft 365 and Intune" } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    },
+    "cta_band": {
+      "type": "evotech-cta-band",
+      "settings": {
+        "eyebrow": "ESSENTIAL8 COMPASS",
+        "headline": "Make the next audit easy.",
+        "lede": "Audit-ready exports. Australian compliance specialists included.",
+        "cta_primary_text": "Start free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Book a compliance consult",
+        "cta_secondary_link": "/pages/contact"
+      }
+    }
+  },
+  "order": ["hero","feature_1","cta_band"]
+}

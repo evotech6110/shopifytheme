@@ -1,0 +1,160 @@
+{%- comment -%} Contact page — full contact form + business details. Assign to /pages/contact via the Template picker. {%- endcomment -%}
+{% render 'evotech-breadcrumbs' %}
+
+<section class="evo-contact">
+  <header class="evo-contact__head">
+    <p class="evo-contact__eyebrow">EVOTECH DIGITAL · PERTH</p>
+    <h1 class="evo-contact__title">Let's talk.</h1>
+    <p class="evo-contact__lede">Tell us what you're working on — IT support, cyber security, cloud migration, or a custom AI agent. We'll reply within one business day. Urgent? Call us.</p>
+  </header>
+
+  <div class="evo-contact__grid">
+    <div class="evo-contact__form-wrap">
+      {%- form 'contact', id: 'ContactForm', class: 'evo-contact__form' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="evo-contact__ok">
+            <strong>Message received.</strong> A team member will reply within one business day. For anything urgent please call <a href="tel:+61466911816">+61 466 911 816</a>.
+          </div>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <div class="evo-contact__err">
+            <strong>Please check:</strong>
+            <ul>{%- for field in form.errors -%}<li>{{ form.errors.messages[field] }}</li>{%- endfor -%}</ul>
+          </div>
+        {%- endif -%}
+
+        <div class="evo-contact__row">
+          <label>First name<input type="text" name="contact[first_name]" required></label>
+          <label>Last name<input type="text" name="contact[last_name]" required></label>
+        </div>
+        <div class="evo-contact__row">
+          <label>Email<input type="email" name="contact[email]" required></label>
+          <label>Phone (optional)<input type="tel" name="contact[phone]"></label>
+        </div>
+        <label>Company / organisation<input type="text" name="contact[company]" placeholder="Acme Pty Ltd"></label>
+        <label>How can we help?
+          <select name="contact[topic]" required>
+            <option value="">Select a topic…</option>
+            <option>General enquiry</option>
+            <option>Managed IT Services</option>
+            <option>Cyber Security / Essential 8</option>
+            <option>Cloud Migration / Microsoft 365</option>
+            <option>Custom AI agent build</option>
+            <option>Hardware procurement</option>
+            <option>vCIO / IT consulting</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label>Team size (optional)
+          <select name="contact[team_size]">
+            <option value="">—</option>
+            <option>1–5</option>
+            <option>6–20</option>
+            <option>21–50</option>
+            <option>51–200</option>
+            <option>200+</option>
+          </select>
+        </label>
+        <label>Your message<textarea name="contact[body]" rows="5" required placeholder="A sentence or two about what you need. We'll take it from there."></textarea></label>
+
+        <label class="evo-contact__consent">
+          <input type="checkbox" name="contact[consent]" value="yes" required>
+          <span>I consent to EvoTech Digital contacting me about this enquiry. See our <a href="/policies/privacy-policy">privacy policy</a>.</span>
+        </label>
+
+        <button type="submit" class="evo-contact__submit">Send message</button>
+        <p class="evo-contact__note">We reply within one business day. For urgent issues, call <a href="tel:+61466911816">+61 466 911 816</a>.</p>
+      {%- endform -%}
+    </div>
+
+    <aside class="evo-contact__aside">
+      <div class="evo-contact__card">
+        <h2>EvoTech Digital</h2>
+        <p class="evo-contact__tagline">Perth's trusted MSP — Proactive IT, Cyber Security &amp; Cloud Solutions.</p>
+
+        <div class="evo-contact__section">
+          <p class="evo-contact__label">EMAIL</p>
+          <p><a href="mailto:info@evotech.au">info@evotech.au</a></p>
+          <p><a href="mailto:orders@evotech.au">orders@evotech.au</a> <span class="evo-contact__sub">— Sales &amp; orders</span></p>
+        </div>
+
+        <div class="evo-contact__section">
+          <p class="evo-contact__label">PHONE</p>
+          <p><a href="tel:+61466911816">+61 466 911 816</a></p>
+        </div>
+
+        <div class="evo-contact__section">
+          <p class="evo-contact__label">HOURS</p>
+          <p>Monday – Friday<br>9:00 AM – 5:00 PM AWST</p>
+          <p>Saturday &amp; Sunday — Closed</p>
+        </div>
+
+        <div class="evo-contact__section">
+          <p class="evo-contact__label">ADDRESS</p>
+          <p>30 Tenterden Way<br>Gosnells, WA 6110</p>
+        </div>
+
+        <div class="evo-contact__section">
+          <p class="evo-contact__label">BUSINESS</p>
+          <p>EvoTech Digital<br>ABN 72 375 743 898</p>
+        </div>
+      </div>
+
+      <div class="evo-contact__card evo-contact__card--urgent">
+        <p class="evo-contact__label">URGENT · CYBER INCIDENT</p>
+        <p>Active ransomware, breach, or phishing incident?</p>
+        <a class="evo-contact__urgent-btn" href="tel:+61466911816">Call +61 466 911 816</a>
+      </div>
+    </aside>
+  </div>
+
+  {%- if page.content != blank -%}
+    <div class="evo-contact__extra rte">{{ page.content }}</div>
+  {%- endif -%}
+</section>
+
+<style>
+  .evo-contact { max-width: 1240px; margin: 0 auto; padding: 40px 24px 100px; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; }
+  .evo-contact__head { max-width: 680px; margin: 0 0 48px; }
+  .evo-contact__eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 14px; }
+  .evo-contact__title { font-family: 'Clash Display', sans-serif; font-size: clamp(36px, 6vw, 64px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 14px; }
+  .evo-contact__lede { color: #B6B5C6; font-size: 17px; line-height: 1.6; margin: 0; }
+  .evo-contact__grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+  @media (min-width: 900px) { .evo-contact__grid { grid-template-columns: 1.4fr 1fr; gap: 40px; } }
+  .evo-contact__form-wrap { background: #0B0820; border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 32px; }
+  .evo-contact__form { display: flex; flex-direction: column; gap: 14px; }
+  .evo-contact__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 560px) { .evo-contact__row { grid-template-columns: 1fr; } }
+  .evo-contact__form label { display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; color: #B6B5C6; text-transform: uppercase; }
+  .evo-contact__form input, .evo-contact__form select, .evo-contact__form textarea { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); color: #FFFFFF; padding: 12px 14px; border-radius: 10px; font-size: 15px; font-family: 'Satoshi', system-ui, sans-serif; resize: vertical; text-transform: none; letter-spacing: 0; }
+  .evo-contact__form input:focus, .evo-contact__form select:focus, .evo-contact__form textarea:focus { border-color: #A8E898; outline: none; }
+  .evo-contact__consent { flex-direction: row !important; align-items: flex-start !important; gap: 10px !important; text-transform: none !important; letter-spacing: 0 !important; color: #D8D7E3 !important; font-family: inherit !important; font-size: 13px !important; padding-top: 6px; }
+  .evo-contact__consent input { width: auto !important; margin-top: 3px; }
+  .evo-contact__consent a { color: #A8E898; }
+  .evo-contact__submit { background: #FF7A4A; color: #0A0A0A; border: 0; border-radius: 999px; padding: 15px 26px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 4px; align-self: flex-start; }
+  .evo-contact__submit:hover { background: #ff9068; }
+  .evo-contact__note { color: #B6B5C6; font-size: 13px; margin: 0; }
+  .evo-contact__note a { color: #A8E898; }
+  .evo-contact__ok { background: rgba(168,232,152,.08); border: 1px solid rgba(168,232,152,.3); color: #D8F2C9; padding: 14px 16px; border-radius: 10px; font-size: 14px; }
+  .evo-contact__ok a { color: #A8E898; }
+  .evo-contact__err { background: rgba(255,122,74,.08); border: 1px solid rgba(255,122,74,.3); color: #FFD6C4; padding: 14px 16px; border-radius: 10px; font-size: 14px; }
+  .evo-contact__err ul { margin: 6px 0 0; padding-left: 20px; }
+
+  .evo-contact__aside { display: flex; flex-direction: column; gap: 16px; }
+  .evo-contact__card { background: #0B0820; border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 28px 26px; }
+  .evo-contact__card h2 { font-family: 'Clash Display', sans-serif; font-size: 22px; margin: 0 0 6px; line-height: 1.15; }
+  .evo-contact__tagline { color: #B6B5C6; font-size: 13.5px; line-height: 1.55; margin: 0 0 20px; }
+  .evo-contact__section { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .evo-contact__section:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+  .evo-contact__label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .22em; color: #A8E898; margin: 0 0 6px; }
+  .evo-contact__section p { color: #D8D7E3; font-size: 14.5px; line-height: 1.55; margin: 0 0 4px; }
+  .evo-contact__section a { color: #FFFFFF; text-decoration: none; border-bottom: 1px solid rgba(168,232,152,.4); }
+  .evo-contact__section a:hover { color: #A8E898; border-bottom-color: #A8E898; }
+  .evo-contact__sub { color: #B6B5C6; font-size: 12px; }
+  .evo-contact__card--urgent { border-color: rgba(255,122,74,.3); background: linear-gradient(135deg, #0B0820, #1a0f0a); }
+  .evo-contact__card--urgent p { color: #FFD6C4; }
+  .evo-contact__urgent-btn { display: inline-block; background: #FF7A4A; color: #0A0A0A; padding: 12px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; margin-top: 8px; }
+  .evo-contact__urgent-btn:hover { background: #ff9068; }
+  .evo-contact__extra { margin-top: 48px; color: #D8D7E3; font-size: 16px; line-height: 1.7; }
+  .evo-contact__extra a { color: #A8E898; }
+</style>

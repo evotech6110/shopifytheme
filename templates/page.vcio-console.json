@@ -1,0 +1,54 @@
+{
+  "sections": {
+    "hero": {
+      "type": "evotech-saas-product-hero",
+      "settings": {
+        "product_name": "vCIO Console",
+        "category": "IT Governance",
+        "price_display": "A$249/mo",
+        "price_amount": "249.00",
+        "schema_category": "BusinessApplication",
+        "headline": "Deliver board-ready IT strategy in one-tenth the hours.",
+        "subhead": "Quarterly business reviews, roadmaps, and budgets — auto-assembled from your live stack.",
+        "cta_primary_text": "See a sample QBR",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Talk to a vCIO",
+        "cta_secondary_link": "/pages/contact",
+        "trust_metric": "10× faster QBRs",
+        "trust_rating": "4.9 / 5 · 96 reviews"
+      }
+    },
+    "feature_1": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "WORKFLOWS",
+        "headline": "Every deliverable a vCIO actually ships.",
+        "body": "Technology roadmaps, risk registers, capex/opex models, vendor scorecards, and board packs — all wired to live data from Microsoft 365, NetPulse, and SentryOps.",
+        "placeholder_metric": "1 tab",
+        "placeholder_label": "Governance HQ",
+        "cta_text": "Explore the console",
+        "cta_link": "/pages/contact",
+        "reverse": true
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "Prebuilt QBR, risk, and budget templates" } },
+        "c2": { "type": "check", "settings": { "text": "Live data feeds from your stack" } },
+        "c3": { "type": "check", "settings": { "text": "White-label for MSPs" } }
+      },
+      "block_order": ["c1","c2","c3"]
+    },
+    "cta_band": {
+      "type": "evotech-cta-band",
+      "settings": {
+        "eyebrow": "VCIO CONSOLE",
+        "headline": "Strategy at the speed of business.",
+        "lede": "14-day free trial. Per advisor seat.",
+        "cta_primary_text": "Start free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Request a demo",
+        "cta_secondary_link": "/pages/contact"
+      }
+    }
+  },
+  "order": ["hero","feature_1","cta_band"]
+}

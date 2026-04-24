@@ -1,0 +1,220 @@
+{%- comment -%} IT Procurement / Purchase Request page — full intake form. Assign to /pages/it-procurement-perth or /pages/it-purchase-request. {%- endcomment -%}
+{% render 'evotech-breadcrumbs' %}
+
+<section class="evo-proc">
+  <header class="evo-proc__head">
+    <p class="evo-proc__eyebrow">EVOTECH DIGITAL · IT PROCUREMENT</p>
+    <h1 class="evo-proc__title">IT Purchase Request</h1>
+    <p class="evo-proc__lede">
+      Welcome to EvoTech Digital's dedicated IT Procurement portal for Perth businesses. Whether you're upgrading office laptops, expanding your server architecture, or licensing new software, use our streamlined Purchase Request Form below to initiate your order. We quote in AUD and ship Australia-wide.
+    </p>
+    <ul class="evo-proc__trust">
+      <li>AUD quote</li>
+      <li>Australian authorised stock</li>
+      <li>Same-day quote turnaround</li>
+      <li>Onsite Perth installation available</li>
+    </ul>
+  </header>
+
+  <div class="evo-proc__grid">
+    <div class="evo-proc__form-wrap">
+      <div class="evo-proc__form-head">
+        <h2>Purchase Request Form</h2>
+        <p>Fill in the details below. You'll receive a formal AUD quote (with GST) within one business day. No obligation.</p>
+      </div>
+
+      {%- form 'contact', id: 'ProcurementForm', class: 'evo-proc__form' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="evo-proc__ok">
+            <strong>Request received.</strong> Our procurement team will email you a formal quote within one business day. For urgent orders, call <a href="tel:+61466911816">+61 466 911 816</a>.
+          </div>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <div class="evo-proc__err">
+            <strong>Please fix:</strong>
+            <ul>{%- for field in form.errors -%}<li>{{ form.errors.messages[field] }}</li>{%- endfor -%}</ul>
+          </div>
+        {%- endif -%}
+
+        <input type="hidden" name="contact[form_type]" value="IT Purchase Request">
+
+        <fieldset class="evo-proc__fieldset">
+          <legend>Contact details</legend>
+          <div class="evo-proc__row">
+            <label>First name<input type="text" name="contact[first_name]" required></label>
+            <label>Last name<input type="text" name="contact[last_name]" required></label>
+          </div>
+          <div class="evo-proc__row">
+            <label>Work email<input type="email" name="contact[email]" required></label>
+            <label>Phone<input type="tel" name="contact[phone]" required></label>
+          </div>
+          <div class="evo-proc__row">
+            <label>Company / organisation<input type="text" name="contact[company]" required></label>
+            <label>Your role<input type="text" name="contact[role]" placeholder="e.g. IT Manager, Finance, Operations"></label>
+          </div>
+          <label>ABN (optional)<input type="text" name="contact[abn]" placeholder="11 digits, no spaces"></label>
+        </fieldset>
+
+        <fieldset class="evo-proc__fieldset">
+          <legend>Procurement category</legend>
+          <label>What are you ordering?
+            <select name="contact[category]" required>
+              <option value="">Select a category…</option>
+              <option>Laptops / Desktops</option>
+              <option>Servers / Storage / NAS</option>
+              <option>Networking (routers, switches, APs)</option>
+              <option>Cyber security appliances / software</option>
+              <option>Microsoft 365 / Google Workspace licences</option>
+              <option>Backup &amp; disaster recovery</option>
+              <option>Monitors, accessories, peripherals</option>
+              <option>Printers / managed print</option>
+              <option>Cloud (Azure / AWS / VPS)</option>
+              <option>Bundle / mixed order</option>
+              <option>Other (specify below)</option>
+            </select>
+          </label>
+          <label>Quantity needed<input type="number" name="contact[quantity]" min="1" placeholder="e.g. 12"></label>
+          <label>Preferred brand(s) — if any<input type="text" name="contact[brand]" placeholder="e.g. Dell, HP, UniFi, Meraki, Cisco, Synology"></label>
+        </fieldset>
+
+        <fieldset class="evo-proc__fieldset">
+          <legend>Project details</legend>
+          <label>Describe what you need
+            <textarea name="contact[body]" rows="6" required placeholder="Model, specs, quantities, intended use, any existing infrastructure we should match. The more detail, the faster we can quote."></textarea>
+          </label>
+          <div class="evo-proc__row">
+            <label>Budget range (AUD)
+              <select name="contact[budget]">
+                <option value="">—</option>
+                <option>Under A$2,000</option>
+                <option>A$2,000 – A$10,000</option>
+                <option>A$10,000 – A$25,000</option>
+                <option>A$25,000 – A$50,000</option>
+                <option>A$50,000 – A$100,000</option>
+                <option>A$100,000+</option>
+              </select>
+            </label>
+            <label>Timeline
+              <select name="contact[timeline]">
+                <option value="">—</option>
+                <option>ASAP — urgent</option>
+                <option>Within 2 weeks</option>
+                <option>Within 1 month</option>
+                <option>Within 3 months</option>
+                <option>Just exploring</option>
+              </select>
+            </label>
+          </div>
+          <label>Need onsite delivery / installation (Perth)?
+            <select name="contact[install]">
+              <option value="">—</option>
+              <option>No — ship only</option>
+              <option>Yes — delivery</option>
+              <option>Yes — delivery + installation</option>
+              <option>Yes — delivery + installation + staff training</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <label class="evo-proc__consent">
+          <input type="checkbox" name="contact[consent]" value="yes" required>
+          <span>I consent to EvoTech Digital contacting me about this procurement request. See our <a href="/policies/privacy-policy">privacy policy</a>.</span>
+        </label>
+
+        <button type="submit" class="evo-proc__submit">Submit purchase request</button>
+        <p class="evo-proc__note">Formal AUD quote delivered within one business day. Urgent? Call <a href="tel:+61466911816">+61 466 911 816</a>.</p>
+      {%- endform -%}
+    </div>
+
+    <aside class="evo-proc__aside">
+      <div class="evo-proc__card">
+        <p class="evo-proc__label">WHAT HAPPENS NEXT</p>
+        <ol class="evo-proc__steps">
+          <li><strong>We review your request</strong> and confirm we can source the right gear at the right price.</li>
+          <li><strong>You receive a formal AUD quote</strong> (PDF, PO-ready) within 1 business day.</li>
+          <li><strong>Approve &amp; PO</strong> — we procure Australian-authorised stock and keep you updated.</li>
+          <li><strong>Delivery &amp; optional install</strong> — Perth metro onsite or Australia-wide shipping.</li>
+        </ol>
+      </div>
+
+      <div class="evo-proc__card">
+        <p class="evo-proc__label">WHY BUY VIA EVOTECH</p>
+        <ul class="evo-proc__benefits">
+          <li>Authorised Australian distribution — full warranty</li>
+          <li>AUD pricing, PO-friendly</li>
+          <li>Expert spec advice — not just a reseller</li>
+          <li>Perth warehouse — same-day metro delivery possible</li>
+          <li>Installation, migration &amp; training available</li>
+          <li>Ongoing Managed IT support once deployed</li>
+        </ul>
+      </div>
+
+      <div class="evo-proc__card evo-proc__card--urgent">
+        <p class="evo-proc__label">URGENT PROCUREMENT</p>
+        <p>Same-day quote for critical orders.</p>
+        <a class="evo-proc__urgent-btn" href="tel:+61466911816">Call +61 466 911 816</a>
+        <p class="evo-proc__urgent-sub">Mon–Fri · 9:00 AM – 5:00 PM AWST</p>
+      </div>
+    </aside>
+  </div>
+
+  {%- if page.content != blank -%}
+    <div class="evo-proc__extra rte">{{ page.content }}</div>
+  {%- endif -%}
+</section>
+
+<style>
+  .evo-proc { max-width: 1240px; margin: 0 auto; padding: 40px 24px 100px; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; }
+  .evo-proc__head { max-width: 820px; margin: 0 0 48px; }
+  .evo-proc__eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 14px; }
+  .evo-proc__title { font-family: 'Clash Display', sans-serif; font-size: clamp(36px, 6vw, 64px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 14px; }
+  .evo-proc__lede { color: #B6B5C6; font-size: 17px; line-height: 1.65; margin: 0 0 22px; }
+  .evo-proc__trust { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 18px; color: #B6B5C6; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .06em; }
+  .evo-proc__trust li { position: relative; padding-left: 14px; }
+  .evo-proc__trust li::before { content: "✓"; position: absolute; left: 0; color: #A8E898; }
+
+  .evo-proc__grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+  @media (min-width: 960px) { .evo-proc__grid { grid-template-columns: 1.5fr 1fr; gap: 40px; } }
+
+  .evo-proc__form-wrap { background: #0B0820; border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 32px; }
+  .evo-proc__form-head { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .evo-proc__form-head h2 { font-family: 'Clash Display', sans-serif; font-size: 26px; margin: 0 0 6px; line-height: 1.15; }
+  .evo-proc__form-head p { color: #B6B5C6; font-size: 14.5px; margin: 0; }
+  .evo-proc__form { display: flex; flex-direction: column; gap: 14px; }
+  .evo-proc__fieldset { border: 0; padding: 0; margin: 0 0 8px; display: flex; flex-direction: column; gap: 12px; }
+  .evo-proc__fieldset legend { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .2em; color: #A8E898; text-transform: uppercase; padding: 0 0 8px; }
+  .evo-proc__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 560px) { .evo-proc__row { grid-template-columns: 1fr; } }
+  .evo-proc__form label { display: flex; flex-direction: column; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; color: #B6B5C6; text-transform: uppercase; }
+  .evo-proc__form input, .evo-proc__form select, .evo-proc__form textarea { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); color: #FFFFFF; padding: 12px 14px; border-radius: 10px; font-size: 15px; font-family: 'Satoshi', system-ui, sans-serif; resize: vertical; text-transform: none; letter-spacing: 0; }
+  .evo-proc__form input:focus, .evo-proc__form select:focus, .evo-proc__form textarea:focus { border-color: #A8E898; outline: none; }
+  .evo-proc__consent { flex-direction: row !important; align-items: flex-start !important; gap: 10px !important; text-transform: none !important; letter-spacing: 0 !important; color: #D8D7E3 !important; font-family: inherit !important; font-size: 13px !important; padding-top: 6px; }
+  .evo-proc__consent input { width: auto !important; margin-top: 3px; }
+  .evo-proc__consent a { color: #A8E898; }
+  .evo-proc__submit { background: #FF7A4A; color: #0A0A0A; border: 0; border-radius: 999px; padding: 15px 26px; font-weight: 700; font-size: 15px; cursor: pointer; font-family: inherit; margin-top: 4px; align-self: flex-start; }
+  .evo-proc__submit:hover { background: #ff9068; }
+  .evo-proc__note { color: #B6B5C6; font-size: 13px; margin: 0; }
+  .evo-proc__note a { color: #A8E898; }
+  .evo-proc__ok { background: rgba(168,232,152,.08); border: 1px solid rgba(168,232,152,.3); color: #D8F2C9; padding: 14px 16px; border-radius: 10px; font-size: 14px; }
+  .evo-proc__ok a { color: #A8E898; }
+  .evo-proc__err { background: rgba(255,122,74,.08); border: 1px solid rgba(255,122,74,.3); color: #FFD6C4; padding: 14px 16px; border-radius: 10px; font-size: 14px; }
+  .evo-proc__err ul { margin: 6px 0 0; padding-left: 20px; }
+
+  .evo-proc__aside { display: flex; flex-direction: column; gap: 16px; }
+  .evo-proc__card { background: #0B0820; border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 24px 22px; }
+  .evo-proc__label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .22em; color: #A8E898; margin: 0 0 12px; }
+  .evo-proc__steps { list-style: none; counter-reset: step; padding: 0; margin: 0; }
+  .evo-proc__steps li { position: relative; padding-left: 36px; margin-bottom: 14px; color: #D8D7E3; font-size: 14px; line-height: 1.55; counter-increment: step; }
+  .evo-proc__steps li::before { content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #A8E898; background: rgba(168,232,152,.1); border: 1px solid rgba(168,232,152,.3); padding: 4px 6px; border-radius: 6px; letter-spacing: .06em; }
+  .evo-proc__steps strong { color: #FFFFFF; font-weight: 600; }
+  .evo-proc__benefits { list-style: none; padding: 0; margin: 0; }
+  .evo-proc__benefits li { padding-left: 20px; position: relative; margin-bottom: 10px; color: #D8D7E3; font-size: 14px; line-height: 1.5; }
+  .evo-proc__benefits li::before { content: "✓"; position: absolute; left: 0; color: #A8E898; }
+  .evo-proc__card--urgent { border-color: rgba(255,122,74,.3); background: linear-gradient(135deg, #0B0820, #1a0f0a); }
+  .evo-proc__card--urgent p { color: #FFD6C4; margin: 0 0 8px; font-size: 14px; }
+  .evo-proc__urgent-btn { display: inline-block; background: #FF7A4A; color: #0A0A0A; padding: 12px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+  .evo-proc__urgent-btn:hover { background: #ff9068; }
+  .evo-proc__urgent-sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .08em; margin-top: 8px !important; color: #B6B5C6 !important; }
+  .evo-proc__extra { margin-top: 48px; color: #D8D7E3; font-size: 16px; line-height: 1.7; }
+  .evo-proc__extra a { color: #A8E898; }
+</style>

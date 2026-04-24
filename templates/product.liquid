@@ -1,9 +1,12 @@
-{%- comment -%} Default product template {%- endcomment -%}
+{%- comment -%} EvoTech product template — breadcrumbs, variants, reviews, FAQ, JSON-LD {%- endcomment -%}
+
+{% render 'evotech-breadcrumbs' %}
+
 <section class="evo-product">
   <div class="evo-product__grid">
     <div class="evo-product__media">
       {%- if product.featured_media -%}
-        <div class="evo-product__media-main">
+        <div class="evo-product__media-main" data-evo-main-media>
           {{ product.featured_media | image_url: width: 1200 | image_tag: loading: 'eager', widths: '400,600,800,1200,1600', sizes: '(min-width: 900px) 50vw, 100vw', alt: product.featured_media.alt | default: product.title }}
         </div>
       {%- else -%}
@@ -12,7 +15,11 @@
       {%- if product.media.size > 1 -%}
         <ul class="evo-product__thumbs">
           {%- for media in product.media -%}
-            <li>{{ media | image_url: width: 200 | image_tag: loading: 'lazy', widths: '120,200', alt: media.alt | default: product.title }}</li>
+            <li>
+              <button type="button" class="evo-product__thumb-btn" data-evo-thumb data-src="{{ media | image_url: width: 1200 }}">
+                {{ media | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,240', alt: media.alt | default: product.title }}
+              </button>
+            </li>
           {%- endfor -%}
         </ul>
       {%- endif -%}
@@ -22,13 +29,46 @@
       <p class="evo-product__vendor">{{ product.vendor }}</p>
       <h1 class="evo-product__title">{{ product.title }}</h1>
 
+      {%- comment -%} Review summary (reads Shopify product_reviews / judge.me / yotpo metafields if present) {%- endcomment -%}
+      {%- assign review_count = product.metafields.reviews.rating_count | plus: 0 -%}
+      {%- assign review_avg = 0 -%}
+      {%- if product.metafields.reviews.rating.value.value != blank -%}
+        {%- assign review_avg = product.metafields.reviews.rating.value.value -%}
+      {%- elsif product.metafields.reviews.rating.value != blank -%}
+        {%- assign review_avg = product.metafields.reviews.rating.value -%}
+      {%- elsif product.metafields.reviews.rating != blank -%}
+        {%- assign review_avg = product.metafields.reviews.rating -%}
+      {%- endif -%}
+      {%- assign review_avg = review_avg | times: 1.0 -%}
+      {%- if review_count != 0 -%}
+        <div class="evo-product__stars" aria-label="{{ review_avg }} out of 5 stars, {{ review_count }} reviews">
+          {%- assign stars_full = review_avg | round -%}
+          {%- for i in (1..5) -%}
+            <span class="evo-product__star {% if i <= stars_full %}evo-product__star--on{% endif %}">★</span>
+          {%- endfor -%}
+          <span class="evo-product__stars-meta">{{ review_avg | round: 1 }} · {{ review_count }} review{% unless review_count == 1 %}s{% endunless %}</span>
+          <a class="evo-product__stars-link" href="#reviews">Read reviews</a>
+        </div>
+      {%- else -%}
+        <div class="evo-product__stars evo-product__stars--empty">
+          <span class="evo-product__star">★</span><span class="evo-product__star">★</span><span class="evo-product__star">★</span><span class="evo-product__star">★</span><span class="evo-product__star">★</span>
+          <a class="evo-product__stars-link" href="#reviews">Be the first to review</a>
+        </div>
+      {%- endif -%}
+
       <div class="evo-product__price">
         {%- if product.compare_at_price > product.price -%}
           <span class="evo-product__price-compare">{{ product.compare_at_price | money }}</span>
         {%- endif -%}
         <span class="evo-product__price-current">{{ product.price | money }}</span>
-        <span class="evo-product__price-note">AUD · Incl. GST</span>
+        <span class="evo-product__price-note">AUD</span>
       </div>
+
+      {%- if product.selected_or_first_available_variant.available -%}
+        <p class="evo-product__stock"><span class="evo-product__stock-dot"></span> In stock · Ready to ship</p>
+      {%- else -%}
+        <p class="evo-product__stock evo-product__stock--out"><span class="evo-product__stock-dot"></span> Temporarily out of stock</p>
+      {%- endif -%}
 
       {%- form 'product', product, class: 'evo-product__form' -%}
         {%- unless product.has_only_default_variant -%}
@@ -62,64 +102,483 @@
         </button>
       {%- endform -%}
 
-      {%- if product.description != blank -%}
-        <div class="evo-product__desc rte">
-          {{ product.description }}
-        </div>
-      {%- endif -%}
-
       <ul class="evo-product__trust">
-        <li>Shipped from Perth, WA</li>
-        <li>AUD · GST invoice</li>
-        <li>Backed by Perth-based support</li>
+        <li>Australia-wide delivery</li>
+        <li>AUD pricing</li>
+        <li>Perth-based support</li>
+        <li>Express shipping available</li>
       </ul>
     </div>
   </div>
+
+  <div class="evo-product__panels">
+    {%- if product.description != blank -%}
+      <section class="evo-product__panel">
+        <h2>Product description</h2>
+        <div class="evo-product__desc rte">{{ product.description }}</div>
+      </section>
+    {%- endif -%}
+
+    {%- assign specs = product.metafields.custom.specs.value | default: product.metafields.specs.table.value -%}
+    {%- if specs != blank -%}
+      <section class="evo-product__panel">
+        <h2>Specifications</h2>
+        <div class="evo-product__specs rte">{{ specs }}</div>
+      </section>
+    {%- endif -%}
+
+    {%- assign faq_block = product.metafields.custom.faq.value | default: product.metafields.faq.value -%}
+    {%- if faq_block != blank -%}
+      <section class="evo-product__panel" id="faq">
+        <h2>Frequently asked questions</h2>
+        <div class="evo-product__faq rte">{{ faq_block }}</div>
+      </section>
+    {%- endif -%}
+
+    <section class="evo-product__panel evo-product__panel--reviews" id="reviews">
+      <div class="evo-product__reviews-head">
+        <h2>Customer reviews</h2>
+        {%- if review_count != 0 -%}
+          <div class="evo-product__reviews-summary">
+            <span class="evo-product__reviews-score">
+              <strong>{{ review_avg | round: 1 }}</strong>
+              <span class="evo-product__reviews-slash">/ 5</span>
+            </span>
+            <span class="evo-product__reviews-stars" aria-hidden="true">
+              {%- assign full_stars = review_avg | round -%}
+              {%- for i in (1..5) -%}
+                <span class="evo-product__star {% if i <= full_stars %}evo-product__star--on{% endif %}">★</span>
+              {%- endfor -%}
+            </span>
+            <span class="evo-product__reviews-count">
+              from {{ review_count }} verified review{% unless review_count == 1 %}s{% endunless %}
+            </span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%}
+        Multi-app review widget zone.
+        Whichever review app you have installed (Shopify Product Reviews, Judge.me, Loox,
+        Stamped, Yotpo, Reviews.io, Okendo) will auto-detect its mount point below and
+        populate it with the review list + "Write a review" form.
+      {%- endcomment -%}
+      <div class="evo-product__reviews-widget">
+        {%- comment -%} Shopify Product Reviews (legacy SPR) {%- endcomment -%}
+        <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
+
+        {%- comment -%} Judge.me {%- endcomment -%}
+        <div class="jdgm-widget jdgm-review-widget"
+             data-id="{{ product.id }}"
+             data-product-title="{{ product.title | escape }}"></div>
+
+        {%- comment -%} Loox {%- endcomment -%}
+        <div id="looxReviews" data-product-id="{{ product.id }}"></div>
+
+        {%- comment -%} Stamped.io {%- endcomment -%}
+        <div id="stamped-main-widget"
+             data-product-id="{{ product.id }}"
+             data-name="{{ product.title | escape }}"
+             data-url="{{ shop.url }}{{ product.url }}"
+             data-image-url="{{ product.featured_image | image_url: width: 800 }}"
+             data-description="{{ product.description | strip_html | escape | truncate: 500 }}"
+             data-product-sku="{{ product.selected_or_first_available_variant.sku }}"></div>
+
+        {%- comment -%} Yotpo {%- endcomment -%}
+        <div class="yotpo yotpo-main-widget"
+             data-product-id="{{ product.id }}"
+             data-name="{{ product.title | escape }}"
+             data-url="{{ shop.url }}{{ product.url }}"
+             data-image-url="{{ product.featured_image | image_url: width: 800 }}"
+             data-description="{{ product.description | strip_html | escape | truncate: 500 }}"></div>
+
+        {%- comment -%} Okendo {%- endcomment -%}
+        <div data-oke-reviews-product-listing
+             data-oke-reviews-product-id="shopify-{{ product.id }}"></div>
+
+        {%- comment -%} Reviews.io {%- endcomment -%}
+        <div id="ruk_rating_snippet" data-sku="{{ product.selected_or_first_available_variant.sku }}"></div>
+      </div>
+
+      {%- if review_count == 0 -%}
+        <p class="evo-product__reviews-empty">No reviews yet — be the first to share your experience.</p>
+      {%- endif -%}
+    </section>
+
+    <section class="evo-product__panel">
+      <h2>Shipping &amp; returns</h2>
+      <p>Australia-wide delivery on every order. Standard shipping 3–7 business days; express options available at checkout. All prices are in AUD. 14-day hassle-free returns on unopened hardware — see our <a href="/policies/refund-policy">refund policy</a>. Questions? <a href="/pages/contact">Contact our Perth-based support team</a>.</p>
+    </section>
+  </div>
 </section>
 
+{%- comment -%} JSON-LD Product Schema {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 5000 | json }},
+  "sku": {{ product.selected_or_first_available_variant.sku | json }},
+  "mpn": {{ product.selected_or_first_available_variant.sku | json }},
+  {%- if product.featured_media -%}
+  "image": [
+    {%- for media in product.media limit: 6 -%}
+      {{ media | image_url: width: 1200 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ],
+  {%- endif -%}
+  "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
+  {%- if review_count != 0 -%}
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ review_avg | round: 2 }}",
+    "reviewCount": "{{ review_count }}"
+  },
+  {%- endif -%}
+  "offers": {
+    "@type": "{% if product.variants.size > 1 %}AggregateOffer{% else %}Offer{% endif %}",
+    {%- if product.variants.size > 1 -%}
+      "lowPrice": "{{ product.price_min | divided_by: 100.0 }}",
+      "highPrice": "{{ product.price_max | divided_by: 100.0 }}",
+      "offerCount": "{{ product.variants.size }}",
+    {%- else -%}
+      "price": "{{ product.price | divided_by: 100.0 }}",
+    {%- endif -%}
+    "priceCurrency": {{ shop.currency | json }},
+    "availability": "{% if product.selected_or_first_available_variant.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "url": "{{ shop.url }}{{ product.url }}",
+    "seller": { "@type": "Organization", "name": {{ shop.name | json }} }
+  }
+}
+</script>
+
 <style>
-  .evo-product { max-width: 1240px; margin: 0 auto; padding: 48px 24px 120px; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; }
+  .evo-product { max-width: 1240px; margin: 0 auto; padding: 20px 24px 100px; color: #FFFFFF; font-family: 'Satoshi', system-ui, sans-serif; }
   .evo-product__grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
   @media (min-width: 900px) { .evo-product__grid { grid-template-columns: 1.1fr 1fr; gap: 56px; } }
   .evo-product__media-main { background: #0B0820; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
   .evo-product__media-main img { width: 100%; height: auto; display: block; }
   .evo-product__media-empty { aspect-ratio: 1; background: #0B0820; border-radius: 16px; display: grid; place-items: center; color: #B6B5C6; border: 1px solid rgba(255,255,255,.08); }
   .evo-product__thumbs { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 10px; }
-  .evo-product__thumbs img { width: 100%; border-radius: 10px; border: 1px solid rgba(255,255,255,.08); background: #0B0820; }
-  .evo-product__vendor { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 10px; text-transform: uppercase; }
-  .evo-product__title { font-family: 'Clash Display', 'Satoshi', sans-serif; font-size: clamp(30px, 4.5vw, 44px); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 18px; }
-  .evo-product__price { display: flex; align-items: baseline; gap: 10px; margin: 0 0 24px; flex-wrap: wrap; }
-  .evo-product__price-current { font-family: 'Clash Display', 'Satoshi', sans-serif; font-size: 28px; font-weight: 600; }
+  .evo-product__thumb-btn { background: #0B0820; padding: 0; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; cursor: pointer; overflow: hidden; transition: border-color .2s; }
+  .evo-product__thumb-btn:hover, .evo-product__thumb-btn:focus { border-color: #A8E898; }
+  .evo-product__thumb-btn img { width: 100%; height: auto; display: block; }
+  .evo-product__vendor { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .22em; color: #A8E898; margin: 0 0 10px; text-transform: uppercase; }
+  .evo-product__title { font-family: 'Clash Display', sans-serif; font-size: clamp(30px, 4.5vw, 44px); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 14px; }
+  .evo-product__stars { display: flex; align-items: center; gap: 4px; margin: 0 0 16px; font-size: 14px; }
+  .evo-product__star { color: rgba(255,255,255,.22); font-size: 17px; }
+  .evo-product__star--on { color: #FF7A4A; }
+  .evo-product__stars--empty .evo-product__star { color: rgba(255,255,255,.18); }
+  .evo-product__stars-meta { color: #B6B5C6; font-family: 'JetBrains Mono', monospace; font-size: 12px; margin-left: 6px; }
+  .evo-product__stars-link { color: #A8E898; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-decoration: none; margin-left: 8px; }
+  .evo-product__stars-link:hover { text-decoration: underline; }
+  .evo-product__price { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; flex-wrap: wrap; }
+  .evo-product__price-current { font-family: 'Clash Display', sans-serif; font-size: 32px; font-weight: 600; }
   .evo-product__price-compare { color: #B6B5C6; text-decoration: line-through; font-size: 18px; }
-  .evo-product__price-note { color: #B6B5C6; font-size: 13px; }
+  .evo-product__price-note { color: #B6B5C6; font-size: 13px; font-family: 'JetBrains Mono', monospace; letter-spacing: .06em; }
+  .evo-product__stock { display: flex; align-items: center; gap: 8px; color: #A8E898; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .06em; margin: 0 0 22px; }
+  .evo-product__stock-dot { width: 8px; height: 8px; border-radius: 50%; background: #A8E898; box-shadow: 0 0 0 3px rgba(168,232,152,.2); }
+  .evo-product__stock--out { color: #FF7A4A; }
+  .evo-product__stock--out .evo-product__stock-dot { background: #FF7A4A; box-shadow: 0 0 0 3px rgba(255,122,74,.2); }
   .evo-product__form { display: flex; flex-direction: column; gap: 16px; }
   .evo-product__option { display: flex; flex-direction: column; gap: 6px; }
-  .evo-product__option-label { font-size: 13px; color: #B6B5C6; text-transform: uppercase; letter-spacing: .1em; }
+  .evo-product__option-label { font-size: 13px; color: #B6B5C6; text-transform: uppercase; letter-spacing: .1em; font-family: 'JetBrains Mono', monospace; }
   .evo-product__option-select, .evo-product__qty { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); color: #FFFFFF; padding: 12px 14px; border-radius: 10px; font-size: 15px; font-family: inherit; }
   .evo-product__qty-row { display: flex; align-items: center; gap: 12px; }
+  .evo-product__qty-label { font-size: 13px; color: #B6B5C6; text-transform: uppercase; letter-spacing: .1em; font-family: 'JetBrains Mono', monospace; }
   .evo-product__qty { width: 100px; text-align: center; }
-  .evo-product__add { background: #FF7A4A; color: #0A0A0A; border: 0; border-radius: 999px; padding: 16px 28px; font-weight: 700; font-size: 15px; cursor: pointer; transition: transform .18s ease, background .18s ease; }
+  .evo-product__add { background: #FF7A4A; color: #0A0A0A; border: 0; border-radius: 999px; padding: 16px 28px; font-weight: 700; font-size: 15px; cursor: pointer; transition: transform .18s ease, background .18s ease; font-family: inherit; }
   .evo-product__add:hover:not(:disabled) { transform: translateY(-1px); background: #ff9068; }
   .evo-product__add:disabled { opacity: .4; cursor: not-allowed; }
-  .evo-product__desc { margin-top: 24px; color: #D8D7E3; font-size: 16px; line-height: 1.7; }
-  .evo-product__desc a { color: #A8E898; }
-  .evo-product__trust { list-style: none; padding: 0; margin: 24px 0 0; display: flex; gap: 18px; flex-wrap: wrap; color: #B6B5C6; font-size: 13px; font-family: 'JetBrains Mono', ui-monospace, monospace; letter-spacing: .04em; }
+  .evo-product__trust { list-style: none; padding: 0; margin: 18px 0 0; display: flex; gap: 18px; flex-wrap: wrap; color: #B6B5C6; font-size: 12px; font-family: 'JetBrains Mono', monospace; letter-spacing: .04em; }
   .evo-product__trust li { position: relative; padding-left: 14px; }
   .evo-product__trust li::before { content: "✓"; position: absolute; left: 0; color: #A8E898; }
+
+  .evo-product__panels { margin-top: 72px; display: grid; gap: 14px; }
+  .evo-product__panel { background: #0B0820; border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 28px 26px; }
+  .evo-product__panel h2 { font-family: 'Clash Display', sans-serif; font-size: 24px; line-height: 1.15; margin: 0 0 14px; letter-spacing: -0.01em; }
+  .evo-product__desc, .evo-product__specs, .evo-product__faq, .evo-product__panel p { color: #D8D7E3; font-size: 16px; line-height: 1.7; }
+  .evo-product__panel a { color: #A8E898; }
+  .evo-product__specs table { width: 100%; border-collapse: collapse; }
+  .evo-product__specs th, .evo-product__specs td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; }
+  .evo-product__specs th { color: #B6B5C6; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+  .evo-product__reviews-empty { color: #B6B5C6; font-size: 15px; margin-top: 20px; }
+
+  /* Customer reviews panel — header + summary */
+  .evo-product__panel--reviews { padding-bottom: 32px; }
+  .evo-product__reviews-head {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 24px;
+  }
+  @media (min-width: 720px) {
+    .evo-product__reviews-head {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+  }
+  .evo-product__reviews-head h2 { margin: 0; }
+  .evo-product__reviews-summary {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .evo-product__reviews-score {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .evo-product__reviews-score strong {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #FF7A4A;
+    line-height: 1;
+  }
+  .evo-product__reviews-slash {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #B6B5C6;
+    letter-spacing: 0.06em;
+  }
+  .evo-product__reviews-stars {
+    display: inline-flex;
+    gap: 2px;
+  }
+  .evo-product__reviews-stars .evo-product__star { font-size: 18px; color: rgba(255,255,255,0.22); }
+  .evo-product__reviews-stars .evo-product__star--on { color: #FF7A4A; }
+  .evo-product__reviews-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #B6B5C6;
+    letter-spacing: 0.06em;
+  }
+
+  /* Multi-app review widget zone — style the content each app injects */
+  .evo-product__reviews-widget { color: #D8D7E3; }
+  .evo-product__reviews-widget > div:empty {
+    display: none;   /* hide mount points for apps that aren't installed */
+  }
+
+  /* Shopify Product Reviews (SPR) */
+  .evo-product__reviews-widget #shopify-product-reviews .spr-container,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-content {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    color: #D8D7E3;
+  }
+  .evo-product__reviews-widget #shopify-product-reviews .spr-summary,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-review {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(168,232,152,0.14) !important;
+    border-radius: 12px;
+    padding: 18px 20px !important;
+    margin: 0 0 12px !important;
+    color: #D8D7E3;
+  }
+  .evo-product__reviews-widget #shopify-product-reviews .spr-review-header-title,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-review-header-byline,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-review-content-body,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-summary-caption,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-summary-actions {
+    color: #D8D7E3 !important;
+  }
+  .evo-product__reviews-widget #shopify-product-reviews .spr-review-header-title {
+    font-family: 'Clash Display', sans-serif;
+    color: #FFFFFF !important;
+    font-size: 15px;
+  }
+  .evo-product__reviews-widget #shopify-product-reviews .spr-icon,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-starratings {
+    color: #FF7A4A !important;
+  }
+  .evo-product__reviews-widget #shopify-product-reviews .spr-button,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-summary-actions-newreview {
+    background: #FF7A4A !important;
+    color: #0A0A0A !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    padding: 12px 22px !important;
+    font-family: 'Satoshi', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+  .evo-product__reviews-widget #shopify-product-reviews .spr-form {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(168,232,152,0.14);
+    border-radius: 12px;
+    padding: 20px;
+    color: #D8D7E3;
+  }
+  .evo-product__reviews-widget #shopify-product-reviews .spr-form-input,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-form textarea,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-form input[type="text"],
+  .evo-product__reviews-widget #shopify-product-reviews .spr-form input[type="email"] {
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: #FFFFFF !important;
+    border-radius: 10px !important;
+    padding: 10px 12px !important;
+  }
+  .evo-product__reviews-widget #shopify-product-reviews .spr-form-label,
+  .evo-product__reviews-widget #shopify-product-reviews .spr-form-title {
+    color: #FFFFFF !important;
+  }
+
+  /* Judge.me */
+  .evo-product__reviews-widget .jdgm-widget { color: #D8D7E3; }
+  .evo-product__reviews-widget .jdgm-widget .jdgm-rev {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(168,232,152,0.14) !important;
+    border-radius: 12px;
+    padding: 18px !important;
+    margin-bottom: 12px !important;
+  }
+  .evo-product__reviews-widget .jdgm-widget .jdgm-rev__title,
+  .evo-product__reviews-widget .jdgm-widget .jdgm-rev__author { color: #FFFFFF; }
+  .evo-product__reviews-widget .jdgm-widget .jdgm-rev__body,
+  .evo-product__reviews-widget .jdgm-widget .jdgm-rev__timestamp { color: #D8D7E3; }
+  .evo-product__reviews-widget .jdgm-star { color: #FF7A4A !important; }
+  .evo-product__reviews-widget .jdgm-write-rev-link {
+    background: #FF7A4A !important;
+    color: #0A0A0A !important;
+    border-radius: 999px !important;
+    padding: 12px 22px !important;
+  }
+
+  /* Loox / Stamped / Yotpo — soft reset so their widgets inherit theme colors */
+  .evo-product__reviews-widget #looxReviews,
+  .evo-product__reviews-widget #stamped-main-widget,
+  .evo-product__reviews-widget .yotpo {
+    background: transparent !important;
+    color: #D8D7E3;
+  }
+
+  /* ---------- FAQ block (rendered from product metafield) ---------- */
+  .evo-product__faq { color: #D8D7E3; }
+  .evo-product__faq details {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(168,232,152,0.14);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 0 0 10px;
+    transition: border-color .2s ease, background .2s ease;
+  }
+  .evo-product__faq details[open] {
+    background: rgba(168,232,152,0.06);
+    border-color: rgba(168,232,152,0.35);
+  }
+  .evo-product__faq summary {
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: 'Clash Display', 'Satoshi', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    list-style: none;
+    padding-right: 28px;
+    position: relative;
+  }
+  .evo-product__faq summary::-webkit-details-marker { display: none; }
+  .evo-product__faq summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    color: #A8E898;
+    transition: transform .2s ease;
+  }
+  .evo-product__faq details[open] summary::after {
+    content: "−";
+  }
+  .evo-product__faq details > *:not(summary) {
+    color: #D8D7E3;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 12px;
+  }
+  .evo-product__faq details p { margin: 8px 0; }
+  .evo-product__faq details a { color: #A8E898; }
+
+  /* Technical reference guide / spec tables inside FAQ blocks */
+  .evo-product__faq table,
+  .evo-product__panel .evo-product__faq table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(11,8,32,0.6);
+    border: 1px solid rgba(168,232,152,0.18);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 14px 0 0;
+  }
+  .evo-product__faq thead,
+  .evo-product__faq tr:first-child {
+    background: rgba(168,232,152,0.08);
+  }
+  .evo-product__faq th,
+  .evo-product__faq tr:first-child td {
+    color: #A8E898 !important;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    text-align: left;
+    padding: 14px 18px;
+    font-weight: 600;
+  }
+  .evo-product__faq td {
+    color: #D8D7E3;
+    padding: 14px 18px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px;
+    vertical-align: top;
+  }
+  .evo-product__faq td:first-child {
+    color: #B6B5C6;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    width: 40%;
+  }
 </style>
 
 <script>
   (function(){
-    var variantSelect = document.querySelector('.evo-product__variant-select');
-    var optionSelects = document.querySelectorAll('.evo-product__option-select');
-    if (!variantSelect || !optionSelects.length) return;
-    optionSelects.forEach(function(sel){
-      sel.addEventListener('change', function(){
-        var chosen = Array.prototype.map.call(optionSelects, function(s){ return s.value; });
-        Array.prototype.forEach.call(variantSelect.options, function(opt){
-          if (opt.textContent.split(' — ')[0].trim() === chosen.join(' / ')) { variantSelect.value = opt.value; }
+    var mainMedia = document.querySelector('[data-evo-main-media]');
+    var thumbs = document.querySelectorAll('[data-evo-thumb]');
+    if (mainMedia && thumbs.length) {
+      thumbs.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var src = btn.getAttribute('data-src');
+          var img = mainMedia.querySelector('img');
+          if (img) { img.src = src; img.srcset = ''; }
         });
       });
-    });
+    }
+    var variantSelect = document.querySelector('.evo-product__variant-select');
+    var optionSelects = document.querySelectorAll('.evo-product__option-select');
+    if (variantSelect && optionSelects.length) {
+      optionSelects.forEach(function(sel){
+        sel.addEventListener('change', function(){
+          var chosen = Array.prototype.map.call(optionSelects, function(s){ return s.value; });
+          Array.prototype.forEach.call(variantSelect.options, function(opt){
+            if (opt.textContent.split(' — ')[0].trim() === chosen.join(' / ')) { variantSelect.value = opt.value; }
+          });
+        });
+      });
+    }
   })();
 </script>

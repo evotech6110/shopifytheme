@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "hero": {
+      "type": "evotech-saas-product-hero",
+      "settings": {
+        "product_name": "NetPulse",
+        "category": "Observability",
+        "price_display": "A$89/mo",
+        "price_amount": "89.00",
+        "schema_category": "UtilitiesApplication",
+        "headline": "See every device, every packet, every outage — before users do.",
+        "subhead": "Real-time network observability for teams that run lean. Free for the first 25 devices.",
+        "cta_primary_text": "Start free (25 devices)",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "See a live demo",
+        "cta_secondary_link": "/pages/contact",
+        "trust_metric": "99.98% uptime",
+        "trust_rating": "4.8 / 5 · 164 reviews"
+      }
+    },
+    "feature_1": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "OBSERVABILITY",
+        "headline": "Network intelligence without the enterprise price tag.",
+        "body": "Active synthetic checks, SNMP polling, and flow analytics in one dashboard. Auto-discovers topology. Surfaces the 2 alerts you should actually look at.",
+        "placeholder_metric": "<1s",
+        "placeholder_label": "Alert propagation",
+        "cta_text": "See supported vendors",
+        "cta_link": "/pages/contact"
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "Auto-discovery of every device on your LAN" } },
+        "c2": { "type": "check", "settings": { "text": "Vendor-neutral: Cisco, Ubiquiti, Aruba, MikroTik" } },
+        "c3": { "type": "check", "settings": { "text": "SLA dashboards exportable as PDF" } }
+      },
+      "block_order": ["c1","c2","c3"]
+    },
+    "cta_band": {
+      "type": "evotech-cta-band",
+      "settings": {
+        "eyebrow": "NETPULSE",
+        "headline": "Catch the outage before your CEO does.",
+        "lede": "Start free. Upgrade when you grow.",
+        "cta_primary_text": "Create free account",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Book a demo",
+        "cta_secondary_link": "/pages/contact"
+      }
+    }
+  },
+  "order": ["hero","feature_1","cta_band"]
+}

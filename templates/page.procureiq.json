@@ -1,0 +1,54 @@
+{
+  "sections": {
+    "hero": {
+      "type": "evotech-saas-product-hero",
+      "settings": {
+        "product_name": "ProcureIQ",
+        "category": "IT Procurement",
+        "price_display": "A$59/mo",
+        "price_amount": "59.00",
+        "schema_category": "FinanceApplication",
+        "headline": "IT procurement that pays for itself in the first quarter.",
+        "subhead": "Vendor-neutral quoting, asset tracking, renewal alerts — built for finance teams that buy tech.",
+        "cta_primary_text": "Start 14-day free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "See sample savings",
+        "cta_secondary_link": "/pages/contact",
+        "trust_metric": "A$42k avg Y1 savings",
+        "trust_rating": "4.8 / 5 · 142 reviews"
+      }
+    },
+    "feature_1": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "HOW IT WORKS",
+        "headline": "Every asset. Every vendor. Every renewal.",
+        "body": "ProcureIQ pulls live quotes from 40+ Australian IT vendors, tracks every asset through its lifecycle, and alerts you 45 days before renewals so you never over-spend.",
+        "placeholder_metric": "40+",
+        "placeholder_label": "AU vendors",
+        "cta_text": "See the vendor list",
+        "cta_link": "/pages/contact"
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "Live quotes from 40+ AU vendors" } },
+        "c2": { "type": "check", "settings": { "text": "Asset lifecycle + depreciation tracking" } },
+        "c3": { "type": "check", "settings": { "text": "Renewal alerts 45 days out" } },
+        "c4": { "type": "check", "settings": { "text": "Xero + MYOB sync" } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    },
+    "cta_band": {
+      "type": "evotech-cta-band",
+      "settings": {
+        "eyebrow": "PROCUREIQ",
+        "headline": "Stop overpaying for IT.",
+        "lede": "Unlimited assets. 14-day free trial. Cancel anytime.",
+        "cta_primary_text": "Start free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Book a walkthrough",
+        "cta_secondary_link": "/pages/contact"
+      }
+    }
+  },
+  "order": ["hero","feature_1","cta_band"]
+}

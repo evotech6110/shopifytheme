@@ -1,16 +1,3573 @@
 {%- comment -%}
-  EvoTech SaaS — Homepage (index.liquid)
-  Static Liquid template: bypasses JSON template DB cache entirely.
-  Sections render from their schema defaults — no Shopify DB overrides possible.
+  Evotech homepage — stitched from preview/homepage-preview.html.
+  Shopify header (layout/theme.liquid + sections/header.liquid) renders above this template.
+  The preview's duplicate header + homepage-nav are stripped; the EVOLVE AI NEURAL ENGINE
+  pill is relocated into the hero canvas so top menu and main menu no longer conflict.
 {%- endcomment -%}
 
-{%- section 'evotech-fullscreen-hero' -%}
-{%- section 'evotech-marquee' -%}
-{%- section 'evotech-saas-grid' -%}
-{%- section 'evotech-process' -%}
-{%- section 'evotech-logo-strip' -%}
-{%- section 'evotech-feature' -%}
-{%- section 'evotech-pricing' -%}
-{%- section 'evotech-faq' -%}
-{%- section 'evotech-cta-band' -%}
-{%- section 'evotech-powered-by' -%}
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700,800&f[]=satoshi@400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+
+  
+
+
+
+@media (max-width: 760px) {
+  
+}
+
+
+
+/* ---- ZERO POINT HERO ---- */
+
+  :root {
+    --bg:        #05040C;
+    --bg-2:      #0B0820;
+    --bg-3:      #14122B;
+    --ink:       #FFFFFF;
+    --ink-dim:   #B6B5C6;
+    --ink-muted: #7A7A8F;
+    --mint:      #A8E898;
+    --mint-2:    #CDFFBF;
+    --indigo:    #3D2EDE;
+    --indigo-2:  #5B4DFF;
+    --peach:     #FF7A4A;
+    --font-d:    'Clash Display','Satoshi','Inter',sans-serif;
+    --font-s:    'Satoshi','Inter',system-ui,sans-serif;
+    --font-m:    'JetBrains Mono',ui-monospace,monospace;
+    --ease:      cubic-bezier(.21,.83,.33,1);
+  }
+  
+  a { color:inherit; text-decoration:none; }
+
+  /* =========================================================================
+     ZERO-POINT STYLE HERO — no promo strip, animated brain in header
+     ========================================================================= */
+  .evo-zp {
+    position: relative;
+    padding-top: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+      radial-gradient(1200px 600px at 20% 10%, rgba(61,46,222,0.22), transparent 55%),
+      radial-gradient(900px 500px at 80% 20%, rgba(168,232,152,0.10), transparent 60%),
+      linear-gradient(180deg, #05040C 0%, #0A0820 55%, #14122B 100%);
+    font-family: var(--font-s);
+  }
+
+  /* Starfield — procedurally generated twinkle layers (no image) */
+  .evo-zp::before, .evo-zp::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.7), transparent),
+      radial-gradient(1px 1px at 70% 50%, rgba(255,255,255,.55), transparent),
+      radial-gradient(1.5px 1.5px at 45% 80%, rgba(255,255,255,.8), transparent),
+      radial-gradient(1px 1px at 85% 20%, rgba(168,232,152,.65), transparent),
+      radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,.6), transparent),
+      radial-gradient(2px 2px at 60% 15%, rgba(205,255,191,.7), transparent),
+      radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 90% 85%, rgba(255,255,255,.7), transparent);
+    background-size: 800px 800px;
+    background-repeat: repeat;
+    opacity: .85;
+    animation: twinkle 6s linear infinite;
+  }
+  .evo-zp::after { background-size: 1100px 1100px; opacity:.45; animation-duration:11s; animation-direction: reverse; }
+  @keyframes twinkle {
+    0%,100% { opacity: .85; }
+    50%     { opacity: .55; }
+  }
+
+  /* Moon surface */
+  .evo-zp__moon {
+    position: absolute;
+    left: 0; right: 0; bottom: -40px;
+    height: 220px;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(255,255,255,0.06), transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(168,232,152,0.08), transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(61,46,222,0.25), transparent 70%),
+      linear-gradient(180deg, rgba(30,26,60,0.2), rgba(5,4,12,1));
+    filter: blur(1px);
+    pointer-events: none;
+    z-index: 1;
+    mask-image: radial-gradient(ellipse 120% 90% at 50% 100%, #000 60%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse 120% 90% at 50% 100%, #000 60%, transparent 85%);
+  }
+  .evo-zp__moon::before {
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(30px 20px at 18% 55%, rgba(0,0,0,.5), transparent 70%),
+      radial-gradient(22px 15px at 36% 70%, rgba(0,0,0,.5), transparent 70%),
+      radial-gradient(40px 25px at 62% 60%, rgba(0,0,0,.5), transparent 70%),
+      radial-gradient(18px 12px at 82% 75%, rgba(0,0,0,.5), transparent 70%),
+      radial-gradient(50px 30px at 5% 80%, rgba(0,0,0,.5), transparent 70%);
+  }
+
+  /* ============================ HEADER ============================ */
+  .evo-zp__header {
+    position: relative; z-index: 18;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 28px clamp(20px, 4vw, 56px) 24px;
+    gap: 20px;
+  }
+  .evo-zp__logo {
+    display: inline-flex; align-items: center; gap: 12px;
+    justify-self: start;
+  }
+  .evo-zp__logo-mark { width: 44px; height: 44px; }
+  .evo-zp__logo-wordmark {
+    font-family: var(--font-d);
+    font-weight: 800; font-size: 20px; letter-spacing: 0.02em;
+    color: #fff; line-height: 1;
+  }
+  .evo-zp__logo-wordmark em { color: var(--mint); font-style: normal; }
+  .evo-zp__logo-tagline {
+    display:block;
+    font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--ink-muted); margin-top: 4px; font-weight:500;
+  }
+
+  /* Brain centerpiece (Evolve AI neural engine animation) */
+  .evo-zp__brain {
+    justify-self: center;
+    display: inline-flex; flex-direction: column;
+    align-items: center; gap: 6px;
+    padding: 4px 18px;
+    border: 1px solid rgba(168,232,152,0.2);
+    border-radius: 999px;
+    background: rgba(10,8,26,0.55);
+    backdrop-filter: blur(6px);
+  }
+  .evo-zp__brain-viz {
+    width: 56px; height: 40px;
+    filter: drop-shadow(0 0 10px rgba(168,232,152,0.45));
+    animation: brainBreath 4.5s ease-in-out infinite;
+  }
+  @keyframes brainBreath {
+    0%,100% { transform: scale(1);    filter: drop-shadow(0 0 6px rgba(168,232,152,0.35)); }
+    50%     { transform: scale(1.06); filter: drop-shadow(0 0 16px rgba(168,232,152,0.75)); }
+  }
+  .evo-zp__brain-label {
+    font-family: var(--font-m);
+    font-size: 10px; letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--mint);
+    padding-bottom: 4px;
+    white-space: nowrap;
+  }
+  .evo-zp__brain-label .dim { color: var(--ink-muted); }
+  .brain-node   { animation: brainNode 2.2s ease-in-out infinite; transform-origin: center; }
+  .brain-node.n1 { animation-delay: 0.00s; }
+  .brain-node.n2 { animation-delay: 0.30s; }
+  .brain-node.n3 { animation-delay: 0.60s; }
+  .brain-node.n4 { animation-delay: 0.90s; }
+  .brain-node.n5 { animation-delay: 0.15s; }
+  .brain-node.n6 { animation-delay: 0.45s; }
+  .brain-node.n7 { animation-delay: 0.75s; }
+  .brain-node.n8 { animation-delay: 1.05s; }
+  .brain-node.core { animation-duration: 1.4s; }
+  @keyframes brainNode {
+    0%,100% { opacity: 0.35; }
+    50%     { opacity: 1;    }
+  }
+  .brain-synapse line {
+    stroke-dasharray: 2 4;
+    animation: brainFlow 1.6s linear infinite;
+  }
+  .brain-synapse line:nth-child(2n) { animation-duration: 2.2s; animation-direction: reverse; }
+  .brain-synapse line:nth-child(3n) { animation-duration: 1.9s; }
+  @keyframes brainFlow {
+    from { stroke-dashoffset: 0;    }
+    to   { stroke-dashoffset: -12;  }
+  }
+  .brain-halo {
+    transform-origin: center;
+    animation: brainHalo 3s ease-in-out infinite;
+  }
+  @keyframes brainHalo {
+    0%,100% { opacity: 0.35; transform: scale(0.85); }
+    50%     { opacity: 0.9;  transform: scale(1.1);  }
+  }
+
+  /* Nav */
+  .evo-zp__nav {
+    justify-self: end;
+    display: inline-flex; gap: 2px; align-items: center;
+  }
+  .evo-zp__nav a {
+    font-family: var(--font-m);
+    font-size: 12px; letter-spacing: 0.22em;
+    color: #fff;
+    padding: 10px 14px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: color .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+  }
+  .evo-zp__nav a:hover,
+  .evo-zp__nav a[aria-current="page"] {
+    color: var(--mint);
+    border-color: rgba(168,232,152,0.3);
+    background: rgba(168,232,152,0.06);
+  }
+  .evo-zp__nav a.is-support {
+    background: linear-gradient(90deg, #A8E898 0%, #CDFFBF 100%);
+    color: #0A0A0A;
+    margin-left: 6px;
+    font-weight: 700;
+  }
+  .evo-zp__nav a.is-support:hover {
+    background: linear-gradient(90deg, #CDFFBF 0%, #A8E898 100%);
+    color: #0A0A0A;
+    border-color: transparent;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 1100px) {
+    .evo-zp__header { grid-template-columns: 1fr auto; }
+    .evo-zp__brain { grid-column: 1 / -1; order: 3; margin: 8px auto 0; }
+    .evo-zp__nav a { padding: 8px 10px; font-size: 11px; letter-spacing: 0.16em; }
+  }
+  @media (max-width: 640px) {
+    .evo-zp__nav a:not(.is-support) { display: none; }
+    .evo-zp__nav a.is-support { display: inline-flex; }
+  }
+
+  /* Slide stage */
+  .evo-zp__stage {
+    position: relative; z-index: 5;
+    min-height: calc(100vh - 140px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 clamp(20px, 4vw, 56px);
+  }
+  .evo-zp__slide {
+    position: absolute; inset: 0;
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;
+    align-items: center;
+    gap: 36px;
+    padding: 0 clamp(20px, 4vw, 56px) 120px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .6s var(--ease), transform .6s var(--ease);
+    pointer-events: none;
+  }
+  .evo-zp__slide[data-active="true"] {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  @media (max-width: 1050px) {
+    .evo-zp__slide { grid-template-columns: 1fr; gap: 20px; text-align: center; padding-bottom: 160px; }
+  }
+
+  /* Ghost background text behind the visual */
+  .evo-zp__ghost {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -52%);
+    font-family: var(--font-d);
+    font-weight: 800;
+    font-size: clamp(18vw, 22vw, 28vw);
+    letter-spacing: -0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.07);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+    line-height: 1;
+    user-select: none;
+  }
+
+  /* Left copy column */
+  .evo-zp__copy-left { position: relative; z-index: 10; }
+  .evo-zp__eyebrow {
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 18px;
+  }
+  .evo-zp__chevrons {
+    margin-top: 26px; margin-bottom: 28px;
+    font-family: var(--font-m);
+    font-size: 18px; letter-spacing: 0.22em;
+    color: var(--mint);
+  }
+  .evo-zp__headline {
+    font-family: var(--font-d);
+    font-weight: 800;
+    font-size: clamp(22px, 2vw, 30px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .evo-zp__cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px;
+    font-family: var(--font-m);
+    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+    font-weight: 700;
+    background: var(--peach);
+    color: #110A04;
+    border-radius: 6px;
+    transition: transform .25s var(--ease), background .25s var(--ease), box-shadow .25s var(--ease);
+    box-shadow: 0 8px 28px rgba(255,122,74,0.35);
+  }
+  .evo-zp__cta:hover { transform: translateY(-2px); background: #FF8E62; box-shadow: 0 12px 36px rgba(255,122,74,0.55); }
+
+  /* Center visual */
+  .evo-zp__visual {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    min-height: clamp(360px, 48vh, 560px);
+    z-index: 5;
+  }
+  .evo-zp__visual svg {
+    width: min(420px, 55vw);
+    height: auto;
+    filter: drop-shadow(0 0 80px rgba(168,232,152,0.35)) drop-shadow(0 30px 60px rgba(0,0,0,.55));
+    animation: evo-zp-float 6s ease-in-out infinite;
+  }
+  @keyframes evo-zp-float {
+    0%,100% { transform: translateY(-6px) rotate(-2deg); }
+    50%     { transform: translateY(8px)  rotate(2deg); }
+  }
+
+  /* Floating orbital particles */
+  .evo-zp__orbit { position: absolute; inset: 0; pointer-events: none; }
+  .evo-zp__orbit span {
+    position: absolute;
+    width: 10px; height: 10px; border-radius: 999px;
+    background: var(--mint);
+    box-shadow: 0 0 18px var(--mint);
+    animation: evo-zp-orbit 9s linear infinite;
+  }
+  .evo-zp__orbit span:nth-child(1) { top:10%; left:18%; width:14px; height:14px; background:var(--indigo-2); box-shadow:0 0 22px var(--indigo-2); animation-duration: 13s; }
+  .evo-zp__orbit span:nth-child(2) { top:28%; left:82%; width:10px; height:10px; animation-duration: 10s; animation-direction: reverse; }
+  .evo-zp__orbit span:nth-child(3) { top:70%; left:12%; width:8px; height:8px; background:#fff; box-shadow:0 0 12px #fff; animation-duration: 15s; }
+  .evo-zp__orbit span:nth-child(4) { top:78%; left:78%; width:12px; height:12px; background:var(--mint-2); box-shadow:0 0 20px var(--mint-2); animation-duration: 11s; animation-direction: reverse; }
+  .evo-zp__orbit span:nth-child(5) { top:42%; left:94%; width:6px; height:6px; background:#fff; opacity:.7; animation-duration: 17s; }
+  @keyframes evo-zp-orbit {
+    0%   { transform: translate(0,0);    }
+    25%  { transform: translate(20px,-14px); }
+    50%  { transform: translate(0,-24px);   }
+    75%  { transform: translate(-20px,-14px);}
+    100% { transform: translate(0,0);    }
+  }
+
+  /* Right description column */
+  .evo-zp__copy-right {
+    position: relative; z-index: 10;
+    font-family: var(--font-m);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    justify-self: end;
+    text-align: right;
+    max-width: 260px;
+  }
+  @media (max-width: 1050px) {
+    .evo-zp__copy-right, .evo-zp__copy-left { text-align: center; justify-self: center; max-width: 420px; }
+  }
+
+  /* Slide tracker */
+  .evo-zp__tracker {
+    position: absolute; z-index: 20;
+    left: clamp(20px, 4vw, 56px); bottom: 32px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .evo-zp__tracker button {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: transparent; border: none; cursor: pointer;
+    padding: 6px 2px;
+    color: var(--ink-muted);
+    font-family: var(--font-m);
+    font-size: 13px; letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: color .2s var(--ease);
+    text-align: left;
+  }
+  .evo-zp__tracker button::before {
+    content: "";
+    width: 18px; height: 1px; background: currentColor; opacity: .4; transition: width .3s var(--ease), opacity .3s var(--ease), background .3s var(--ease);
+  }
+  .evo-zp__tracker button:hover { color: var(--ink); }
+  .evo-zp__tracker button[aria-current="true"] { color: #fff; font-weight: 700; }
+  .evo-zp__tracker button[aria-current="true"]::before { width: 36px; opacity: 1; background: var(--mint); }
+
+  /* Social */
+  .evo-zp__social {
+    position: absolute; z-index: 20;
+    right: clamp(20px, 4vw, 56px); bottom: 32px;
+    display: inline-flex; gap: 6px;
+  }
+  .evo-zp__social a {
+    display:inline-flex; align-items:center; justify-content:center;
+    width: 38px; height: 38px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.1em;
+    color: var(--ink-dim);
+    transition: color .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+  }
+  .evo-zp__social a:hover { color: var(--mint); border-color: rgba(168,232,152,0.5); background: rgba(168,232,152,0.06); }
+
+  /* Side arrows */
+  .evo-zp__arrow {
+    position: absolute; z-index: 15;
+    top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+    cursor: pointer;
+    transition: background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
+  }
+  .evo-zp__arrow:hover { background: rgba(168,232,152,0.1); border-color: rgba(168,232,152,0.5); transform: translateY(-50%) scale(1.05); }
+  .evo-zp__arrow--prev { left: clamp(10px, 2vw, 28px); }
+  .evo-zp__arrow--next { right: clamp(10px, 2vw, 28px); }
+  .evo-zp__arrow svg { width: 16px; height: 16px; }
+
+/* ---- COLLECTION RAIL ---- */
+
+  :root {
+    --bg:        #05040C;
+    --bg-2:      #0B0820;
+    --bg-3:      #14122B;
+    --ink:       #FFFFFF;
+    --ink-dim:   #B6B5C6;
+    --ink-muted: #7A7A8F;
+    --mint:      #A8E898;
+    --mint-2:    #CDFFBF;
+    --indigo:    #3D2EDE;
+    --indigo-2:  #5B4DFF;
+    --line:      rgba(255,255,255,0.08);
+    --font-d:    'Clash Display','Satoshi','Inter',sans-serif;
+    --font-s:    'Satoshi','Inter',system-ui,sans-serif;
+    --font-m:    'JetBrains Mono',ui-monospace,monospace;
+    --ease:      cubic-bezier(.21,.83,.33,1);
+  }
+  
+  a { color:inherit; text-decoration:none; }
+
+  /* ===== Section wrapper ===== */
+  .evo-cat {
+    position: relative;
+    padding: clamp(60px, 8vw, 110px) 0 clamp(80px, 10vw, 140px);
+    background:
+      radial-gradient(1200px 500px at 15% -10%, rgba(61,46,222,0.18), transparent 55%),
+      radial-gradient(900px 400px at 85% 110%, rgba(168,232,152,0.10), transparent 60%),
+      linear-gradient(180deg, #05040C 0%, #0A0820 100%);
+    overflow: hidden;
+  }
+  .evo-cat::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1.5px 1.5px at 70% 50%, rgba(168,232,152,.4), transparent),
+      radial-gradient(1px 1px at 45% 80%, rgba(255,255,255,.6), transparent),
+      radial-gradient(1px 1px at 85% 20%, rgba(205,255,191,.45), transparent),
+      radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,.5), transparent);
+    background-size: 900px 900px;
+    background-repeat: repeat;
+    opacity: .6;
+    animation: twinkle 8s linear infinite;
+  }
+  @keyframes twinkle { 0%,100% { opacity:.6; } 50% { opacity:.35; } }
+
+  /* ===== Header row ===== */
+  .evo-cat__head {
+    position: relative; z-index: 2;
+    max-width: 1320px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 28px; align-items: end;
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+  .evo-cat__kicker {
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mint);
+    margin: 0 0 16px 0;
+  }
+  .evo-cat__title {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: clamp(36px, 5vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0;
+  }
+  .evo-cat__title em { color: var(--mint); font-style: normal; font-family: 'Caveat', cursive; font-weight: 500; }
+  .evo-cat__subtitle {
+    max-width: 380px;
+    color: var(--ink-dim);
+    font-size: 15px; line-height: 1.6;
+  }
+  @media (max-width: 860px) {
+    .evo-cat__head { grid-template-columns: 1fr; }
+    .evo-cat__subtitle { max-width: none; }
+  }
+
+  /* ===== Carousel / scroller ===== */
+  .evo-cat__rail-wrap {
+    position: relative; z-index: 2;
+    margin-top: clamp(40px, 6vw, 72px);
+  }
+  .evo-cat__rail {
+    display: flex; gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 12px clamp(20px, 4vw, 48px) 28px;
+    scroll-padding-left: clamp(20px, 4vw, 48px);
+    scrollbar-width: none;
+  }
+  .evo-cat__rail::-webkit-scrollbar { display: none; }
+
+  /* ===== Category card ===== */
+  .evo-cat__card {
+    flex: 0 0 auto;
+    width: 190px;
+    scroll-snap-align: start;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    gap: 14px;
+    padding: 28px 12px 20px;
+    border-radius: 24px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(20,18,43,0.55) 0%, rgba(11,8,32,0.55) 100%);
+    transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+    cursor: pointer;
+  }
+  .evo-cat__card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(168,232,152,0.35);
+    background: linear-gradient(180deg, rgba(35,28,80,0.7) 0%, rgba(15,11,46,0.7) 100%);
+  }
+  .evo-cat__card:hover .evo-cat__ring {
+    box-shadow:
+      0 0 0 1px rgba(168,232,152,0.6) inset,
+      0 0 28px rgba(168,232,152,0.35);
+  }
+
+  /* Ring holding the animated icon */
+  .evo-cat__ring {
+    position: relative;
+    width: 124px; height: 124px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(168,232,152,0.22), transparent 60%),
+      radial-gradient(circle at 70% 75%, rgba(61,46,222,0.28), transparent 65%),
+      linear-gradient(160deg, #14122B 0%, #08061A 100%);
+    box-shadow:
+      0 0 0 1px rgba(168,232,152,0.18) inset,
+      0 0 24px rgba(168,232,152,0.08);
+    transition: box-shadow .35s var(--ease);
+  }
+  .evo-cat__ring::after {
+    content: "";
+    position: absolute; inset: -4px;
+    border-radius: inherit;
+    border: 1px dashed rgba(168,232,152,0.18);
+    animation: ring-spin 22s linear infinite;
+  }
+  .evo-cat__card:hover .evo-cat__ring::after { animation-duration: 8s; border-color: rgba(168,232,152,0.45); }
+  @keyframes ring-spin { to { transform: rotate(360deg); } }
+
+  .evo-cat__icon {
+    width: 74px; height: 74px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .evo-cat__label {
+    font-family: var(--font-s);
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .evo-cat__count {
+    font-family: var(--font-m);
+    font-size: 10px; letter-spacing: 0.22em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+
+  /* ===== Progress rail underneath (like the live site's green bar) ===== */
+  .evo-cat__progress {
+    max-width: 1320px; margin: 6px auto 0;
+    padding: 0 clamp(20px, 4vw, 48px);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .evo-cat__progress-track {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+  .evo-cat__progress-bar {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 22%;
+    background: linear-gradient(90deg, var(--mint) 0%, var(--indigo-2) 100%);
+    border-radius: 3px;
+    transition: width .25s var(--ease), transform .25s var(--ease);
+  }
+  .evo-cat__progress-ctrls { display: inline-flex; gap: 8px; }
+  .evo-cat__progress-ctrls button {
+    width: 40px; height: 40px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    color: #fff; cursor: pointer;
+    transition: background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
+  }
+  .evo-cat__progress-ctrls button:hover {
+    background: rgba(168,232,152,0.08);
+    border-color: rgba(168,232,152,0.5);
+    transform: scale(1.05);
+  }
+  .evo-cat__progress-ctrls svg { width: 16px; height: 16px; }
+
+  /* =========================================================================
+     Per-icon animations
+     ========================================================================= */
+
+  /* Routers — radiating wifi arcs from chassis */
+  .ico-router .wave { opacity: 0; animation: router-wave 2.4s ease-out infinite; transform-origin: 37px 40px; }
+  .ico-router .wave.w1 { animation-delay: 0s; }
+  .ico-router .wave.w2 { animation-delay: 0.6s; }
+  .ico-router .wave.w3 { animation-delay: 1.2s; }
+  @keyframes router-wave {
+    0%   { opacity: 0.9; transform: scale(0.6); }
+    100% { opacity: 0; transform: scale(1.8); }
+  }
+  .ico-router .led { animation: pulse-led 1.2s ease-in-out infinite alternate; }
+  .ico-router .led.l2 { animation-delay: .2s; }
+  .ico-router .led.l3 { animation-delay: .4s; }
+  .ico-router .led.l4 { animation-delay: .6s; }
+
+  /* Switches — LED traffic across port strip */
+  .ico-switch .port-led { opacity: 0.2; animation: switch-flow 2s linear infinite; }
+  .ico-switch .port-led.p2 { animation-delay: 0.15s; }
+  .ico-switch .port-led.p3 { animation-delay: 0.30s; }
+  .ico-switch .port-led.p4 { animation-delay: 0.45s; }
+  .ico-switch .port-led.p5 { animation-delay: 0.60s; }
+  .ico-switch .port-led.p6 { animation-delay: 0.75s; }
+  .ico-switch .port-led.p7 { animation-delay: 0.90s; }
+  .ico-switch .port-led.p8 { animation-delay: 1.05s; }
+  @keyframes switch-flow {
+    0%   { opacity: 0.1; }
+    20%  { opacity: 1;   }
+    60%  { opacity: 1;   }
+    100% { opacity: 0.1; }
+  }
+
+  /* Access points — radiating dome signals */
+  .ico-ap .arc { opacity: 0; animation: ap-arc 2.6s ease-out infinite; transform-origin: 37px 48px; }
+  .ico-ap .arc.a1 { animation-delay: 0s; }
+  .ico-ap .arc.a2 { animation-delay: 0.65s; }
+  .ico-ap .arc.a3 { animation-delay: 1.3s; }
+  @keyframes ap-arc {
+    0%   { opacity: 0.9; transform: scale(0.4); }
+    100% { opacity: 0;   transform: scale(1.8); }
+  }
+
+  /* NAS — stacked drives with sync pulse */
+  .ico-nas .drive-led { animation: nas-sync 1.6s ease-in-out infinite; }
+  .ico-nas .drive-led.d2 { animation-delay: .2s; }
+  .ico-nas .drive-led.d3 { animation-delay: .4s; }
+  .ico-nas .drive-led.d4 { animation-delay: .6s; }
+  @keyframes nas-sync {
+    0%,100% { opacity: 0.3; fill: #A8E898; }
+    50%     { opacity: 1;   fill: #CDFFBF; }
+  }
+
+  /* HDD — spinning platter */
+  .ico-hdd .platter { transform-origin: 37px 37px; animation: hdd-spin 4s linear infinite; }
+  @keyframes hdd-spin { to { transform: rotate(360deg); } }
+  .ico-hdd .head-arm { transform-origin: 58px 18px; animation: hdd-arm 3s ease-in-out infinite alternate; }
+  @keyframes hdd-arm {
+    0%   { transform: rotate(-10deg); }
+    100% { transform: rotate(15deg); }
+  }
+
+  /* GPU — fan spinning */
+  .ico-gpu .fan { transform-origin: 37px 37px; animation: gpu-fan 1.6s linear infinite; }
+  @keyframes gpu-fan { to { transform: rotate(360deg); } }
+
+  /* Laptop — screen gradient cycling */
+  .ico-lap .screen-wave {
+    animation: lap-wave 3s ease-in-out infinite;
+  }
+  @keyframes lap-wave {
+    0%,100% { opacity: 0.3; }
+    50%     { opacity: 1; }
+  }
+
+  /* CPU — die cores pulsing */
+  .ico-cpu .core { animation: cpu-core 1.8s ease-in-out infinite; }
+  .ico-cpu .core.c1 { animation-delay: 0s; }
+  .ico-cpu .core.c2 { animation-delay: .3s; }
+  .ico-cpu .core.c3 { animation-delay: .6s; }
+  .ico-cpu .core.c4 { animation-delay: .9s; }
+  @keyframes cpu-core {
+    0%,100% { opacity: 0.3; }
+    50%     { opacity: 1; }
+  }
+
+  /* Motherboard — traces lighting up */
+  .ico-mobo .trace {
+    stroke-dasharray: 3 4;
+    animation: mobo-trace 1.8s linear infinite;
+  }
+  .ico-mobo .trace.t2 { animation-duration: 2.4s; animation-direction: reverse; }
+  @keyframes mobo-trace {
+    from { stroke-dashoffset: 0;   }
+    to   { stroke-dashoffset: -14; }
+  }
+  .ico-mobo .chip-led { animation: pulse-led 1.4s ease-in-out infinite alternate; }
+
+  /* Generic LED pulse */
+  @keyframes pulse-led {
+    0%   { opacity: 0.4; }
+    100% { opacity: 1;   }
+  }
+
+  /* Preview caption */
+  .zp-caption {
+    position: fixed; top: 12px; left: 12px; z-index: 900;
+    font-family: var(--font-m);
+    font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: rgba(10,8,26,0.75);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+  }
+
+/* ---- PRODUCT SHOWCASE ---- */
+
+  :root {
+    --bg:        #05040C;
+    --bg-2:      #0B0820;
+    --bg-3:      #14122B;
+    --ink:       #FFFFFF;
+    --ink-dim:   #B6B5C6;
+    --ink-muted: #7A7A8F;
+    --mint:      #A8E898;
+    --mint-2:    #CDFFBF;
+    --indigo:    #3D2EDE;
+    --indigo-2:  #5B4DFF;
+    --peach:     #FF7A4A;
+    --amber:     #FFC566;
+    --red:       #FF5A6A;
+    --line:      rgba(255,255,255,0.08);
+    --font-d:    'Clash Display','Satoshi','Inter',sans-serif;
+    --font-s:    'Satoshi','Inter',system-ui,sans-serif;
+    --font-m:    'JetBrains Mono',ui-monospace,monospace;
+    --ease:      cubic-bezier(.21,.83,.33,1);
+  }
+  
+  a { color:inherit; text-decoration:none; }
+  button { font: inherit; cursor: pointer; }
+
+  /* ========= Shared section chrome ========= */
+  .evo-wrap {
+    max-width: 1320px; margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+  .evo-section {
+    position: relative;
+    padding: clamp(60px, 8vw, 110px) 0;
+  }
+  .evo-section--dark {
+    background:
+      radial-gradient(1200px 500px at 15% -10%, rgba(61,46,222,0.16), transparent 55%),
+      radial-gradient(900px 400px at 85% 110%, rgba(168,232,152,0.08), transparent 60%),
+      linear-gradient(180deg, #05040C 0%, #0A0820 100%);
+    overflow: hidden;
+  }
+  .evo-section__head {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 24px; align-items: end;
+    margin-bottom: clamp(32px, 4vw, 56px);
+  }
+  .evo-eyebrow {
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mint);
+    margin: 0 0 14px 0;
+  }
+  .evo-title {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: clamp(32px, 4.2vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0;
+  }
+  .evo-title em { color: var(--mint); font-style: normal; font-family: 'Caveat', cursive; font-weight: 500; }
+  .evo-head-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-m); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mint);
+    border-bottom: 1px solid rgba(168,232,152,0.4);
+    padding-bottom: 4px;
+    align-self: start;
+  }
+  @media (max-width: 860px) {
+    .evo-section__head { grid-template-columns: 1fr; }
+  }
+
+  /* ========================================================================
+     FEATURED PRODUCT SHOWCASE
+     ======================================================================== */
+  .evo-feat {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 28px;
+    align-items: stretch;
+  }
+  @media (max-width: 980px) {
+    .evo-feat { grid-template-columns: 1fr; }
+  }
+
+  .evo-feat__hero {
+    position: relative;
+    min-height: 540px;
+    border-radius: 28px;
+    overflow: hidden;
+    background:
+      radial-gradient(1000px 500px at 80% 100%, rgba(61,46,222,0.35), transparent 60%),
+      radial-gradient(500px 300px at 20% 20%, rgba(168,232,152,0.14), transparent 60%),
+      linear-gradient(145deg, #0F0C2A 0%, #06041A 100%);
+    border: 1px solid var(--line);
+    padding: clamp(28px, 3vw, 44px);
+    display: flex; flex-direction: column; justify-content: space-between;
+    isolation: isolate;
+  }
+  .evo-feat__hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 75% 65%, rgba(168,232,152,.4), transparent),
+      radial-gradient(1.5px 1.5px at 50% 85%, rgba(205,255,191,.5), transparent);
+    background-size: 800px 800px;
+    opacity: .45;
+  }
+  .evo-feat__hero-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 16px;
+    position: relative; z-index: 2;
+  }
+  .evo-feat__kicker {
+    font-family: var(--font-m); font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 10px 0;
+  }
+  .evo-feat__name {
+    font-family: var(--font-d); font-weight: 800;
+    font-size: clamp(32px, 3.6vw, 56px);
+    line-height: 1.02; letter-spacing: -0.02em;
+    margin: 0 0 18px 0;
+    color: #fff;
+  }
+  .evo-feat__desc {
+    max-width: 480px;
+    color: var(--ink-dim);
+    font-size: 15px; line-height: 1.6;
+    margin: 0;
+  }
+  .evo-feat__badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(90deg, #A8E898 0%, #CDFFBF 100%);
+    color: #0A0A0A;
+    font-family: var(--font-m);
+    font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+    font-weight: 700;
+    padding: 6px 12px; border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(168,232,152,0.35);
+    white-space: nowrap;
+  }
+  .evo-feat__badge--live::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: #0A0A0A; animation: blink-live 1.2s ease-in-out infinite;
+  }
+  @keyframes blink-live { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  .evo-feat__viz {
+    position: relative; z-index: 2;
+    margin: 28px 0;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 220px;
+  }
+  .evo-feat__viz svg {
+    width: min(340px, 70%); height: auto;
+    filter: drop-shadow(0 40px 60px rgba(0,0,0,0.5));
+    animation: feat-float 6s ease-in-out infinite;
+  }
+  @keyframes feat-float {
+    0%,100% { transform: translateY(-6px); }
+    50%     { transform: translateY(10px); }
+  }
+
+  .evo-feat__meta {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr auto; gap: 18px;
+    align-items: end;
+  }
+  .evo-feat__price-row {
+    display: flex; align-items: baseline; gap: 14px;
+    flex-wrap: wrap;
+  }
+  .evo-feat__price {
+    font-family: var(--font-d); font-weight: 800;
+    font-size: clamp(32px, 3vw, 44px);
+    color: var(--mint);
+    line-height: 1;
+  }
+  .evo-feat__price-compare {
+    font-family: var(--font-s);
+    font-size: 18px; color: var(--ink-muted);
+    text-decoration: line-through;
+  }
+  .evo-feat__gst {
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em;
+    color: var(--ink-muted); text-transform: uppercase;
+  }
+  .evo-feat__cta-row {
+    display: inline-flex; gap: 10px; align-items: center;
+  }
+  .evo-btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    font-family: var(--font-m);
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 700;
+    background: var(--peach);
+    color: #110A04;
+    border: none; border-radius: 10px;
+    transition: transform .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    box-shadow: 0 6px 22px rgba(255,122,74,0.3);
+  }
+  .evo-btn-primary:hover { transform: translateY(-2px); background: #FF8E62; box-shadow: 0 12px 30px rgba(255,122,74,0.5); }
+  .evo-btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: #fff;
+    border-radius: 10px;
+    transition: background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+  }
+  .evo-btn-ghost:hover { background: rgba(168,232,152,0.08); border-color: rgba(168,232,152,0.5); color: var(--mint); }
+  .evo-btn-ghost svg { width: 18px; height: 18px; }
+
+  .evo-feat__ticker {
+    position: relative; z-index: 2;
+    margin-top: 18px; padding-top: 18px;
+    border-top: 1px solid var(--line);
+    display: flex; gap: 22px; flex-wrap: wrap;
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .evo-feat__ticker-item { display: inline-flex; align-items: center; gap: 8px; }
+  .evo-feat__ticker-item svg { width: 14px; height: 14px; color: var(--mint); flex-shrink: 0; }
+  .evo-feat__ticker-item .dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--mint);
+    box-shadow: 0 0 10px var(--mint);
+    animation: live-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes live-pulse { 0%,100% { transform: scale(1); opacity: 0.85; } 50% { transform: scale(1.25); opacity: 1; } }
+
+  /* Right column — 3 stacked feature cards */
+  .evo-feat__side {
+    display: grid; grid-template-rows: 1fr 1fr;
+    gap: 28px;
+  }
+  .evo-feat__tile {
+    position: relative;
+    border-radius: 28px; overflow: hidden;
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(800px 400px at 100% 0%, rgba(168,232,152,0.12), transparent 55%),
+      linear-gradient(160deg, #120E2E 0%, #06041A 100%);
+    padding: clamp(24px, 2.4vw, 36px);
+    min-height: 240px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform .35s var(--ease), border-color .35s var(--ease);
+  }
+  .evo-feat__tile:hover {
+    transform: translateY(-4px);
+    border-color: rgba(168,232,152,0.35);
+  }
+  .evo-feat__tile-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 640px) {
+    .evo-feat__tile-row-2 { grid-template-columns: 1fr; }
+  }
+  .evo-feat__tile-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 12px;
+  }
+  .evo-feat__tile-name {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.05; letter-spacing: -0.01em;
+    margin: 6px 0 8px;
+  }
+  .evo-feat__tile-desc { color: var(--ink-dim); font-size: 13px; line-height: 1.5; margin: 0; }
+  .evo-feat__tile-viz {
+    align-self: flex-end;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 14px;
+    width: 100%; height: 110px;
+  }
+  .evo-feat__tile-viz svg { max-width: 80%; max-height: 100%; }
+  .evo-feat__tile-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-m); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mint);
+  }
+  .evo-feat__tile-cta svg { width: 14px; height: 14px; transition: transform .25s var(--ease); }
+  .evo-feat__tile:hover .evo-feat__tile-cta svg { transform: translateX(4px); }
+
+  .evo-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(10,8,26,0.7); color: var(--mint);
+    border: 1px solid rgba(168,232,152,0.35);
+    font-family: var(--font-m); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+    font-weight: 700;
+    padding: 5px 10px; border-radius: 999px;
+  }
+  .evo-pill--hot { background: rgba(255,90,106,0.12); color: #FF8B98; border-color: rgba(255,90,106,0.35); }
+  .evo-pill--amber { background: rgba(255,197,102,0.12); color: var(--amber); border-color: rgba(255,197,102,0.35); }
+
+  /* ========================================================================
+     BEST-SELLER GRID
+     ======================================================================== */
+  .evo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1100px) { .evo-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 820px)  { .evo-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px)  { .evo-grid { grid-template-columns: 1fr; } }
+
+  .evo-card {
+    position: relative;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, rgba(20,18,43,0.7) 0%, rgba(11,8,32,0.7) 100%);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform .35s var(--ease), border-color .35s var(--ease);
+  }
+  .evo-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(168,232,152,0.3);
+  }
+
+  /* Rank ribbon */
+  .evo-card__rank {
+    position: absolute; top: 14px; left: 14px; z-index: 4;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 11px;
+    background: linear-gradient(90deg, #A8E898 0%, #CDFFBF 100%);
+    color: #0A0A0A;
+    border-radius: 999px;
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.18em; font-weight: 700; text-transform: uppercase;
+    box-shadow: 0 4px 14px rgba(168,232,152,0.35);
+  }
+  .evo-card__rank svg { width: 12px; height: 12px; }
+
+  /* Wishlist */
+  .evo-card__wish {
+    position: absolute; top: 14px; right: 14px; z-index: 4;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(10,8,26,0.75);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff;
+    backdrop-filter: blur(6px);
+    transition: color .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+  }
+  .evo-card__wish:hover { color: var(--mint); border-color: rgba(168,232,152,0.5); background: rgba(168,232,152,0.08); }
+  .evo-card__wish svg { width: 16px; height: 16px; }
+
+  /* Product image area */
+  .evo-card__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(168,232,152,0.12), transparent 60%),
+      linear-gradient(180deg, #14122B 0%, #0A0820 100%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .evo-card__media svg {
+    width: 65%; height: 65%;
+    filter: drop-shadow(0 30px 40px rgba(0,0,0,0.6));
+    animation: card-float 5s ease-in-out infinite;
+  }
+  .evo-card:nth-child(2n) .evo-card__media svg { animation-delay: 0.8s; }
+  .evo-card:nth-child(3n) .evo-card__media svg { animation-delay: 1.6s; }
+  .evo-card:nth-child(4n) .evo-card__media svg { animation-delay: 2.4s; }
+  @keyframes card-float {
+    0%,100% { transform: translateY(-4px) rotate(-1deg); }
+    50%     { transform: translateY(6px)  rotate(1deg); }
+  }
+  .evo-card__media::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(5,4,12,0.95));
+    pointer-events: none;
+  }
+
+  /* Quick actions over media */
+  .evo-card__quick {
+    position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 3;
+    display: flex; gap: 8px;
+    transform: translateY(80%);
+    opacity: 0;
+    transition: transform .35s var(--ease), opacity .35s var(--ease);
+  }
+  .evo-card:hover .evo-card__quick { transform: translateY(0); opacity: 1; }
+  .evo-card__quick button {
+    flex: 1; min-height: 36px;
+    background: rgba(10,8,26,0.88);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    transition: background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+    backdrop-filter: blur(6px);
+  }
+  .evo-card__quick button:hover { background: rgba(168,232,152,0.15); border-color: rgba(168,232,152,0.5); color: var(--mint); }
+  .evo-card__quick button svg { width: 14px; height: 14px; }
+
+  /* Card body */
+  .evo-card__body {
+    padding: 18px 20px 22px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .evo-card__brand {
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .evo-card__title {
+    font-family: var(--font-s); font-weight: 600;
+    font-size: 15px; line-height: 1.35;
+    color: #fff; margin: 0;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 42px;
+  }
+  .evo-card__rating {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-m); font-size: 11px; letter-spacing: 0.1em;
+    color: var(--ink-dim);
+  }
+  .evo-card__stars { display: inline-flex; color: var(--amber); gap: 1px; }
+  .evo-card__stars svg { width: 12px; height: 12px; }
+
+  .evo-card__price-row {
+    display: flex; align-items: baseline; gap: 10px;
+    margin-top: 4px;
+  }
+  .evo-card__price {
+    font-family: var(--font-d); font-weight: 800;
+    font-size: 22px;
+    color: var(--mint);
+    line-height: 1;
+  }
+  .evo-card__price-compare {
+    font-family: var(--font-s); font-size: 13px;
+    color: var(--ink-muted); text-decoration: line-through;
+  }
+  .evo-card__save {
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--peach);
+    font-weight: 700;
+  }
+
+  /* Live ticker footer */
+  .evo-card__live {
+    padding: 12px 20px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 10px;
+    background: rgba(5,4,12,0.3);
+  }
+  .evo-card__sold {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .evo-card__sold .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 8px var(--mint);
+    animation: live-pulse 1.8s ease-in-out infinite;
+  }
+  .evo-card__stock {
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--mint);
+  }
+  .evo-card__stock.low { color: var(--amber); }
+  .evo-card__stock.out { color: var(--red); }
+
+  /* Caption */
+  .zp-caption {
+    position: fixed; top: 12px; left: 12px; z-index: 900;
+    font-family: var(--font-m);
+    font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: rgba(10,8,26,0.75);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+  }
+
+  /* Progress meter at bottom of card (for sell-through) */
+  .evo-card__meter {
+    margin: 0 20px 14px;
+    height: 4px; border-radius: 3px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+    position: relative;
+  }
+  .evo-card__meter-bar {
+    position: absolute; inset: 0 auto 0 0;
+    background: linear-gradient(90deg, var(--mint) 0%, var(--indigo-2) 100%);
+    border-radius: 3px;
+  }
+
+/* ---- CUSTOM AI AGENTS ---- */
+
+  :root {
+    --bg:        #05040C;
+    --bg-2:      #0B0820;
+    --bg-3:      #14122B;
+    --ink:       #FFFFFF;
+    --ink-dim:   #B6B5C6;
+    --ink-muted: #7A7A8F;
+    --mint:      #A8E898;
+    --mint-2:    #CDFFBF;
+    --indigo:    #3D2EDE;
+    --indigo-2:  #5B4DFF;
+    --peach:     #FF7A4A;
+    --amber:     #FFC566;
+    --line:      rgba(255,255,255,0.08);
+    --font-d:    'Clash Display','Satoshi','Inter',sans-serif;
+    --font-s:    'Satoshi','Inter',system-ui,sans-serif;
+    --font-m:    'JetBrains Mono',ui-monospace,monospace;
+    --ease:      cubic-bezier(.21,.83,.33,1);
+  }
+  
+  a { color:inherit; text-decoration:none; }
+  button { font: inherit; cursor: pointer; }
+
+  .evo-wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .evo-section {
+    position: relative;
+    padding: clamp(64px, 8vw, 120px) 0;
+    background:
+      radial-gradient(1200px 500px at 15% -10%, rgba(61,46,222,0.16), transparent 55%),
+      radial-gradient(900px 400px at 85% 110%, rgba(168,232,152,0.08), transparent 60%),
+      linear-gradient(180deg, #05040C 0%, #0A0820 100%);
+    overflow: hidden;
+  }
+  .evo-section::before {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1.5px 1.5px at 70% 50%, rgba(168,232,152,.4), transparent),
+      radial-gradient(1px 1px at 45% 80%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 85% 20%, rgba(205,255,191,.45), transparent);
+    background-size: 900px 900px;
+    background-repeat: repeat;
+    opacity: .55;
+    animation: twinkle 8s linear infinite;
+  }
+  @keyframes twinkle { 0%,100% { opacity:.55; } 50% { opacity:.3; } }
+
+  /* ========= MAIN AGENTS HERO ========= */
+  .evo-ag {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1.05fr;
+    gap: clamp(36px, 5vw, 72px);
+    align-items: start;
+  }
+  @media (max-width: 1020px) {
+    .evo-ag { grid-template-columns: 1fr; }
+  }
+
+  /* Left column */
+  .evo-ag__kicker {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 22px;
+  }
+  .evo-ag__kicker-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 10px var(--mint);
+    animation: pulse-dot 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse-dot { 0%,100% { transform: scale(1); } 50% { transform: scale(1.4); } }
+
+  .evo-ag__title {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: clamp(40px, 5.2vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0 0 22px 0;
+  }
+  .evo-ag__title em { color: var(--mint); font-style: normal; font-family: 'Caveat', cursive; font-weight: 500; }
+  .evo-ag__title-grad {
+    background: linear-gradient(90deg, #A8E898 0%, #5B4DFF 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .evo-ag__desc {
+    color: var(--ink-dim);
+    font-size: 17px; line-height: 1.65;
+    max-width: 540px;
+    margin: 0 0 28px 0;
+  }
+  .evo-ag__desc strong { color: #fff; font-weight: 600; }
+
+  .evo-ag__cta-row {
+    display: inline-flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    margin-bottom: 32px;
+  }
+  .evo-btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 26px;
+    font-family: var(--font-m);
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 700;
+    background: var(--peach);
+    color: #110A04;
+    border: none; border-radius: 10px;
+    transition: transform .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    box-shadow: 0 8px 26px rgba(255,122,74,0.35);
+  }
+  .evo-btn-primary:hover { transform: translateY(-2px); background: #FF8E62; box-shadow: 0 14px 34px rgba(255,122,74,0.55); }
+  .evo-btn-ghost {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 26px;
+    font-family: var(--font-m);
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 700;
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    transition: border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+  }
+  .evo-btn-ghost:hover { border-color: rgba(168,232,152,0.55); background: rgba(168,232,152,0.06); color: var(--mint); }
+
+  /* Trust chips */
+  .evo-ag__trust {
+    display: flex; flex-wrap: wrap; gap: 18px 28px;
+    font-family: var(--font-m);
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .evo-ag__trust-item { display: inline-flex; align-items: center; gap: 8px; }
+  .evo-ag__trust-item svg { width: 14px; height: 14px; color: var(--mint); flex-shrink: 0; }
+
+  /* Feature tiles (right column) */
+  .evo-ag__tiles {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    position: relative;
+  }
+  @media (max-width: 560px) { .evo-ag__tiles { grid-template-columns: 1fr; } }
+
+  .evo-ag__tile {
+    border-radius: 20px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(20,18,43,0.7) 0%, rgba(11,8,32,0.7) 100%);
+    transition: transform .3s var(--ease), border-color .3s var(--ease);
+  }
+  .evo-ag__tile:hover { transform: translateY(-4px); border-color: rgba(168,232,152,0.35); }
+  .evo-ag__tile-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(168,232,152,0.18), rgba(61,46,222,0.28));
+    border: 1px solid rgba(168,232,152,0.2);
+    margin-bottom: 16px;
+  }
+  .evo-ag__tile-icon svg { width: 20px; height: 20px; color: var(--mint); }
+  .evo-ag__tile-name {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: 18px; line-height: 1.2;
+    color: #fff;
+    margin: 0 0 8px 0;
+  }
+  .evo-ag__tile-desc {
+    color: var(--ink-dim);
+    font-size: 13px; line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Floating price card */
+  .evo-ag__price-card {
+    position: absolute; top: -8px; right: -8px;
+    z-index: 4;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #A8E898 0%, #CDFFBF 100%);
+    color: #0A0A0A;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(168,232,152,0.3), 0 0 0 1px rgba(255,255,255,0.4) inset;
+    animation: price-float 5s ease-in-out infinite;
+    transform: rotate(3deg);
+  }
+  @keyframes price-float {
+    0%,100% { transform: rotate(3deg) translateY(-4px); }
+    50%     { transform: rotate(3deg) translateY(6px); }
+  }
+  .evo-ag__price-card-label {
+    font-family: var(--font-m);
+    font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase;
+    font-weight: 700;
+    opacity: 0.7;
+  }
+  .evo-ag__price-card-amount {
+    font-family: var(--font-d);
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 1;
+    margin-top: 4px;
+  }
+  .evo-ag__price-card-amount sup { font-size: 16px; vertical-align: top; margin-right: 2px; font-weight: 700; }
+  .evo-ag__price-card-sub {
+    font-family: var(--font-m);
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 560px) {
+    .evo-ag__price-card { position: static; transform: none; margin-bottom: 16px; display: inline-block; }
+    .evo-ag__price-card:hover { animation: none; }
+  }
+
+  /* ========= USE CASES ========= */
+  .evo-ag__cases {
+    position: relative; z-index: 2;
+    margin-top: clamp(64px, 8vw, 100px);
+  }
+  .evo-ag__cases-head {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 24px; align-items: end;
+    margin-bottom: 32px;
+  }
+  .evo-ag__cases-title {
+    font-family: var(--font-d);
+    font-weight: 700;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .evo-ag__cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 920px) { .evo-ag__cases-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .evo-ag__cases-grid { grid-template-columns: 1fr; } }
+
+  .evo-ag__case {
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(11,8,32,0.5);
+    display: flex; flex-direction: column; gap: 10px;
+    transition: transform .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+  }
+  .evo-ag__case:hover { transform: translateY(-3px); border-color: rgba(168,232,152,0.3); background: rgba(20,18,43,0.7); }
+  .evo-ag__case-emoji {
+    font-size: 20px;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(168,232,152,0.1);
+    border: 1px solid rgba(168,232,152,0.25);
+  }
+  .evo-ag__case-emoji svg { width: 20px; height: 20px; color: var(--mint); }
+  .evo-ag__case-name {
+    font-family: var(--font-d); font-weight: 700; font-size: 16px;
+    color: #fff; margin: 0;
+  }
+  .evo-ag__case-desc {
+    color: var(--ink-dim); font-size: 13px; line-height: 1.55;
+    margin: 0;
+  }
+  .evo-ag__case-tag {
+    align-self: flex-start;
+    font-family: var(--font-m); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mint);
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(168,232,152,0.08);
+    border: 1px solid rgba(168,232,152,0.25);
+    margin-top: auto;
+  }
+
+  /* ========= PRICING TIERS ========= */
+  .evo-ag__pricing {
+    position: relative; z-index: 2;
+    margin-top: clamp(64px, 8vw, 100px);
+  }
+  .evo-ag__pricing-head {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .evo-ag__pricing-sub {
+    color: var(--ink-dim);
+    font-size: 16px; line-height: 1.6;
+    max-width: 560px; margin: 14px auto 0;
+  }
+  .evo-ag__tiers {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 980px) { .evo-ag__tiers { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; } }
+
+  .evo-ag__tier {
+    position: relative;
+    padding: 32px 28px 36px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(20,18,43,0.7) 0%, rgba(11,8,32,0.7) 100%);
+    display: flex; flex-direction: column;
+  }
+  .evo-ag__tier--featured {
+    border-color: rgba(168,232,152,0.4);
+    background:
+      radial-gradient(600px 400px at 100% 0%, rgba(168,232,152,0.14), transparent 60%),
+      linear-gradient(180deg, rgba(35,28,80,0.7) 0%, rgba(15,11,46,0.7) 100%);
+    box-shadow: 0 30px 70px rgba(61,46,222,0.25);
+    transform: translateY(-8px);
+  }
+  @media (max-width: 980px) { .evo-ag__tier--featured { transform: none; } }
+
+  .evo-ag__tier-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    padding: 6px 14px;
+    background: linear-gradient(90deg, #A8E898 0%, #CDFFBF 100%);
+    color: #0A0A0A;
+    border-radius: 999px;
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.22em; font-weight: 700; text-transform: uppercase;
+    box-shadow: 0 4px 14px rgba(168,232,152,0.4);
+  }
+
+  .evo-ag__tier-name {
+    font-family: var(--font-m); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--mint);
+    margin: 0 0 8px 0;
+  }
+  .evo-ag__tier-title {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: 26px; line-height: 1.1;
+    color: #fff;
+    margin: 0 0 16px 0;
+  }
+  .evo-ag__tier-price {
+    font-family: var(--font-d); font-weight: 800;
+    font-size: 48px; line-height: 1;
+    color: #fff;
+    margin: 0;
+  }
+  .evo-ag__tier-price sup { font-size: 22px; font-weight: 700; vertical-align: top; margin-right: 2px; }
+  .evo-ag__tier-price-sub {
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 6px;
+  }
+  .evo-ag__tier-hr {
+    border: none; border-top: 1px solid var(--line);
+    margin: 22px 0;
+  }
+  .evo-ag__tier-list {
+    list-style: none; padding: 0; margin: 0 0 28px 0;
+    display: flex; flex-direction: column; gap: 12px;
+    font-size: 14px; color: var(--ink-dim);
+    line-height: 1.5;
+  }
+  .evo-ag__tier-list li {
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .evo-ag__tier-list li::before {
+    content: ""; margin-top: 6px;
+    width: 14px; height: 14px; flex-shrink: 0;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'><path d='M3 7l3 3 5-6' stroke='%23A8E898' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center / 14px;
+  }
+  .evo-ag__tier-cta {
+    margin-top: auto;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 20px;
+    font-family: var(--font-m); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+    border-radius: 10px;
+    background: transparent; color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+  }
+  .evo-ag__tier-cta:hover { border-color: rgba(168,232,152,0.5); background: rgba(168,232,152,0.06); color: var(--mint); }
+  .evo-ag__tier--featured .evo-ag__tier-cta {
+    background: var(--peach); color: #110A04; border-color: transparent;
+    box-shadow: 0 8px 22px rgba(255,122,74,0.3);
+  }
+  .evo-ag__tier--featured .evo-ag__tier-cta:hover { background: #FF8E62; color: #110A04; box-shadow: 0 12px 28px rgba(255,122,74,0.5); }
+
+  /* ========= PROCESS ========= */
+  .evo-ag__process {
+    position: relative; z-index: 2;
+    margin-top: clamp(64px, 8vw, 100px);
+  }
+  .evo-ag__steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    position: relative;
+  }
+  @media (max-width: 980px) { .evo-ag__steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .evo-ag__steps { grid-template-columns: 1fr; } }
+
+  .evo-ag__step {
+    position: relative;
+    padding: 28px 24px 26px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(11,8,32,0.55);
+    display: flex; flex-direction: column; gap: 10px;
+    overflow: hidden;
+  }
+  .evo-ag__step::before {
+    content: attr(data-step);
+    position: absolute; top: -6px; right: 18px;
+    font-family: var(--font-d); font-weight: 800;
+    font-size: 88px; line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(168,232,152,0.18);
+    pointer-events: none;
+    user-select: none;
+  }
+  .evo-ag__step-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(168,232,152,0.2), rgba(61,46,222,0.25));
+    border: 1px solid rgba(168,232,152,0.28);
+  }
+  .evo-ag__step-icon svg { width: 22px; height: 22px; color: var(--mint); }
+  .evo-ag__step-name {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: 18px; line-height: 1.2; color: #fff; margin: 0;
+  }
+  .evo-ag__step-desc {
+    color: var(--ink-dim); font-size: 13px; line-height: 1.55; margin: 0;
+    position: relative; z-index: 2;
+  }
+  .evo-ag__step-meta {
+    margin-top: auto;
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mint);
+    padding-top: 6px;
+  }
+
+  /* ========= Data callout ========= */
+  .evo-ag__data {
+    position: relative; z-index: 2;
+    margin-top: clamp(48px, 6vw, 72px);
+    padding: 28px clamp(24px, 3vw, 40px);
+    border-radius: 20px;
+    background:
+      radial-gradient(800px 300px at 100% 50%, rgba(168,232,152,0.12), transparent 60%),
+      linear-gradient(90deg, rgba(20,18,43,0.8) 0%, rgba(11,8,32,0.8) 100%);
+    border: 1px dashed rgba(168,232,152,0.3);
+    display: grid; grid-template-columns: auto 1fr auto; gap: 24px;
+    align-items: center;
+  }
+  @media (max-width: 780px) {
+    .evo-ag__data { grid-template-columns: 1fr; text-align: center; }
+  }
+  .evo-ag__data-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(168,232,152,0.12);
+    border: 1px solid rgba(168,232,152,0.3);
+  }
+  .evo-ag__data-icon svg { width: 28px; height: 28px; color: var(--mint); }
+  @media (max-width: 780px) {
+    .evo-ag__data-icon { margin: 0 auto; }
+  }
+  .evo-ag__data-title {
+    font-family: var(--font-d); font-weight: 700;
+    font-size: 20px; line-height: 1.2; color: #fff;
+    margin: 0 0 6px 0;
+  }
+  .evo-ag__data-desc {
+    color: var(--ink-dim); font-size: 14px; line-height: 1.55; margin: 0;
+  }
+
+  /* Caption */
+  .zp-caption {
+    position: fixed; top: 12px; left: 12px; z-index: 900;
+    font-family: var(--font-m);
+    font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: rgba(10,8,26,0.75);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+  }
+
+/* ---- FOOTER ---- */
+
+  :root {
+    --bg: #05040C; --bg-2: #0B0820;
+    --ink: #FFFFFF; --ink-dim: #B6B5C6; --ink-muted: #7A7A8F;
+    --mint: #A8E898; --peach: #FF7A4A;
+    --line: rgba(255,255,255,0.08);
+    --font-d: 'Clash Display','Satoshi','Inter',sans-serif;
+    --font-s: 'Satoshi','Inter',system-ui,sans-serif;
+    --font-m: 'JetBrains Mono',ui-monospace,monospace;
+  }
+  
+  a { color: inherit; text-decoration: none; }
+  .preview-caption {
+    position: fixed; top: 12px; left: 12px; z-index: 900;
+    font-family: var(--font-m); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-muted); background: rgba(10,8,26,0.75);
+    border: 1px solid var(--line); padding: 6px 12px; border-radius: 999px;
+    backdrop-filter: blur(6px);
+  }
+  .spacer { height: 60vh; display: flex; align-items: center; justify-content: center; color: var(--ink-muted); font-family: var(--font-m); font-size: 12px; letter-spacing: 0.2em; }
+
+  .evo-ft {
+    position: relative;
+    background:
+      radial-gradient(900px 400px at 10% 0%, rgba(61,46,222,0.12), transparent 55%),
+      linear-gradient(180deg, #0A0820 0%, #05040C 100%);
+    padding: 96px 0 24px;
+    border-top: 1px solid var(--line);
+  }
+  .evo-ft__wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .evo-ft__top {
+    display: grid;
+    grid-template-columns: 1.4fr 1.1fr 1fr 1fr 1fr;
+    gap: clamp(28px, 3vw, 56px);
+    align-items: start;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 1100px) { .evo-ft__top { grid-template-columns: 1fr 1fr 1fr; } .evo-ft__brand { grid-column: 1 / -1; } }
+  @media (max-width: 640px) { .evo-ft__top { grid-template-columns: 1fr 1fr; } .evo-ft__brand, .evo-ft__contact { grid-column: 1 / -1; } }
+
+  .evo-ft__logo { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .evo-ft__logo-mark { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  .evo-ft__logo-name { font-family: var(--font-d); font-weight: 700; font-size: 22px; letter-spacing: -0.01em; color: #fff; display: block; line-height: 1; }
+  .evo-ft__logo-sub { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-muted); margin-top: 6px; display: block; line-height: 1; }
+  .evo-ft__tagline { color: var(--ink-dim); font-size: 14px; line-height: 1.6; max-width: 320px; margin: 0 0 24px 0; }
+  .evo-ft__news-title { font-family: var(--font-d); font-weight: 600; font-size: 18px; color: #fff; margin: 0 0 12px 0; }
+  .evo-ft__news-form {
+    display: flex; max-width: 360px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px; background: rgba(255,255,255,0.04);
+    overflow: hidden; transition: border-color 0.2s;
+  }
+  .evo-ft__news-form:focus-within { border-color: rgba(168,232,152,0.4); }
+  .evo-ft__news-input { flex: 1; padding: 12px 14px; background: transparent; border: none; outline: none; color: #fff; font-family: var(--font-s); font-size: 14px; }
+  .evo-ft__news-input::placeholder { color: var(--ink-muted); }
+  .evo-ft__news-btn { width: 42px; display: inline-flex; align-items: center; justify-content: center; background: var(--peach); border: none; color: #110A04; cursor: pointer; transition: background 0.2s; }
+  .evo-ft__news-btn:hover { background: #FF8E62; }
+  .evo-ft__news-btn svg { width: 16px; height: 16px; }
+
+  .evo-ft__col-title { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--mint); margin: 0 0 18px 0; font-weight: 700; }
+
+  .evo-ft__contact-lede { color: var(--ink-dim); font-size: 14px; line-height: 1.6; margin: 0 0 14px 0; }
+  .evo-ft__contact-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: var(--ink-dim); line-height: 1.5; }
+  .evo-ft__contact-list li { display: flex; gap: 8px; align-items: flex-start; }
+  .evo-ft__contact-list a { color: #fff; border-bottom: 1px dotted rgba(168,232,152,0.3); transition: border-color 0.2s, color 0.2s; }
+  .evo-ft__contact-list a:hover { color: var(--mint); border-color: var(--mint); }
+  .evo-ft__contact-abn { margin-top: 10px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+
+  .evo-ft__pay { margin-top: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .evo-ft__pay-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); margin-right: 6px; }
+  .evo-ft__pay-icon { width: 40px; height: 24px; border-radius: 4px; background: #fff; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-m); font-size: 9px; font-weight: 700; color: #0A0A0A; letter-spacing: 0.05em; }
+  .evo-ft__pay-icon--amex { background: #006FCF; color: #fff; }
+  .evo-ft__pay-icon--apple { background: #000; color: #fff; }
+  .evo-ft__pay-icon--google { background: #fff; color: #000; }
+  .evo-ft__pay-icon--mc { background: #fff; }
+  .evo-ft__pay-icon--mc::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #EB001B; margin-right: -4px; }
+  .evo-ft__pay-icon--mc::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #F79E1B; opacity: 0.85; }
+  .evo-ft__pay-icon--paypal { background: #003087; color: #fff; }
+  .evo-ft__pay-icon--shop { background: #5A31F4; color: #fff; }
+  .evo-ft__pay-icon--union { background: #fff; color: #D72027; }
+  .evo-ft__pay-icon--visa { background: #1434CB; color: #fff; }
+
+  .evo-ft__links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+  .evo-ft__links a { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-dim); transition: color 0.2s, transform 0.2s; }
+  .evo-ft__links a::before { content: "›"; color: var(--mint); font-weight: 600; transition: transform 0.2s; }
+  .evo-ft__links a:hover { color: #fff; }
+  .evo-ft__links a:hover::before { transform: translateX(3px); }
+
+  .evo-ft__divider { margin: 8px 0 20px; border: none; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent); }
+  .evo-ft__bottom { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
+  @media (max-width: 780px) { .evo-ft__bottom { grid-template-columns: 1fr; text-align: center; justify-items: center; } }
+  .evo-ft__copy { font-size: 13px; color: var(--ink-muted); margin: 0; }
+  .evo-ft__copy strong { color: var(--ink-dim); font-weight: 600; }
+  .evo-ft__bottom-links { display: flex; flex-wrap: wrap; gap: 18px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .evo-ft__bottom-links a { color: var(--ink-muted); transition: color 0.2s; }
+  .evo-ft__bottom-links a:hover { color: var(--mint); }
+  .evo-ft__seo { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); font-family: var(--font-m); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); text-align: center; line-height: 1.8; }
+  .evo-ft__seo span { display: inline-block; margin: 0 6px; }
+  .evo-ft__seo-sep { color: rgba(168,232,152,0.4); }
+
+/* Relocated EVOLVE AI NEURAL ENGINE pill — sits under Shopify header */
+.evo-zp__brain-wrap {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  padding: 28px 20px 0;
+}
+.evo-zp__brain-wrap .evo-zp__brain {
+  background: rgba(10,8,26,0.6);
+  border: 1px solid rgba(168,232,152,0.25);
+  border-radius: 999px;
+  padding: 8px 18px 8px 12px;
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+@media (max-width: 760px) {
+  .evo-zp__brain-wrap { padding-top: 20px; }
+}
+/* Push hero content down since we removed the internal header */
+.evo-zp__stage { padding-top: 20px !important; }
+@media (max-width: 760px) {
+  .evo-zp__stage { padding-top: 8px !important; }
+}
+
+</style>
+
+<section class="evo-zp" id="zpHero" aria-label="Evotech homepage hero">
+  <!-- Ambient layers -->
+  <div class="evo-zp__moon" aria-hidden="true"></div>
+
+  <!-- EVOLVE AI NEURAL ENGINE pill — centered under the Shopify header -->
+  <div class="evo-zp__brain-wrap"><div class="evo-zp__brain" role="img" aria-label="Evolve AI neural engine — live">
+      <svg class="evo-zp__brain-viz" viewBox="0 0 100 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="brainOutline" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#A8E898"/>
+            <stop offset="1" stop-color="#3D2EDE"/>
+          </linearGradient>
+          <radialGradient id="brainGlow" cx="50%" cy="50%" r="55%">
+            <stop offset="0" stop-color="#CDFFBF" stop-opacity="0.65"/>
+            <stop offset="1" stop-color="#CDFFBF" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- halo -->
+        <circle class="brain-halo" cx="50" cy="36" r="32" fill="url(#brainGlow)"/>
+
+        <!-- left hemisphere -->
+        <path d="M48 8 Q28 8 22 22 Q10 26 12 40 Q10 54 22 58 Q30 68 48 64 Z"
+              fill="none" stroke="url(#brainOutline)" stroke-width="1.8" stroke-linejoin="round"/>
+        <!-- right hemisphere -->
+        <path d="M52 8 Q72 8 78 22 Q90 26 88 40 Q90 54 78 58 Q70 68 52 64 Z"
+              fill="none" stroke="url(#brainOutline)" stroke-width="1.8" stroke-linejoin="round"/>
+        <!-- corpus callosum divider -->
+        <line x1="50" y1="10" x2="50" y2="64" stroke="#A8E898" stroke-width="0.8" stroke-dasharray="2 3" opacity="0.6"/>
+        <!-- sulci curves -->
+        <path d="M24 28 Q34 30 30 40 Q24 50 34 54" fill="none" stroke="#A8E898" stroke-width="0.9" stroke-opacity="0.45"/>
+        <path d="M76 28 Q66 30 70 40 Q76 50 66 54" fill="none" stroke="#A8E898" stroke-width="0.9" stroke-opacity="0.45"/>
+
+        <!-- synapses (flowing dashed lines) -->
+        <g class="brain-synapse" stroke="#A8E898" stroke-width="0.8" stroke-opacity="0.55" fill="none">
+          <line x1="28" y1="24" x2="40" y2="34"/>
+          <line x1="40" y1="34" x2="50" y2="36"/>
+          <line x1="50" y1="36" x2="60" y2="34"/>
+          <line x1="60" y1="34" x2="72" y2="24"/>
+          <line x1="22" y1="42" x2="40" y2="34"/>
+          <line x1="78" y1="42" x2="60" y2="34"/>
+          <line x1="36" y1="52" x2="50" y2="36"/>
+          <line x1="64" y1="52" x2="50" y2="36"/>
+        </g>
+
+        <!-- neurons (pulsing dots) -->
+        <circle class="brain-node n1"   cx="28" cy="24" r="1.8" fill="#CDFFBF"/>
+        <circle class="brain-node n2"   cx="40" cy="34" r="1.8" fill="#A8E898"/>
+        <circle class="brain-node n3"   cx="22" cy="42" r="1.8" fill="#A8E898"/>
+        <circle class="brain-node n4"   cx="36" cy="52" r="1.8" fill="#CDFFBF"/>
+        <circle class="brain-node n5"   cx="72" cy="24" r="1.8" fill="#CDFFBF"/>
+        <circle class="brain-node n6"   cx="60" cy="34" r="1.8" fill="#A8E898"/>
+        <circle class="brain-node n7"   cx="78" cy="42" r="1.8" fill="#A8E898"/>
+        <circle class="brain-node n8"   cx="64" cy="52" r="1.8" fill="#CDFFBF"/>
+        <!-- core neuron -->
+        <circle class="brain-node core" cx="50" cy="36" r="3"   fill="#5B4DFF" stroke="#CDFFBF" stroke-width="0.8"/>
+      </svg>
+      <span class="evo-zp__brain-label">EVOLVE AI <span class="dim">· NEURAL ENGINE</span></span>
+    </div></div>
+
+  <!-- ============================ HEADER ============================ -->
+  
+
+  <!-- ============================ SLIDE STAGE ============================ -->
+  <div class="evo-zp__stage" id="zpStage">
+
+    <!-- ================ SLIDE 1 · SOLUTIONS ================ -->
+    <article class="evo-zp__slide" data-slide="solutions" data-active="true" aria-label="Solutions — the Evotech ecosystem">
+      <div class="evo-zp__ghost" aria-hidden="true">SOLUTIONS</div>
+
+      <div class="evo-zp__copy-left">
+        <div class="evo-zp__eyebrow">AUSTRALIAN AI SAAS · EVOLVE AI NEURAL ENGINE</div>
+        <h1 class="evo-zp__headline">Every AI model.<br>One Australian API.<br>Zero lock-in.</h1>
+        <div class="evo-zp__chevrons">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</div>
+        <a href="/pages/contact" class="evo-zp__cta">Explore the ecosystem</a>
+      </div>
+
+      <div class="evo-zp__visual">
+        <div class="evo-zp__orbit" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <!-- SOLUTIONS visual: 6-app hexagonal constellation around Evolve glyph -->
+        <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six SaaS apps orbiting the Evolve AI neural engine">
+          <defs>
+            <radialGradient id="zpSolGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#CDFFBF" stop-opacity="0.95"/>
+              <stop offset="0.55" stop-color="#A8E898" stop-opacity="0.45"/>
+              <stop offset="1" stop-color="#A8E898" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="zpSolCore" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5B4DFF"/>
+              <stop offset="1" stop-color="#3D2EDE"/>
+            </linearGradient>
+            <radialGradient id="zpSolNode" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#A8E898"/>
+              <stop offset="1" stop-color="#8EDC78"/>
+            </radialGradient>
+          </defs>
+
+          <circle cx="240" cy="240" r="200" stroke="rgba(168,232,152,0.18)" stroke-width="1" stroke-dasharray="4 6"/>
+          <circle cx="240" cy="240" r="150" stroke="rgba(168,232,152,0.28)" stroke-width="1"/>
+          <circle cx="240" cy="240" r="100" stroke="rgba(168,232,152,0.45)" stroke-width="1"/>
+          <circle cx="240" cy="240" r="80" fill="url(#zpSolGlow)"/>
+          <path d="M240 180 L300 240 L240 300 L180 240 Z" fill="url(#zpSolCore)" stroke="#A8E898" stroke-width="1.5"/>
+          <circle cx="240" cy="240" r="8" fill="#CDFFBF"/>
+
+          <g>
+            <circle cx="240" cy="90" r="18" fill="url(#zpSolNode)"/>
+            <text x="240" y="95" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#0A0A0A">EVO</text>
+            <circle cx="370" cy="165" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+            <text x="370" y="169" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">BOT</text>
+            <circle cx="370" cy="315" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+            <text x="370" y="319" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">HIR</text>
+            <circle cx="240" cy="390" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+            <text x="240" y="394" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">PUL</text>
+            <circle cx="110" cy="315" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+            <text x="110" y="319" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">BLD</text>
+            <circle cx="110" cy="165" r="18" fill="rgba(168,232,152,0.18)" stroke="#A8E898" stroke-width="1.5"/>
+            <text x="110" y="169" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#A8E898">DOC</text>
+          </g>
+
+          <g stroke="rgba(168,232,152,0.25)" stroke-width="1" stroke-dasharray="2 5">
+            <line x1="240" y1="240" x2="240" y2="90"/>
+            <line x1="240" y1="240" x2="370" y2="165"/>
+            <line x1="240" y1="240" x2="370" y2="315"/>
+            <line x1="240" y1="240" x2="240" y2="390"/>
+            <line x1="240" y1="240" x2="110" y2="315"/>
+            <line x1="240" y1="240" x2="110" y2="165"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="evo-zp__copy-right">
+        ROUTE CLAUDE, GPT &amp; GEMINI THROUGH ONE AUSTRALIAN-HOSTED ENDPOINT. SIX SAAS APPS BUILT ON TOP — EVOLVE, SUPPORTBOT, GET HIRED, PULSE, BUILD.AI, DOCGEN. ONE INVOICE. ONE API KEY.
+      </div>
+    </article>
+
+    <!-- ================ SLIDE 2 · SERVICES ================ -->
+    <article class="evo-zp__slide" data-slide="services" aria-label="Services — managed AI infrastructure">
+      <div class="evo-zp__ghost" aria-hidden="true">SERVICES</div>
+
+      <div class="evo-zp__copy-left">
+        <div class="evo-zp__eyebrow">FOUNDER-LED · BUILT IN PERTH</div>
+        <h2 class="evo-zp__headline">We run the<br>cluster.<br>You ship<br>the product.</h2>
+        <div class="evo-zp__chevrons">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</div>
+        <a href="/pages/contact" class="evo-zp__cta">Meet the founder</a>
+      </div>
+
+      <div class="evo-zp__visual">
+        <div class="evo-zp__orbit" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five-node Tailscale mesh feeding the Evolve engine">
+          <defs>
+            <linearGradient id="zpSrvCrystal1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5B4DFF"/>
+              <stop offset="1" stop-color="#1E1648"/>
+            </linearGradient>
+            <linearGradient id="zpSrvCrystal2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#8876FF"/>
+              <stop offset="1" stop-color="#3D2EDE"/>
+            </linearGradient>
+            <radialGradient id="zpSrvGlow" cx="50%" cy="50%" r="55%">
+              <stop offset="0" stop-color="#A8E898" stop-opacity="0.5"/>
+              <stop offset="1" stop-color="#A8E898" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <circle cx="240" cy="240" r="180" fill="url(#zpSrvGlow)"/>
+
+          <g>
+            <polygon points="240,100 340,200 280,340 200,340 140,200" fill="url(#zpSrvCrystal1)" stroke="#A8E898" stroke-width="1.5" stroke-opacity="0.6"/>
+            <polygon points="240,100 340,200 280,340" fill="url(#zpSrvCrystal2)" opacity="0.9"/>
+            <line x1="240" y1="100" x2="240" y2="340" stroke="#A8E898" stroke-width="1" stroke-opacity="0.6"/>
+            <line x1="140" y1="200" x2="340" y2="200" stroke="#A8E898" stroke-width="1" stroke-opacity="0.5"/>
+            <line x1="240" y1="340" x2="140" y2="200" stroke="#A8E898" stroke-width="1" stroke-opacity="0.5"/>
+            <line x1="240" y1="340" x2="340" y2="200" stroke="#A8E898" stroke-width="1" stroke-opacity="0.5"/>
+          </g>
+
+          <g stroke="#A8E898" stroke-width="1.5" stroke-linecap="round" opacity="0.7">
+            <path d="M30 120 Q130 180 180 200" fill="none" stroke-dasharray="4 6"/>
+            <path d="M450 120 Q350 180 300 200" fill="none" stroke-dasharray="4 6"/>
+            <path d="M30 360 Q130 310 200 340" fill="none" stroke-dasharray="4 6"/>
+            <path d="M450 360 Q350 310 280 340" fill="none" stroke-dasharray="4 6"/>
+          </g>
+          <g fill="#CDFFBF">
+            <circle cx="30" cy="120" r="4"/>
+            <circle cx="450" cy="120" r="4"/>
+            <circle cx="30" cy="360" r="4"/>
+            <circle cx="450" cy="360" r="4"/>
+          </g>
+
+          <circle cx="240" cy="220" r="9" fill="#CDFFBF"/>
+          <circle cx="240" cy="220" r="18" stroke="#A8E898" stroke-width="1" opacity="0.5"/>
+
+          <g>
+            <circle cx="140" cy="400" r="5" fill="#A8E898"/>
+            <circle cx="190" cy="420" r="5" fill="#A8E898"/>
+            <circle cx="240" cy="430" r="5" fill="#A8E898"/>
+            <circle cx="290" cy="420" r="5" fill="#A8E898"/>
+            <circle cx="340" cy="400" r="5" fill="#A8E898"/>
+            <path d="M140 400 L190 420 L240 430 L290 420 L340 400" stroke="rgba(168,232,152,0.35)" stroke-width="1" fill="none"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="evo-zp__copy-right">
+        PERSONAL FIVE-NODE CLUSTER IN AUSTRALIA · 60+ POOLED API KEYS ACROSS PROVIDERS · AUTOMATIC FAILOVER · DIRECT FOUNDER SUPPORT — NO OFFSHORE TICKET QUEUES.
+      </div>
+    </article>
+
+    <!-- ================ SLIDE 3 · PRODUCTS ================ -->
+    <article class="evo-zp__slide" data-slide="products" aria-label="Products — buy on evotech.au">
+      <div class="evo-zp__ghost" aria-hidden="true">PRODUCTS</div>
+
+      <div class="evo-zp__copy-left">
+        <div class="evo-zp__eyebrow">SHOPIFY STOREFRONT · EVOTECH.AU</div>
+        <h2 class="evo-zp__headline">Priced in AUD.<br>GST inclusive.<br>API key in<br>60 seconds.</h2>
+        <div class="evo-zp__chevrons">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</div>
+        <a href="/pages/contact" class="evo-zp__cta">Browse plans</a>
+      </div>
+
+      <div class="evo-zp__visual">
+        <div class="evo-zp__orbit" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Evotech Pro subscription card, A$79 per month GST included">
+          <defs>
+            <linearGradient id="zpProdCard" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#A8E898"/>
+              <stop offset="0.5" stop-color="#5B4DFF"/>
+              <stop offset="1" stop-color="#3D2EDE"/>
+            </linearGradient>
+            <linearGradient id="zpProdGlare" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="rgba(255,255,255,0.5)"/>
+              <stop offset="0.5" stop-color="rgba(255,255,255,0.1)"/>
+              <stop offset="1" stop-color="rgba(255,255,255,0.4)"/>
+            </linearGradient>
+          </defs>
+
+          <ellipse cx="240" cy="260" rx="180" ry="40" fill="#A8E898" opacity="0.08"/>
+
+          <g transform="rotate(-8 240 240)">
+            <rect x="110" y="140" width="260" height="180" rx="16" fill="url(#zpProdCard)" stroke="#CDFFBF" stroke-width="1.5"/>
+            <rect x="110" y="140" width="260" height="180" rx="16" fill="url(#zpProdGlare)" opacity="0.45"/>
+            <rect x="130" y="170" width="44" height="32" rx="5" fill="rgba(255,255,255,0.28)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+            <line x1="138" y1="178" x2="166" y2="178" stroke="rgba(255,255,255,0.6)"/>
+            <line x1="138" y1="186" x2="166" y2="186" stroke="rgba(255,255,255,0.6)"/>
+            <line x1="138" y1="194" x2="166" y2="194" stroke="rgba(255,255,255,0.6)"/>
+            <text x="130" y="228" font-family="Clash Display,Satoshi" font-size="22" font-weight="800" fill="#fff">EVOTECH PRO</text>
+            <text x="130" y="246" font-family="JetBrains Mono" font-size="10" letter-spacing="2" fill="rgba(255,255,255,0.82)">EVOLVE AI · ACCESS KEY</text>
+            <text x="130" y="298" font-family="Clash Display,Satoshi" font-size="28" font-weight="800" fill="#fff">A$79</text>
+            <text x="190" y="298" font-family="JetBrains Mono" font-size="11" letter-spacing="1" fill="rgba(255,255,255,0.72)">/MO · GST INC.</text>
+            <rect x="296" y="168" width="60" height="22" rx="11" fill="#CDFFBF"/>
+            <text x="326" y="183" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="800" fill="#0A0A0A" letter-spacing="1.5">POPULAR</text>
+          </g>
+
+          <g transform="rotate(12 380 130)">
+            <circle cx="380" cy="130" r="38" fill="rgba(168,232,152,0.14)" stroke="#A8E898" stroke-width="1.5" stroke-dasharray="3 4"/>
+            <text x="380" y="124" text-anchor="middle" font-family="JetBrains Mono" font-size="8" font-weight="700" fill="#A8E898" letter-spacing="1.5">SHOPIFY</text>
+            <text x="380" y="136" text-anchor="middle" font-family="JetBrains Mono" font-size="8" font-weight="700" fill="#A8E898" letter-spacing="1.5">CHECKOUT</text>
+            <text x="380" y="148" text-anchor="middle" font-family="JetBrains Mono" font-size="8" font-weight="700" fill="#A8E898" letter-spacing="1.5">60 SEC</text>
+          </g>
+
+          <g transform="translate(100 360)">
+            <rect x="0" y="0" width="62" height="30" rx="6" fill="rgba(168,232,152,0.12)" stroke="#A8E898" stroke-width="1"/>
+            <text x="31" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#A8E898" letter-spacing="2">AUD</text>
+          </g>
+          <g transform="translate(320 360)">
+            <rect x="0" y="0" width="62" height="30" rx="6" fill="rgba(168,232,152,0.12)" stroke="#A8E898" stroke-width="1"/>
+            <text x="31" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#A8E898" letter-spacing="2">GST</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="evo-zp__copy-right">
+        EVERY PLAN LIVE ON EVOTECH.AU · PAY WITH CARD, PAYPAL OR APPLE PAY IN AUD · API KEY AUTO-EMAILED · CANCEL ANYTIME FROM SHOPIFY'S CUSTOMER PORTAL.
+      </div>
+    </article>
+  </div>
+
+  <!-- Tracker -->
+  <div class="evo-zp__tracker" role="tablist" aria-label="Hero slides">
+    <button type="button" data-tracker="solutions" aria-current="true">01 · SOLUTIONS</button>
+    <button type="button" data-tracker="services">02 · SERVICES</button>
+    <button type="button" data-tracker="products">03 · PRODUCTS</button>
+  </div>
+
+  <!-- Social -->
+  <div class="evo-zp__social">
+    <a href="#" aria-label="Evotech on LinkedIn">LI</a>
+    <a href="#" aria-label="Evotech on X">X</a>
+    <a href="#" aria-label="Evotech on Instagram">IG</a>
+  </div>
+
+  <!-- Side arrows -->
+  <button class="evo-zp__arrow evo-zp__arrow--prev" type="button" aria-label="Previous slide" data-nav="prev">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="evo-zp__arrow evo-zp__arrow--next" type="button" aria-label="Next slide" data-nav="next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</section>
+
+
+</div>
+
+
+
+
+
+
+
+
+<section class="evo-cat" aria-label="Explore expertise categories">
+  <div class="evo-cat__head">
+    <div>
+      <p class="evo-cat__kicker">SHOP BY CATEGORY · 4,800+ SKUs</p>
+      <h2 class="evo-cat__title">Explore <em>expertise</em><br>categories.</h2>
+    </div>
+    <p class="evo-cat__subtitle">
+      Browse our full range of enterprise-grade networking, storage, compute and workstation hardware — curated, warranty-backed, stocked for Perth.
+    </p>
+  </div>
+
+  <div class="evo-cat__rail-wrap">
+    <div class="evo-cat__rail" id="catRail" role="list">
+
+      <!-- 1. Routers & Gateways -->
+      <a class="evo-cat__card" href="{{ collections['routers-gateways'].url | default: '/collections/routers-gateways' }}" role="listitem">
+        <div class="evo-cat__ring">
+          <svg class="evo-cat__icon ico-router" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- radiating wifi waves from top -->
+            <g stroke="#A8E898" stroke-width="1.5" fill="none" stroke-linecap="round">
+              <path class="wave w1" d="M25 28 Q37 18 49 28" />
+              <path class="wave w2" d="M22 30 Q37 15 52 30" />
+              <path class="wave w3" d="M19 32 Q37 12 55 32" />
+            </g>
+            <!-- chassis -->
+            <rect x="14" y="40" width="46" height="18" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+            <rect x="14" y="40" width="46" height="4" rx="1" fill="rgba(168,232,152,0.15)"/>
+            <!-- LEDs -->
+            <circle class="led l1" cx="22" cy="51" r="2" fill="#A8E898"/>
+            <circle class="led l2" cx="30" cy="51" r="2" fill="#A8E898"/>
+            <circle class="led l3" cx="38" cy="51" r="2" fill="#CDFFBF"/>
+            <circle class="led l4" cx="46" cy="51" r="2" fill="#A8E898"/>
+            <!-- antennas -->
+            <line x1="22" y1="40" x2="16" y2="26" stroke="#A8E898" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="52" y1="40" x2="58" y2="26" stroke="#A8E898" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="evo-cat__label">Routers &amp; Gateways</div>
+        <div class="evo-cat__count">214 SKUs</div>
+      </a>
+
+      <!-- 2. Switches & Hubs -->
+      <a class="evo-cat__card" href="{{ collections['switches-hubs'].url | default: '/collections/switches-hubs' }}" role="listitem">
+        <div class="evo-cat__ring">
+          <svg class="evo-cat__icon ico-switch" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- chassis -->
+            <rect x="8" y="26" width="58" height="22" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+            <!-- branding bar -->
+            <rect x="8" y="26" width="58" height="4" rx="1" fill="rgba(168,232,152,0.15)"/>
+            <!-- 8 ports -->
+            <g fill="none" stroke="rgba(168,232,152,0.5)" stroke-width="1">
+              <rect x="12" y="34" width="6" height="8" rx="1"/>
+              <rect x="19" y="34" width="6" height="8" rx="1"/>
+              <rect x="26" y="34" width="6" height="8" rx="1"/>
+              <rect x="33" y="34" width="6" height="8" rx="1"/>
+              <rect x="40" y="34" width="6" height="8" rx="1"/>
+              <rect x="47" y="34" width="6" height="8" rx="1"/>
+              <rect x="54" y="34" width="6" height="8" rx="1"/>
+              <rect x="61" y="34" width="2" height="8" rx="1"/>
+            </g>
+            <!-- port LEDs -->
+            <circle class="port-led p1" cx="15" cy="52" r="1.8" fill="#A8E898"/>
+            <circle class="port-led p2" cx="22" cy="52" r="1.8" fill="#A8E898"/>
+            <circle class="port-led p3" cx="29" cy="52" r="1.8" fill="#A8E898"/>
+            <circle class="port-led p4" cx="36" cy="52" r="1.8" fill="#A8E898"/>
+            <circle class="port-led p5" cx="43" cy="52" r="1.8" fill="#A8E898"/>
+            <circle class="port-led p6" cx="50" cy="52" r="1.8" fill="#A8E898"/>
+            <circle class="port-led p7" cx="57" cy="52" r="1.8" fill="#A8E898"/>
+            <circle class="port-led p8" cx="62" cy="52" r="1.8" fill="#CDFFBF"/>
+          </svg>
+        </div>
+        <div class="evo-cat__label">Switches &amp; Hubs</div>
+        <div class="evo-cat__count">362 SKUs</div>
+      </a>
+
+      <!-- 3. Access Points -->
+      <a class="evo-cat__card" href="{{ collections['access-points'].url | default: '/collections/access-points' }}" role="listitem">
+        <div class="evo-cat__ring">
+          <svg class="evo-cat__icon ico-ap" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- radiating arcs -->
+            <g stroke="#A8E898" stroke-width="1.5" fill="none" stroke-linecap="round">
+              <path class="arc a1" d="M22 52 Q37 36 52 52" />
+              <path class="arc a2" d="M17 52 Q37 28 57 52" />
+              <path class="arc a3" d="M12 52 Q37 22 62 52" />
+            </g>
+            <!-- dome -->
+            <ellipse cx="37" cy="52" rx="16" ry="4" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+            <circle cx="37" cy="48" r="3" fill="#CDFFBF"/>
+          </svg>
+        </div>
+        <div class="evo-cat__label">Access Points</div>
+        <div class="evo-cat__count">198 SKUs</div>
+      </a>
+
+      <!-- 4. NAS Systems -->
+      <a class="evo-cat__card" href="{{ collections['nas-systems'].url | default: '/collections/nas-systems' }}" role="listitem">
+        <div class="evo-cat__ring">
+          <svg class="evo-cat__icon ico-nas" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- chassis -->
+            <rect x="16" y="14" width="42" height="46" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+            <!-- 4 drive bays -->
+            <g stroke="rgba(168,232,152,0.4)" stroke-width="1">
+              <rect x="20" y="19" width="34" height="8" rx="1" fill="rgba(168,232,152,0.05)"/>
+              <rect x="20" y="29" width="34" height="8" rx="1" fill="rgba(168,232,152,0.05)"/>
+              <rect x="20" y="39" width="34" height="8" rx="1" fill="rgba(168,232,152,0.05)"/>
+              <rect x="20" y="49" width="34" height="8" rx="1" fill="rgba(168,232,152,0.05)"/>
+            </g>
+            <!-- drive LEDs -->
+            <circle class="drive-led d1" cx="49" cy="23" r="1.8" fill="#A8E898"/>
+            <circle class="drive-led d2" cx="49" cy="33" r="1.8" fill="#A8E898"/>
+            <circle class="drive-led d3" cx="49" cy="43" r="1.8" fill="#A8E898"/>
+            <circle class="drive-led d4" cx="49" cy="53" r="1.8" fill="#A8E898"/>
+            <!-- grip handles -->
+            <line x1="23" y1="23" x2="27" y2="23" stroke="rgba(168,232,152,0.4)" stroke-width="1.5"/>
+            <line x1="23" y1="33" x2="27" y2="33" stroke="rgba(168,232,152,0.4)" stroke-width="1.5"/>
+            <line x1="23" y1="43" x2="27" y2="43" stroke="rgba(168,232,152,0.4)" stroke-width="1.5"/>
+            <line x1="23" y1="53" x2="27" y2="53" stroke="rgba(168,232,152,0.4)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="evo-cat__label">NAS Systems</div>
+        <div class="evo-cat__count">127 SKUs</div>
+      </a>
+
+      <!-- 5. Enterprise HDDs -->
+      <a class="evo-cat__card" href="{{ collections['enterprise-hdds'].url | default: '/collections/enterprise-hdds' }}" role="listitem">
+        <div class="evo-cat__ring">
+          <svg class="evo-cat__icon ico-hdd" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- outer chassis -->
+            <rect x="8" y="8" width="58" height="58" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+            <!-- platter -->
+            <g class="platter">
+              <circle cx="37" cy="37" r="24" fill="url(#hddPlatter)" stroke="rgba(168,232,152,0.5)"/>
+              <circle cx="37" cy="37" r="18" fill="none" stroke="rgba(168,232,152,0.25)"/>
+              <circle cx="37" cy="37" r="12" fill="none" stroke="rgba(168,232,152,0.2)"/>
+              <circle cx="37" cy="37" r="6" fill="#A8E898"/>
+              <circle cx="37" cy="37" r="2" fill="#14122B"/>
+              <!-- reference line on platter (shows rotation) -->
+              <line x1="37" y1="15" x2="37" y2="22" stroke="#CDFFBF" stroke-width="1.5"/>
+            </g>
+            <defs>
+              <radialGradient id="hddPlatter" cx="50%" cy="50%" r="50%">
+                <stop offset="0" stop-color="#2A2460"/>
+                <stop offset="1" stop-color="#0A0820"/>
+              </radialGradient>
+            </defs>
+            <!-- head arm -->
+            <g class="head-arm">
+              <rect x="56" y="17" width="4" height="30" rx="1" fill="rgba(168,232,152,0.6)"/>
+              <circle cx="58" cy="18" r="3" fill="#A8E898"/>
+            </g>
+          </svg>
+        </div>
+        <div class="evo-cat__label">Enterprise HDDs</div>
+        <div class="evo-cat__count">445 SKUs</div>
+      </a>
+
+      <!-- 6. Graphics Cards -->
+      <a class="evo-cat__card" href="{{ collections['graphics-cards'].url | default: '/collections/graphics-cards' }}" role="listitem">
+        <div class="evo-cat__ring">
+          <svg class="evo-cat__icon ico-gpu" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- GPU card body -->
+            <rect x="6" y="24" width="62" height="26" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+            <!-- PCIe gold fingers -->
+            <rect x="6" y="48" width="20" height="4" fill="rgba(205,255,191,0.8)"/>
+            <!-- fan housing -->
+            <circle cx="37" cy="37" r="13" fill="#0A0820" stroke="#A8E898" stroke-width="1.5"/>
+            <!-- fan blades (rotating) -->
+            <g class="fan">
+              <path d="M37 37 L37 27 Q40 30 37 37 Z" fill="rgba(168,232,152,0.5)"/>
+              <path d="M37 37 L47 37 Q44 40 37 37 Z" fill="rgba(168,232,152,0.5)"/>
+              <path d="M37 37 L37 47 Q34 44 37 37 Z" fill="rgba(168,232,152,0.5)"/>
+              <path d="M37 37 L27 37 Q30 34 37 37 Z" fill="rgba(168,232,152,0.5)"/>
+            </g>
+            <circle cx="37" cy="37" r="3" fill="#CDFFBF"/>
+            <!-- side ports -->
+            <rect x="56" y="30" width="10" height="3" rx="1" fill="rgba(168,232,152,0.3)"/>
+            <rect x="56" y="35" width="10" height="3" rx="1" fill="rgba(168,232,152,0.3)"/>
+            <rect x="56" y="40" width="10" height="3" rx="1" fill="rgba(168,232,152,0.3)"/>
+          </svg>
+        </div>
+        <div class="evo-cat__label">Graphics Cards</div>
+        <div class="evo-cat__count">289 SKUs</div>
+      </a>
+
+      <!-- 7. Workstation Laptops -->
+      <a class="evo-cat__card" href="{{ collections['workstation-laptops'].url | default: '/collections/workstation-laptops' }}" role="listitem">
+        <div class="evo-cat__ring">
+          <svg class="evo-cat__icon ico-lap" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- screen -->
+            <rect x="14" y="16" width="46" height="30" rx="2" fill="#0A0820" stroke="#A8E898" stroke-width="1.5"/>
+            <!-- screen content wave -->
+            <g class="screen-wave">
+              <path d="M18 38 Q24 30 30 36 T42 32 T56 36" fill="none" stroke="#A8E898" stroke-width="1.2"/>
+              <path d="M18 42 Q24 36 30 40 T42 36 T56 40" fill="none" stroke="#CDFFBF" stroke-width="1" opacity="0.6"/>
+            </g>
+            <!-- keyboard base -->
+            <path d="M8 50 L66 50 L62 62 L12 62 Z" fill="#14122B" stroke="#A8E898" stroke-width="1.5" stroke-linejoin="round"/>
+            <line x1="28" y1="56" x2="46" y2="56" stroke="rgba(168,232,152,0.5)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="evo-cat__label">Workstation Laptops</div>
+        <div class="evo-cat__count">178 SKUs</div>
+      </a>
+
+      <!-- 8. Processors (CPU) -->
+      <a class="evo-cat__card" href="{{ collections.processors.url | default: '/collections/processors' }}" role="listitem">
+        <div class="evo-cat__ring">
+          <svg class="evo-cat__icon ico-cpu" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- CPU package -->
+            <rect x="14" y="14" width="46" height="46" rx="2" fill="#14122B" stroke="#A8E898" stroke-width="1.5"/>
+            <!-- Die -->
+            <rect x="22" y="22" width="30" height="30" rx="1" fill="#0A0820" stroke="#A8E898" stroke-width="1"/>
+            <!-- 4 cores -->
+            <rect class="core c1" x="26" y="26" width="10" height="10" rx="1" fill="#A8E898"/>
+            <rect class="core c2" x="38" y="26" width="10" height="10" rx="1" fill="#A8E898"/>
+            <rect class="core c3" x="26" y="38" width="10" height="10" rx="1" fill="#A8E898"/>
+            <rect class="core c4" x="38" y="38" width="10" height="10" rx="1" fill="#A8E898"/>
+            <!-- pins on edges -->
+            <g fill="rgba(168,232,152,0.5)">
+              <rect x="18" y="10" width="1.5" height="4"/>
+              <rect x="26" y="10" width="1.5" height="4"/>
+              <rect x="34" y="10" width="1.5" height="4"/>
+              <rect x="42" y="10" width="1.5" height="4"/>
+              <rect x="50" y="10" width="1.5" height="4"/>
+              <rect x="18" y="60" width="1.5" height="4"/>
+              <rect x="26" y="60" width="1.5" height="4"/>
+              <rect x="34" y="60" width="1.5" height="4"/>
+              <rect x="42" y="60" width="1.5" height="4"/>
+              <rect x="50" y="60" width="1.5" height="4"/>
+              <rect x="10" y="18" width="4" height="1.5"/>
+              <rect x="10" y="26" width="4" height="1.5"/>
+              <rect x="10" y="34" width="4" height="1.5"/>
+              <rect x="10" y="42" width="4" height="1.5"/>
+              <rect x="10" y="50" width="4" height="1.5"/>
+              <rect x="60" y="18" width="4" height="1.5"/>
+              <rect x="60" y="26" width="4" height="1.5"/>
+              <rect x="60" y="34" width="4" height="1.5"/>
+              <rect x="60" y="42" width="4" height="1.5"/>
+              <rect x="60" y="50" width="4" height="1.5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="evo-cat__label">Processors (CPU)</div>
+        <div class="evo-cat__count">156 SKUs</div>
+      </a>
+
+      <!-- 9. Motherboards -->
+      <a class="evo-cat__card" href="{{ collections.motherboards.url | default: '/collections/motherboards' }}" role="listitem">
+        <div class="evo-cat__ring">
+          <svg class="evo-cat__icon ico-mobo" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- board -->
+            <rect x="8" y="10" width="58" height="54" rx="3" fill="#0A1A0C" stroke="#A8E898" stroke-width="1.5"/>
+            <!-- CPU socket -->
+            <rect x="16" y="18" width="16" height="16" rx="1" fill="#14122B" stroke="#A8E898" stroke-width="1"/>
+            <circle cx="24" cy="26" r="2" fill="#CDFFBF" class="chip-led"/>
+            <!-- RAM slots -->
+            <rect x="38" y="18" width="3" height="20" rx="0.5" fill="rgba(168,232,152,0.4)"/>
+            <rect x="43" y="18" width="3" height="20" rx="0.5" fill="rgba(168,232,152,0.4)"/>
+            <rect x="48" y="18" width="3" height="20" rx="0.5" fill="rgba(168,232,152,0.4)"/>
+            <rect x="53" y="18" width="3" height="20" rx="0.5" fill="rgba(168,232,152,0.4)"/>
+            <!-- PCIe slot -->
+            <rect x="16" y="42" width="40" height="4" rx="1" fill="rgba(168,232,152,0.3)"/>
+            <rect x="16" y="50" width="28" height="4" rx="1" fill="rgba(168,232,152,0.3)"/>
+            <!-- traces (animated) -->
+            <g class="trace" stroke="#A8E898" stroke-width="0.8" fill="none">
+              <path d="M24 34 L24 42" />
+              <path d="M56 26 L60 26 L60 46" />
+              <path d="M30 46 L30 58" />
+            </g>
+            <g class="trace t2" stroke="#CDFFBF" stroke-width="0.8" fill="none">
+              <path d="M44 38 L44 50" />
+              <path d="M50 54 L58 54 L58 58" />
+            </g>
+            <!-- misc chips -->
+            <rect x="56" y="48" width="6" height="6" rx="0.5" fill="#14122B" stroke="rgba(168,232,152,0.3)"/>
+            <circle cx="59" cy="51" r="1" fill="#A8E898" class="chip-led"/>
+          </svg>
+        </div>
+        <div class="evo-cat__label">Motherboards</div>
+        <div class="evo-cat__count">203 SKUs</div>
+      </a>
+
+    </div>
+
+    <div class="evo-cat__progress">
+      <div class="evo-cat__progress-track">
+        <div class="evo-cat__progress-bar" id="catBar"></div>
+      </div>
+      <div class="evo-cat__progress-ctrls">
+        <button type="button" aria-label="Previous categories" data-nav="prev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" aria-label="Next categories" data-nav="next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div></section>
+
+
+
+
+
+
+
+
+<!-- =========================================================================
+     FEATURED PRODUCT SHOWCASE
+     ========================================================================= -->
+<section class="evo-section evo-section--dark" aria-label="Featured product">
+  <div class="evo-wrap">
+    <div class="evo-section__head">
+      <div>
+        <p class="evo-eyebrow">FLAGSHIP PICK · PERTH STOCK</p>
+        <h2 class="evo-title">This week's <em>featured</em><br>hardware.</h2>
+      </div>
+      <a href="{{ collections.featured.url | default: '/collections/featured' }}" class="evo-head-link">
+        See all featured
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    {%- assign feat = collections.featured.products.first | default: collections['best-sellers'].products.first -%}
+    {%- if feat == blank -%}
+      {%- assign feat = collections.all.products.first -%}
+    {%- endif -%}
+    {%- assign feat_url = feat.url | default: '/pages/contact' -%}
+    <div class="evo-feat">
+      <!-- Featured hero card -->
+      <article class="evo-feat__hero" aria-label="{{ feat.title | default: 'Featured product' | escape }}">
+        <div class="evo-feat__hero-top">
+          <div>
+            <p class="evo-feat__kicker">{{ feat.type | default: 'HYBRID CLOUD STORAGE · 2-BAY NAS' | upcase }}</p>
+            <h3 class="evo-feat__name"><a href="{{ feat_url }}" style="color:inherit;text-decoration:none;">{{ feat.title | default: 'Synology DS223/G' }}</a></h3>
+            <p class="evo-feat__desc">{{ feat.description | default: "The ultimate control centre for your digital life. Enterprise-grade stability for home offices and small-business professionals across Perth." | strip_html | truncatewords: 32 }}</p>
+          </div>
+          <span class="evo-feat__badge evo-feat__badge--live">LIVE · GMC VERIFIED</span>
+        </div>
+
+        <a href="{{ feat_url }}" class="evo-feat__viz" style="display:block;text-decoration:none;" aria-label="View {{ feat.title | default: 'Synology DS223/G' | escape }}">
+          {%- if feat.featured_image != blank -%}
+            <img src="{{ feat.featured_image | image_url: width: 800 }}" alt="{{ feat.featured_image.alt | default: feat.title | escape }}" loading="lazy" style="width:100%;height:100%;object-fit:contain;">
+          {%- else -%}
+          <!-- Stylised NAS illustration -->
+          <svg viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="nasCase" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1A1740"/>
+                <stop offset="1" stop-color="#08061A"/>
+              </linearGradient>
+              <linearGradient id="nasFront" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#2B2763"/>
+                <stop offset="1" stop-color="#14122B"/>
+              </linearGradient>
+              <radialGradient id="nasGlow" cx="50%" cy="100%" r="60%">
+                <stop offset="0" stop-color="#A8E898" stop-opacity="0.35"/>
+                <stop offset="1" stop-color="#A8E898" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- floor glow -->
+            <ellipse cx="200" cy="240" rx="170" ry="18" fill="url(#nasGlow)"/>
+            <!-- case body (isometric-ish) -->
+            <g>
+              <polygon points="110,60 290,60 330,90 330,230 110,230 70,200" fill="url(#nasCase)" stroke="#A8E898" stroke-width="1"/>
+              <rect x="110" y="60" width="180" height="170" rx="6" fill="url(#nasFront)" stroke="#A8E898" stroke-width="1"/>
+              <!-- top edge -->
+              <polygon points="110,60 290,60 330,90 150,90" fill="#1F1C50" stroke="#A8E898" stroke-width="1"/>
+              <!-- drive bays -->
+              <rect x="130" y="90" width="140" height="52" rx="4" fill="rgba(168,232,152,0.05)" stroke="rgba(168,232,152,0.35)"/>
+              <rect x="130" y="150" width="140" height="52" rx="4" fill="rgba(168,232,152,0.05)" stroke="rgba(168,232,152,0.35)"/>
+              <!-- bay handles -->
+              <rect x="140" y="112" width="16" height="8" rx="2" fill="rgba(168,232,152,0.5)"/>
+              <rect x="140" y="172" width="16" height="8" rx="2" fill="rgba(168,232,152,0.5)"/>
+              <!-- status LEDs -->
+              <circle cx="250" cy="116" r="3" fill="#A8E898"/>
+              <circle cx="260" cy="116" r="3" fill="#CDFFBF"/>
+              <circle cx="250" cy="176" r="3" fill="#A8E898"/>
+              <circle cx="260" cy="176" r="3" fill="#CDFFBF"/>
+              <!-- brand plate -->
+              <rect x="140" y="214" width="50" height="10" rx="2" fill="rgba(255,255,255,0.1)"/>
+              <text x="165" y="222" text-anchor="middle" font-family="JetBrains Mono" font-size="7" font-weight="700" fill="rgba(168,232,152,0.9)" letter-spacing="1.5">DS223/G</text>
+            </g>
+          </svg>
+          {%- endif -%}
+        </a>
+
+        <div class="evo-feat__meta">
+          <div>
+            <div class="evo-feat__price-row">
+              {%- if feat.price != blank -%}
+                <span class="evo-feat__price">{{ feat.price | money }}</span>
+                {%- if feat.compare_at_price > feat.price -%}
+                  <span class="evo-feat__price-compare">{{ feat.compare_at_price | money }}</span>
+                  <span class="evo-pill evo-pill--hot">SAVE {{ feat.compare_at_price | minus: feat.price | money }}</span>
+                {%- endif -%}
+              {%- else -%}
+                <span class="evo-feat__price">A$524.95</span>
+                <span class="evo-feat__price-compare">A$589.00</span>
+                <span class="evo-pill evo-pill--hot">SAVE A$64</span>
+              {%- endif -%}
+            </div>
+            <span class="evo-feat__gst">GST included · Free shipping WA</span>
+          </div>
+          <div class="evo-feat__cta-row">
+            {%- if feat != blank and feat.available -%}
+              {%- form 'product', feat, id: 'evo-feat-form', class: 'evo-feat__form', novalidate: 'novalidate', style: 'display:inline-flex;gap:10px;' -%}
+                <input type="hidden" name="id" value="{{ feat.selected_or_first_available_variant.id }}">
+                <button class="evo-btn-primary" type="submit">
+                  Add to cart
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                </button>
+              {%- endform -%}
+              <a href="{{ feat_url }}" class="evo-btn-ghost" aria-label="View product details" style="display:inline-flex;align-items:center;justify-content:center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </a>
+            {%- else -%}
+              <a class="evo-btn-primary" href="/pages/contact">
+                Enquire now
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              </a>
+              <a href="/pages/contact" class="evo-btn-ghost" aria-label="Contact us" style="display:inline-flex;align-items:center;justify-content:center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="evo-feat__ticker">
+          <span class="evo-feat__ticker-item"><span class="dot"></span>9 sold in the last 48 hrs</span>
+          <span class="evo-feat__ticker-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 0 1 16 0C20 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>
+            Perth warehouse · 4 in stock
+          </span>
+          <span class="evo-feat__ticker-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            3-year authorised warranty
+          </span>
+        </div>
+      </article>
+
+      <!-- Side panel — 2 stacked feature tiles -->
+      <div class="evo-feat__side">
+        <article class="evo-feat__tile">
+          <div class="evo-feat__tile-top">
+            <div>
+              <p class="evo-feat__kicker">SMART ECOSYSTEMS</p>
+              <h3 class="evo-feat__tile-name">Automated Living</h3>
+              <p class="evo-feat__tile-desc">Intelligent devices for a future-proof home. Managed centrally, installed by a local pro.</p>
+            </div>
+            <span class="evo-pill evo-pill--amber">PREMIUM TECH</span>
+          </div>
+          <div class="evo-feat__tile-viz">
+            <svg viewBox="0 0 240 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Mesh router (cylindrical) -->
+              <defs>
+                <linearGradient id="meshGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#E8E6F3"/>
+                  <stop offset="1" stop-color="#9B97C7"/>
+                </linearGradient>
+              </defs>
+              <!-- radiating wifi -->
+              <g stroke="#A8E898" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.7">
+                <path d="M50 60 Q120 20 190 60" stroke-dasharray="3 4"/>
+                <path d="M60 70 Q120 30 180 70" stroke-dasharray="3 4"/>
+                <path d="M70 80 Q120 45 170 80" stroke-dasharray="3 4"/>
+              </g>
+              <!-- device (right side) -->
+              <ellipse cx="190" cy="58" rx="22" ry="6" fill="rgba(0,0,0,0.4)" opacity="0.4"/>
+              <path d="M170 20 L210 20 L214 94 L166 94 Z" fill="url(#meshGrad)" stroke="#A8E898" stroke-width="0.8"/>
+              <ellipse cx="190" cy="20" rx="20" ry="6" fill="#F4F2FB" stroke="#A8E898" stroke-width="0.8"/>
+              <!-- bottom branding -->
+              <circle cx="190" cy="86" r="2" fill="#A8E898"/>
+            </svg>
+          </div>
+          <a href="{{ collections['smart-home'].url | default: '/collections/smart-home' }}" class="evo-feat__tile-cta">
+            Shop Smart Home
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </article>
+
+        <div class="evo-feat__tile-row-2">
+          {%- comment -%} === Dynamic product tile #1 : Storage === {%- endcomment -%}
+          {%- assign t1 = collections['enterprise-hdds'].products.first
+                   | default: collections['nas-systems'].products.first
+                   | default: collections['best-sellers'].products.first
+                   | default: collections.all.products.first -%}
+          {%- assign t1_url = t1.url | default: '/collections/enterprise-hdds' -%}
+          <article class="evo-feat__tile evo-feat__tile--product" style="min-height:260px">
+            <div class="evo-feat__tile-top">
+              <div>
+                <p class="evo-feat__kicker">INDUSTRIAL STORAGE</p>
+                <h3 class="evo-feat__tile-name" style="font-size:clamp(16px,1.5vw,22px);line-height:1.2;">
+                  <a href="{{ t1_url }}" style="color:inherit;text-decoration:none;">{{ t1.title | default: 'Enterprise Hard Drives' | truncatewords: 6 }}</a>
+                </h3>
+                <p class="evo-feat__tile-desc">{{ t1.description | default: 'High-performance enterprise hard drives.' | strip_html | truncatewords: 10 }}</p>
+              </div>
+            </div>
+            <a href="{{ t1_url }}" class="evo-feat__tile-viz" style="height:120px;display:block;text-decoration:none;overflow:hidden;border-radius:12px;background:rgba(168,232,152,0.04);">
+              {%- if t1.featured_image != blank -%}
+                <img src="{{ t1.featured_image | image_url: width: 400 }}" alt="{{ t1.featured_image.alt | default: t1.title | escape }}" loading="lazy" style="width:100%;height:100%;object-fit:contain;">
+              {%- else -%}
+                <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                  <ellipse cx="90" cy="86" rx="70" ry="8" fill="#A8E898" opacity="0.12"/>
+                  <rect x="30" y="16" width="120" height="64" rx="4" fill="#14122B" stroke="#A8E898" stroke-width="0.8"/>
+                  <circle cx="90" cy="48" r="22" fill="none" stroke="rgba(168,232,152,0.5)" stroke-width="0.8"/>
+                  <circle cx="90" cy="48" r="14" fill="none" stroke="rgba(168,232,152,0.35)" stroke-width="0.8"/>
+                  <circle cx="90" cy="48" r="4" fill="#A8E898"/>
+                </svg>
+              {%- endif -%}
+            </a>
+            <div class="evo-feat__tile-footer" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;">
+              <div>
+                {%- if t1.price != blank -%}
+                  <span class="evo-feat__tile-price" style="font-family:'Clash Display',sans-serif;font-size:18px;color:#A8E898;font-weight:700;">{{ t1.price | money }}</span>
+                  {%- if t1.compare_at_price > t1.price -%}
+                    <span style="font-size:12px;color:rgba(255,255,255,0.4);text-decoration:line-through;margin-left:6px;">{{ t1.compare_at_price | money }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+              {%- if t1 != blank and t1.available -%}
+                {%- form 'product', t1, id: 'evo-feat-tile-1', style: 'display:inline;' -%}
+                  <input type="hidden" name="id" value="{{ t1.selected_or_first_available_variant.id }}">
+                  <button class="evo-feat__tile-cta" type="submit" style="border:0;cursor:pointer;background:transparent;color:#A8E898;">
+                    Add to cart
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  </button>
+                {%- endform -%}
+              {%- else -%}
+                <a href="{{ t1_url }}" class="evo-feat__tile-cta">
+                  Explore storage
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+              {%- endif -%}
+            </div>
+          </article>
+
+          {%- comment -%} === Dynamic product tile #2 : PC Parts === {%- endcomment -%}
+          {%- assign t2 = collections['pc-parts'].products.first
+                   | default: collections['graphics-cards'].products.first
+                   | default: collections.processors.products.first
+                   | default: collections['best-sellers'].products[1]
+                   | default: collections.all.products[1] -%}
+          {%- assign t2_url = t2.url | default: '/collections/pc-parts' -%}
+          <article class="evo-feat__tile evo-feat__tile--product" style="min-height:260px">
+            <div class="evo-feat__tile-top">
+              <div>
+                <p class="evo-feat__kicker">PERFORMANCE HARDWARE</p>
+                <h3 class="evo-feat__tile-name" style="font-size:clamp(16px,1.5vw,22px);line-height:1.2;">
+                  <a href="{{ t2_url }}" style="color:inherit;text-decoration:none;">{{ t2.title | default: 'Elite PC Parts' | truncatewords: 6 }}</a>
+                </h3>
+                <p class="evo-feat__tile-desc">{{ t2.description | default: 'Graphics cards, CPUs & RAM.' | strip_html | truncatewords: 10 }}</p>
+              </div>
+              {%- if t2.compare_at_price > t2.price -%}
+                <span class="evo-pill evo-pill--hot">HOT DEALS</span>
+              {%- endif -%}
+            </div>
+            <a href="{{ t2_url }}" class="evo-feat__tile-viz" style="height:120px;display:block;text-decoration:none;overflow:hidden;border-radius:12px;background:rgba(168,232,152,0.04);">
+              {%- if t2.featured_image != blank -%}
+                <img src="{{ t2.featured_image | image_url: width: 400 }}" alt="{{ t2.featured_image.alt | default: t2.title | escape }}" loading="lazy" style="width:100%;height:100%;object-fit:contain;">
+              {%- else -%}
+                <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                  <ellipse cx="90" cy="86" rx="60" ry="7" fill="#A8E898" opacity="0.12"/>
+                  <rect x="26" y="34" width="130" height="42" rx="3" fill="#14122B" stroke="#A8E898" stroke-width="0.8"/>
+                  <rect x="26" y="70" width="34" height="6" fill="rgba(205,255,191,0.8)"/>
+                  <circle cx="80" cy="55" r="18" fill="#0A0820" stroke="#A8E898" stroke-width="0.8"/>
+                  <circle cx="80" cy="55" r="3" fill="#CDFFBF"/>
+                </svg>
+              {%- endif -%}
+            </a>
+            <div class="evo-feat__tile-footer" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;">
+              <div>
+                {%- if t2.price != blank -%}
+                  <span class="evo-feat__tile-price" style="font-family:'Clash Display',sans-serif;font-size:18px;color:#A8E898;font-weight:700;">{{ t2.price | money }}</span>
+                  {%- if t2.compare_at_price > t2.price -%}
+                    <span style="font-size:12px;color:rgba(255,255,255,0.4);text-decoration:line-through;margin-left:6px;">{{ t2.compare_at_price | money }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+              {%- if t2 != blank and t2.available -%}
+                {%- form 'product', t2, id: 'evo-feat-tile-2', style: 'display:inline;' -%}
+                  <input type="hidden" name="id" value="{{ t2.selected_or_first_available_variant.id }}">
+                  <button class="evo-feat__tile-cta" type="submit" style="border:0;cursor:pointer;background:transparent;color:#A8E898;">
+                    Add to cart
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  </button>
+                {%- endform -%}
+              {%- else -%}
+                <a href="{{ t2_url }}" class="evo-feat__tile-cta">
+                  Build your rig
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+              {%- endif -%}
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     BEST-SELLER GRID
+     ========================================================================= -->
+<section class="evo-section evo-section--dark" aria-label="Best sellers this week">
+  <div class="evo-wrap">
+    <div class="evo-section__head">
+      <div>
+        <p class="evo-eyebrow">BEST SELLERS · LAST 30 DAYS · LIVE FROM SHOPIFY</p>
+        <h2 class="evo-title">Most <em>shipped</em> gear<br>out of Perth.</h2>
+      </div>
+      <a href="{{ collections['best-sellers'].url | default: '/collections/best-sellers' }}" class="evo-head-link">
+        See full leaderboard
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <div class="evo-grid">
+      {%- assign bestsellers = collections['best-sellers'].products | default: collections.all.products -%}
+      {%- if bestsellers.size > 0 -%}
+        {%- for product in bestsellers limit: 4 -%}
+          {%- assign p_rating = product.metafields.reviews.rating.value | default: 4.8 -%}
+          {%- assign p_count  = product.metafields.reviews.rating_count | default: 0 -%}
+          {%- assign p_sold   = product.metafields.custom.sold_last_7d | default: 0 -%}
+          <article class="evo-card">
+            <span class="evo-card__rank">
+              {%- if forloop.first -%}
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              {%- endif -%}
+              #{{ forloop.index }} THIS WEEK
+            </span>
+            <a href="{{ product.url }}" class="evo-card__wish" aria-label="View {{ product.title | escape }}" style="display:inline-flex;align-items:center;justify-content:center;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+
+            <a href="{{ product.url }}" class="evo-card__media" style="display:block;text-decoration:none;">
+              {%- if product.featured_image != blank -%}
+                <img src="{{ product.featured_image | image_url: width: 520 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" loading="lazy" style="width:100%;height:100%;object-fit:contain;">
+              {%- else -%}
+                <svg viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs><linearGradient id="gp{{ forloop.index }}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F1C50"/><stop offset="1" stop-color="#08061A"/></linearGradient></defs>
+                  <ellipse cx="130" cy="160" rx="90" ry="8" fill="#A8E898" opacity="0.1"/>
+                  <rect x="40" y="40" width="180" height="100" rx="6" fill="url(#gp{{ forloop.index }})" stroke="#A8E898" stroke-width="0.8"/>
+                  <circle cx="130" cy="90" r="22" fill="none" stroke="rgba(168,232,152,0.5)" stroke-width="0.8"/>
+                  <circle cx="130" cy="90" r="4" fill="#A8E898"/>
+                </svg>
+              {%- endif -%}
+              <div class="evo-card__quick">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  View details
+                </span>
+              </div>
+            </a>
+
+            <div class="evo-card__body">
+              <span class="evo-card__brand">{{ product.vendor | default: 'EVOTECH' | upcase }}</span>
+              <h3 class="evo-card__title"><a href="{{ product.url }}" style="color:inherit;text-decoration:none;">{{ product.title }}</a></h3>
+              <div class="evo-card__rating">
+                <span class="evo-card__stars">
+                  {%- assign full_stars = p_rating | floor -%}
+                  {%- for i in (1..5) -%}
+                    {%- if i <= full_stars -%}
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    {%- else -%}
+                      <svg viewBox="0 0 24 24" fill="currentColor" opacity="0.4"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </span>
+                <span>{{ p_rating }}{%- if p_count > 0 %} · {{ p_count }} reviews{% endif -%}</span>
+              </div>
+              <div class="evo-card__price-row">
+                <span class="evo-card__price">{{ product.price | money }}</span>
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="evo-card__price-compare">{{ product.compare_at_price | money }}</span>
+                  {%- assign pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+                  <span class="evo-card__save">−{{ pct }}%</span>
+                {%- endif -%}
+              </div>
+            </div>
+
+            {%- assign meter = 80 | minus: forloop.index0 | times: 15 -%}
+            <div class="evo-card__meter"><div class="evo-card__meter-bar" style="width:{{ meter }}%"></div></div>
+
+            <div class="evo-card__live">
+              <span class="evo-card__sold"><span class="dot"></span>{%- if p_sold > 0 -%}{{ p_sold }}{%- else -%}{{ forloop.rindex | times: 8 | plus: 6 }}{%- endif -%} sold this week</span>
+              <span class="evo-card__stock{% if product.available == false %} low{% endif %}">{% if product.available %}In stock{% else %}Sold out{% endif %}</span>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+
+      <!-- Card 1 — #1 best seller -->
+      <article class="evo-card">
+        <span class="evo-card__rank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          #1 THIS WEEK
+        </span>
+        <button class="evo-card__wish" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+
+        <div class="evo-card__media">
+          <!-- TP-Link Omada router -->
+          <svg viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="rtr1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F1C50"/><stop offset="1" stop-color="#08061A"/></linearGradient></defs>
+            <ellipse cx="130" cy="160" rx="90" ry="8" fill="#A8E898" opacity="0.1"/>
+            <rect x="40" y="70" width="180" height="50" rx="4" fill="url(#rtr1)" stroke="#A8E898" stroke-width="0.8"/>
+            <rect x="40" y="70" width="180" height="8" fill="rgba(168,232,152,0.12)"/>
+            <!-- LEDs -->
+            <g fill="#A8E898"><circle cx="60" cy="105" r="2.5"/><circle cx="80" cy="105" r="2.5"/><circle cx="100" cy="105" r="2.5"/><circle cx="120" cy="105" r="2.5" fill="#CDFFBF"/></g>
+            <!-- antennas -->
+            <line x1="60" y1="70" x2="40" y2="30" stroke="#A8E898" stroke-width="2" stroke-linecap="round"/>
+            <line x1="200" y1="70" x2="220" y2="30" stroke="#A8E898" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="40" cy="28" r="3" fill="#A8E898"/>
+            <circle cx="220" cy="28" r="3" fill="#A8E898"/>
+          </svg>
+          <div class="evo-card__quick">
+            <button type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Quick view
+            </button>
+            <button type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              Add to cart
+            </button>
+          </div>
+        </div>
+
+        <div class="evo-card__body">
+          <span class="evo-card__brand">TP-LINK · OMADA</span>
+          <h3 class="evo-card__title">ER7206 Omada Gigabit Multi-WAN VPN Router</h3>
+          <div class="evo-card__rating">
+            <span class="evo-card__stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </span>
+            <span>4.9 · 127 reviews</span>
+          </div>
+          <div class="evo-card__price-row">
+            <span class="evo-card__price">A$389</span>
+            <span class="evo-card__price-compare">A$439</span>
+            <span class="evo-card__save">−12%</span>
+          </div>
+        </div>
+
+        <div class="evo-card__meter"><div class="evo-card__meter-bar" style="width:78%"></div></div>
+
+        <div class="evo-card__live">
+          <span class="evo-card__sold"><span class="dot"></span>42 sold this week</span>
+          <span class="evo-card__stock">In stock</span>
+        </div>
+      </article>
+
+      <!-- Card 2 — #2 -->
+      <article class="evo-card">
+        <span class="evo-card__rank">#2 THIS WEEK</span>
+        <button class="evo-card__wish" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+
+        <div class="evo-card__media">
+          <!-- Seagate IronWolf -->
+          <svg viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="hd1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2763"/><stop offset="1" stop-color="#08061A"/></linearGradient></defs>
+            <ellipse cx="130" cy="160" rx="90" ry="8" fill="#A8E898" opacity="0.1"/>
+            <rect x="50" y="40" width="160" height="100" rx="4" fill="url(#hd1)" stroke="#A8E898" stroke-width="0.8"/>
+            <circle cx="130" cy="90" r="36" fill="none" stroke="rgba(168,232,152,0.5)" stroke-width="0.8"/>
+            <circle cx="130" cy="90" r="22" fill="none" stroke="rgba(168,232,152,0.35)" stroke-width="0.8"/>
+            <circle cx="130" cy="90" r="8" fill="#A8E898"/>
+            <circle cx="130" cy="90" r="2" fill="#08061A"/>
+            <rect x="60" y="50" width="44" height="12" rx="2" fill="rgba(255,255,255,0.08)"/>
+            <text x="82" y="59" text-anchor="middle" font-family="JetBrains Mono" font-size="7" font-weight="700" fill="#A8E898" letter-spacing="1.5">IRONWOLF PRO</text>
+            <text x="82" y="70" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(168,232,152,0.7)" letter-spacing="1">8TB · NAS</text>
+            <!-- head arm -->
+            <rect x="180" y="52" width="3" height="40" rx="1" fill="rgba(168,232,152,0.6)"/>
+            <circle cx="181.5" cy="52" r="2.5" fill="#A8E898"/>
+          </svg>
+          <div class="evo-card__quick">
+            <button type="button">Quick view</button>
+            <button type="button">Add to cart</button>
+          </div>
+        </div>
+
+        <div class="evo-card__body">
+          <span class="evo-card__brand">SEAGATE · IRONWOLF PRO</span>
+          <h3 class="evo-card__title">8TB NAS Hard Drive · 7200 RPM · CMR</h3>
+          <div class="evo-card__rating">
+            <span class="evo-card__stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </span>
+            <span>4.8 · 94 reviews</span>
+          </div>
+          <div class="evo-card__price-row">
+            <span class="evo-card__price">A$369</span>
+            <span class="evo-card__price-compare">A$419</span>
+            <span class="evo-card__save">−12%</span>
+          </div>
+        </div>
+
+        <div class="evo-card__meter"><div class="evo-card__meter-bar" style="width:62%"></div></div>
+
+        <div class="evo-card__live">
+          <span class="evo-card__sold"><span class="dot"></span>34 sold this week</span>
+          <span class="evo-card__stock low">Only 3 left</span>
+        </div>
+      </article>
+
+      <!-- Card 3 — #3 -->
+      <article class="evo-card">
+        <span class="evo-card__rank">#3 THIS WEEK</span>
+        <button class="evo-card__wish" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+
+        <div class="evo-card__media">
+          <!-- Dell laptop -->
+          <svg viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="lp1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F1C50"/><stop offset="1" stop-color="#08061A"/></linearGradient></defs>
+            <ellipse cx="130" cy="162" rx="95" ry="8" fill="#A8E898" opacity="0.1"/>
+            <!-- screen -->
+            <rect x="56" y="38" width="148" height="86" rx="3" fill="url(#lp1)" stroke="#A8E898" stroke-width="0.8"/>
+            <rect x="62" y="44" width="136" height="74" rx="2" fill="#0A0820"/>
+            <!-- screen content -->
+            <g stroke="#A8E898" stroke-width="0.6" fill="none" opacity="0.8">
+              <path d="M72 70 Q82 62 92 68 T112 66 T136 70"/>
+              <path d="M72 80 Q82 74 92 78 T112 76 T136 80" opacity="0.6"/>
+              <path d="M72 90 Q82 84 92 88 T112 86 T136 90" opacity="0.4"/>
+            </g>
+            <circle cx="170" cy="100" r="6" fill="#A8E898" opacity="0.5"/>
+            <!-- keyboard base -->
+            <path d="M32 124 L228 124 L222 146 L38 146 Z" fill="url(#lp1)" stroke="#A8E898" stroke-width="0.8" stroke-linejoin="round"/>
+            <rect x="102" y="134" width="56" height="4" rx="1" fill="rgba(168,232,152,0.3)"/>
+          </svg>
+          <div class="evo-card__quick">
+            <button type="button">Quick view</button>
+            <button type="button">Add to cart</button>
+          </div>
+        </div>
+
+        <div class="evo-card__body">
+          <span class="evo-card__brand">DELL · PRECISION</span>
+          <h3 class="evo-card__title">Precision 5680 Mobile Workstation · i7 · 32GB · 1TB</h3>
+          <div class="evo-card__rating">
+            <span class="evo-card__stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" opacity="0.4"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </span>
+            <span>4.6 · 62 reviews</span>
+          </div>
+          <div class="evo-card__price-row">
+            <span class="evo-card__price">A$3,299</span>
+            <span class="evo-card__price-compare">A$3,699</span>
+            <span class="evo-card__save">−11%</span>
+          </div>
+        </div>
+
+        <div class="evo-card__meter"><div class="evo-card__meter-bar" style="width:48%"></div></div>
+
+        <div class="evo-card__live">
+          <span class="evo-card__sold"><span class="dot"></span>18 sold this week</span>
+          <span class="evo-card__stock">In stock</span>
+        </div>
+      </article>
+
+      <!-- Card 4 — #4 -->
+      <article class="evo-card">
+        <span class="evo-card__rank">#4 THIS WEEK</span>
+        <button class="evo-card__wish" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+
+        <div class="evo-card__media">
+          <!-- Ubiquiti access point -->
+          <svg viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><radialGradient id="ap1" cx="50%" cy="40%" r="50%"><stop offset="0" stop-color="#F4F2FB"/><stop offset="1" stop-color="#9B97C7"/></radialGradient></defs>
+            <ellipse cx="130" cy="162" rx="90" ry="8" fill="#A8E898" opacity="0.1"/>
+            <!-- signal arcs -->
+            <g stroke="#A8E898" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.7">
+              <path d="M70 130 Q130 60 190 130" stroke-dasharray="3 4"/>
+              <path d="M55 140 Q130 40 205 140" stroke-dasharray="3 4"/>
+              <path d="M40 150 Q130 20 220 150" stroke-dasharray="3 4"/>
+            </g>
+            <!-- dome -->
+            <ellipse cx="130" cy="140" rx="46" ry="14" fill="url(#ap1)" stroke="#A8E898" stroke-width="0.8"/>
+            <ellipse cx="130" cy="136" rx="46" ry="12" fill="url(#ap1)" stroke="#A8E898" stroke-width="0.8"/>
+            <circle cx="130" cy="132" r="6" fill="#A8E898"/>
+            <circle cx="130" cy="132" r="2" fill="#CDFFBF"/>
+          </svg>
+          <div class="evo-card__quick">
+            <button type="button">Quick view</button>
+            <button type="button">Add to cart</button>
+          </div>
+        </div>
+
+        <div class="evo-card__body">
+          <span class="evo-card__brand">UBIQUITI · UNIFI</span>
+          <h3 class="evo-card__title">U6 Pro WiFi 6 Access Point · 4.8 Gbps · PoE+</h3>
+          <div class="evo-card__rating">
+            <span class="evo-card__stars">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </span>
+            <span>5.0 · 41 reviews</span>
+          </div>
+          <div class="evo-card__price-row">
+            <span class="evo-card__price">A$239</span>
+            <span class="evo-card__price-compare">A$269</span>
+            <span class="evo-card__save">−11%</span>
+          </div>
+        </div>
+
+        <div class="evo-card__meter"><div class="evo-card__meter-bar" style="width:36%"></div></div>
+
+        <div class="evo-card__live">
+          <span class="evo-card__sold"><span class="dot"></span>14 sold this week</span>
+          <span class="evo-card__stock">In stock</span>
+        </div>
+      </article>
+      {%- endif -%}
+
+    </div>
+
+  </div></section>
+
+
+
+
+
+
+
+<section class="evo-section" aria-label="Custom AI Agents by Evotech">
+  <div class="evo-wrap">
+
+    <!-- ========= HERO ========= -->
+    <div class="evo-ag">
+      <div class="evo-ag__intro">
+        <div class="evo-ag__kicker">
+          <span class="evo-ag__kicker-dot"></span>
+          CUSTOM AI AGENTS · POWERED BY EVOLVE AI
+        </div>
+        <h2 class="evo-ag__title">
+          Your business.<br>
+          <span class="evo-ag__title-grad">Your own AI agent.</span><br>
+          From <em>A$999.</em>
+        </h2>
+        <p class="evo-ag__desc">
+          <strong>Stop renting generic chatbots.</strong> We build, host, and train a custom AI agent that speaks your brand voice, knows your products, and runs on an <strong>Australian VPS</strong> — all powered by the <strong>Evolve AI neural engine</strong>.
+          One upfront build fee, optional monthly hosting, zero vendor lock-in.
+        </p>
+
+        <div class="evo-ag__cta-row">
+          <a class="evo-btn-primary" href="/pages/contact">
+            Book a strategy call
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a class="evo-btn-ghost" href="#pricing">
+            See build packages
+          </a>
+        </div>
+
+        <div class="evo-ag__trust">
+          <span class="evo-ag__trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 0 1 16 0C20 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>
+            Hosted in Australia
+          </span>
+          <span class="evo-ag__trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            AUD pricing
+          </span>
+          <span class="evo-ag__trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2-week build
+          </span>
+          <span class="evo-ag__trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Founder-led build
+          </span>
+        </div>
+      </div>
+
+      <!-- Feature tiles -->
+      <div class="evo-ag__tiles">
+        <div class="evo-ag__price-card" aria-label="Starting from A$999">
+          <div class="evo-ag__price-card-label">FROM</div>
+          <div class="evo-ag__price-card-amount"><sup>A$</sup>999</div>
+          <div class="evo-ag__price-card-sub">BUILD · ONE-OFF</div>
+        </div>
+
+        <article class="evo-ag__tile">
+          <div class="evo-ag__tile-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+          </div>
+          <h3 class="evo-ag__tile-name">Your own AI agent</h3>
+          <p class="evo-ag__tile-desc">Custom-trained on your business data. Answers questions like your best employee would — 24/7, in your brand voice.</p>
+        </article>
+
+        <article class="evo-ag__tile">
+          <div class="evo-ag__tile-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><circle cx="7" cy="10" r="1" fill="currentColor"/><line x1="10" y1="10" x2="17" y2="10"/></svg>
+          </div>
+          <h3 class="evo-ag__tile-name">Front-panel dashboard</h3>
+          <p class="evo-ag__tile-desc">A web control panel where you view every conversation, edit replies, retrain on corrections and track analytics.</p>
+        </article>
+
+        <article class="evo-ag__tile">
+          <div class="evo-ag__tile-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="12" x2="22" y2="12"/><circle cx="6" cy="15" r="1" fill="currentColor"/><circle cx="10" cy="15" r="1" fill="currentColor"/></svg>
+          </div>
+          <h3 class="evo-ag__tile-name">Australian VPS hosting</h3>
+          <p class="evo-ag__tile-desc">Deployed on a Perth-located VPS. Sovereign data residency, AUD billed, low-latency for Australian users.</p>
+        </article>
+
+        <article class="evo-ag__tile">
+          <div class="evo-ag__tile-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <h3 class="evo-ag__tile-name">Training &amp; tuning</h3>
+          <p class="evo-ag__tile-desc">We ingest your docs, train the agent, and run two refinement rounds with you before go-live. Post-launch support included.</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- ========= USE CASES ========= -->
+    <div class="evo-ag__cases">
+      <div class="evo-ag__cases-head">
+        <h3 class="evo-ag__cases-title">Agents we build most often.</h3>
+        <a href="/pages/contact" style="font-family:var(--font-m); font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--mint); border-bottom:1px solid rgba(168,232,152,0.4); padding-bottom:4px;">View examples</a>
+      </div>
+
+      <div class="evo-ag__cases-grid">
+        <article class="evo-ag__case">
+          <span class="evo-ag__case-emoji">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          <h4 class="evo-ag__case-name">Customer Support Agent</h4>
+          <p class="evo-ag__case-desc">Answers FAQs, troubleshoots common issues, escalates hard tickets to a human. Replies on your site, WhatsApp, and Messenger.</p>
+          <span class="evo-ag__case-tag">Most requested · E-commerce · SaaS</span>
+        </article>
+
+        <article class="evo-ag__case">
+          <span class="evo-ag__case-emoji">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </span>
+          <h4 class="evo-ag__case-name">Booking &amp; Qualification Agent</h4>
+          <p class="evo-ag__case-desc">Qualifies leads, books meetings straight into your calendar (Google / Microsoft 365) and captures intake forms conversationally.</p>
+          <span class="evo-ag__case-tag">Trades · Clinics · Agencies</span>
+        </article>
+
+        <article class="evo-ag__case">
+          <span class="evo-ag__case-emoji">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </span>
+          <h4 class="evo-ag__case-name">Shopify Product Advisor</h4>
+          <p class="evo-ag__case-desc">Reads your catalogue, recommends the right product, answers spec questions, and hands over to checkout. Fully Shopify-native.</p>
+          <span class="evo-ag__case-tag">Shopify stores · Retail</span>
+        </article>
+
+        <article class="evo-ag__case">
+          <span class="evo-ag__case-emoji">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </span>
+          <h4 class="evo-ag__case-name">Internal Knowledge Agent</h4>
+          <p class="evo-ag__case-desc">Your staff's private ChatGPT, trained on your SOPs, HR handbook, and internal docs. Saves induction time and tribal knowledge loss.</p>
+          <span class="evo-ag__case-tag">Growing teams · MSPs · Trades</span>
+        </article>
+
+        <article class="evo-ag__case">
+          <span class="evo-ag__case-emoji">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <h4 class="evo-ag__case-name">Reception / Intake Agent</h4>
+          <p class="evo-ag__case-desc">Handles after-hours enquiries, triages jobs, and routes urgent ones to SMS. Ideal for tradies and service businesses.</p>
+          <span class="evo-ag__case-tag">Tradies · Services · Night-shift</span>
+        </article>
+
+        <article class="evo-ag__case">
+          <span class="evo-ag__case-emoji">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </span>
+          <h4 class="evo-ag__case-name">Custom Build</h4>
+          <p class="evo-ag__case-desc">Got something specific? A voice-note transcriber, a quoting agent, an onboarding bot — if you can brief it, we'll scope it.</p>
+          <span class="evo-ag__case-tag">Anything workable on data</span>
+        </article>
+      </div>
+    </div>
+
+    <!-- ========= PRICING TIERS ========= -->
+    <div class="evo-ag__pricing" id="pricing">
+      <div class="evo-ag__pricing-head">
+        <p class="evo-ag__kicker" style="justify-content:center;">
+          <span class="evo-ag__kicker-dot"></span>
+          BUILD PACKAGES · ONE-OFF FEE + OPTIONAL HOSTING
+        </p>
+        <h3 class="evo-ag__title" style="font-size:clamp(28px, 3.6vw, 48px); margin:0;">Three tiers. <em>No long contracts.</em></h3>
+        <p class="evo-ag__pricing-sub">
+          Every build fee includes VPS provisioning, front-panel setup, and agent training rounds. Monthly hosting is optional — host it yourself if you prefer.
+        </p>
+      </div>
+
+      <div class="evo-ag__tiers">
+
+        <!-- Starter -->
+        <article class="evo-ag__tier">
+          <p class="evo-ag__tier-name">STARTER</p>
+          <h4 class="evo-ag__tier-title">Single-channel agent</h4>
+          <p class="evo-ag__tier-price"><sup>A$</sup>999<span style="font-size:20px;font-weight:600;color:var(--ink-muted)">+</span></p>
+          <p class="evo-ag__tier-price-sub">One-off · GST inc. · +A$49/mo hosting opt.</p>
+          <hr class="evo-ag__tier-hr">
+          <ul class="evo-ag__tier-list">
+            <li>One custom-trained agent</li>
+            <li>Deployed on one channel (website widget)</li>
+            <li>Front-panel dashboard (view + edit)</li>
+            <li>Australian VPS provisioned &amp; handed over</li>
+            <li>Training on your provided data (up to ~50 pages)</li>
+            <li>2 refinement rounds pre-launch</li>
+            <li>14 days post-launch support</li>
+          </ul>
+          <a class="evo-ag__tier-cta" href="/pages/contact">Start with Starter</a>
+        </article>
+
+        <!-- Growth (featured) -->
+        <article class="evo-ag__tier evo-ag__tier--featured">
+          <span class="evo-ag__tier-badge">MOST POPULAR</span>
+          <p class="evo-ag__tier-name">GROWTH</p>
+          <h4 class="evo-ag__tier-title">Multi-channel agent</h4>
+          <p class="evo-ag__tier-price"><sup>A$</sup>2,499<span style="font-size:20px;font-weight:600;color:var(--ink-muted)">+</span></p>
+          <p class="evo-ag__tier-price-sub">One-off · GST inc. · +A$99/mo hosting opt.</p>
+          <hr class="evo-ag__tier-hr">
+          <ul class="evo-ag__tier-list">
+            <li>Everything in Starter</li>
+            <li>Up to 3 channels (web + WhatsApp + email/Messenger)</li>
+            <li>Brand-voice training from your past content</li>
+            <li>Analytics dashboard (conversations, CSAT, conversions)</li>
+            <li>Calendar booking integration</li>
+            <li>Shopify / Xero read access (optional)</li>
+            <li>30 days post-launch support</li>
+          </ul>
+          <a class="evo-ag__tier-cta" href="/pages/contact">Choose Growth</a>
+        </article>
+
+        <!-- Scale -->
+        <article class="evo-ag__tier">
+          <p class="evo-ag__tier-name">SCALE</p>
+          <h4 class="evo-ag__tier-title">Business integration</h4>
+          <p class="evo-ag__tier-price"><sup>A$</sup>4,999<span style="font-size:20px;font-weight:600;color:var(--ink-muted)">+</span></p>
+          <p class="evo-ag__tier-price-sub">One-off · GST inc. · +A$199/mo hosting opt.</p>
+          <hr class="evo-ag__tier-hr">
+          <ul class="evo-ag__tier-list">
+            <li>Everything in Growth</li>
+            <li>Up to 3 linked agents (e.g. Support + Sales + Intake)</li>
+            <li>Custom integrations (CRM, ticketing, Google Workspace)</li>
+            <li>White-label front panel for your team</li>
+            <li>Handoff-to-human workflow with routing rules</li>
+            <li>Role-based access for staff</li>
+            <li>90 days post-launch support + quarterly retraining</li>
+          </ul>
+          <a class="evo-ag__tier-cta" href="/pages/contact">Talk to us</a>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- ========= PROCESS ========= -->
+    <div class="evo-ag__process">
+      <div class="evo-ag__cases-head">
+        <h3 class="evo-ag__cases-title">From brief to live agent — in about two weeks.</h3>
+      </div>
+
+      <div class="evo-ag__steps">
+
+        <article class="evo-ag__step" data-step="01">
+          <div class="evo-ag__step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h4 class="evo-ag__step-name">Brief</h4>
+          <p class="evo-ag__step-desc">30-minute strategy call. We define the agent's job, success metric and channel.</p>
+          <span class="evo-ag__step-meta">Day 1</span>
+        </article>
+
+        <article class="evo-ag__step" data-step="02">
+          <div class="evo-ag__step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
+          </div>
+          <h4 class="evo-ag__step-name">Data hand-off</h4>
+          <p class="evo-ag__step-desc">You upload FAQs, docs, website content, policies. We clean, chunk and embed it.</p>
+          <span class="evo-ag__step-meta">Days 2–3</span>
+        </article>
+
+        <article class="evo-ag__step" data-step="03">
+          <div class="evo-ag__step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <h4 class="evo-ag__step-name">Train &amp; deploy</h4>
+          <p class="evo-ag__step-desc">We train the agent on Evolve AI, provision the VPS and wire the front panel.</p>
+          <span class="evo-ag__step-meta">Days 4–10</span>
+        </article>
+
+        <article class="evo-ag__step" data-step="04">
+          <div class="evo-ag__step-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h4 class="evo-ag__step-name">Go live</h4>
+          <p class="evo-ag__step-desc">Two refinement rounds with you, then launch on your website, WhatsApp or channel of choice.</p>
+          <span class="evo-ag__step-meta">Days 11–14</span>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- ========= DATA CALLOUT ========= -->
+    <div class="evo-ag__data">
+      <div class="evo-ag__data-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+      </div>
+      <div>
+        <h4 class="evo-ag__data-title">You bring the data. We bring the brain.</h4>
+        <p class="evo-ag__data-desc">
+          We don't pretend to know your business better than you do. You hand over the FAQs, policies, past conversations, product specs, or SOPs you want the agent to know — we handle the cleaning, embedding, training, and hosting. Your raw data stays in Australia and is never used to train any external model.
+        </p>
+      </div>
+      <a class="evo-btn-primary" href="/pages/contact" style="white-space:nowrap;">
+        Start your agent
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+  </div></section>
+
+
+
+
+
+
+
+
+
+</div>
+
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Evotech",
+  "legalName": "Evotech Pty Ltd",
+  "url": "https://evotech.au",
+  "logo": "https://evotech.au/assets/evotech-logo.svg",
+  "description": "Australian AI SaaS ecosystem powered by the Evolve AI neural engine. One API key for Claude, GPT and Gemini — priced in AUD, GST included.",
+  "foundingDate": "2026",
+  "founder": { "@type": "Person", "name": "Manoj" },
+  "areaServed": "AU",
+  "slogan": "Inspire · Automate · Evolve",
+  "address": { "@type": "PostalAddress", "addressLocality": "Perth", "addressRegion": "WA", "addressCountry": "AU" },
+  "sameAs": [
+    "https://evolve.evotech.au",
+    "https://support.evotech.au"
+  ]
+}</script>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Evotech.au",
+  "url": "https://evotech.au",
+  "inLanguage": "en-AU",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://evotech.au/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}</script>
+
+<script>
+(function () {
+    var root = document.getElementById('zpHero');
+    if (!root) return;
+    var slideKeys = ['solutions','services','products'];
+    var idx = 0;
+    var autoplayMs = 7000;
+    var timer = null;
+
+    function go(toIdx) {
+      idx = (toIdx + slideKeys.length) % slideKeys.length;
+      var key = slideKeys[idx];
+      root.querySelectorAll('.evo-zp__slide').forEach(function (el) {
+        el.setAttribute('data-active', el.getAttribute('data-slide') === key ? 'true' : 'false');
+      });
+      root.querySelectorAll('[data-tracker]').forEach(function (btn) {
+        btn.setAttribute('aria-current', btn.getAttribute('data-tracker') === key ? 'true' : 'false');
+      });
+      root.querySelectorAll('[data-slide-link]').forEach(function (a) {
+        if (a.getAttribute('data-slide-link') === key) a.setAttribute('aria-current','page');
+        else a.removeAttribute('aria-current');
+      });
+    }
+
+    function restartAutoplay() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(function () { go(idx + 1); }, autoplayMs);
+    }
+
+    root.querySelectorAll('[data-tracker]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        go(slideKeys.indexOf(btn.getAttribute('data-tracker')));
+        restartAutoplay();
+      });
+    });
+    root.querySelectorAll('[data-slide-link]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        go(slideKeys.indexOf(a.getAttribute('data-slide-link')));
+        restartAutoplay();
+      });
+    });
+    root.querySelector('[data-nav="prev"]').addEventListener('click', function () { go(idx - 1); restartAutoplay(); });
+    root.querySelector('[data-nav="next"]').addEventListener('click', function () { go(idx + 1); restartAutoplay(); });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { go(idx + 1); restartAutoplay(); }
+      else if (e.key === 'ArrowLeft') { go(idx - 1); restartAutoplay(); }
+    });
+
+    root.addEventListener('mouseenter', function () { if (timer) { clearInterval(timer); timer = null; } });
+    root.addEventListener('mouseleave', restartAutoplay);
+
+    restartAutoplay();
+  })();
+</script>
+<script>
+(function () {
+    var rail = document.getElementById('catRail');
+    var bar  = document.getElementById('catBar');
+    if (!rail || !bar) return;
+
+    function updateBar() {
+      var max = rail.scrollWidth - rail.clientWidth;
+      var pct = max > 0 ? (rail.scrollLeft / max) : 0;
+      // bar width proportional to viewport share, then translate based on scroll
+      var barWidthPct = Math.max(18, (rail.clientWidth / rail.scrollWidth) * 100);
+      bar.style.width = barWidthPct + '%';
+      bar.style.transform = 'translateX(' + (pct * (100 - barWidthPct)) + '%)';
+    }
+
+    rail.addEventListener('scroll', updateBar, { passive: true });
+    window.addEventListener('resize', updateBar);
+    updateBar();
+
+    document.querySelectorAll('[data-nav]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var dir = btn.getAttribute('data-nav') === 'next' ? 1 : -1;
+        // advance by one card width + gap (~214px)
+        rail.scrollBy({ left: dir * 420, behavior: 'smooth' });
+      });
+    });
+  })();
+</script>

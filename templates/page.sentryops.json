@@ -1,0 +1,103 @@
+{
+  "sections": {
+    "hero": {
+      "type": "evotech-saas-product-hero",
+      "settings": {
+        "product_name": "SentryOps",
+        "category": "Cyber Security",
+        "price_display": "A$499/mo",
+        "price_amount": "499.00",
+        "schema_category": "SecurityApplication",
+        "headline": "A 24/7 security operations centre — without hiring one.",
+        "subhead": "Human analysts plus AI triage. ACSC Essential Eight aligned. Median time-to-contain: 11 minutes.",
+        "cta_primary_text": "Start 14-day free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Book a demo",
+        "cta_secondary_link": "/pages/contact",
+        "trust_metric": "11-min median containment",
+        "trust_rating": "4.9 / 5 · 128 reviews"
+      }
+    },
+    "feature_1": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "HOW IT WORKS",
+        "headline": "Threat detection that never sleeps.",
+        "body": "SentryOps combines continuous endpoint telemetry, network sensors, and Microsoft 365 audit logs — correlated through an AI triage engine and escalated to Perth-based analysts only when it matters.",
+        "placeholder_metric": "24/7",
+        "placeholder_label": "Analyst coverage",
+        "cta_text": "See the architecture",
+        "cta_link": "/pages/contact",
+        "reverse": false
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "Endpoint + network + cloud telemetry" } },
+        "c2": { "type": "check", "settings": { "text": "AI triage with human escalation" } },
+        "c3": { "type": "check", "settings": { "text": "Automatic MITRE ATT&CK mapping" } },
+        "c4": { "type": "check", "settings": { "text": "Ransomware kill-switch in < 1 minute" } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    },
+    "feature_2": {
+      "type": "evotech-feature",
+      "settings": {
+        "eyebrow": "AUSTRALIAN CONTEXT",
+        "headline": "Built for the ACSC Essential Eight.",
+        "body": "Controls, logs, and evidence are automatically mapped to the eight ACSC mitigation strategies — so every SentryOps deployment doubles as progress against ML1, ML2, or ML3.",
+        "placeholder_metric": "ML3",
+        "placeholder_label": "Maturity-ready",
+        "cta_text": "Open Essential8 Compass",
+        "cta_link": "/pages/essential8-compass",
+        "reverse": true
+      },
+      "blocks": {
+        "c1": { "type": "check", "settings": { "text": "Mapped to all 8 ACSC strategies" } },
+        "c2": { "type": "check", "settings": { "text": "Auditor-ready evidence export" } },
+        "c3": { "type": "check", "settings": { "text": "Works with any Microsoft 365 tenant" } }
+      },
+      "block_order": ["c1","c2","c3"]
+    },
+    "testimonials": {
+      "type": "evotech-testimonials",
+      "settings": {
+        "eyebrow": "IMPACT",
+        "headline": "Teams that swapped legacy SIEMs for SentryOps.",
+        "lede": "Three Australian SMBs. Three outages avoided. One platform."
+      },
+      "blocks": {
+        "q1": { "type": "testimonial", "settings": { "quote": "SentryOps contained a ransomware attempt in 9 minutes — at 2am on a Saturday. We didn't even lose a file.", "name": "Priya S.", "role": "CFO, health-tech startup" } },
+        "q2": { "type": "testimonial", "settings": { "quote": "We went from 40 alert emails a day to 2 actionable incidents. Our team sleeps again.", "name": "Jack R.", "role": "IT Director, construction firm" } },
+        "q3": { "type": "testimonial", "settings": { "quote": "Passing the Essential Eight audit was effectively automatic — the evidence export saved weeks.", "name": "Sam K.", "role": "Compliance Lead, legal practice" } }
+      },
+      "block_order": ["q1","q2","q3"]
+    },
+    "faq": {
+      "type": "evotech-faq",
+      "settings": {
+        "eyebrow": "SENTRYOPS FAQ",
+        "headline": "What teams ask before switching their SOC.",
+        "lede": "All the operational detail you need to make the decision."
+      },
+      "blocks": {
+        "f1": { "type": "faq", "settings": { "question": "What endpoints are supported?", "answer": "<p>Windows, macOS, Linux, iOS, Android, plus Microsoft 365, Google Workspace, AWS, Azure, and GCP telemetry.</p>" } },
+        "f2": { "type": "faq", "settings": { "question": "How fast can SentryOps be deployed?", "answer": "<p>Median time to live threat monitoring is 48 hours — including agent rollout and alert routing.</p>" } },
+        "f3": { "type": "faq", "settings": { "question": "What SLAs are offered?", "answer": "<p>1-hour response on Severity 1 incidents, 4-hour on Severity 2. Australian business hours + 24/7 on-call for Sev 1.</p>" } },
+        "f4": { "type": "faq", "settings": { "question": "Do you replace existing antivirus?", "answer": "<p>No — we layer on top of whatever EDR you have, including Microsoft Defender, CrowdStrike, or SentinelOne.</p>" } }
+      },
+      "block_order": ["f1","f2","f3","f4"]
+    },
+    "cta_band": {
+      "type": "evotech-cta-band",
+      "settings": {
+        "eyebrow": "SENTRYOPS",
+        "headline": "Sleep better knowing a human analyst is watching.",
+        "lede": "14-day free trial. Deployed in 48 hours. Cancel anytime.",
+        "cta_primary_text": "Start free trial",
+        "cta_primary_link": "/pages/contact",
+        "cta_secondary_text": "Talk to a security specialist",
+        "cta_secondary_link": "/pages/contact"
+      }
+    }
+  },
+  "order": ["hero","feature_1","feature_2","testimonials","faq","cta_band"]
+}

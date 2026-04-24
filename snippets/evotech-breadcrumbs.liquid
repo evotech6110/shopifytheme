@@ -1,0 +1,88 @@
+{%- comment -%}
+  EvoTech breadcrumbs — context-aware, schema.org BreadcrumbList JSON-LD included.
+  Usage: {% render 'evotech-breadcrumbs' %}
+{%- endcomment -%}
+{%- assign t = template.name -%}
+<nav class="evo-crumbs" aria-label="Breadcrumb">
+  <ol class="evo-crumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li class="evo-crumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ routes.root_url }}" itemprop="item"><span itemprop="name">Home</span></a>
+      <meta itemprop="position" content="1">
+    </li>
+    {%- case t -%}
+      {%- when 'product' -%}
+        {%- if collection -%}
+          <li class="evo-crumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="{{ collection.url }}" itemprop="item"><span itemprop="name">{{ collection.title }}</span></a>
+            <meta itemprop="position" content="2">
+          </li>
+          <li class="evo-crumbs__item evo-crumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">{{ product.title }}</span>
+            <meta itemprop="position" content="3">
+          </li>
+        {%- else -%}
+          <li class="evo-crumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="{{ routes.all_products_collection_url }}" itemprop="item"><span itemprop="name">Catalog</span></a>
+            <meta itemprop="position" content="2">
+          </li>
+          <li class="evo-crumbs__item evo-crumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">{{ product.title }}</span>
+            <meta itemprop="position" content="3">
+          </li>
+        {%- endif -%}
+      {%- when 'collection' -%}
+        <li class="evo-crumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="{{ routes.collections_url }}" itemprop="item"><span itemprop="name">Collections</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <li class="evo-crumbs__item evo-crumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">{{ collection.title }}</span>
+          <meta itemprop="position" content="3">
+        </li>
+      {%- when 'list-collections' -%}
+        <li class="evo-crumbs__item evo-crumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">Collections</span>
+          <meta itemprop="position" content="2">
+        </li>
+      {%- when 'article' -%}
+        <li class="evo-crumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="{{ blog.url }}" itemprop="item"><span itemprop="name">{{ blog.title }}</span></a>
+          <meta itemprop="position" content="2">
+        </li>
+        <li class="evo-crumbs__item evo-crumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">{{ article.title }}</span>
+          <meta itemprop="position" content="3">
+        </li>
+      {%- when 'blog' -%}
+        <li class="evo-crumbs__item evo-crumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">{{ blog.title }}</span>
+          <meta itemprop="position" content="2">
+        </li>
+      {%- when 'page' -%}
+        <li class="evo-crumbs__item evo-crumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">{{ page.title }}</span>
+          <meta itemprop="position" content="2">
+        </li>
+      {%- when 'search' -%}
+        <li class="evo-crumbs__item evo-crumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">Search</span>
+          <meta itemprop="position" content="2">
+        </li>
+      {%- when 'cart' -%}
+        <li class="evo-crumbs__item evo-crumbs__item--current" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">Cart</span>
+          <meta itemprop="position" content="2">
+        </li>
+    {%- endcase -%}
+  </ol>
+</nav>
+
+<style>
+  .evo-crumbs { max-width: 1240px; margin: 0 auto; padding: 20px 24px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .06em; color: #B6B5C6; }
+  .evo-crumbs__list { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .evo-crumbs__item { display: flex; align-items: center; }
+  .evo-crumbs__item + .evo-crumbs__item::before { content: "/"; color: rgba(255,255,255,.18); margin-right: 8px; }
+  .evo-crumbs__item a { color: #B6B5C6; text-decoration: none; transition: color .16s ease; }
+  .evo-crumbs__item a:hover { color: #A8E898; }
+  .evo-crumbs__item--current span { color: #FFFFFF; }
+</style>
