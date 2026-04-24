@@ -19,6 +19,7 @@
     <div class="evo-header-container">
       <div class="evo-header-util-inner">
         <div class="evo-header-util-msg">
+          <div class="neural-beam"></div>
           <span class="evo-header-util-dot"></span>
           <span>Australian Hosted AI Multi-Model API</span>
         </div>
@@ -42,8 +43,8 @@
         <a href="/" class="evo-header-logo">
           <div class="evo-header-logo-mark">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="40" height="40" rx="10" fill="url(#evoLogoGrad)"/>
-              <path d="M20 10L28.6603 25H11.3397L20 10Z" fill="white" opacity="0.9"/>
+              <rect x="2" y="2" width="36" height="36" rx="10" stroke="url(#evoLogoGrad)" stroke-width="2"/>
+              <path d="M20 12L26 28H14L20 12Z" fill="url(#evoLogoGrad)" opacity="0.9"/>
               <defs>
                 <linearGradient id="evoLogoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
                   <stop stop-color="#A8E898"/>
@@ -196,6 +197,23 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .neural-beam {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(168, 232, 152, 0.2), transparent);
+    animation: beam-slide 4s infinite linear;
+  }
+
+  @keyframes beam-slide {
+    0% { left: -100%; }
+    100% { left: 200%; }
   }
 
   .evo-header-util-dot {
@@ -203,8 +221,10 @@
     height: 6px;
     background: #A8E898;
     border-radius: 50%;
-    box-shadow: 0 0 8px #A8E898;
+    box-shadow: 0 0 12px #A8E898;
     animation: pulse-dot 2s infinite;
+    position: relative;
+    z-index: 2;
   }
 
   @keyframes pulse-dot {
