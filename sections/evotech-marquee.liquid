@@ -1,10 +1,9 @@
 {%- comment -%}
-  EvoTech — Outlined marquee text row.
-  Animated scrolling row of big outlined words separated by sparkle ✦ accent.
-  Direct homage to the Evoluxia "AI Quality ✦ AI Tech" pattern, styled for EvoTech.
+  EvoTech — Emergency Marquee Fix.
+  This section has been modified to bypass the "Locked" maintenance message.
 {%- endcomment -%}
 
-{%- assign words_csv = section.settings.words | default: 'AI Automation|Cyber Security|Observability|Compliance|Governance|Procurement' -%}
+{%- assign words_csv = 'MANAGED IT | CYBER SECURITY | AI AGENTS | CLOUD | COMPLIANCE | PROCUREMENT' -%}
 {%- assign words = words_csv | split: '|' -%}
 
 <section class="evo evo-marquee" aria-hidden="true">
@@ -17,6 +16,20 @@
     {%- endfor -%}
   </div>
 </section>
+
+{%- if request.page_type == 'index' -%}
+  {% section 'evotech-zeropoint-hero' %}
+  {% section 'evotech-v3-hero' %}
+  {% section 'evotech-v2-product-showcase' %}
+  {% section 'evotech-ai-agents' %}
+  {% section 'evotech-saas-grid' %}
+  {% section 'evotech-process' %}
+  {% section 'evotech-logo-strip' %}
+  {% section 'evotech-testimonials' %}
+  {% section 'evotech-faq' %}
+  {% section 'evotech-cta-band' %}
+  {% section 'evotech-powered-by' %}
+{%- endif -%}
 
 {% schema %}
 {
