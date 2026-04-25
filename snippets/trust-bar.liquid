@@ -1,0 +1,56 @@
+{% comment %}
+  Trust Bar Snippet - Professional Trust Signals
+  Inspired by Kogan & JB Hi-Fi Header bars.
+{% endcomment %}
+
+<style>
+  .trust-bar {
+    background: #008060; /* Professional Deep Green */
+    color: #ffffff;
+    padding: 10px 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .trust-bar-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .trust-item svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+  @media (max-width: 768px) {
+    .trust-item span {
+      font-size: 0.75rem;
+    }
+    .trust-item:not(:first-child) {
+      display: none; /* Hide others on mobile to save space */
+    }
+  }
+</style>
+
+<div class="trust-bar">
+  <div class="ic-container trust-bar-container">
+    <div class="trust-item">
+      <span>🛡️ Architecture & Integrity Verified</span>
+    </div>
+    <div class="trust-item">
+      <span>⚙️ 1-3 Year Authorised Local Warranty</span>
+    </div>
+    <div class="trust-item">
+      <span>👨‍💻 Expert IT Setup Support by EvoTech</span>
+    </div>
+    <div class="trust-item">
+      <span>✅ GMC Verified Genuine Stock</span>
+    </div>
+  </div>
+</div>

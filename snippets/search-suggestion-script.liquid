@@ -1,0 +1,123 @@
+<script>
+  window.addEventListener("load", handleSearchInout);
+  document.addEventListener("shopify:section:load", handleSearchInout);  
+  function handleSearchInout(){
+    const searchInputArr = document.querySelectorAll('[name="q"]');
+    searchInputArr.forEach(function (searchInput){
+      searchInput.addEventListener('input', function() {
+        performSearchSuggestion(searchInput)
+      })
+      searchInput.addEventListener('focus', function() {
+        performSearchSuggestion(searchInput)
+      })
+    })
+    function performSearchSuggestion(searchInput){
+      const searchQuery = searchInput.value;
+      const defaultSearchInput = searchInput;
+      const searchContainerID = searchInput.closest('.search-container').dataset.section;
+      const searchSuggestionID = '#predictive-search-' + searchContainerID;
+      if (! searchQuery) {
+        const removePredictiveSearch = document.querySelector(searchSuggestionID);
+        if (removePredictiveSearch) {
+          removePredictiveSearch.remove();
+          defaultSearchInput.classList.remove('suggestion-active')
+        }
+        return;
+      }
+      const searchContainer = searchInput.closest('.search-container');
+      const sectionId = searchContainer.dataset.section;
+      var requestResponse;
+      fetch(window.Shopify.routes.root + "search/suggest?q=" + searchQuery + "&resources[options][fields]=title,product_type,variants.title,vendor,tag" + "&section_id=" + sectionId).then((response) => {
+        requestResponse = response;
+        return response.text();
+      }).then((text) => {
+        if (! requestResponse.ok) {
+          throw new Error(`${
+            requestResponse.status
+          }: ${text}`);
+        }
+        const resultHtml = new DOMParser().parseFromString(text, 'text/html');
+        const resultsMarkup = resultHtml.querySelector(searchSuggestionID);
+        const predictiveSearchSection = document.querySelector(searchSuggestionID);
+        const resultSearchInput = resultHtml.querySelector('[data-section="' + searchContainerID + '"] [name="q"]');
+        if (predictiveSearchSection) {
+          predictiveSearchSection.innerHTML = resultsMarkup.innerHTML;
+        } else {
+          searchContainer.append(resultsMarkup);
+          if(resultSearchInput.classList.contains('suggestion-active')){
+            defaultSearchInput.classList.add('suggestion-active');
+          }
+        }
+
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }
+
+  window.addEventListener("load", handleDocClickAndFocus);
+  document.addEventListener("shopify:section:load", handleDocClickAndFocus);  
+  function handleDocClickAndFocus() {
+    document.addEventListener('click', handleEvent);
+    document.addEventListener('focusin', handleFocusIn);
+    document.addEventListener('focusout', handleFocusOut);
+    document.addEventListener('keydown', handleKeydown);
+
+    function handleFocusIn(event) {
+      const mainContent = document.querySelector('main[tabindex="-1"]');
+      if (event.target === mainContent) {
+        return;
+      }
+      handleEvent(event);
+    }
+    
+    function handleFocusOut(event) {
+      const mainContent = document.querySelector('main[tabindex="-1"]');
+      if (event.target === mainContent) {
+        return;
+      }
+      handleEvent(event);
+    }
+
+    function handleEvent(event) {
+      const searchInputArr = document.querySelectorAll('[name="q"]');
+      searchInputArr.forEach(function(searchInput) {
+        const searchContainer = searchInput.closest('.search-container');
+        const searchContainerID = searchContainer.dataset.section;
+        const searchSuggestionID = '#predictive-search-' + searchContainerID;
+        const searchSuggestion = document.querySelector(searchSuggestionID);
+
+        if (searchContainer.contains(event.target)) {
+          if (searchSuggestion) {
+            searchSuggestion.classList.remove('ic-hidden');
+            searchInput.classList.add('suggestion-active');
+          }
+        } else {
+          if (searchSuggestion) {
+            searchSuggestion.classList.add('ic-hidden');
+            searchInput.classList.remove('suggestion-active');
+          }
+        }
+      });
+    }
+
+    function handleKeydown(event) {
+      if (event.key === 'Escape') {
+          const searchInputArr = document.querySelectorAll('[name="q"]');
+          searchInputArr.forEach(function(searchInput) {
+              const searchContainer = searchInput.closest('.search-container');
+              const searchContainerID = searchContainer.dataset.section;
+              const searchSuggestionID = '#predictive-search-' + searchContainerID;
+              const searchSuggestion = document.querySelector(searchSuggestionID);
+  
+              if (searchSuggestion && !searchSuggestion.classList.contains('ic-hidden')) {
+                  searchSuggestion.classList.add('ic-hidden');
+                  searchInput.value = ''; // Clear the search input
+                  searchInput.focus();    // Set focus back to the search input
+                  searchInput.classList.remove('suggestion-active');
+              }
+          });
+      }
+    }
+  }
+</script>

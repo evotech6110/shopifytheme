@@ -1,0 +1,240 @@
+.cart-container{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+@media(max-width:1023px){
+    .cart-container{
+        grid-template-columns: 1fr;
+    }
+}
+
+.cart-container .item-table{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 70px;
+    row-gap: 14px;
+    padding: 16px;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-background-variant);
+    border-radius: var(--theme-border-radius);
+    color: var(--text-color);
+}
+.cart-container .item-container{
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 20px;
+}
+.cart-container .item-container .item-image{
+    align-self: start;
+}
+.cart-container .item-container .item-detail:only-child{
+    grid-column: span 2;
+}
+.cart-container .item-container .item-title{
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--heading-color);
+    margin-bottom: 10px;
+}
+.cart-container .item-container .item-variant{
+    color: var(--heading-color);
+}
+.cart-container .item-container .discount-badge{
+    color: var(--primary-btn-text-color);
+    position: relative;
+    z-index: 0;
+}
+.cart-container .item-container .discount-badge::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--badge-border-radius);
+    background-color: var(--primary-btn-bg-color);
+    transform: skewX(var(--badge-skew));
+}
+.cart-container .item-table .compare-price,
+.cart-container .item-table .unit-price {
+    color: var(--text-color-variant);
+}
+.cart-container .item-table .item-right{
+    display: flex;
+    flex-direction: column;
+}
+.cart-container .item-table .item-right .item-quantity .quantity-and-remove{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 28px;
+}
+.cart-container .item-table .item-right .item-quantity{
+    width: 100%;
+}
+.cart-container .item-table .item-right .item-quantity .quantity-container{
+    background-color: rgba(var(--color-background-variant-rgb), 0.5);
+    border-radius: var(--input-border-radius);
+    border: 1px solid rgba(var(--input-border-color-rgb),var(--input-border-opacity));
+    display: flex;
+}
+.cart-container .item-table .item-right .item-quantity .quantity-container input{
+    background-color: transparent;
+}
+.cart-container .item-table .item-right .item-quantity .cart_remove_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+}
+.cart-container .item-table .item-right .item-quantity .cart_remove_btn .icon{
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+}
+.cart-container .item-table .item-right .item-quantity .cart_remove_btn .icon svg{
+    width: 100%;
+    height: 100%;
+}
+.cart-container .item-table .item-right .item-total{
+    margin-top: auto;
+}
+input[name='updates[]']{
+    width: 60px;
+    border: none;
+    border-radius: 0;
+}
+
+.quantity-btn{
+    width: 44px;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: transparent;
+}
+.quantity-error {
+    display: none;
+}
+.quantity-error.show{
+    display: flex;
+}
+
+.quantity-error svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+input[name='updates[]']::-webkit-outer-spin-button,
+input[name='updates[]']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[name='updates[]'][type=number] {
+  -moz-appearance: textfield;
+}
+@media (max-width:1535px){
+    .cart-container .item-table{
+        column-gap: 60px;
+    }
+
+}
+@media (max-width:767px){
+    .cart-container .item-table{
+        grid-template-columns: 1fr;
+    }
+    .cart-container .item-container{
+        grid-template-columns: 100px 1fr;
+    }
+    .cart-container .item-table .item-right{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        row-gap: 24px;
+    }
+    .cart-container .item-table .item-right .item-total{
+        margin-top: 12px;
+    }
+    .cart-container .item-table .item-right .item-quantity{
+        order: 1;
+        width: auto;
+        justify-content: flex-start;
+    }
+    .cart-container .item-table .item-right .item-quantity .quantity-and-remove{
+        justify-content: flex-start;
+    }
+
+}
+@media (max-width:449px){
+    .cart-container .item-table {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+    .cart-container .item-table .item-quantity {
+        grid-row-start: 2;
+        display: flex;
+        justify-content: center;
+    }
+
+    .cart-container .item-table .item-total {
+        grid-row-start: 3;
+        display: flex;
+        justify-content: center;
+    }
+    .cart-container .order-summary-card{
+        font-size: 14px;
+    }
+
+}
+.cart-container .order-summary-card{
+    padding: 24px;
+    border: 1px solid var(--color-background-variant);
+    border-radius: var(--theme-border-radius);
+    background-color: var(--color-background);
+    color: var(--text-color);
+    margin-bottom: 16px;
+}
+.cart-container .order-summary-card .collapsible-detail{
+    border: none;
+}
+.cart-container .order-summary-card.order-collapse{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.cart-container .order-summary-card .sub-total{
+    padding-top: 20px;
+    border-top: 1px solid var(--text-color-variant);
+}
+.cart-container .order-summary-card .discount-price{
+    color: var(--success-color);
+}
+.cart-container .order-summary-card.cart-note textarea{
+    display: block;
+    width: 100%;
+    min-height: 160px;
+}
+.back-to-link{
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    color: var(--text-color);
+    text-decoration: underline;
+}
+.back-to-link span{
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+.cart-container .order-summary button.ic-btn{
+    width: 100%;
+}
+.cart-container .order-summary .additional-checkout-buttons{
+    --shopify-accelerated-checkout-inline-alignment: center;
+}

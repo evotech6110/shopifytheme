@@ -1,0 +1,139 @@
+<div class="collection-card {{ card-style }}{% if card-scheme %} color-{{ card-scheme }} gradient-enabled{% endif %}">
+    {% if collection.featured_image != blank or default_image != nil %}
+        {% liquid
+            if collection.featured_image != blank
+            assign collection_image = collection.featured_image
+            else
+            assign collection_image = default_image
+            endif
+            assign alt = collection_image.alt | escape | default: collection.title
+            if srcset != ''
+            assign widths_string_no_spaces = srcset | replace: ' ', ''
+            assign widths_array = widths_string_no_spaces | split: ','
+            assign sorted_widths_array = widths_array | sort | reverse
+            assign largest_width = sorted_widths_array[0]
+            else
+            assign largest_width = 400
+            endif
+        %}
+    <div class="media-container">
+        <div class="media-inner">
+                {{ collection_image 
+                    | image_url: width: largest_width
+                    | image_tag:
+                    loading: 'lazy',
+                    widths: srcset, 
+                    sizes: sizes,
+                    alt: alt,
+                    class: 'main-image'
+                }}
+        </div>
+    </div>
+    <div class="text-container">
+        {% liquid 
+            if collection.title != blank
+            assign title = collection.title
+            else
+            assign title = "sections.collection_list.collection_title" | t
+            endif
+        %}
+        <h3 class="link-heading">
+            <a href="{{ collection.url | default: '#' }}" class="card-link">
+                {{ title }}
+            </a>
+        </h3>
+
+        {% if starting-price %}
+            {% liquid 
+                for product in collection.products
+                    if forloop.first
+                    assign lowest_price = product.price
+                    endif
+                    assign new_price = product.price
+                    if lowest_price == 0
+                    assign lowest_price = new_price
+                    endif
+                    if new_price < lowest_price and new_price != 0
+                    assign lowest_price = new_price
+                    endif
+                endfor
+            %}
+            <p class="start-from">
+                <span class="start-text">{{ "sections.collection_list.starting_from" | t }}</span> 
+                <strong class="start-price price-text">
+                    {{ lowest_price | default: 99900 | money }}
+                </strong>
+            </p>
+            {% assign lowest_price = nil %}
+        {% endif %}
+
+        {% if button %}
+            {% if card-style != "style-3" %}
+                {% if button-text != blank %}
+                    <span class="ic-btn ic-btn-small ic-btn-primary card-show-link">
+                        {{ button-text }}
+                        <span class="icon">{% render 'icon-arrow-right' %}</span>
+                    </span>
+                {% endif %}
+            {% else %}
+                <span class="card-show-icon">{% render 'icon-right' %}</span>
+            {% endif %}
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="text-only {% if button %}btn-true{% endif %}">
+        <div class="text-container">
+            {% liquid 
+                if collection.title != blank
+                assign title = collection.title
+                else
+                assign title = "sections.collection_list.collection_title" | t
+                endif
+            %}
+            <h3 class="link-heading">
+                <a href="{{ collection.url | default: '#' }}" class="card-link">
+                    {{ title }}
+                </a>
+            </h3>
+    
+            {% if starting-price %}
+                {% liquid 
+                    for product in collection.products
+                        if forloop.first
+                        assign lowest_price = product.price
+                        endif
+                        assign new_price = product.price
+                        if lowest_price == 0
+                        assign lowest_price = new_price
+                        endif
+                        if new_price < lowest_price and new_price != 0
+                        assign lowest_price = new_price
+                        endif
+                    endfor
+                %}
+                <p class="start-from">
+                    <span class="start-text">{{ "sections.collection_list.starting_from" | t }}</span> 
+                    <strong class="start-price price-text">
+                        {{ lowest_price | default: 99900 | money }}
+                    </strong>
+                </p>
+                {% assign lowest_price = nil %}
+            {% endif %}
+    
+            {% if button %}
+                {% if card-style != "style-3" %}
+                    {% if button-text != blank %}
+                        <span class="ic-btn ic-btn-small ic-btn-primary card-show-link">
+                            {{ button-text }}
+                            <span class="icon">{% render 'icon-arrow-right' %}</span>
+                        </span>
+                    {% endif %}
+                {% else %}
+                    <span class="card-show-icon">{% render 'icon-right' %}</span>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>

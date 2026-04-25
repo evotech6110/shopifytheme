@@ -1,0 +1,27 @@
+<div class="ic-container ic-py-13">
+    {%- for block in section.blocks -%}
+        {% render block %}
+    {%- endfor -%}
+</div>
+  
+  {% schema %}
+  {
+    "name": "t:sections.apps.name",
+    "tag": "section",
+    "class": "section",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "@app"
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.apps.presets.name"
+      }
+    ],
+    "disabled_on": {
+        "groups": ["*"]
+    }
+  }
+  {% endschema %}

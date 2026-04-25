@@ -35,13 +35,13 @@
 
   <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
 
-  {% section 'header' %}
+  {% sections 'header-group' %}
 
   <main id="MainContent" role="main" class="main-content">
     {{ content_for_layout }}
   </main>
 
-  {% section 'footer' %}
+  {% sections 'footer-group' %}
 
   <script src="{{ 'evotech-saas.js' | asset_url }}" defer></script>
 

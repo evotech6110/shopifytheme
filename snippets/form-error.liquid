@@ -1,0 +1,18 @@
+{% if form.errors %}
+  <div class="error-box" role="alert" id="{{ error_id }}">
+      <div class="head ic-text-sm ic-font-medium ic-mb-2">
+          <span>{% render 'icon-error' %}</span> {{ "general.error" | t }}
+      </div>
+      <ul class="ic-list-disc ic-text-sm">
+          {% for error in form.errors %}
+              <li class="{% if forloop.last == false %}ic-mb-1{% endif %}">
+                  {% if error == 'form' %}
+                      {{ form.errors.messages[error] }}
+                  {% else %}
+                      {{ form.errors.translated_fields[error] | capitalize }} {{ form.errors.messages[error] }}
+                  {% endif %}
+              </li>
+          {% endfor %}
+      </ul>
+  </div>
+{% endif %}

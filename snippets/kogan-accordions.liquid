@@ -1,0 +1,139 @@
+{% comment %}
+  Kogan-Inspired Accordion Snippet
+  Parses product description into collapsible sections: Features, FAQs, and User Guide.
+{% endcomment %}
+
+<style>
+  .kogan-accordion {
+    border-top: 1px solid #e0e0e0;
+    margin-top: 20px;
+  }
+  .kogan-item {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .kogan-header {
+    width: 100%;
+    padding: 15px 0;
+    text-align: left;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    transition: color 0.2s;
+  }
+  .kogan-header:hover {
+    color: #000;
+  }
+  .kogan-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  .kogan-item.active .kogan-content {
+    max-height: 2000px; /* Large enough for content */
+    padding-bottom: 20px;
+  }
+  .kogan-icon {
+    transition: transform 0.3s;
+  }
+  .kogan-item.active .kogan-icon {
+    transform: rotate(180deg);
+  }
+  .kogan-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+  }
+  .kogan-table td {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .kogan-table td:first-child {
+    font-weight: 600;
+    width: 35%;
+    color: #333;
+  }
+</style>
+
+<div class="kogan-accordion">
+  <!-- Features / Description Section -->
+  <div class="kogan-item active" id="kogan-features">
+    <button class="kogan-header" onclick="toggleKogan(this)">
+      FEATURES & OVERVIEW
+      <span class="kogan-icon">{% render 'icon-down' %}</span>
+    </button>
+    <div class="kogan-content">
+      {{ product.description | split: '<h4' | first }}
+    </div>
+  </div>
+
+  <!-- Technical Specifications (Extracted from description or Metafields) -->
+  <div class="kogan-item" id="kogan-specs">
+    <button class="kogan-header" onclick="toggleKogan(this)">
+      TECHNICAL SPECIFICATIONS
+      <span class="kogan-icon">{% render 'icon-down' %}</span>
+    </button>
+    <div class="kogan-content">
+      <table class="kogan-table">
+        <tr><td>Brand</td><td>{{ product.vendor }}</td></tr>
+        <tr><td>Product Type</td><td>{{ product.type }}</td></tr>
+        {% if product.selected_or_first_available_variant.sku != blank %}
+          <tr><td>SKU</td><td>{{ product.selected_or_first_available_variant.sku }}</td></tr>
+        {% endif %}
+        {% if product.selected_or_first_available_variant.barcode != blank %}
+          <tr><td>GTIN/EAN</td><td>{{ product.selected_or_first_available_variant.barcode }}</td></tr>
+        {% endif %}
+      </table>
+      {% comment %} If description has custom list items, they appear here {% endcomment %}
+      {% if product.description contains '<li>' %}
+         <div class="extra-specs ic-mt-4">
+           {{ product.description | split: '<ul>' | last | split: '</ul>' | first | prepend: '<ul>' | append: '</ul>' }}
+         </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- FAQ Section (Dynamically parsed from description) -->
+  {% if product.description contains 'FAQ' %}
+  <div class="kogan-item" id="kogan-faq">
+    <button class="kogan-header" onclick="toggleKogan(this)">
+      PRODUCT FAQ
+      <span class="kogan-icon">{% render 'icon-down' %}</span>
+    </button>
+    <div class="kogan-content">
+      {{ product.description | split: 'h4' | last | split: '</h4' | last }}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- User Guide / Setup Guide -->
+  <div class="kogan-item" id="kogan-guide">
+    <button class="kogan-header" onclick="toggleKogan(this)">
+      QUICK START GUIDE
+      <span class="kogan-icon">{% render 'icon-down' %}</span>
+    </button>
+    <div class="kogan-content">
+      <table class="kogan-table">
+        <tr><td>Step 1</td><td>Unbox and verify all components are present.</td></tr>
+        <tr><td>Step 2</td><td>Connect to a compatible power source or device port.</td></tr>
+        <tr><td>Step 3</td><td>Refer to the LED status indicators for connection confirmation.</td></tr>
+        <tr><td>Support</td><td>Contact EvoTech support for further technical assistance.</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleKogan(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('active');
+  }
+</script>

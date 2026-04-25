@@ -1,0 +1,79 @@
+<div class="search-suggestion" id="predictive-search-{{ section.id }}">
+  <div class="suggestion-container">
+    {%- if predictive_search.resources.queries.size > 0 -%}
+      <div class="suggestion-group">
+        <h4 class="suggestion-heading">{{ 'sections.header.search_suggestion.suggestions' | t }}</h4>
+        <ul>
+          {%- for query in predictive_search.resources.queries -%}
+            <li><a href="{{ query.url }}" class="suggestion-link-tag">{{ query.text }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <div class="suggestion-group product-suggestion-group">
+        <h4 class="suggestion-heading">{{ 'sections.header.search_suggestion.products' | t }}</h4>
+        <ul>
+          {%- for product in predictive_search.resources.products -%}
+            {% assign selectedVariant = product.selected_or_first_available_variant %}
+            <li>
+              <div class="product-suggestion-card">
+                {% if product.featured_image %}
+                <div class="image-container">
+                  {{ product.featured_image 
+                    | image_url: width: 40
+                    | image_tag:
+                    loading: 'lazy',
+                    widths: '40', 
+                    sizes: '40px',
+                    alt: product.featured_image.alt
+                }}
+                </div>
+                {% endif %}
+                <div class="text-container">
+                  <a href="{{ selectedVariant.url }}">
+                    <h4>{{ product.title }}</h4>
+                  </a>
+                  <p class="price-text">{{ selectedVariant.price | money }}</p>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    {%- if predictive_search.resources.collections.size > 0 -%}
+      <div class="suggestion-group">
+        <h4 class="suggestion-heading">{{ 'sections.header.search_suggestion.collections' | t }}</h4>
+        <ul>
+          {%- for collection in predictive_search.resources.collections -%}
+            <li><a href="{{ collection.url }}" class="suggestion-link-tag">{{ collection.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    {%- if predictive_search.resources.pages.size > 0 -%}
+      <div class="suggestion-group">
+        <h4 class="suggestion-heading">{{ 'sections.header.search_suggestion.pages' | t }}</h4>
+        <ul>
+          {%- for page in predictive_search.resources.pages -%}
+            <li><a href="{{ page.url }}" class="suggestion-link-tag">{{ page.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    {%- if predictive_search.resources.articles.size > 0 -%}
+      <div class="suggestion-group">
+        <h4 class="suggestion-heading">{{ 'sections.header.search_suggestion.articles' | t }}</h4>
+        <ul>
+          {%- for article in predictive_search.resources.articles -%}
+            <li><a href="{{ article.url }}" class="suggestion-link-tag">{{ article.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <div class="suggestion-footer">
+      <a href="{{ routes.search_url }}?q={{ predictive_search.terms | replace: " ", "+" }}">{{ 'sections.header.search_suggestion.search_for' | t }} "{{ predictive_search.terms }}"</a>
+    </div>
+  </div>
+</div>

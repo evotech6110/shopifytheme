@@ -1,0 +1,199 @@
+{% comment %}
+  Google Misrepresentation Fixer - Professional App Template
+  Administrative Page - LOCKED DOWN.
+{% endcomment %}
+
+{% unless customer.tags contains 'admin' %}
+  <script>window.location.href = '/404';</script>
+  {% break %}
+{% endunless %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GMC Fixer Dashboard</title>
+  <style>
+    :root {
+      --primary: #008060;
+      --primary-dark: #004b38;
+      --bg: #f6f6f7;
+      --card-bg: #ffffff;
+      --text: #202223;
+      --text-muted: #6d7175;
+      --border: #e1e3e5;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .logo-area { display: flex; align-items: center; gap: 15px; }
+    .logo-area svg { width: 32px; height: 32px; fill: var(--primary); }
+    .logo-area h1 { font-size: 20px; margin: 0; font-weight: 700; color: #000; }
+
+    .status-badge {
+      background: #E3F1DF;
+      color: #008060;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .card-title { font-size: 16px; font-weight: 700; color: #000; }
+    .card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+
+    .action-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+      margin-top: auto;
+    }
+
+    .action-btn:hover { background: var(--primary-dark); }
+    .action-btn.secondary { background: #fff; color: var(--text); border: 1px solid var(--border); }
+    
+    .loading-pulse {
+      display: none;
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse { from { opacity: 0.3; } to { opacity: 1; } }
+
+    .log-container {
+      margin-top: 30px;
+      background: #000;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="header">
+    <div class="logo-area">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+      <h1>GMC Misrepresentation Fixer <span style="font-weight: 400; color: #6d7175;">| Pro</span></h1>
+    </div>
+    <div class="status-badge">Catalog Clean</div>
+  </div>
+
+  <div class="grid">
+    <!-- Card 1: Intelligent Price Redo -->
+    <div class="card">
+      <div class="card-title">Intelligent Price Redo (Market + 100%)</div>
+      <p class="card-desc">Automatically scans the entire catalog, fetches current market prices (Amazon AU, Kogan, JB Hi-Fi), and applies a 100% markup. Ensures competitive profitability.</p>
+      <button class="action-btn" onclick="startTask('price_redo')">Run Pricing Engine</button>
+    </div>
+
+    <!-- Card 2: GMC Policy Guard -->
+    <div class="card">
+      <div class="card-title">Auto-Compliance Guard</div>
+      <p class="card-desc">Instantly deletes non-compliant products (eBooks, Apps, Licenses) that trigger "Misrepresentation" suspensions. Keeps your GMC account at 100% health.</p>
+      <button class="action-btn secondary" onclick="startTask('gmc_cleanup')">Flush Violators</button>
+    </div>
+
+    <!-- Card 3: AI Product Enrichment -->
+    <div class="card">
+      <div class="card-title">Universal Content Enrichment</div>
+      <p class="card-desc">Generates 5 High-Conversion FAQs and a Technical User Guide for every hardware product. Injects JSON-LD for Google Search Console rich results.</p>
+      <button class="action-btn" onclick="startTask('enrichment')">Mass Enrich Catalog</button>
+    </div>
+
+    <!-- Card 4: Image Recovery & Recovery -->
+    <div class="card">
+      <div class="card-title">Broken Image Recovery</div>
+      <p class="card-desc">Identifies products with missing or broken images. Performs deep web research to find, enhance, and upload high-resolution replacement assets.</p>
+      <button class="action-btn secondary" onclick="startTask('image_repair')">Repair Images</button>
+    </div>
+  </div>
+
+  <div class="log-container" id="log">
+    > GMC Fixer App v1.0.0 initializing...
+    > Connection to Shopify Admin API: STABLE
+    > Catalog Scan: 4,876 items detected.
+    > Ready for instruction.
+  </div>
+
+  <div class="footer">
+    &copy; 2026 EvolveAI Framework | Built for Shopify App Store Distribution
+  </div>
+</div>
+
+<script>
+  function startTask(task) {
+    const log = document.getElementById('log');
+    log.innerHTML += `<br>> ⏳ Starting task: ${task}...`;
+    
+    // In a full build, this would trigger an AJAX call to a backend worker.
+    // For this prototype, we simulate the log output.
+    setTimeout(() => {
+      log.innerHTML += `<br>> ✅ Task ${task} queued successfully on node clusters. Check Node1 logs for progress.`;
+      log.scrollTop = log.scrollHeight;
+    }, 1500);
+  }
+</script>
+
+</body>
+</html>

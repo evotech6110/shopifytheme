@@ -1,0 +1,90 @@
+<div class="register-section-after color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container">
+        <div class="ic-flex ic-justify-content-center ic-align-items-center ic-py-13">
+            <div class="ic-flex-col-12 ic-flex-col-md-10 ic-flex-col-lg-8 ic-flex-col-xl-7 ic-flex-col-2xl-6">
+                <div class="account-panel color-{{ section.settings.content_color_scheme }}">
+                    <h1 class="ic-text-center">{{ "sections.template_customer_register.sign_up" | t }}</h1>
+                    <div class="ic-mt-8">
+                        {% form 'create_customer' %}
+                            {% render 'form-error', form: form, error_id: 'register_customer' %}
+                            <div class="ic-flex ic--mx-3">
+                                <div class="ic-my-4 ic-px-3 ic-w-100 ic-flex-col-md-6">
+                                    <label for="first_name" class="ic-d-block ic-mb-2" aria-label="{{ 'sections.template_customer_register.first_name' | t }}">{{ "sections.template_customer_register.first_name" | t }}</label>
+                                    <input 
+                                        type="text"
+                                        name="customer[first_name]"
+                                        id="first_name"
+                                        autocomplete="given-name"
+                                        class="ic-relative ic-block ic-w-100"
+                                        placeholder="{{ 'sections.template_customer_register.first_name' | t }}"
+                                    >
+                                </div>
+                                <div class="ic-my-4 ic-px-3 ic-w-100 ic-flex-col-md-6">
+                                    <label for="last_name" class="ic-d-block ic-mb-2" aria-label="{{ 'sections.template_customer_register.last_name' | t }}">{{ "sections.template_customer_register.last_name" | t }}</label>
+                                    <input 
+                                        type="text"
+                                        name="customer[last_name]"
+                                        id="last_name"
+                                        autocomplete="family-name"
+                                        class="ic-relative ic-block ic-w-100"
+                                        placeholder="{{ 'sections.template_customer_register.last_name' | t }}"
+                                    >
+                                </div>
+                                <div class="ic-my-4 ic-px-3 ic-w-100 ic-flex-col-md-6">
+                                    <label for="email_address" class="ic-d-block ic-mb-2" aria-label="{{ 'sections.template_customer_register.email_address' | t }}">{{ "sections.template_customer_register.email_address" | t }}</label>
+                                    <input 
+                                        type="email"
+                                        name="customer[email]"
+                                        id="email_address"
+                                        autocomplete="email"
+                                        aria-describedby="register_customer"
+                                        class="ic-relative ic-block ic-w-100"
+                                        placeholder="{{ 'sections.template_customer_register.email_address' | t }}"
+                                    >
+                                </div>
+                                <div class="ic-my-4 ic-px-3 ic-w-100 ic-flex-col-md-6">
+                                    <label for="password" class="ic-d-block ic-mb-2" aria-label="{{ 'sections.template_customer_register.password' | t }}">{{ "sections.template_customer_register.password" | t }}</label>
+                                    <input 
+                                        type="password"
+                                        name="customer[password]"
+                                        id="password"
+                                        autocomplete="new-passowrd"
+                                        class="ic-relative ic-block ic-w-100"
+                                        placeholder="{{ 'sections.template_customer_register.password' | t }}"
+                                    >
+                                </div>
+                            </div>
+                            <div class="ic-flex ic-align-items-center ic-justify-content-space-between ic-flex-gap-4 ic-mt-2">
+                                <p>
+                                    <span>{{ "sections.template_customer_register.already_customer" | t }}</span> 
+                                    <a href="{{ routes.account_login_url | default: '#' }}" class="ic-font-semibold">{{ "sections.template_customer_register.back_to_login" | t }}</a>
+                                </p>
+                                <button type="submit" class="ic-btn ic-btn-primary ic-justify-content-center ic-w-100 ic-w-sm-auto">{{ "sections.template_customer_register.create_account" | t }}</button>
+                            </div>
+                        {% endform %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "t:sections.template_customer_register.name",
+    "settings": [
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:sections.template_customer_register.settings.color_scheme.background.label",
+            "default": "scheme_1"
+        },
+        {
+            "type": "color_scheme",
+            "id": "content_color_scheme",
+            "label": "t:sections.template_customer_register.settings.color_scheme.content.label",
+            "default": "scheme_1"
+        }
+    ]
+}
+{% endschema %}

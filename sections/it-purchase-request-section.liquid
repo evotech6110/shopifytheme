@@ -1,0 +1,460 @@
+<div class="procurement-form-wrapper">
+  {%- style -%}
+    /* ── Reset & Base ──────────────────────────────────────────────────────── */
+    .procurement-form-wrapper *, .procurement-form-wrapper *::before, .procurement-form-wrapper *::after { box-sizing: border-box; }
+
+    .procurement-form-wrapper {
+      --green-900: #1C2B1A;
+      --green-700: #2E5224;
+      --green-500: #4A7C35;
+      --green-400: #5E9A44;
+      --green-100: #EAF2E5;
+      --green-50:  #F4FAF1;
+      --grey-900:  #111827;
+      --grey-700:  #374151;
+      --grey-500:  #6B7280;
+      --grey-300:  #D1D5DB;
+      --grey-200:  #E5E7EB;
+      --grey-100:  #F3F4F6;
+      --grey-50:   #F9FAFB;
+      --white:     #FFFFFF;
+      --red-500:   #DC2626;
+      --amber-500: #D97706;
+      --radius:    8px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+      --transition: 150ms cubic-bezier(.4,0,.2,1);
+      
+      font-family: 'DM Sans', sans-serif;
+      background: var(--grey-100);
+      color: var(--grey-900);
+      line-height: 1.55;
+      padding: 20px;
+    }
+
+    /* ── Layout ──────────────────────────────────────────────────────────────── */
+    .app-shell {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 80vh;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      border: 1px solid var(--grey-200);
+    }
+
+    @media (max-width: 900px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--grey-200); max-height: 400px; }
+    }
+
+    /* ── Sidebar (Product Catalogue) ─────────────────────────────────────────── */
+    .sidebar { background: var(--white); border-right: 1px solid var(--grey-200); overflow-y: auto; display: flex; flex-direction: column; }
+    .sidebar-header { padding: 18px 16px 14px; border-bottom: 1px solid var(--grey-200); position: sticky; top: 0; background: white; z-index: 10; }
+    .sidebar-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--grey-500); margin-bottom: 10px; }
+    .search-wrap { position: relative; }
+    .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--grey-400); pointer-events: none; }
+    .search-input { width: 100%; padding: 8px 10px 8px 34px; border: 1px solid var(--grey-300); border-radius: var(--radius); font-size: 13px; font-family: inherit; background: var(--grey-50); outline: none; transition: all 0.2s; }
+    .search-input:focus { border-color: var(--green-500); box-shadow: 0 0 0 3px rgba(74,124,53,.15); background: white; }
+    .filter-row { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+    .chip { padding: 3px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 500; cursor: pointer; border: 1px solid var(--grey-300); background: white; color: var(--grey-600); transition: all var(--transition); }
+    .chip.active { background: var(--green-500); border-color: var(--green-500); color: white; }
+    .chip:hover:not(.active) { border-color: var(--green-400); color: var(--green-500); }
+
+    .product-list { padding: 8px; flex: 1; }
+    .product-card { display: flex; align-items: flex-start; gap: 10px; padding: 10px; border-radius: var(--radius); cursor: pointer; border: 1px solid transparent; transition: all var(--transition); margin-bottom: 3px; }
+    .product-card:hover { background: var(--green-50); border-color: var(--green-100); }
+    .product-card.added { background: var(--green-50); border-color: var(--green-400); }
+    .product-icon { width: 36px; height: 36px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; background: var(--grey-100); }
+    .product-info { flex: 1; min-width: 0; }
+    .product-name { font-size: 13px; font-weight: 600; color: var(--grey-900); line-height: 1.3; margin: 0; }
+    .product-sku  { font-size: 11px; color: var(--grey-500); font-family: monospace; }
+    .product-price{ font-size: 12px; font-weight: 600; color: var(--green-700); margin-top: 2px; }
+    .product-badge { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+    .badge-add    { background: var(--green-100); color: var(--green-700); }
+    .badge-added  { background: var(--green-500); color: white; }
+
+    /* ── Main Content ─────────────────────────────────────────────────────────── */
+    .main { background: var(--grey-50); overflow-y: auto; display: flex; flex-direction: column; }
+    .form-header { background: white; border-bottom: 1px solid var(--grey-200); padding: 20px 28px; }
+    .form-title { font-size: 22px; font-weight: 700; color: var(--grey-900); margin: 0 0 4px; }
+    .form-purpose { font-size: 13px; color: var(--grey-500); max-width: 640px; }
+    .form-content { padding: 20px 28px; flex: 1; }
+
+    .section { background: white; border: 1px solid var(--grey-200); border-radius: 10px; margin-bottom: 20px; box-shadow: var(--shadow-sm); overflow: hidden; }
+    .section-head { display: flex; align-items: center; gap: 10px; padding: 13px 18px; border-bottom: 1px solid var(--grey-200); background: var(--grey-50); }
+    .section-num { width: 22px; height: 22px; border-radius: 50%; background: var(--green-500); color: white; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-label { font-size: 14px; font-weight: 700; color: var(--grey-800); }
+    .section-body { padding: 20px 18px; }
+
+    .form-grid { display: grid; gap: 16px; }
+    .form-grid-2 { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 640px) { .form-grid-2 { grid-template-columns: 1fr; } }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .field-label { font-size: 13px; font-weight: 600; color: var(--grey-700); margin: 0; }
+    .field-label span { color: var(--red-500); margin-left: 2px; }
+    .field-input, .field-select { padding: 10px 12px; border: 1px solid var(--grey-300); border-radius: var(--radius); font-size: 14px; font-family: inherit; color: var(--grey-900); background: white; transition: all 0.2s; outline: none; width: 100%; }
+    .field-input:focus, .field-select:focus { border-color: var(--green-500); box-shadow: 0 0 0 3px rgba(74,124,53,.12); }
+
+    /* Items Table */
+    .items-table-wrap { overflow-x: auto; margin: 0 -18px; }
+    .items-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    .items-table th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--grey-500); padding: 10px 18px; text-align: left; background: var(--grey-50); border-bottom: 1px solid var(--grey-200); }
+    .items-table td { padding: 10px 18px; border-bottom: 1px solid var(--grey-100); vertical-align: middle; font-size: 13px; }
+    .td-number input { width: 70px; padding: 6px 8px; border: 1px solid var(--grey-300); border-radius: 6px; text-align: center; }
+    .td-total { font-weight: 600; color: var(--green-700); font-family: monospace; }
+    .remove-btn { width: 28px; height: 28px; border-radius: 6px; background: none; border: 1px solid transparent; color: var(--grey-400); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .remove-btn:hover { background: #FEF2F2; border-color: #FECACA; color: var(--red-500); }
+
+    .summary-row { display: flex; justify-content: flex-end; padding: 14px 18px; border-top: 1px solid var(--grey-200); background: var(--green-50); gap: 32px; }
+    .summary-label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--grey-500); font-weight: 600; }
+    .summary-value { font-size: 18px; font-weight: 700; color: var(--green-700); font-family: monospace; }
+
+    .btn-submit { width: auto; min-width: 180px; padding: 12px 24px; background: var(--green-500); color: white; border: none; border-radius: var(--radius); font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+    .btn-submit:hover { background: var(--green-400); }
+
+    .btn-outline { width: 100%; padding: 10px 24px; background: white; color: var(--green-600); border: 1px dashed var(--grey-400); border-radius: var(--radius); font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; margin: 10px 18px; box-sizing: border-box; }
+    .btn-outline:hover { background: var(--green-50); border-color: var(--green-500); }
+
+    .shopify-challenge__container { padding: 20px; } /* Recaptcha styles */
+  {%- endstyle -%}
+
+  {%- form 'contact', id: 'it-procurement-form', class: 'procurement-form' -%}
+    {%- if form.posted_successfully? -%}
+      <div style="background: #F4FAF1; border: 1px solid #4A7C35; color: #1C2B1A; padding: 20px; border-radius: 8px; margin-bottom: 24px; font-weight: 600;">
+        ✅ Thank you! Your IT Purchase request has been received. We will be in touch shortly.
+      </div>
+    {%- elsif form.errors -%}
+      <div style="background: #FEF2F2; border: 1px solid #DC2626; color: #DC2626; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+        {{ form.errors | default_errors }}
+      </div>
+    {%- endif -%}
+
+    <div class="app-shell">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-title">Product Catalogue</div>
+          <div class="search-wrap">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="search-input" id="searchInput" type="text" placeholder="Search products…">
+          </div>
+          <div class="filter-row" id="filterRow">
+            <span class="chip active" data-cat="all">All</span>
+            <span class="chip" data-cat="Laptops">Laptops</span>
+            <span class="chip" data-cat="Monitors">Monitors</span>
+            <span class="chip" data-cat="Networking">Networking</span>
+            <span class="chip" data-cat="Peripherals">Peripherals</span>
+            <span class="chip" data-cat="Software">Software</span>
+            <span class="chip" data-cat="Servers">Servers</span>
+          </div>
+        </div>
+        <div class="product-list" id="productList"></div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <div class="form-header">
+          <h1 class="form-title">EvoTech IT Purchase Request</h1>
+          <p class="form-purpose">Use this optimized form to initiate a purchase request. After submission, you will receive an email confirmation containing all requested details.</p>
+        </div>
+
+        <div class="form-content">
+          <!-- 1. Requester Info -->
+          <div class="section">
+            <div class="section-head"><div class="section-num">1</div><div class="section-label">Requester Information</div></div>
+            <div class="section-body">
+              <div class="form-grid form-grid-2">
+                <div class="form-field">
+                  <label class="field-label">Full Name <span>*</span></label>
+                  <input class="field-input" type="text" name="contact[1_Full_Name]" required placeholder="John Doe">
+                </div>
+                <div class="form-field">
+                  <label class="field-label">Contact Email <span>*</span></label>
+                  <input class="field-input" type="email" name="contact[email]" required placeholder="name@company.com.au">
+                </div>
+                <div class="form-field">
+                  <label class="field-label">Business Phone</label>
+                  <input class="field-input" type="tel" name="contact[2_Phone]">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Purchase Details -->
+          <div class="section">
+            <div class="section-head"><div class="section-num">2</div><div class="section-label">Purchase Items</div></div>
+            <div class="items-table-wrap">
+              <table class="items-table">
+                <thead><tr><th style="width:40%">Item / SKU</th><th style="width:10%">Qty</th><th style="width:15%">Unit Cost</th><th style="width:15%">Total</th><th style="width:10%">Action</th></tr></thead>
+                <tbody id="itemsBody">
+                  <tr><td colspan="5" style="text-align:center; padding: 24px; color: #888;">No items added. Please select from the catalogue or add manually.</td></tr>
+                </tbody>
+              </table>
+              <div style="padding-right: 36px;">
+                <button type="button" class="btn-outline" id="addManualBtn">+ Add Custom Item</button>
+              </div>
+            </div>
+            <div class="summary-row">
+              <div><div class="summary-label">Total Estimated Cost</div><div class="summary-value" id="summaryTotal">$0.00</div></div>
+            </div>
+            <!-- HIDDEN FIELD TO STORE ALL ITEMS SO SHOPIFY SENDS IT IN EMAIL -->
+            <textarea name="contact[3_Requested_Items]" id="hiddenItemsField" style="display:none;" required></textarea>
+            <input type="hidden" name="contact[4_Total_Cost]" id="hiddenTotalCost">
+          </div>
+
+          <!-- 3. Delivery & Approval -->
+          <div class="section">
+            <div class="section-head"><div class="section-num">3</div><div class="section-label">Delivery & Approval</div></div>
+            <div class="section-body">
+              <div class="form-grid form-grid-2">
+                <div class="form-field">
+                  <label class="field-label">Required Delivery Date <span>*</span></label>
+                  <input class="field-input" type="date" name="contact[5_Delivery_Date]" required>
+                </div>
+                <div class="form-field">
+                  <label class="field-label">Delivery Location <span>*</span></label>
+                  <input class="field-input" type="text" name="contact[6_Delivery_Location]" placeholder="Level 3, 123 St Georges Tce..." required>
+                </div>
+                <div class="form-field">
+                  <label class="field-label">Urgency Level</label>
+                  <select class="field-select" name="contact[7_Urgency]">
+                    <option value="Standard">Standard (5-10 days)</option>
+                    <option value="Priority">Priority (2-4 days)</option>
+                    <option value="Urgent">Urgent (Next day)</option>
+                  </select>
+                </div>
+                <div class="form-field" style="grid-column: span 2;">
+                  <label class="field-label">Notes / Comments or special instructions</label>
+                  <textarea class="field-input" name="contact[8_Special_Instructions]" rows="3" placeholder="Additional notes or instructions..."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end;">
+            <button type="submit" class="btn-submit" id="submitBtn">Submit Purchase Request</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  {%- endform -%}
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let items = [];
+      let currentResults = []; // Store fetched Shopify products
+      let filterCat = 'all';
+
+      const searchInput = document.getElementById('searchInput');
+      const productList = document.getElementById('productList');
+      const chips = document.querySelectorAll('.chip');
+      const itemsBody = document.getElementById('itemsBody');
+      const summaryTotal = document.getElementById('summaryTotal');
+      const hiddenField = document.getElementById('hiddenItemsField');
+      const hiddenTotal = document.getElementById('hiddenTotalCost');
+      const form = document.getElementById('it-procurement-form');
+
+      // Debounce timer for search
+      let searchTimeout;
+
+      async function fetchShopifyProducts(query) {
+        if (!query) {
+          productList.innerHTML = `<div style="text-align:center; padding: 20px; color:#888; font-size:13px;">Please type to search your store's products.</div>`;
+          currentResults = [];
+          return;
+        }
+
+        productList.innerHTML = `<div style="text-align:center; padding: 20px; color:#888; font-size:13px;">Searching store...</div>`;
+
+        try {
+          const res = await fetch(window.Shopify?.routes?.root + 'search/suggest.json?q=' + encodeURIComponent(query) + '&resources[type]=product');
+          if (!res.ok) throw new Error('Search failed');
+          const data = await res.json();
+          const products = data.resources.results.products || [];
+          currentResults = products;
+          renderCatalogue(products);
+        } catch (e) {
+          console.error(e);
+          productList.innerHTML = `<div style="text-align:center; padding: 20px; color:#DC2626; font-size:13px;">Error searching products.</div>`;
+        }
+      }
+
+      function renderCatalogue(products) {
+        if (!products || products.length === 0) {
+          productList.innerHTML = `<div style="text-align:center; padding: 20px; color:#888; font-size:13px;">No products found in store.</div>`;
+          return;
+        }
+
+        productList.innerHTML = products.map(p => {
+          // Parse price from Shopify's formatted string (e.g. "$1,299.00" -> 1299.00)
+          const rawPrice = parseFloat(p.price.replace(/[^0-9.-]+/g, "")) || 0;
+          const added = items.some(i => i.id === p.id && !i.isManual);
+          
+          return `
+          <div class="product-card ${added ? 'added' : ''}" data-id="${p.id}">
+            ${p.image ? `<div style="width:36px; height:36px; flex-shrink:0; border-radius:6px; overflow:hidden;"><img src="${p.image}" style="width:100%; height:100%; object-fit:cover;"></div>` : `<div class="product-icon">📦</div>`}
+            <div class="product-info">
+              <h4 class="product-name">${p.title}</h4>
+              <div class="product-price">${p.price}</div>
+            </div>
+            <span class="product-badge ${added ? 'badge-added' : 'badge-add'}">${added ? '✓ Added' : '+ Add'}</span>
+          </div>`;
+        }).join('');
+
+        document.querySelectorAll('.product-card').forEach(el => {
+          el.addEventListener('click', () => {
+             const pId = el.getAttribute('data-id');
+             // Find product from currentResults, which are returned from Shopify JSON
+             // Some IDs might be numbers instead of strings from Shopify, so == instead of ===
+             const prod = currentResults.find(x => x.id == pId);
+             if (!prod) return;
+             
+             const rawPrice = parseFloat(prod.price.replace(/[^0-9.-]+/g, "")) || 0;
+             const existing = items.find(i => i.id == pId && !i.isManual);
+             if (existing) {
+               existing.qty++;
+             } else {
+               items.push({ id: prod.id, name: prod.title, sku: prod.handle, qty: 1, price: rawPrice, isManual: false });
+             }
+             renderTable();
+             renderCatalogue(currentResults);
+          });
+        });
+      }
+
+      function updateHiddenFields(total) {
+        const formattedTotal = '$' + total.toLocaleString('en-AU', {minimumFractionDigits:2});
+        summaryTotal.textContent = formattedTotal;
+        hiddenTotal.value = formattedTotal;
+        
+        let plainTextFormat = "=== REQUESTED ITEMS ===\n\n";
+        items.forEach((item, idx) => {
+          const itemTotal = item.qty * item.price;
+          plainTextFormat += `${idx+1}. ${item.name || 'Custom Item'} (SKU: ${item.sku})\n   Quantity: ${item.qty} x $${item.price} = $${itemTotal}\n\n`;
+        });
+        plainTextFormat += `\nESTIMATED TOTAL: ${formattedTotal}\n=======================\n`;
+        hiddenField.value = plainTextFormat;
+      }
+
+      function renderTable() {
+        if (items.length === 0) {
+          itemsBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 24px; color: #888;">No items added. Please select from the catalogue or add manually.</td></tr>`;
+          summaryTotal.textContent = '$0.00';
+          hiddenField.value = '';
+          hiddenTotal.value = '$0.00';
+          return;
+        }
+
+        let total = 0;
+
+        itemsBody.innerHTML = items.map((item, idx) => {
+          const itemTotal = item.qty * item.price;
+          total += itemTotal;
+
+          const nameCell = item.isManual ? 
+            `<input type="text" class="manual-name-input field-input" data-id="${item.id}" value="${item.name.replace(/"/g, '&quot;')}" placeholder="Item description / Name" style="width:100%; padding:6px; font-size:13px;">` :
+            `<strong style="font-size:13px">${item.name}</strong><br><span style="font-size:11px; color:#666">${item.sku}</span>`;
+            
+          const priceCell = item.isManual ? 
+            `$<input type="number" class="manual-price-input field-input" data-id="${item.id}" value="${item.price}" min="0" step="0.01" style="width:80px; padding:6px; font-size:13px; display:inline-block; margin-left:4px;">` :
+            `$${item.price.toLocaleString('en-AU', {minimumFractionDigits:2})}`;
+
+          return `
+          <tr>
+            <td>${nameCell}</td>
+            <td class="td-number"><input type="number" min="1" value="${item.qty}" data-id="${item.id}" class="qty-input"></td>
+            <td>${priceCell}</td>
+            <td class="td-total">$${itemTotal.toLocaleString('en-AU', {minimumFractionDigits:2})}</td>
+            <td><button type="button" class="remove-btn" data-id="${item.id}">✕</button></td>
+          </tr>`;
+        }).join('');
+
+        updateHiddenFields(total);
+
+        // Setup removal
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+             const pId = e.currentTarget.getAttribute('data-id');
+             items = items.filter(i => i.id !== pId);
+             renderTable();
+             renderCatalogue();
+          });
+        });
+
+        // Setup Qty Update
+        document.querySelectorAll('.qty-input').forEach(input => {
+          input.addEventListener('change', (e) => {
+             const pId = e.currentTarget.getAttribute('data-id');
+             const newQty = parseInt(e.currentTarget.value) || 1;
+             const it = items.find(i => i.id === pId);
+             if (it) it.qty = newQty;
+             renderTable();
+          });
+        });
+
+        // Setup Manual Inputs
+        document.querySelectorAll('.manual-name-input').forEach(input => {
+          input.addEventListener('input', (e) => {
+             const pId = e.currentTarget.getAttribute('data-id');
+             const it = items.find(i => i.id === pId);
+             if (it) {
+               it.name = e.currentTarget.value;
+               updateHiddenFields(items.reduce((sum, item) => sum + (item.qty * item.price), 0));
+             }
+          });
+        });
+
+        document.querySelectorAll('.manual-price-input').forEach(input => {
+          input.addEventListener('input', (e) => {
+             const pId = e.currentTarget.getAttribute('data-id');
+             const it = items.find(i => i.id === pId);
+             if (it) {
+               it.price = parseFloat(e.currentTarget.value) || 0;
+               // Wait for them to finish typing before full re-render to avoid losing focus, just update totals
+               const newTotal = items.reduce((sum, item) => sum + (item.qty * item.price), 0);
+               updateHiddenFields(newTotal);
+             }
+          });
+          input.addEventListener('blur', renderTable);
+        });
+      }
+      
+      document.getElementById('addManualBtn').addEventListener('click', () => {
+        const manualId = 'manual_' + Date.now();
+        items.push({ id: manualId, name: '', sku: 'Custom', qty: 1, price: 0, isManual: true });
+        renderTable();
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        const q = e.target.value;
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => fetchShopifyProducts(q), 300);
+      });
+      
+      chips.forEach(chip => {
+        chip.addEventListener('click', (e) => {
+          chips.forEach(c => c.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          const cat = e.currentTarget.getAttribute('data-cat');
+          if (cat !== 'all') {
+            searchInput.value = cat;
+            fetchShopifyProducts(cat);
+          } else {
+            searchInput.value = '';
+            fetchShopifyProducts('');
+          }
+        });
+      });
+
+      form.addEventListener('submit', (e) => {
+        if (items.length === 0) {
+          e.preventDefault();
+          alert('Please add at least one item from the catalogue or manually add an item to submit the purchase request.');
+        }
+      });
+
+      fetchShopifyProducts('');
+    });
+  </script>
+</div>

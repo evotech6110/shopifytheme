@@ -1,0 +1,252 @@
+{% comment %}
+  Bento Grid 2.0 - High Density Commercial Edition
+  Inspired by Kogan & Apple minimalist-but-informative style.
+  Features: Trust Badges, Pricing, and Next-Gen Glow Animations.
+{% endcomment %}
+
+<style>
+  :root {
+    --bento-glow: rgba(0, 128, 96, 0.15); /* Eco/Pro Green Glow */
+    --accent-gold: #FFD700;
+  }
+
+  .bento-section {
+    padding: 60px 0;
+    background: #ffffff;
+  }
+
+  .bento-grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 350px);
+    gap: 20px;
+  }
+
+  .bento-item {
+    background: #f8fafc;
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    border: 1px solid #f1f5f9;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Next-Gen Light Animation (Glow on Hover) */
+  .bento-item:hover {
+    transform: translateY(-8px);
+    border-color: var(--bento-glow);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08), 0 0 15px var(--bento-glow);
+  }
+
+  .bento-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at top right, var(--bento-glow), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .bento-item:hover::before {
+    opacity: 1;
+  }
+
+  .bento-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #000;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    z-index: 2;
+  }
+
+  .bento-type {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .bento-title {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    color: #0f172a;
+    max-width: 80%;
+  }
+
+  .bento-desc {
+    font-size: 14px;
+    color: #475569;
+    margin-top: 15px;
+    line-height: 1.5;
+  }
+
+  .bento-price {
+    margin-top: auto;
+    font-size: 20px;
+    font-weight: 900;
+    color: #008060;
+  }
+
+  .bento-cta {
+    margin-top: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+
+  .bento-item:hover .bento-cta {
+    color: #008060;
+  }
+
+  /* Grid Layout Variants */
+  .bento-item.large { grid-column: span 2; grid-row: span 2; }
+  .bento-item.medium { grid-column: span 2; }
+
+  /* Images */
+  .bento-img {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 50%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 1;
+  }
+
+  .bento-item:hover .bento-img {
+    transform: scale(1.1) rotate(-3deg);
+  }
+
+  /* --- Professional Trust Tooltips --- */
+  .bento-item[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    background: #000;
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+    white-space: nowrap;
+  }
+
+  .bento-item[data-tooltip]:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 1024px) {
+    .bento-grid-container {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .bento-grid-container {
+      grid-template-columns: 1fr;
+    }
+    .bento-item.large, .bento-item.medium {
+      grid-column: span 1;
+    }
+  }
+</style>
+
+<section class="bento-section">
+  <div class="ic-container">
+    <div class="bento-grid-container">
+      
+      <!-- ITEM 1: Synology (Large) -->
+      <a href="/products/synology-ds223-p-nas-kit-2-bay" class="bento-item large" data-tooltip="🛡️ Architecture Verified for 99.9% Uptime">
+        <span class="bento-badge">GMC Verified</span>
+        <div>
+          <span class="bento-type">Hybrid Cloud Storage</span>
+          <h2 class="bento-title">Synology DS223/G</h2>
+          <p class="bento-desc">The ultimate control center for your digital life. Enterprise-grade stability for home and small business professionals.</p>
+        </div>
+        <img src="{{ 'bento-synology.png' | asset_url }}" class="bento-img" alt="Synology DS223">
+        <div>
+          <div class="bento-price">$524.95</div>
+          <div class="bento-cta">Discover Reliability <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14m-7-7l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <!-- ITEM 2: Smart Home (Medium) -->
+      <a href="/collections/smart-home" class="bento-item medium" data-tooltip="🛠️ Expert Node Integration Consult Available">
+        <span class="bento-badge">Premium Tech</span>
+        <div>
+          <span class="bento-type">Smart Ecosystems</span>
+          <h2 class="bento-title">Automated Living</h2>
+          <p class="bento-desc">Intelligent devices for a future-proof home. Managed centrally, integrated perfectly.</p>
+        </div>
+        <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/tp-link-deco-ax6000-dual-band-5g-whole-home-mesh-wifi-6-system-smart-810_bbc9dc53-76fd-49c7-956b-03dd654b7c04.webp?v=1775856102" class="bento-img" style="width: 35%" alt="Smart Home">
+        <div class="bento-cta">Shop Smart Home <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14m-7-7l7 7-7 7"/></svg></div>
+      </a>
+
+      <!-- ITEM 3: High-Speed Storage (Small) -->
+      <a href="/collections/storage" class="bento-item" data-tooltip="💡 Enterprise Data Integrity Guaranteed">
+        <div>
+          <span class="bento-type">Industrial Storage</span>
+          <h2 class="bento-title">IronWolf Pro</h2>
+          <p class="bento-desc">High-performance enterprise hard drives.</p>
+        </div>
+        <img src="{{ 'bento-ironwolf.png' | asset_url }}" class="bento-img" style="width: 40%;" alt="Storage">
+        <div class="bento-cta">Explore Storage <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14m-7-7l7 7-7 7"/></svg></div>
+      </a>
+
+      <!-- ITEM 4: Essential Components (Small) -->
+      <a href="/collections/pc-components" class="bento-item" data-tooltip="⚙️ Tested Compatibility for AI Nodes">
+        <span class="bento-badge">Hot Deals</span>
+        <div>
+          <span class="bento-type">Performance Hardware</span>
+          <h2 class="bento-title">Elite PC Parts</h2>
+          <p class="bento-desc">Graphics cards, CPUs & RAM.</p>
+        </div>
+        <img src="{{ 'bento-gpu.png' | asset_url }}" class="bento-img" style="width: 45%;" alt="GPU">
+        <div class="bento-cta">Build Your Rig <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14m-7-7l7 7-7 7"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bento Grid 2.0",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Bento Grid 2.0"
+    }
+  ]
+}
+{% endschema %}
+

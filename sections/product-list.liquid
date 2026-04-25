@@ -1,0 +1,216 @@
+<div class="ic-py-14 product-list-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container">
+        {% if section.settings.title != blank %}
+            <div class="ic-text-center ic-mb-10">
+                <h2 class="ic-break-words">{{ section.settings.title }}</h2>
+            </div>
+        {% endif %}
+        <div class="ic-grid ic-grid-template-cols-{{ section.settings.mobile-columns }} ic-grid-template-cols-md-{{ section.settings.tablet-columns }} ic-grid-template-cols-xl-{{ section.settings.desktop-columns }} ic-grid-gap-y-32 ic-grid-gap-x-4 ic-grid-gap-x-md-32 color-{{ section.settings.products_color_scheme }}">
+            {% liquid
+                assign sizes = ''
+                if section.settings.mobile-columns == '1'
+                assign sizes = sizes | append: '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 570px, '
+                elsif section.settings.mobile-columns == '2'
+                assign sizes = sizes | append: '(max-width: 639px) calc((100vw - 40px) / 2), (max-width: 767px) 265px, '
+                endif
+
+                if section.settings.tablet-columns == '3'
+                assign sizes = sizes | append: '(max-width: 899px) 195px, (max-width: 1023px) 240px, (max-width: 1279px) 280px, '
+                elsif section.settings.tablet-columns == '4'
+                assign sizes = sizes | append: '(max-width: 899px) 130px, (max-width: 1023px) 165px, (max-width: 1279px) 195px, '
+                endif
+
+                if section.settings.desktop-columns == '4'
+                assign sizes = sizes | append: '(max-width: 1535px) 260px, 325px'
+                elsif section.settings.desktop-columns == '5'
+                assign sizes = sizes | append: '(max-width: 1535px) 195px, 250px'
+                elsif section.settings.desktop-columns == '6'
+                assign sizes = sizes | append: '(max-width: 1535px) 155px, 195px'
+                endif
+
+                assign srcset = '200, 270, 330, 400, 500, 600'
+            %}
+           {% for block in section.blocks %}
+            {% case block.type %}
+                {% when 'product' %}
+                    {% liquid
+                        if block.settings.product != blank
+                        assign placeholder = false
+                        else
+                        assign placeholder = true
+                        endif
+                    %}
+                    <div class="grid-item" {{ block.shopify_attributes }}>
+                        {% render 'product-card', 
+                            product: block.settings.product, 
+                            collection: collection, 
+                            sale_badge: section.settings.sale-badge, 
+                            vendor: section.settings.vendor, 
+                            offer_badge: section.settings.offer-badge,
+                            show_placeholder: placeholder,
+                            sizes: sizes, 
+                            srcset: srcset,
+                            default_image: section.settings.default_image,
+                            quick_view: section.settings.quick_view
+                         %}
+                    </div>
+                {% else %}
+                    
+            {% endcase %}
+           {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name":"t:sections.product_list.name",
+        "class": "section",
+        "tag": "section",
+        "settings":[
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type":"text",
+                "id":"title",
+                "default":"Product list",
+                "label":"t:sections.product_list.settings.title.label"
+            },
+            {
+                "type": "header",
+                "content": "t:snippets.product_card.content"
+            },
+            {
+                "type": "color_scheme",
+                "id": "products_color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type": "checkbox",
+                "id": "sale-badge",
+                "default": true,
+                "label": "t:snippets.product_card.sale_badge.label"
+            },
+            {
+                "type": "checkbox",
+                "id": "vendor",
+                "default": true,
+                "label": "t:snippets.product_card.vendor.label"
+            },
+            {
+                "type": "checkbox",
+                "id": "offer-badge",
+                "default": true,
+                "label": "t:snippets.product_card.offer_badge.label"
+            },
+            {
+                "type": "checkbox",
+                "id": "quick_view",
+                "default": false,
+                "label": "t:snippets.product_card.quick_view.label"
+            },
+            {
+                "type": "image_picker",
+                "id": "default_image",
+                "label": "t:snippets.product_card.default_image.label"
+            },
+            {
+                "type": "header",
+                "content": "t:sections.product_list.settings.layout.content"
+            },
+            {
+                "type": "select",
+                "id": "desktop-columns",
+                "options": [
+                    {
+                        "value": "4",
+                        "label": "4"
+                    },
+                    {
+                        "value": "5",
+                        "label": "5"
+                    },
+                    {
+                        "value": "6",
+                        "label": "6"
+                    }
+                ],
+                "default": "4",
+                "label": "t:sections.product_list.settings.desktop_columns.label"
+            },
+            {
+                "type": "select",
+                "id": "tablet-columns",
+                "options": [
+                    {
+                        "value": "3",
+                        "label": "3"
+                    },
+                    {
+                        "value": "4",
+                        "label": "4"
+                    }
+                ],
+                "default": "4",
+                "label": "t:sections.product_list.settings.tablet_columns.label"
+            },
+            {
+                "type": "select",
+                "id": "mobile-columns",
+                "options": [
+                    {
+                        "value": "1",
+                        "label": "1"
+                    },
+                    {
+                        "value": "2",
+                        "label": "2"
+                    }
+                ],
+                "default": "2",
+                "label": "t:sections.product_list.settings.mobile_columns.label"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "product",
+                "name": "t:sections.product_list.blocks.product.name",
+                "limit": 6,
+                "settings": [
+                    {
+                        "type": "product",
+                        "id": "product",
+                        "label": "t:sections.product_list.blocks.product.settings.product.label"
+                    }
+                ]
+            }
+        ],
+        "presets":[
+            {
+                "name":"t:sections.product_list.name",
+                "blocks": [
+                    {
+                        "type": "product"
+                    },
+                    {
+                        "type": "product"
+                    },
+                    {
+                        "type": "product"
+                    },
+                    {
+                        "type": "product"
+                    }
+                ]
+            }
+        ],
+        "disabled_on": {
+            "groups": ["*"]
+        }
+    }
+{% endschema %}

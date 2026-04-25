@@ -1,0 +1,225 @@
+<div class="customer-order-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container ic-py-13 order-page">
+        <div class="ic-flex ic-justify-content-space-between ic-align-items-start ic-mb-8 ic-flex-gap-8 order-header">
+            <div class="ic-flex-col-12 ic-flex-col-md-6 order-title">
+                <h1 class="ic-h2 font-bold text-gray-700">{{ "sections.template_customer_order.order" | t }} {{ order.name }}</h1>
+                <p class="ic-my-2">
+                    {{ "sections.template_customer_order.placed_on" | t }} 
+                    <span class="ic-font-semibold">{{ order.created_at | date: format: 'date' }}</span>
+                </p>
+                <span class="ic-text-sm final-status-label ic-mt-2 ic-px-4 ic-py-1">{{ order.financial_status_label }}</span>
+            </div>
+
+            <a href="{{ routes.account_url | default: '#' }}" class="ic-base-link">
+                <span class="icon icon-left ic-mr-2">{% render 'icon-left' %}</span>
+                {{ "sections.template_customer_order.back_to_account" | t }}
+            </a>
+        </div>
+        <div class="order-summary ic-overflow-hidden">
+            <div class="deliver-address">
+                <h2 class="ic-h4 ic-font-medium ic-mb-2">{{ "sections.template_customer_order.delivery_address" | t }}</h2>
+                <div>
+                    {{ order.shipping_address | format_address }}
+                </div>
+            </div>
+            <div class="billing-address">
+                <h2 class="ic-h4 ic-font-medium ic-mb-2">{{ "sections.template_customer_order.billing_address" | t }}</h2>
+                {{ order.billing_address | format_address }}
+            </div>
+            <div class="payment-status">
+                <h2 class="ic-h4 ic-font-medium">{{ "sections.template_customer_order.payment_information" | t }}</h2>
+                {% for transaction in order.transactions %}
+                    <div class="ic-mt-2">
+                        {% assign credit_card_company = transaction.payment_details.credit_card_company %}
+                        {% assign credit_card_last_four_digits = transaction.payment_details.credit_card_number %}
+                        {% if credit_card_company %}
+                            <p>{{ credit_card_company }}</p>
+                            <p class="ic-mb-4">{{ credit_card_last_four_digits }}</p>
+                            {% case transaction.status_label %}
+                                {% when 'Failure' %}
+                                    {% assign background = 'red' %}
+                                {% else %}
+                                {% assign background = 'green' %}
+                            {% endcase %}
+                            {% comment %} 
+                                Tailwind classes
+                                bg-red-700
+                                bg-green-700 
+                            {% endcomment %}
+                            <span class="ic-text-sm ic-px-4 ic-py-1 ic-color-white transanction-status status-label-{{ background }}">{{ transaction.status_label }}</span>
+                        {% else %}
+                            <p>{{ 'sections.template_customer_order.order_placed_text' | t: shop_name: shop.name }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="ic-grid ic-grid-template-cols-2 total-container">
+                {% liquid 
+                    assign total_price = 0
+                    for line_item in order.line_items
+                    assign line_price = line_item.original_price | times: line_item.quantity
+                    assign total_price = total_price | plus: line_price
+                    endfor
+                %}
+                <p>{{ "sections.template_customer_order.subtotal" | t }}</p>
+                <p>{{ total_price | money }}</p>
+                {% if order.total_discounts != 0 %}
+                    <p>{{ "sections.template_customer_order.discount" | t }}</p>
+                    <p class="ic--ml-2p5">- {{ order.total_discounts | money }}</p>
+                {% endif %}
+                {% liquid
+                    if order.shipping_price == 0
+                    assign shipping_price = "sections.template_customer_order.free" | t
+                    else
+                    assign shipping_price = order.shipping_price | money
+                    endif
+                %}
+                <p>{{ "sections.template_customer_order.shipping" | t }}</p>
+                <p>{{ shipping_price }}</p>
+                {% if order.tax_lines.size > 0 %}
+                    <p class="ic-font-medium ic-grid-col-2 ic-mt-2">{{ "sections.template_customer_order.tax_details" | t }}</p>
+                    {% for tax_line in order.tax_lines %}
+                        <p>{{ tax_line.title }} ({{ tax_line.rate_percentage }}%)</p>
+                        <p>{{ tax_line.price | money }}</p>
+                    {% endfor %}
+                {% endif %}
+                <p class="ic-font-semibold ic-mt-2">{{ "sections.template_customer_order.total" | t }}</p>
+                <p class="ic-font-semibold ic-mt-2">{{ order.total_price | money }}</p>
+            </div>
+        </div>
+
+        <div class="order-line-wrapper color-{{ section.settings.card_color_scheme }}">
+            {% for line_item in order.line_items %}
+                <div class="order-line-card">
+                    <div class="order-product ic-flex ic-flex-gap-6">
+                        <div class="order-image">
+                            {% if line_item.image %}
+                                {% assign alt = line_item.image.alt | escape | default: line_item.product.title %}
+                                {{ line_item.image 
+                                    | image_url: width: 140
+                                    | image_tag:
+                                    loading: 'lazy',
+                                    widths: '70, 140', 
+                                    sizes: '(max-width: 767px) 70px, 140px',
+                                    alt: alt,
+                                    class: "ic-w-100 ic-h-100 ic-object-center ic-object-contain"
+                                }}
+                            {% else %}
+                                {{ 'product-5' | placeholder_svg_tag: 'ic-w-100 ic-h-100 ic-object-center ic-object-contain' }}
+                            {% endif %}
+                        </div>
+                        <div class="product-detail">
+                            <p class="ic-mb-2">{{ line_item.product.vendor }}</p>
+                            <h3 class="ic-h4 ic-font-medium ic-mb-3">{{ line_item.product.title | link_to: line_item.url }}</h3>
+                            {%- if line_item.product.has_only_default_variant == false -%}
+                                <div class="product-variant">
+                                    {%- for option in line_item.options_with_values -%}
+                                        <span class="ic-mb-2 ic-mr-3 ic-inline-block">{{ option.name }}: {{ option.value }}</span>
+                                    {%- endfor -%}
+                                </div>
+                            {%- endif -%}
+                            {%- if line_item.selling_plan_allocation != nil -%}
+                                <p class="ic-mb-3">{{ line_item.selling_plan_allocation.selling_plan.name }}</p>
+                            {% endif %}
+                            {% if line_item.original_price != line_item.final_price %}
+                                <div class="ic-flex ic-flex-gap-4 ic-mb-3">
+                                    {% for discount_allocation in line_item.line_level_discount_allocations %}
+                                        <span class="ic-text-xs discount-badge ic-py-1 ic-px-2">{{ discount_allocation.discount_application.title }}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="price-wrap ic-mt-auto">
+                                    <p class="ic-font-semibold ic-text-lg price-text">{{ line_item.final_price | money }}</p>
+                                    <p class="ic-font-semibold ic-text-line-through compare-price">{{ line_item.variant.price | money }}</p>
+                                </div>
+                                {% else %}
+                                <div class="price-wrap ic-mt-auto">
+                                    <p class="ic-font-semibold  ic-text-lg price-text">{{ line_item.variant.price | money }}</p>
+                                    {% if line_item.variant.compare_at_price > line_item.variant.price %}
+                                        <p class="ic-font-semibold ic-text-line-through compare-price">{{ line_item.variant.compare_at_price | money }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            
+                            {% if line_item.unit_price_measurement != nil %}
+                                <small class="unit-price ic-mb-2">
+                                    <span>
+                                        <span>{{- line_item.unit_price | money -}}</span>
+                                        <span aria-hidden="true">/</span>
+                                        <span>
+                                            {%- if line_item.unit_price_measurement.reference_value != 1 -%}
+                                            {{- line_item.unit_price_measurement.reference_value -}}
+                                            {%- endif -%}
+                                            {{ line_item.unit_price_measurement.reference_unit }}
+                                        </span>
+                                    </span>
+                                </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="order-detail">
+                        <div class="fullfillment ic-mb-lg-3">
+                            {% if line_item.successfully_fulfilled_quantity > 0 %}
+                                <p>{{ 'sections.template_customer_order.fulfillment_message' | t: count: line_item.successfully_fulfilled_quantity }}</p>
+                                {% if line_item.fulfillment.tracking_company %}
+                                <p class="ic-mt-2">{{ 'sections.template_customer_order.tracking_number' | t: count: line_item.fulfillment.tracking_company }}</p>
+                                {% endif %}
+                                {% if line_item.fulfillment.tracking_number %}
+                                    <p class="ic-mt-2">{{ 'sections.template_customer_order.tracking_number' | t: count: line_item.fulfillment.tracking_number }}</p>
+                                {% endif %}
+                                {% if line_item.fulfillment.tracking_url %}
+                                    <a href="{{ line_item.fulfillment.tracking_url | default: '#' }}" target="_blank" class="ic-font-medium ic-mt-2 ic-inline-block ic-base-link" aria-label="{{ "sections.template_customer_order.track_order" | t }}. {{ 'general.open_new_window' | t }}">{{ "sections.template_customer_order.track_order" | t }}
+                                    <span class="icon ic-ml-2">{% render 'icon-external-link' %}</span></a>
+                                {% endif %}
+                            {% else %}
+                                <p>{{ 'sections.template_customer_order.not_fulfilled' | t }}</p>
+                            {% endif %}
+                        </div>
+
+                        <p class="ic-text-center ic-mt-auto ic-mb-lg-2">{{ "sections.template_customer_order.quantity" | t }} {{ line_item.quantity }}</p>
+                        {% if line_item.original_price != line_item.final_price %}
+                        <div class="price-wrap">
+                            <p class="ic-font-semibold ic-text-lg price-text">{{ line_item.final_line_price | money }}</p>
+                            <p class="ic-font-semibold ic-text-line-through compare-price">{{ line_item.original_price | times: line_item.quantity | money }}</p>
+                        </div>
+                        {% else %}
+                        <div class="price-wrap">
+                            {% assign compare_price_value = line_item.variant.compare_at_price | times: line_item.quantity %}
+                            <p class="ic-font-semibold ic-text-lg price-text">{{ line_item.final_line_price | money }}</p>
+                            {% if compare_price_value > line_item.final_line_price %}
+                            <p class="ic-font-semibold ic-text-line-through compare-price">{{ line_item.variant.compare_at_price | times: line_item.quantity | money }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "t:sections.template_customer_order.name",
+    "settings": [
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:settings_schema.general.settings.color_scheme.label",
+            "default": "scheme_1"
+        },
+        {
+            "type": "header",
+            "content": "t:sections.template_customer_order.settings.cards.content"
+        },
+        {
+            "type": "color_scheme",
+            "id": "card_color_scheme",
+            "label": "t:settings_schema.general.settings.color_scheme.label",
+            "default": "scheme_1"
+        }
+    ]
+}
+{% endschema %}

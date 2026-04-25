@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "network_design_security": {
+      "type": "network-design-security",
+      "settings": {
+        "phone_number": "0466 911 816",
+        "email_address": "info@evotech.au",
+        "cta_primary_link": "/pages/contact",
+        "show_announce": true
+      }
+    }
+  },
+  "order": [
+    "network_design_security"
+  ]
+}

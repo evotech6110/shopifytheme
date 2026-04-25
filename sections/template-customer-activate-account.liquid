@@ -1,0 +1,57 @@
+<div class="activate-account-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container">
+        <div class="ic-py-13 ic-flex ic-align-items-center ic-justify-content-center">
+            <div class="ic-flex-col-12 ic-flex-col-md-8 ic-flex-col-lg-6 ic-flex-col-2xl-4">
+                <h1 class="ic-text-center ic-mb-4">{{ "sections.template_customer_active_account.activate_account" | t }}</h1>
+                <p class="ic-text-center ic-mb-10">{{ "sections.template_customer_active_account.create_your_password_to_activate_your_account" | t }}</p>
+                <div>
+                    {% form 'activate_customer_password', class: 'space-y-4', id: 'activate_account_form' %}
+                        {% render 'form-error', form: form, error_id: 'password__confirmation' %}
+                        <div class="ic-my-4">
+                            <label for="password" class="ic-screen-reader" aria-label="{{ 'sections.template_customer_active_account.password' | t }}">{{ "sections.template_customer_active_account.password" | t }}</label>
+                            <input 
+                                type="password" 
+                                name="customer[password]" 
+                                id="password"
+                                placeholder="{{ 'sections.template_customer_active_account.placeholder.new_password' | t }}"
+                                class="ic-block ic-w-100"
+                                autocomplete="new-password"
+                            >
+                        </div>
+                        <div class="ic-mb-4">
+                            <label for="confirm_password"  class="ic-screen-reader" aria-label="{{ 'sections.template_customer_active_account.confirm_password' | t }}">{{ "sections.template_customer_active_account.confirm_password" | t }}</label>
+                            <input 
+                                type="password" 
+                                name="customer[password_confirmation]" 
+                                id="confirm_password"
+                                placeholder="{{ 'sections.template_customer_active_account.placeholder.confirm_password' | t }}"
+                                aria-describedby="password__confirmation"
+                                class="ic-block ic-w-100"
+                                autocomplete="new-password"
+                            >
+                        </div>
+        
+                        <div class="ic-block ic-md-flex ic-flex-gap-8">
+                            <button type="submit" class="ic-w-100 ic-flex-1 ic-btn ic-btn-primary ic-justify-content-center ic-mb-4 ic-mb-md-0">{{ "sections.template_customer_active_account.activate_account" | t }}</button>
+                            <button type="submit" name="decline" class="ic-w-100 ic-flex-1 ic-btn ic-btn-secondary ic-justify-content-center">{{ "sections.template_customer_active_account.decline_invitation" | t }}</button>
+                        </div>
+                    {% endform %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "t:sections.template_customer_activate.name",
+    "settings": [
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:settings_schema.general.settings.color_scheme.label",
+            "default": "scheme_1"
+        }
+    ]
+}
+{% endschema %}

@@ -80,6 +80,13 @@
       "post_comment": "Post comment"
     }
   },
+  "gift_cards": {
+    "issued": {
+      "title": "Here's your gift card!",
+      "redeem": "Redeem",
+      "copy_code": "Copy code"
+    }
+  },
   "sections": {
     "collection": {
       "empty": "No products found",
@@ -111,14 +118,8 @@
       "price_range": "Price range",
       "from": "From",
       "to": "To",
-      "filters": "Filters"
-    }
-  },
-  "gift_cards": {
-    "issued": {
-      "title": "Here's your gift card!",
-      "redeem": "Redeem",
-      "copy_code": "Copy code"
+      "filters": "Filters",
+      "reset": "Reset"
     }
   }
 }

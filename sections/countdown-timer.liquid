@@ -1,0 +1,566 @@
+<div class="ic-py-14 deal-counter-wrapper color-{{ section.settings.background_color_scheme }} gradient-enabled">
+  <div class="ic-container color-{{ section.settings.content_color_scheme }}">
+    <div class="counter-deal-section">
+      <div class="deal-main-col">
+        {% if section.settings.deal-product != null and section.settings.deal-product.featured_media %}
+          <div class="deal-product-image">
+            {% assign alt = section.settings.deal-product.featured_media.alt | default: section.settings.deal-product.title %}
+            {{ section.settings.deal-product.featured_media 
+              | image_url: width: 330
+              | image_tag:
+              loading: 'lazy',
+              widths: '100, 160, 240, 300, 330', 
+              sizes: '(max-width: 639px) calc(100vw - 40%), (max-width: 767px) 330px, (max-width: 899px) 190px, (max-width: 1023px) 230px, (max-width: 1279px) 170px, (max-width: 1535px) 220px, 270px',
+              alt: alt
+            }}
+            {% if section.settings.product_badge != blank %}
+              <span class="deal-new-product">{{ section.settings.product_badge }}</span>
+            {% endif %}
+          </div>
+        {% elsif section.settings.deal-product == null  %}
+          <div class="deal-product-image">
+            {{ 'product-5' | placeholder_svg_tag }}
+            {% if section.settings.product_badge != blank %}
+              <span class="deal-new-product">{{ section.settings.product_badge }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="deal-offer-details">
+          {% if section.settings['counter-badge'] != blank %}
+            <div class="deal-badge">
+              <p>{{ section.settings['counter-badge'] }}</p>
+            </div>
+          {% endif %}
+          <div class="counter-container {{ section.settings.counter_style }}">
+            {% if section.settings['counter-text'] != blank %}
+              <p>{{ section.settings['counter-text'] }}</p>
+            {% endif %}
+            <div class="counter">
+              <div class="container count-down-section">
+                <div
+                  id="{{ section.id }}"
+                  class="count-down-data"
+                  data-month="{{ section.settings.month }}"
+                  data-date="{{ section.settings.day }}"
+                  data-year="{{ section.settings.year }}"
+                >
+                  <ul>
+                    {% liquid
+                      assign current_year = 'now' | date: '%Y' | times: 1
+                      assign current_month = 'now' | date: '%m' | times: 1
+                      assign current_day = 'now' | date: '%d' | times: 1
+                      assign future_year = section.settings.year | times: 1
+                      assign future_month = section.settings.month | times: 1
+                      assign future_day = section.settings.day | times: 1
+                      if future_year >= current_year and future_month >= current_month and future_day > current_day
+                        assign current_date = 'now' | date: '%s'
+                        assign future_date = section.settings.year | append: '-' | append: section.settings.month | append: '-' | append: section.settings.day
+
+                        assign future_timestamp = future_date | date: '%s'
+                        assign total_seconds = future_timestamp | minus: current_date
+                        assign diff_days = total_seconds | divided_by: 86400
+                        assign diff_hours = total_seconds | modulo: 86400 | divided_by: 3600
+                        assign diff_minutes = total_seconds | modulo: 3600 | divided_by: 60
+                        assign diff_seconds = total_seconds | modulo: 60
+                      else
+                        assign diff_days = '00'
+                        assign diff_hours = '00'
+                        assign diff_minutes = '00'
+                        assign diff_seconds = '00'
+                      endif
+                    %}
+                    <li>
+                      <span data-type="days">{{ diff_days }}</span>{{ 'sections.countdown_timer.days' | t }}
+                    </li>
+                    <li>
+                      <span data-type="hours">{{ diff_hours }}</span>{{ 'sections.countdown_timer.hours' | t }}
+                    </li>
+                    <li>
+                      <span data-type="mins">{{ diff_minutes }}</span>{{ 'sections.countdown_timer.minutes' | t }}
+                    </li>
+                    <li>
+                      <span data-type="secs">{{ diff_seconds }}</span>{{ 'sections.countdown_timer.seconds' | t }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if section.settings['deal-text'] != blank %}
+            <div class="sale-details">
+              <h4>{{ section.settings['deal-text'] | newline_to_br }}</h4>
+            </div>
+          {% endif %}
+        </div>
+        <div class="deal-product-details">
+          <div class="deal-product ic-mb-6">
+            <div class="deal-product-title">
+              {{ section.settings['deal-product'].title | default: 'Product title' }}
+            </div>
+            {% if section.settings['deal-product'] != blank %}
+              {% if section.settings['deal-product'].description != '<p></p>' %}
+                <div class="deal-product-desc richtext-container">
+                  {{ section.settings['deal-product'].description }}
+                </div>
+              {% endif %}
+            {% else %}
+              <div class="deal-product-desc richtext-container">{{ 'sections.countdown_timer.product_description' | t }}</div>
+            {% endif %}
+
+            <div class="deal-product-price">
+              {% if section.settings['deal-product'].price_varies %}
+                <p class="ic-mb-2">{{ 'sections.countdown_timer.starting_from' | t }}</p>
+              {% endif %}
+              <span class="deal-product-price price-text">
+                {{ section.settings['deal-product'].price | default: 99900 | money }}
+              </span>
+            </div>
+          </div>
+          {% if section.settings.product_button != blank %}
+            <div class="deal-product-link">
+              <a
+                href="{{ section.settings['deal-product'].url | default: '#' }}"
+                rel="noopener noreferrer"
+                class="ic-btn ic-btn-primary"
+              >
+                {{- section.settings.product_button -}}
+                <span class="icon">{% render 'icon-right' %}</span></a
+              >
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      {% for block in section.blocks %}
+        <div class="deal-col--{{ forloop.index }} {{ block.settings.deal-small-card-image-style }} {% if block.settings.deal-small-card-image-gradient %}image-gradient{% endif %}">
+          {% if block.settings['deal-small-card'] != null %}
+            {% liquid
+              if block.settings['deal-small-card'].alt != null
+                assign alt = block.settings['deal-small-card'].alt
+              else
+                assign alt = block.settings['deal-small-card'].src | split: '/' | last | split: '.' | first
+              endif
+
+              if forloop.length > 1
+                if block.settings.deal-small-card-image-style == 'image-fit'
+                assign sizes = '(max-width: 568px) calc(100vw - 40px), (max-width: 639px) calc((100vw - 40px) / 2), (max-width: 767px) 300px, (max-width: 899px) 365px, (max-width: 1023px) 430px, (max-width: 1279px) 330px, (max-width: 1535px) 415px, 500px'
+                assign srcset = '200, 350, 450, 540'
+                assign media_width = 540
+                else
+                assign sizes = '(max-width: 568px) calc(100vw - 40px), (max-width: 639px) calc((100vw - 40px) / 1.5), (max-width: 767px) 450px, (max-width: 899px) 580px, (max-width: 1023px) 645px, (max-width: 1279px) 495px, (max-width: 1535px) 630px, 750px'
+                assign srcset = '200, 350, 420, 500, 550, 600, 650, 760'
+                assign media_width = 760
+                endif
+              else
+                if block.settings.deal-small-card-image-style == 'image-fit'
+                assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 605px, (max-width: 899px) 730px, (max-width: 1023px) 860px, (max-width: 1279px) 330px, (max-width: 1535px) 415px, 500px'
+                assign srcset = '200, 350, 450, 540, 620, 750, 900'
+                assign media_width = 900
+                else
+                assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 605px, (max-width: 899px) 730px, (max-width: 1023px) 860px, (max-width: 1279px) 660px, (max-width: 1535px) 830px, 1000px'
+                assign srcset = '200, 350, 420, 500, 550, 600, 670, 750, 850, 900, 1000'
+                assign media_width = 1000
+                endif
+                
+              endif
+            %}
+            {{
+              block.settings['deal-small-card']
+              | image_url: width: media_width
+              | image_tag:
+                loading: 'lazy',
+                widths: srcset,
+                sizes: sizes,
+                alt: alt
+            }}
+          {% else %}
+            {{ 'image' | placeholder_svg_tag }}
+          {% endif %}
+          {% if block.settings['deal-small-card-text'] != blank %}
+            <div class="card-text-container">
+              {% if block.settings['deal-small-card-link'] != null %}
+                <a href="{{ block.settings.deal-small-card-link }}" class="card-link link-heading">
+                  <h3 class="card-text {{ block.settings.deal-small-card-text-align }}">
+                    {{ block.settings['deal-small-card-text'] }}
+                  </h3>
+                </a>
+              {% else %}
+                <h3 class="card-text {{ block.settings.deal-small-card-text-align }}">
+                  {{ block.settings['deal-small-card-text'] }}
+                </h3>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.countdown_timer.name",
+  "tag": "section",
+  "class": "sections",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "background_color_scheme",
+      "label": "t:sections.countdown_timer.settings.color_scheme.background",
+      "default": "scheme_1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "content_color_scheme",
+      "label": "t:sections.countdown_timer.settings.color_scheme.content",
+      "default": "scheme_4"
+    },
+    {
+      "type": "product",
+      "id": "deal-product",
+      "label": "t:sections.countdown_timer.settings.product.label",
+      "info": "t:sections.countdown_timer.settings.product.info"
+    },
+    {
+      "type": "text",
+      "id": "product_badge",
+      "default": "New",
+      "label": "t:sections.countdown_timer.settings.product.badge.label"
+    },
+    {
+      "type": "text",
+      "id": "product_button",
+      "default": "View product",
+      "label": "t:sections.countdown_timer.settings.product.button.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.countdown_timer.settings.timer.content"
+    },
+    {
+      "type": "select",
+      "id": "counter_style",
+      "label": "t:sections.countdown_timer.settings.counter_style.label",
+      "options": [
+        {
+          "value": "counter_box",
+          "label": "t:sections.countdown_timer.settings.counter_style.option_1"
+        },
+        {
+          "value": "counter_divider",
+          "label": "t:sections.countdown_timer.settings.counter_style.option_2"
+        }
+      ],
+      "default": "counter_box"
+    },
+    {
+      "type": "text",
+      "id": "counter-badge",
+      "default": "Deal of the day",
+      "label": "t:sections.countdown_timer.settings.timer.badge.label"
+    },
+    {
+      "type": "text",
+      "id": "counter-text",
+      "default": "Hurry! Ends in",
+      "label": "t:sections.countdown_timer.settings.timer.text.label"
+    },
+    {
+      "type": "select",
+      "id": "day",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "7",
+          "label": "7"
+        },
+        {
+          "value": "8",
+          "label": "8"
+        },
+        {
+          "value": "9",
+          "label": "9"
+        },
+        {
+          "value": "10",
+          "label": "10"
+        },
+        {
+          "value": "11",
+          "label": "11"
+        },
+        {
+          "value": "12",
+          "label": "12"
+        },
+        {
+          "value": "13",
+          "label": "13"
+        },
+        {
+          "value": "14",
+          "label": "14"
+        },
+        {
+          "value": "15",
+          "label": "15"
+        },
+        {
+          "value": "16",
+          "label": "16"
+        },
+        {
+          "value": "17",
+          "label": "17"
+        },
+        {
+          "value": "18",
+          "label": "18"
+        },
+        {
+          "value": "19",
+          "label": "19"
+        },
+        {
+          "value": "20",
+          "label": "20"
+        },
+        {
+          "value": "21",
+          "label": "21"
+        },
+        {
+          "value": "22",
+          "label": "22"
+        },
+        {
+          "value": "23",
+          "label": "23"
+        },
+        {
+          "value": "24",
+          "label": "24"
+        },
+        {
+          "value": "25",
+          "label": "25"
+        },
+        {
+          "value": "26",
+          "label": "26"
+        },
+        {
+          "value": "27",
+          "label": "27"
+        },
+        {
+          "value": "28",
+          "label": "28"
+        },
+        {
+          "value": "29",
+          "label": "29"
+        },
+        {
+          "value": "30",
+          "label": "30"
+        },
+        {
+          "value": "31",
+          "label": "31"
+        }
+      ],
+      "default": "1",
+      "label": "t:sections.countdown_timer.settings.timer.day.label"
+    },
+    {
+      "type": "select",
+      "id": "month",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.january"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.february"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.march"
+        },
+        {
+          "value": "4",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.april"
+        },
+        {
+          "value": "5",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.may"
+        },
+        {
+          "value": "6",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.june"
+        },
+        {
+          "value": "7",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.july"
+        },
+        {
+          "value": "8",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.august"
+        },
+        {
+          "value": "9",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.september"
+        },
+        {
+          "value": "10",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.october"
+        },
+        {
+          "value": "11",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.november"
+        },
+        {
+          "value": "12",
+          "label": "t:sections.countdown_timer.settings.timer.month.options.december"
+        }
+      ],
+      "default": "1",
+      "label": "t:sections.countdown_timer.settings.timer.month.label"
+    },
+    {
+      "type": "select",
+      "id": "year",
+      "options": [
+        {
+          "value": "2024",
+          "label": "2024"
+        },
+        {
+          "value": "2025",
+          "label": "2025"
+        },
+        {
+          "value": "2026",
+          "label": "2026"
+        },
+        {
+          "value": "2027",
+          "label": "2027"
+        }
+      ],
+      "label": "t:sections.countdown_timer.settings.timer.year.label"
+    },
+    {
+      "type": "textarea",
+      "id": "deal-text",
+      "default": "Sale\noffer title",
+      "label": "t:sections.countdown_timer.settings.timer.deal_text.label",
+      "info": "t:sections.countdown_timer.settings.timer.deal_text.info"
+    }
+  ],
+  "max_blocks": 2,
+  "blocks": [
+    {
+      "type": "small_card",
+      "name": "t:sections.countdown_timer.settings.small_card.content",
+      "settings": [
+        {
+          "type": "select",
+          "id": "deal-small-card-image-style",
+          "options": [
+            {
+              "value": "image-fill",
+              "label": "t:sections.countdown_timer.settings.small_card.image_style.option_1.label"
+            },
+            {
+              "value": "image-fit",
+              "label": "t:sections.countdown_timer.settings.small_card.image_style.option_2.label"
+            }
+          ],
+          "default": "image-fill",
+          "label": "t:sections.countdown_timer.settings.small_card.image_style.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "deal-small-card-image-gradient",
+          "default": true,
+          "label": "t:sections.countdown_timer.settings.small_card.image_gradient.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "deal-small-card",
+          "label": "t:sections.countdown_timer.settings.small_card.image"
+        },
+        {
+          "type": "text",
+          "id": "deal-small-card-text",
+          "default": "Link title",
+          "label": "t:sections.countdown_timer.settings.small_card.text"
+        },
+        {
+          "type": "url",
+          "id": "deal-small-card-link",
+          "label": "t:sections.countdown_timer.settings.small_card.link"
+        },
+        {
+          "type": "select",
+          "id": "deal-small-card-text-align",
+          "options": [
+            {
+              "value": "ic-text-left",
+              "label": "t:sections.countdown_timer.settings.small_card.text-align.option_1.label"
+            },
+            {
+              "value": "ic-text-center",
+              "label": "t:sections.countdown_timer.settings.small_card.text-align.option_2.label"
+            }
+          ],
+          "default": "ic-text-left",
+          "label": "t:sections.countdown_timer.settings.small_card.text-align.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.countdown_timer.name",
+      "blocks": [
+        {
+          "type": "small_card"
+        },
+        {
+          "type": "small_card"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["*"]
+  }
+}
+{% endschema %}

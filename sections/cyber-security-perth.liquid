@@ -1,0 +1,1177 @@
+{% comment %}
+  ============================================================
+  CYBER SECURITY SOLUTIONS PERTH — Full-Page SEO Section
+  For: evotech.au/pages/cyber-security-perth
+  SEO Title: Cyber Security Perth | Managed Security Services (MSSP) | Evotech
+  Target Keywords: cyber security Perth, small business cyber security
+  Brand Colors: #0e2240 (navy), #cff394 (lime), #e63946 (threat red)
+  ============================================================
+{% endcomment %}
+
+{% comment %} ── SCHEMA.ORG STRUCTURED DATA ─────────────────── {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "EvoTech Digital",
+  "description": "Perth cyber security services for small businesses. MDR, endpoint detection, Essential Eight compliance, dark web monitoring and employee security training across Western Australia.",
+  "url": "{{ shop.url }}",
+  "telephone": "+61466911816",
+  "email": "info@evotech.au",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Perth",
+    "addressRegion": "WA",
+    "addressCountry": "AU"
+  },
+  "areaServed": "Perth, Western Australia",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Cyber Security Services Perth",
+    "itemListElement": [
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Managed Detection and Response (MDR) Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Essential Eight Compliance Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Cyber Security Awareness Training Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Dark Web Monitoring Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Endpoint Detection and Response Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Cyber Security Audit Perth"}}
+    ]
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What is cyber security for small business in Perth?","acceptedAnswer":{"@type":"Answer","text":"Small business cyber security in Perth means implementing the right combination of tools, processes and training to protect your business from ransomware, phishing, data breaches and business email compromise. EvoTech Digital provides affordable, layered cyber security solutions tailored for Perth SMBs."}},
+    {"@type":"Question","name":"What is MDR and do Perth small businesses need it?","acceptedAnswer":{"@type":"Answer","text":"Managed Detection and Response (MDR) is a 24/7 cyber security service where a team of analysts monitors your systems, detects threats in real time, and responds before damage occurs. Perth SMBs absolutely benefit from MDR because attackers often strike outside business hours and most small businesses lack the in-house expertise to detect advanced threats."}},
+    {"@type":"Question","name":"What is the Essential Eight and is it mandatory in Australia?","acceptedAnswer":{"@type":"Answer","text":"The Essential Eight is a set of eight cyber security controls developed by the Australian Signals Directorate (ASD). It is mandatory for Australian government entities and is strongly recommended for all Australian businesses. Only 22% of Australian organisations currently meet Maturity Level 2 — the baseline target — leaving most businesses exposed."}},
+    {"@type":"Question","name":"How much does a cyber security audit cost in Perth?","acceptedAnswer":{"@type":"Answer","text":"A cyber security audit in Perth can range from a free initial assessment to several thousand dollars for a comprehensive penetration test and compliance report. EvoTech Digital offers a free introductory security health check for Perth businesses. Contact us to book yours."}},
+    {"@type":"Question","name":"What cyber threats are Perth businesses facing in 2026?","acceptedAnswer":{"@type":"Answer","text":"In 2026, Perth businesses face AI-powered phishing, ransomware-as-a-service, business email compromise (BEC), supply chain attacks and identity-based threats. The average cost of a cyber incident for an Australian small business rose to $56,600 in 2024-25 (ASD Annual Cyber Threat Report). Proactive defences including MDR, MFA and employee training are essential."}}
+  ]
+}
+</script>
+
+<style>
+  /* ═══════════════════════════════════════════════════
+     EVOTECH CYBER SECURITY PAGE — DESIGN SYSTEM
+     Inherits brand from Managed IT page + adds:
+     --cyber-red: #e63946  (threat / alert accent)
+     --cyber-amber: #f4a261 (warning accent)
+  ═══════════════════════════════════════════════════ */
+
+  .evo-page { font-family: var(--body-font); color: #5e6979; background: #fff; }
+
+  /* ── Shared variables ─────────────────────── */
+  :root {
+    --cyber-red: #e63946;
+    --cyber-red-soft: rgba(230,57,70,0.10);
+    --cyber-amber: #f4a261;
+  }
+
+  /* ── ANNOUNCE BAR ─────────────────────────── */
+  .evo-announce {
+    background: #e63946;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .evo-announce a { color: #fff; text-decoration: underline; }
+  .evo-announce strong { color: #fff; }
+
+  /* ── HERO ─────────────────────────────────── */
+  .evo-hero {
+    background: #0a1628;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 0 70px;
+  }
+  /* Animated threat grid background */
+  .evo-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(230,57,70,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(230,57,70,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+  .evo-hero::after {
+    content: '';
+    position: absolute;
+    top: -80px; right: -120px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(207,243,148,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .evo-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .evo-hero__eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #e63946;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 18px;
+  }
+  .evo-hero__eyebrow::before {
+    content: ''; display: inline-block; width: 24px; height: 2px;
+    background: #e63946; flex-shrink: 0;
+  }
+  .evo-hero h1 {
+    font-family: var(--heading-font);
+    font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+    font-weight: 700; color: #fff; line-height: 1.13; margin-bottom: 20px;
+  }
+  .evo-hero h1 span { color: #cff394; }
+  .evo-hero h1 em { font-style: normal; color: #e63946; }
+  .evo-hero__lead { font-size: 1.05rem; color: #c5d3e8; line-height: 1.75; margin-bottom: 28px; }
+
+  /* Threat stat bar */
+  .evo-threat-bar {
+    background: rgba(230,57,70,0.1);
+    border: 1px solid rgba(230,57,70,0.25);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.87rem; color: #e8c8cb;
+  }
+  .evo-threat-bar strong { color: #ff6b76; }
+  .evo-threat-bar__icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  .evo-hero__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+  .evo-btn-red {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: #e63946; color: #fff;
+    padding: 14px 28px; border-radius: var(--button-border-radius, 6px);
+    font-weight: 700; font-size: 0.93rem; text-decoration: none;
+    transition: background 0.2s, transform 0.2s; border: none;
+  }
+  .evo-btn-red:hover { background: #c8303c; transform: translateY(-2px); text-decoration: none; color: #fff; }
+  .evo-btn-lime {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: #cff394; color: #0e2240;
+    padding: 14px 28px; border-radius: var(--button-border-radius, 6px);
+    font-weight: 700; font-size: 0.93rem; text-decoration: none;
+    transition: background 0.2s, transform 0.2s; border: none;
+  }
+  .evo-btn-lime:hover { background: #b8e87c; transform: translateY(-2px); text-decoration: none; color: #0e2240; }
+  .evo-btn-outline-white {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: transparent; color: #fff;
+    padding: 13px 28px; border-radius: var(--button-border-radius, 6px);
+    font-weight: 600; font-size: 0.93rem; text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.3); transition: border-color 0.2s, color 0.2s;
+  }
+  .evo-btn-outline-white:hover { border-color: #cff394; color: #cff394; text-decoration: none; }
+
+  .evo-hero__pills {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .evo-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(207,243,148,0.08);
+    border: 1px solid rgba(207,243,148,0.18);
+    border-radius: 50px; padding: 7px 14px;
+    font-size: 0.8rem; font-weight: 600; color: #d8f0b0;
+  }
+  .evo-pill::before { content: '✓'; color: #cff394; font-weight: 700; }
+
+  /* Hero — threat dashboard visual */
+  .evo-threat-vis {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(230,57,70,0.2);
+    border-radius: 14px; padding: 28px;
+  }
+  .evo-vis-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .evo-vis-title { font-size: 0.75rem; font-weight: 700; color: rgba(230,57,70,0.8); text-transform: uppercase; letter-spacing: 0.1em; }
+  .evo-vis-live {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.72rem; font-weight: 600; color: #6ee07a;
+  }
+  .evo-threat-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #e63946; box-shadow: 0 0 8px #e63946;
+    animation: cyberPulse 1.5s infinite;
+  }
+  .evo-threat-dot--ok { background: #6ee07a; box-shadow: 0 0 8px #6ee07a; }
+  @keyframes cyberPulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .evo-threat-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.86rem;
+  }
+  .evo-threat-row:last-child { border-bottom: none; }
+  .evo-threat-lbl { color: #8fa5bf; }
+  .evo-threat-val-ok    { color: #6ee07a; font-weight: 600; }
+  .evo-threat-val-warn  { color: #f4a261; font-weight: 600; }
+  .evo-threat-val-alert { color: #e63946; font-weight: 600; }
+  .evo-threat-val       { color: #e8f0fa; font-weight: 600; }
+  .evo-threat-stat {
+    margin-top: 20px; padding: 14px;
+    background: rgba(230,57,70,0.08);
+    border: 1px solid rgba(230,57,70,0.2); border-radius: 8px;
+    text-align: center;
+  }
+  .evo-threat-stat__num { font-family: var(--heading-font); font-size: 1.7rem; font-weight: 700; color: #ff6b76; line-height: 1; }
+  .evo-threat-stat__desc { font-size: 0.76rem; color: #8fa5bf; margin-top: 4px; line-height: 1.4; }
+
+  /* ── TRUST BAR ────────────────────────────── */
+  .evo-trust-bar {
+    background: #f8f9fd;
+    border-top: 1px solid #e2e4e8; border-bottom: 1px solid #e2e4e8;
+    padding: 22px 0;
+  }
+  .evo-trust-bar__inner { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .evo-trust-bar__label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #9aa3b0; white-space: nowrap; padding-right: 12px; border-right: 1px solid #e2e4e8; }
+  .evo-trust-logos { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .evo-trust-badge { background: #fff; border: 1px solid #e2e4e8; border-radius: 6px; padding: 7px 16px; font-size: 0.8rem; font-weight: 700; color: #0e2240; white-space: nowrap; }
+
+  /* ── SECTION HEADERS ──────────────────────── */
+  .evo-section-head { text-align: center; max-width: 700px; margin: 0 auto 56px; }
+  .evo-badge {
+    display: inline-block; padding: 4px 14px; border-radius: 50px;
+    border: 1.5px solid #0e2240; color: #0e2240;
+    font-size: 0.73rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .evo-badge--red  { border-color: #c8303c; background: var(--cyber-red-soft); color: #c8303c; }
+  .evo-badge--lime { border-color: #5c7d26; background: rgba(207,243,148,0.15); color: #3a5a10; }
+  .evo-badge--white { border-color: rgba(255,255,255,0.35); color: #fff; background: rgba(255,255,255,0.07); }
+  .evo-section-head h2 { font-family: var(--heading-font); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; color: #0e2240; line-height: 1.2; }
+  .evo-section-head--light h2 { color: #fff; }
+  .evo-section-head p { margin-top: 14px; font-size: 1rem; line-height: 1.7; color: #5e6979; }
+  .evo-section-head--light p { color: #b8cce0; }
+
+  /* ── THREAT REALITY SECTION ───────────────── */
+  .evo-threats { background: #fff; padding: 88px 0; }
+  .evo-threats__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .evo-threat-card {
+    background: #fff; border: 1px solid #e2e4e8; border-radius: 10px;
+    padding: 28px; transition: all 0.25s; position: relative; overflow: hidden;
+  }
+  .evo-threat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--cyber-red); transform: scaleX(0); transform-origin: left; transition: transform 0.25s;
+  }
+  .evo-threat-card:hover { box-shadow: 0 8px 32px rgba(230,57,70,0.08); transform: translateY(-3px); }
+  .evo-threat-card:hover::before { transform: scaleX(1); }
+  .evo-threat-card__icon { font-size: 1.6rem; margin-bottom: 14px; display: block; }
+  .evo-threat-card h3 { font-family: var(--heading-font); font-size: 1rem; font-weight: 700; color: #0e2240; margin-bottom: 8px; }
+  .evo-threat-card p { font-size: 0.87rem; line-height: 1.65; color: #5e6979; margin: 0; }
+  .evo-threat-card__stat {
+    margin-top: 14px; padding: 10px 12px;
+    background: var(--cyber-red-soft);
+    border-radius: 6px; font-size: 0.8rem;
+    color: #c8303c; font-weight: 600;
+  }
+
+  /* ── SERVICES GRID ────────────────────────── */
+  .evo-services { padding: 88px 0; background: #f8f9fd; }
+  .evo-services__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .evo-service-card {
+    background: #fff; border: 1px solid #e2e4e8; border-radius: 10px;
+    padding: 30px 28px; transition: all 0.28s; position: relative; overflow: hidden;
+  }
+  .evo-service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: #cff394; transform: scaleX(0); transform-origin: left; transition: transform 0.28s;
+  }
+  .evo-service-card:hover { box-shadow: 0 8px 32px rgba(14,34,64,0.09); transform: translateY(-3px); border-color: #c4d8a4; }
+  .evo-service-card:hover::after { transform: scaleX(1); }
+  .evo-service-icon {
+    width: 48px; height: 48px; border-radius: 10px;
+    background: #f0f8e8; border: 1px solid #d6f0b0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 18px; flex-shrink: 0;
+  }
+  .evo-service-card h3 { font-family: var(--heading-font); font-size: 1.05rem; font-weight: 700; color: #0e2240; margin-bottom: 10px; line-height: 1.3; }
+  .evo-service-card p { font-size: 0.88rem; line-height: 1.65; color: #5e6979; margin: 0; }
+  .evo-service-link {
+    display: inline-flex; align-items: center; gap: 5px; margin-top: 18px;
+    font-size: 0.85rem; font-weight: 700; color: #0e2240; text-decoration: none; transition: gap 0.2s, color 0.2s;
+  }
+  .evo-service-link:hover { gap: 9px; color: #5c7d26; text-decoration: none; }
+
+  /* ── MDR DEEP DIVE ────────────────────────── */
+  .evo-mdr { background: #0e2240; padding: 88px 0; }
+  .evo-mdr__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .evo-mdr__content h2 { font-family: var(--heading-font); font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 16px; }
+  .evo-mdr__content h2 span { color: #cff394; }
+  .evo-mdr__content p { color: #b8cce0; font-size: 1rem; line-height: 1.7; }
+  .evo-mdr__points { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+  .evo-mdr-point {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(207,243,148,0.12);
+    border-radius: 10px; padding: 18px;
+  }
+  .evo-mdr-point__icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+  .evo-mdr-point h4 { font-family: var(--heading-font); font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .evo-mdr-point p { font-size: 0.85rem; color: #8fa5bf; line-height: 1.55; margin: 0; }
+
+  /* MDR vs Traditional table */
+  .evo-mdr__comparison {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(207,243,148,0.15);
+    border-radius: 14px; padding: 30px;
+  }
+  .evo-compare-title { font-family: var(--heading-font); font-size: 0.8rem; font-weight: 700; color: rgba(207,243,148,0.7); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; }
+  .evo-compare-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.84rem; gap: 8px; align-items: center;
+  }
+  .evo-compare-row:last-child { border-bottom: none; }
+  .evo-compare-row--head .evo-col { font-weight: 700; color: rgba(255,255,255,0.5); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .evo-col { color: #8fa5bf; }
+  .evo-col--feat { color: #c5d3e8; font-weight: 600; }
+  .evo-col--yes { color: #6ee07a; font-weight: 700; text-align: center; }
+  .evo-col--no  { color: rgba(255,255,255,0.25); text-align: center; }
+  .evo-col--mid { color: #f4a261; font-weight: 600; text-align: center; }
+
+  /* ── ESSENTIAL EIGHT ──────────────────────── */
+  .evo-e8 { background: #fff; padding: 88px 0; }
+  .evo-e8__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .evo-e8__intro h2 { font-family: var(--heading-font); font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 700; color: #0e2240; line-height: 1.2; margin-bottom: 16px; }
+  .evo-e8__intro p { font-size: 1rem; line-height: 1.7; margin-bottom: 16px; }
+  .evo-e8-stat {
+    display: flex; gap: 16px; align-items: flex-start; margin-top: 24px;
+    background: var(--cyber-red-soft);
+    border: 1px solid rgba(230,57,70,0.2); border-radius: 10px; padding: 20px;
+  }
+  .evo-e8-stat__num { font-family: var(--heading-font); font-size: 2.4rem; font-weight: 700; color: #e63946; line-height: 1; }
+  .evo-e8-stat__text h4 { font-family: var(--heading-font); font-size: 0.95rem; font-weight: 700; color: #0e2240; margin-bottom: 4px; }
+  .evo-e8-stat__text p { font-size: 0.84rem; margin: 0; }
+  .evo-e8-cta-box {
+    background: #0e2240; border-radius: 10px; padding: 24px;
+    margin-top: 24px;
+  }
+  .evo-e8-cta-box p { color: #b8cce0; font-size: 0.9rem; margin-bottom: 14px; }
+
+  .evo-e8__controls { display: flex; flex-direction: column; gap: 12px; }
+  .evo-e8-control {
+    background: #f8f9fd; border: 1px solid #e2e4e8; border-radius: 10px; padding: 18px 20px;
+    display: flex; gap: 14px; align-items: flex-start; transition: all 0.2s;
+  }
+  .evo-e8-control:hover { border-color: #cff394; background: #f0f8e8; }
+  .evo-e8-num {
+    width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0;
+    background: #0e2240; color: #cff394;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--heading-font); font-size: 0.85rem; font-weight: 700;
+  }
+  .evo-e8-control h4 { font-family: var(--heading-font); font-size: 0.93rem; font-weight: 700; color: #0e2240; margin-bottom: 3px; }
+  .evo-e8-control p { font-size: 0.82rem; line-height: 1.5; margin: 0; }
+
+  /* ── EMPLOYEE TRAINING ────────────────────── */
+  .evo-training { background: #f8f9fd; padding: 88px 0; }
+  .evo-training__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .evo-training__content h2 { font-family: var(--heading-font); font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 700; color: #0e2240; line-height: 1.2; margin-bottom: 16px; }
+  .evo-training__content p { font-size: 1rem; line-height: 1.7; margin-bottom: 16px; }
+  .evo-training-steps { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+  .evo-training-step {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #fff; border: 1px solid #e2e4e8; border-radius: 10px; padding: 18px;
+    transition: border-color 0.2s;
+  }
+  .evo-training-step:hover { border-color: #cff394; }
+  .evo-step-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+  .evo-training-step h4 { font-family: var(--heading-font); font-size: 0.93rem; font-weight: 700; color: #0e2240; margin-bottom: 3px; }
+  .evo-training-step p { font-size: 0.84rem; line-height: 1.55; margin: 0; }
+
+  .evo-training__visual {
+    background: #0e2240; border-radius: 14px; padding: 36px;
+  }
+  .evo-training-vis-title { font-size: 0.75rem; font-weight: 700; color: rgba(207,243,148,0.7); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 22px; }
+  .evo-phishing-sim {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .evo-sim-bar { display: flex; flex-direction: column; gap: 5px; }
+  .evo-sim-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: #8fa5bf; }
+  .evo-sim-track {
+    height: 8px; border-radius: 4px; background: rgba(255,255,255,0.08); overflow: hidden;
+  }
+  .evo-sim-fill { height: 100%; border-radius: 4px; }
+  .evo-sim-fill--red    { background: #e63946; }
+  .evo-sim-fill--amber  { background: #f4a261; }
+  .evo-sim-fill--lime   { background: #cff394; }
+  .evo-sim-divider {
+    border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 8px 0;
+  }
+  .evo-training-outcome {
+    background: rgba(207,243,148,0.08); border: 1px solid rgba(207,243,148,0.15);
+    border-radius: 8px; padding: 14px; text-align: center; margin-top: 8px;
+  }
+  .evo-training-outcome__label { font-size: 0.75rem; color: #8fa5bf; margin-bottom: 4px; }
+  .evo-training-outcome__val { font-family: var(--heading-font); font-size: 1.3rem; font-weight: 700; color: #cff394; }
+
+  /* ── PROCESS ──────────────────────────────── */
+  .evo-process { background: #0a1628; padding: 88px 0; }
+  .evo-process__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 16px; }
+  .evo-step {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(230,57,70,0.15);
+    border-radius: 10px; padding: 30px 24px; text-align: center; transition: all 0.25s;
+  }
+  .evo-step:hover { background: rgba(230,57,70,0.06); border-color: rgba(230,57,70,0.35); }
+  .evo-step-num {
+    width: 52px; height: 52px; border-radius: 50%; border: 2px solid #e63946;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--heading-font); font-size: 1.1rem; font-weight: 700; color: #e63946;
+    margin: 0 auto 18px;
+  }
+  .evo-step h3 { font-family: var(--heading-font); font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .evo-step p { font-size: 0.85rem; color: #8fa5bf; margin: 0; line-height: 1.65; }
+
+  /* ── FAQ ──────────────────────────────────── */
+  .evo-faq { background: #f8f9fd; padding: 88px 0; }
+  .evo-faq__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .evo-faq-item { background: #fff; border: 1px solid #e2e4e8; border-radius: 10px; padding: 26px; }
+  .evo-faq-item h4 { font-family: var(--heading-font); font-size: 0.97rem; font-weight: 700; color: #0e2240; margin-bottom: 10px; line-height: 1.35; }
+  .evo-faq-item p { font-size: 0.87rem; line-height: 1.68; margin: 0; }
+
+  /* ── CTA ──────────────────────────────────── */
+  .evo-cta { background: #0e2240; padding: 80px 0; }
+  .evo-cta__inner { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
+  .evo-cta h2 { font-family: var(--heading-font); font-size: clamp(1.5rem, 2.5vw, 2.1rem); font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .evo-cta p { color: #b8cce0; font-size: 1rem; margin: 0; }
+  .evo-cta__checks { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+  .evo-cta__check { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #c5d3e8; }
+  .evo-cta__check::before { content: '✓'; color: #cff394; font-weight: 700; flex-shrink: 0; }
+  .evo-cta__btns { display: flex; flex-direction: column; gap: 10px; min-width: 220px; }
+  .evo-btn-cta {
+    display: block; text-align: center; padding: 15px 26px;
+    border-radius: var(--button-border-radius, 6px);
+    font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; white-space: nowrap;
+  }
+  .evo-btn-cta--red { background: #e63946; color: #fff; }
+  .evo-btn-cta--red:hover { background: #c8303c; text-decoration: none; color: #fff; }
+  .evo-btn-cta--lime { background: #cff394; color: #0e2240; }
+  .evo-btn-cta--lime:hover { background: #b8e87c; text-decoration: none; color: #0e2240; }
+  .evo-btn-cta--outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
+  .evo-btn-cta--outline:hover { border-color: #cff394; color: #cff394; text-decoration: none; }
+
+  /* ── RESPONSIVE ───────────────────────────── */
+  @media (max-width: 1024px) {
+    .evo-hero__grid, .evo-mdr__grid, .evo-e8__grid,
+    .evo-training__grid, .evo-faq__grid, .evo-cta__inner { grid-template-columns: 1fr; }
+    .evo-services__grid, .evo-threats__grid { grid-template-columns: 1fr 1fr; }
+    .evo-process__steps { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 767px) {
+    .evo-hero { padding: 52px 0 46px; }
+    .evo-hero h1 { font-size: 1.85rem; }
+    .evo-services__grid, .evo-threats__grid, .evo-process__steps { grid-template-columns: 1fr; }
+    .evo-faq__grid { grid-template-columns: 1fr; }
+    .evo-threats, .evo-services, .evo-mdr, .evo-e8,
+    .evo-training, .evo-process, .evo-faq, .evo-cta { padding: 56px 0; }
+    .evo-cta__btns { flex-direction: row; flex-wrap: wrap; min-width: auto; }
+  }
+</style>
+
+<div class="evo-page">
+
+  {% comment %} ANNOUNCE BAR {% endcomment %}
+  {% if section.settings.show_announce %}
+  <div class="evo-announce">
+    🚨 <strong>Perth Alert:</strong> Average cost of a cyber attack on an Australian small business is now <strong>$56,600</strong> — <a href="{{ section.settings.cta_primary_link }}">Get a Free Security Check →</a>
+  </div>
+  {% endif %}
+
+  {% comment %} ════════════════════════
+     HERO
+  ════════════════════════ {% endcomment %}
+  <section class="evo-hero" aria-labelledby="evo-cyber-h1">
+    <div class="ic-container">
+      <div class="evo-hero__grid">
+
+        <div>
+          <div class="evo-hero__eyebrow">Cyber Security Perth</div>
+          <h1 id="evo-cyber-h1">
+            Protect Your <span>Perth</span> Business<br>
+            Before the<br>
+            <em>Next Attack Hits</em>
+          </h1>
+          <p class="evo-hero__lead">
+            AI-powered threats, ransomware and business email compromise are hitting Perth SMBs harder than ever in 2026. EvoTech Digital delivers <strong style="color:#e8f0fa">managed detection, threat response and employee training</strong> so your business stays protected around the clock.
+          </p>
+          <div class="evo-threat-bar">
+            <span class="evo-threat-bar__icon">⚠️</span>
+            <span>The ASD Annual Cyber Threat Report found the average small business cyber incident now costs <strong>$56,600</strong> — and 4 in 5 Australian organisations are still below the Essential Eight baseline.</span>
+          </div>
+          <div class="evo-hero__actions">
+            <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-red">
+              🔍 Book a Free Security Audit
+            </a>
+            <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-btn-outline-white">
+              📞 {{ section.settings.phone_number }}
+            </a>
+          </div>
+          <div class="evo-hero__pills">
+            <span class="evo-pill">MDR — 24/7 Threat Detection</span>
+            <span class="evo-pill">Essential Eight Compliance</span>
+            <span class="evo-pill">Employee Security Training</span>
+            <span class="evo-pill">Perth-Based Team</span>
+          </div>
+        </div>
+
+        <div aria-hidden="true">
+          <div class="evo-threat-vis">
+            <div class="evo-vis-header">
+              <span class="evo-vis-title">🛡️ Threat Dashboard</span>
+              <span class="evo-vis-live">
+                <span class="evo-threat-dot--ok evo-threat-dot" style="background:#6ee07a;box-shadow:0 0 8px #6ee07a"></span>
+                MDR Active
+              </span>
+            </div>
+            <div class="evo-threat-row">
+              <span class="evo-threat-lbl">Endpoint Protection</span>
+              <span class="evo-threat-val-ok">✓ All devices secured</span>
+            </div>
+            <div class="evo-threat-row">
+              <span class="evo-threat-lbl">Email Threats Blocked</span>
+              <span class="evo-threat-val-warn">⚡ 14 blocked today</span>
+            </div>
+            <div class="evo-threat-row">
+              <span class="evo-threat-lbl">Dark Web Monitoring</span>
+              <span class="evo-threat-val-ok">✓ No credentials found</span>
+            </div>
+            <div class="evo-threat-row">
+              <span class="evo-threat-lbl">MFA Status</span>
+              <span class="evo-threat-val-ok">✓ Enforced all users</span>
+            </div>
+            <div class="evo-threat-row">
+              <span class="evo-threat-lbl">Patch Compliance</span>
+              <span class="evo-threat-val-ok">✓ 100% up to date</span>
+            </div>
+            <div class="evo-threat-row">
+              <span class="evo-threat-lbl">Essential Eight Level</span>
+              <span class="evo-threat-val" style="color:#cff394">▲ Maturity Level 2</span>
+            </div>
+            <div class="evo-threat-stat">
+              <div class="evo-threat-stat__num">0</div>
+              <div class="evo-threat-stat__desc">Security incidents this month<br><span style="color:#6ee07a">↓ vs industry avg of 4.2/month</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} TRUST BAR {% endcomment %}
+  <div class="evo-trust-bar">
+    <div class="ic-container">
+      <div class="evo-trust-bar__inner">
+        <span class="evo-trust-bar__label">Security Frameworks We Implement</span>
+        <div class="evo-trust-logos">
+          <span class="evo-trust-badge">ASD Essential Eight</span>
+          <span class="evo-trust-badge">ISO 27001</span>
+          <span class="evo-trust-badge">NIST CSF</span>
+          <span class="evo-trust-badge">Privacy Act 1988</span>
+          <span class="evo-trust-badge">Microsoft Defender</span>
+          <span class="evo-trust-badge">Fortinet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} ════════════════════════
+     THREAT REALITY — What Perth Businesses Face
+  ════════════════════════ {% endcomment %}
+  <section class="evo-threats" aria-labelledby="evo-threats-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge evo-badge--red">The Threat Landscape</span>
+        <h2 id="evo-threats-h2">The Cyber Threats Targeting Perth Small Businesses Right Now</h2>
+        <p>In 2026, cyber attackers aren't just targeting large corporations. Perth SMBs are now the most frequently targeted sector — because attackers know small businesses often have weaker defences and more to lose.</p>
+      </div>
+      <div class="evo-threats__grid">
+
+        <div class="evo-threat-card">
+          <span class="evo-threat-card__icon">🤖</span>
+          <h3>AI-Powered Phishing</h3>
+          <p>Attackers now use generative AI to mimic your supplier's writing style, your CEO's voice, and internal email patterns with disturbing accuracy. Even tech-savvy employees are being deceived.</p>
+          <div class="evo-threat-card__stat">⚠️ #1 entry point for Perth business breaches in 2025–26</div>
+        </div>
+
+        <div class="evo-threat-card">
+          <span class="evo-threat-card__icon">🔐</span>
+          <h3>Ransomware-as-a-Service</h3>
+          <p>Modern ransomware doesn't just lock your files — it exfiltrates them first, then threatens to publish sensitive data publicly. Without tested backups, businesses face weeks of downtime or a ransom payment with no guarantee of recovery.</p>
+          <div class="evo-threat-card__stat">⚠️ No sector in Australia went unaffected in 2025 (ASD)</div>
+        </div>
+
+        <div class="evo-threat-card">
+          <span class="evo-threat-card__icon">📧</span>
+          <h3>Business Email Compromise</h3>
+          <p>Attackers impersonate your CFO, suppliers or legal counsel to redirect payments. Australian businesses lost an average of $55,000 per confirmed BEC case — and most aren't covered by standard insurance.</p>
+          <div class="evo-threat-card__stat">⚠️ $84 million lost by Australian businesses in one year (ASD)</div>
+        </div>
+
+        <div class="evo-threat-card">
+          <span class="evo-threat-card__icon">🔗</span>
+          <h3>Supply Chain Attacks</h3>
+          <p>Attackers compromise your trusted software vendor or IT supplier to gain access to your systems. If your MSP, accounting platform or cloud provider is breached — so are you. Supply chain risk rose sharply in 2025.</p>
+          <div class="evo-threat-card__stat">⚠️ Third-party risk is now every SMB's problem (ASD 2025)</div>
+        </div>
+
+        <div class="evo-threat-card">
+          <span class="evo-threat-card__icon">🪪</span>
+          <h3>Identity & Credential Theft</h3>
+          <p>Stolen Microsoft 365 or VPN credentials give attackers silent access to your business for weeks before detection. Without Identity Threat Detection and Response (ITDR), compromised accounts often go unnoticed until damage is done.</p>
+          <div class="evo-threat-card__stat">⚠️ Undetected account compromise is now a top 3 threat for Australian SMBs</div>
+        </div>
+
+        <div class="evo-threat-card">
+          <span class="evo-threat-card__icon">👤</span>
+          <h3>Insider Threats & Human Error</h3>
+          <p>Over 85% of breaches involve a human element. Accidental data sharing, weak passwords, unsecured personal devices and falling for social engineering are the most common causes of data breaches in Perth workplaces.</p>
+          <div class="evo-threat-card__stat">⚠️ Human error involved in majority of all SMB incidents</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     CYBER SECURITY SERVICES
+  ════════════════════════ {% endcomment %}
+  <section class="evo-services" id="services" aria-labelledby="evo-services-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge evo-badge--lime">Our Solutions</span>
+        <h2 id="evo-services-h2">Cyber Security Solutions for Perth Small Businesses</h2>
+        <p>EvoTech Digital delivers a layered, enterprise-grade cyber security stack made affordable for Perth SMBs. Every service works together to close the gaps attackers exploit.</p>
+      </div>
+      <div class="evo-services__grid">
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🔭</div>
+          <h3>Managed Detection & Response (MDR)</h3>
+          <p>24/7 threat monitoring, detection and hands-on response from a dedicated security team. Unlike basic antivirus, MDR hunts for advanced threats hiding inside your legitimate processes — and responds before damage occurs.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🖥️</div>
+          <h3>Endpoint Detection & Response (EDR)</h3>
+          <p>Real-time monitoring and automated response on every device — laptops, desktops, servers and mobile. EDR detects threats that bypass traditional antivirus by analysing behaviour, not just known signatures.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">✅</div>
+          <h3>Essential Eight Compliance</h3>
+          <p>Gap assessment, technical implementation and ongoing compliance management aligned to the ASD Essential Eight Maturity Model. We help Perth businesses reach and maintain Maturity Level 2 — the Australian baseline standard.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">📧</div>
+          <h3>Email Security & Anti-Phishing</h3>
+          <p>Advanced email filtering, DMARC/DKIM/SPF configuration, anti-phishing protection and business email compromise prevention. We block malicious emails before they reach your staff — including AI-generated impersonation attacks.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🌑</div>
+          <h3>Dark Web Monitoring</h3>
+          <p>Continuous scanning of dark web forums, paste sites and breach databases for your business email addresses, passwords and sensitive data. Get alerted the moment your credentials appear — before attackers exploit them.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🔑</div>
+          <h3>Identity & Access Management</h3>
+          <p>Multi-factor authentication (MFA) rollout, privileged access management, conditional access policies and Identity Threat Detection & Response (ITDR). Stops credential-based attacks — the most common way attackers enter Perth business systems.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🎓</div>
+          <h3>Security Awareness Training</h3>
+          <p>Simulated phishing campaigns, interactive security training modules and regular staff briefings. Your employees are both your biggest vulnerability and your strongest last line of defence — we train them to be the latter.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🔥</div>
+          <h3>Firewall & Network Security</h3>
+          <p>Next-generation firewall management, network segmentation, intrusion detection and prevention systems (IDS/IPS) and secure remote access. We harden the perimeter of your Perth office network so attackers hit a wall.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🔎</div>
+          <h3>Cyber Security Audit Perth</h3>
+          <p>A comprehensive assessment of your current security posture — identifying vulnerabilities, misconfigurations and compliance gaps across your network, endpoints, email, cloud and access controls. Delivered as a clear, prioritised action plan.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Book an Audit →</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     MDR DEEP DIVE
+  ════════════════════════ {% endcomment %}
+  <section class="evo-mdr" aria-labelledby="evo-mdr-h2">
+    <div class="ic-container">
+      <div class="evo-mdr__grid">
+
+        <div class="evo-mdr__content">
+          <span class="evo-badge evo-badge--white" style="margin-bottom:16px;display:inline-block">MDR Explained</span>
+          <h2 id="evo-mdr-h2">Why Perth SMBs Need <span>Managed Detection & Response</span> in 2026</h2>
+          <p>Traditional security tools — antivirus, basic firewalls, even SIEM platforms — are no longer enough. Attackers now use AI to bypass signature-based detection and hide inside legitimate business processes for weeks undetected.</p>
+          <p style="margin-top:12px">MDR gives Perth small businesses access to an enterprise-grade 24/7 Security Operations Centre (SOC) without the cost of building one in-house. Our analysts hunt threats, respond to incidents and contain damage in real time — even at 2am on a Sunday.</p>
+          <div class="evo-mdr__points">
+            <div class="evo-mdr-point">
+              <span class="evo-mdr-point__icon">🕐</span>
+              <div>
+                <h4>24/7 Threat Hunting</h4>
+                <p>Attackers don't keep business hours. Our MDR team monitors your environment continuously — identifying threats that automated tools miss through active investigation.</p>
+              </div>
+            </div>
+            <div class="evo-mdr-point">
+              <span class="evo-mdr-point__icon">⚡</span>
+              <div>
+                <h4>Rapid Incident Response</h4>
+                <p>When a threat is detected, our team acts immediately — isolating affected systems, containing the spread and eradicating the threat before it becomes a business-stopping incident.</p>
+              </div>
+            </div>
+            <div class="evo-mdr-point">
+              <span class="evo-mdr-point__icon">📊</span>
+              <div>
+                <h4>Clear Reporting & Compliance Evidence</h4>
+                <p>Monthly security reports with plain-English findings, threat summaries and compliance metrics. Evidence you can show your insurer, board or regulator at any time.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="evo-mdr__comparison">
+            <div class="evo-compare-title">MDR vs Traditional Security</div>
+            <div class="evo-compare-row evo-compare-row--head">
+              <div class="evo-col">Capability</div>
+              <div class="evo-col" style="text-align:center">Antivirus Only</div>
+              <div class="evo-col" style="text-align:center;color:#cff394">EvoTech MDR</div>
+            </div>
+            <div class="evo-compare-row">
+              <div class="evo-col--feat">24/7 monitoring</div>
+              <div class="evo-col--no">✗</div>
+              <div class="evo-col--yes">✓</div>
+            </div>
+            <div class="evo-compare-row">
+              <div class="evo-col--feat">AI threat detection</div>
+              <div class="evo-col--no">✗</div>
+              <div class="evo-col--yes">✓</div>
+            </div>
+            <div class="evo-compare-row">
+              <div class="evo-col--feat">Human threat hunting</div>
+              <div class="evo-col--no">✗</div>
+              <div class="evo-col--yes">✓</div>
+            </div>
+            <div class="evo-compare-row">
+              <div class="evo-col--feat">Active incident response</div>
+              <div class="evo-col--no">✗</div>
+              <div class="evo-col--yes">✓</div>
+            </div>
+            <div class="evo-compare-row">
+              <div class="evo-col--feat">Behavioural analysis</div>
+              <div class="evo-col--mid">Limited</div>
+              <div class="evo-col--yes">✓</div>
+            </div>
+            <div class="evo-compare-row">
+              <div class="evo-col--feat">Ransomware containment</div>
+              <div class="evo-col--no">✗</div>
+              <div class="evo-col--yes">✓</div>
+            </div>
+            <div class="evo-compare-row">
+              <div class="evo-col--feat">Compliance reporting</div>
+              <div class="evo-col--no">✗</div>
+              <div class="evo-col--yes">✓</div>
+            </div>
+            <div class="evo-compare-row">
+              <div class="evo-col--feat">Identity threat detection</div>
+              <div class="evo-col--no">✗</div>
+              <div class="evo-col--yes">✓</div>
+            </div>
+          </div>
+          <div style="margin-top:20px;padding:20px;background:rgba(207,243,148,0.08);border:1px solid rgba(207,243,148,0.15);border-radius:10px;text-align:center">
+            <div style="font-size:0.78rem;color:#8fa5bf;margin-bottom:6px">Gartner predicts</div>
+            <div style="font-family:var(--heading-font);font-size:1.5rem;font-weight:700;color:#cff394">50% of organisations</div>
+            <div style="font-size:0.82rem;color:#8fa5bf;margin-top:4px">will use MDR services by 2025 — the market has matured from "nice-to-have" to essential</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     ESSENTIAL EIGHT
+  ════════════════════════ {% endcomment %}
+  <section class="evo-e8" id="essential-eight" aria-labelledby="evo-e8-h2">
+    <div class="ic-container">
+      <div class="evo-e8__grid">
+
+        <div class="evo-e8__intro">
+          <span class="evo-badge evo-badge--red">Australian Government Standard</span>
+          <h2 id="evo-e8-h2" style="margin-top:14px">Essential Eight Compliance for Perth Businesses</h2>
+          <p>The Essential Eight is the Australian Signals Directorate's (ASD) baseline cyber security framework. It covers the eight most effective strategies for stopping the most common attack methods — including phishing, ransomware and credential theft.</p>
+          <p>While mandatory for government entities, the Essential Eight is strongly recommended for all Australian businesses — and increasingly required by cyber insurers and enterprise clients before they'll work with you.</p>
+          <div class="evo-e8-stat">
+            <div>
+              <div class="evo-e8-stat__num">78%</div>
+            </div>
+            <div class="evo-e8-stat__text">
+              <h4>of Australian organisations are still below Maturity Level 2</h4>
+              <p>That means most Perth businesses remain exposed to attacks that basic Essential Eight controls would have prevented. — ASD Commonwealth Cyber Security Posture 2025</p>
+            </div>
+          </div>
+          <div class="evo-e8-cta-box">
+            <p>Not sure where your business sits? EvoTech Digital offers a free Essential Eight gap assessment for Perth SMBs.</p>
+            <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-lime" style="display:inline-flex">
+              Book Free E8 Assessment →
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:var(--heading-font);font-size:0.8rem;font-weight:700;color:#9aa3b0;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px">The 8 Controls EvoTech Implements</div>
+          <div class="evo-e8__controls">
+            <div class="evo-e8-control">
+              <div class="evo-e8-num">1</div>
+              <div>
+                <h4>Application Control</h4>
+                <p>Prevent unapproved software from running on your systems — stops malware and ransomware from executing.</p>
+              </div>
+            </div>
+            <div class="evo-e8-control">
+              <div class="evo-e8-num">2</div>
+              <div>
+                <h4>Patch Applications</h4>
+                <p>Automated patching of internet-facing applications within 48 hours of a critical patch release.</p>
+              </div>
+            </div>
+            <div class="evo-e8-control">
+              <div class="evo-e8-num">3</div>
+              <div>
+                <h4>Configure Microsoft Office Macros</h4>
+                <p>Block macros from the internet — a primary delivery mechanism for malware in document-based attacks.</p>
+              </div>
+            </div>
+            <div class="evo-e8-control">
+              <div class="evo-e8-num">4</div>
+              <div>
+                <h4>User Application Hardening</h4>
+                <p>Disable insecure browser features including Flash, web ads and Java — removes common attack vectors.</p>
+              </div>
+            </div>
+            <div class="evo-e8-control">
+              <div class="evo-e8-num">5</div>
+              <div>
+                <h4>Restrict Admin Privileges</h4>
+                <p>Limit who has administrative access and when. Attackers prize admin accounts above all others.</p>
+              </div>
+            </div>
+            <div class="evo-e8-control">
+              <div class="evo-e8-num">6</div>
+              <div>
+                <h4>Patch Operating Systems</h4>
+                <p>Keep all devices up to date. Unpatched operating systems are the most exploited vulnerability in Perth business networks.</p>
+              </div>
+            </div>
+            <div class="evo-e8-control">
+              <div class="evo-e8-num">7</div>
+              <div>
+                <h4>Multi-Factor Authentication (MFA)</h4>
+                <p>Enforce MFA across all systems — stops 99.9% of automated credential attacks. Now mandatory for Australian government and strongly expected across all sectors.</p>
+              </div>
+            </div>
+            <div class="evo-e8-control">
+              <div class="evo-e8-num">8</div>
+              <div>
+                <h4>Regular Backups</h4>
+                <p>Immutable, tested backups stored separately from your primary environment — your last line of defence against ransomware.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     EMPLOYEE SECURITY TRAINING
+  ════════════════════════ {% endcomment %}
+  <section class="evo-training" aria-labelledby="evo-training-h2">
+    <div class="ic-container">
+      <div class="evo-training__grid">
+
+        <div class="evo-training__content">
+          <span class="evo-badge evo-badge--lime">Security Awareness Training</span>
+          <h2 id="evo-training-h2" style="margin-top:14px">Your Employees Are Your Strongest Cyber Defence — When Trained</h2>
+          <p>Technology alone can't stop every attack. Over 85% of cyber incidents involve a human element — an employee clicking a phishing link, using a weak password or accidentally sharing sensitive data. EvoTech's security awareness training turns your team from your biggest vulnerability into your last and strongest line of defence.</p>
+          <div class="evo-training-steps">
+            <div class="evo-training-step">
+              <span class="evo-step-icon">🎣</span>
+              <div>
+                <h4>Simulated Phishing Campaigns</h4>
+                <p>We send realistic, AI-quality phishing simulations to your staff — measuring click rates, reporting rates and identifying who needs targeted training without any real risk.</p>
+              </div>
+            </div>
+            <div class="evo-training-step">
+              <span class="evo-step-icon">📱</span>
+              <div>
+                <h4>Interactive Training Modules</h4>
+                <p>Short, engaging security awareness modules covering phishing recognition, password hygiene, safe browsing, data handling and social engineering — completed in under 10 minutes.</p>
+              </div>
+            </div>
+            <div class="evo-training-step">
+              <span class="evo-step-icon">📊</span>
+              <div>
+                <h4>Monthly Progress Reports</h4>
+                <p>Track your team's improving security behaviour over time. Measurable data showing click-through rates dropping, reporting rates rising and overall security culture improving.</p>
+              </div>
+            </div>
+            <div class="evo-training-step">
+              <span class="evo-step-icon">🛡️</span>
+              <div>
+                <h4>Policy & Compliance Support</h4>
+                <p>Acceptable use policies, incident reporting procedures and Privacy Act compliance documentation — written for Perth SMBs in plain language your staff will actually read.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="evo-training__visual" aria-hidden="true">
+          <div class="evo-training-vis-title">📈 Phishing Simulation Results</div>
+          <div class="evo-phishing-sim">
+            <div style="font-size:0.75rem;color:rgba(207,243,148,0.6);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Before Training</div>
+            <div class="evo-sim-bar">
+              <div class="evo-sim-label"><span>Clicked Phishing Link</span><span style="color:#e63946">34%</span></div>
+              <div class="evo-sim-track"><div class="evo-sim-fill evo-sim-fill--red" style="width:34%"></div></div>
+            </div>
+            <div class="evo-sim-bar">
+              <div class="evo-sim-label"><span>Reported as Suspicious</span><span style="color:#f4a261">12%</span></div>
+              <div class="evo-sim-track"><div class="evo-sim-fill evo-sim-fill--amber" style="width:12%"></div></div>
+            </div>
+            <hr class="evo-sim-divider">
+            <div style="font-size:0.75rem;color:rgba(207,243,148,0.6);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">After 90 Days of Training</div>
+            <div class="evo-sim-bar">
+              <div class="evo-sim-label"><span>Clicked Phishing Link</span><span style="color:#cff394">4%</span></div>
+              <div class="evo-sim-track"><div class="evo-sim-fill evo-sim-fill--lime" style="width:4%"></div></div>
+            </div>
+            <div class="evo-sim-bar">
+              <div class="evo-sim-label"><span>Reported as Suspicious</span><span style="color:#cff394">71%</span></div>
+              <div class="evo-sim-track"><div class="evo-sim-fill evo-sim-fill--lime" style="width:71%"></div></div>
+            </div>
+            <div class="evo-training-outcome">
+              <div class="evo-training-outcome__label">Risk Reduction</div>
+              <div class="evo-training-outcome__val">88% ↓ click rate</div>
+            </div>
+            <div style="margin-top:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px">
+              <div style="font-size:0.75rem;color:#8fa5bf;margin-bottom:10px">What your team learns to spot:</div>
+              <div style="display:flex;flex-direction:column;gap:7px;font-size:0.82rem">
+                <div style="display:flex;align-items:center;gap:8px;color:#c5d3e8"><span style="color:#e63946">🎯</span> Spoofed sender addresses</div>
+                <div style="display:flex;align-items:center;gap:8px;color:#c5d3e8"><span style="color:#e63946">🎯</span> Urgency & authority manipulation</div>
+                <div style="display:flex;align-items:center;gap:8px;color:#c5d3e8"><span style="color:#e63946">🎯</span> Malicious link patterns</div>
+                <div style="display:flex;align-items:center;gap:8px;color:#c5d3e8"><span style="color:#e63946">🎯</span> QR code phishing attacks</div>
+                <div style="display:flex;align-items:center;gap:8px;color:#c5d3e8"><span style="color:#e63946">🎯</span> Invoice & BEC fraud tactics</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     HOW IT WORKS
+  ════════════════════════ {% endcomment %}
+  <section class="evo-process" aria-labelledby="evo-cyber-process-h2">
+    <div class="ic-container">
+      <div class="evo-section-head evo-section-head--light">
+        <span class="evo-badge evo-badge--white">How It Works</span>
+        <h2 id="evo-cyber-process-h2">From Vulnerable to Protected in 4 Steps</h2>
+        <p>EvoTech Digital's cyber security onboarding is designed to get Perth businesses protected quickly — without disrupting your operations.</p>
+      </div>
+      <div class="evo-process__steps">
+        <div class="evo-step">
+          <div class="evo-step-num">1</div>
+          <h3>Free Security Audit</h3>
+          <p>We assess your current security posture — endpoints, email, network, access controls and Essential Eight maturity — and deliver a clear risk report.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">2</div>
+          <h3>Prioritised Remediation Plan</h3>
+          <p>You receive a transparent action plan prioritised by risk level. We fix the most critical vulnerabilities first — delivering immediate risk reduction from day one.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">3</div>
+          <h3>Deploy Protection Stack</h3>
+          <p>We deploy MDR, EDR, email security, MFA and monitoring tools across your environment — configured for your Perth business with zero downtime.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">4</div>
+          <h3>Ongoing Monitoring & Training</h3>
+          <p>24/7 threat monitoring, monthly security reports, regular phishing simulations and continuous Essential Eight compliance management — all ongoing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     FAQ
+  ════════════════════════ {% endcomment %}
+  <section class="evo-faq" id="faq" aria-labelledby="evo-cyber-faq-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">FAQ</span>
+        <h2 id="evo-cyber-faq-h2">Frequently Asked Questions About Cyber Security in Perth</h2>
+      </div>
+      <div class="evo-faq__grid">
+        <div class="evo-faq-item">
+          <h4>What is cyber security for small businesses in Perth?</h4>
+          <p>Small business cyber security means implementing the right combination of tools, processes and training to protect your business from ransomware, phishing, data breaches and BEC fraud. EvoTech Digital provides layered, affordable cyber security specifically designed for Perth SMBs — no enterprise-sized budget required.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>What is MDR and do Perth SMBs need it?</h4>
+          <p>Managed Detection and Response (MDR) is a 24/7 cyber security service where expert analysts monitor your systems, hunt threats and respond to incidents in real time. Perth SMBs need MDR because attackers strike at all hours, AI-powered threats bypass standard antivirus, and most small businesses can't afford a full-time security team.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Is the Essential Eight mandatory for Perth businesses?</h4>
+          <p>The Essential Eight is mandatory for Australian government entities and strongly recommended for all businesses. It is increasingly required by cyber insurers and enterprise clients. Currently 78% of Australian organisations haven't reached Maturity Level 2 — the baseline. EvoTech helps Perth businesses close this gap.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>How much does a cyber security audit cost in Perth?</h4>
+          <p>EvoTech Digital offers a free introductory cyber security health check and Essential Eight gap assessment for Perth businesses — no cost, no obligation. A full penetration test and comprehensive compliance audit is scoped and quoted based on your environment size. Contact us to get started.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>What are the biggest cyber threats for Perth businesses in 2026?</h4>
+          <p>The top threats for Perth SMBs in 2026 are AI-powered phishing, ransomware-as-a-service, business email compromise (BEC), supply chain attacks and credential theft. The ASD reports the average cost of a cyber incident for an Australian small business reached $56,600 in 2024-25 — making prevention far cheaper than recovery.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Does my business need cyber insurance and how does it relate to security?</h4>
+          <p>Cyber insurance is increasingly important for Perth businesses — but insurers are tightening requirements. Many now require evidence of MFA, endpoint protection, tested backups and Essential Eight progress before providing coverage or competitive premiums. EvoTech's security stack directly supports insurability and lower premiums.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Can you train our Perth staff on cyber security?</h4>
+          <p>Yes. EvoTech Digital provides security awareness training including simulated phishing campaigns, interactive training modules, monthly progress reports and policy support. Training has been shown to reduce phishing click-through rates by over 85% within 90 days — making your team a powerful line of defence.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>How quickly can EvoTech protect our Perth business?</h4>
+          <p>Critical protections — MFA, email security, endpoint protection and dark web monitoring — can typically be deployed within 1–5 business days. Our onboarding is designed to deliver immediate risk reduction while broader Essential Eight compliance and MDR monitoring are configured in parallel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     CTA
+  ════════════════════════ {% endcomment %}
+  <section class="evo-cta" id="contact" aria-labelledby="evo-cyber-cta-h2">
+    <div class="ic-container">
+      <div class="evo-cta__inner">
+        <div>
+          <span class="evo-badge evo-badge--white">Don't Wait for a Breach</span>
+          <h2 id="evo-cyber-cta-h2" style="margin-top:10px">
+            Secure Your Perth Business Today
+          </h2>
+          <p>Book a <strong style="color:#cff394">free, no-obligation cyber security health check</strong> with EvoTech Digital. We'll identify your top risks, check your Essential Eight maturity and show you exactly where you're exposed — at no cost.</p>
+          <div class="evo-cta__checks">
+            <div class="evo-cta__check">Free security audit — no obligation, no pressure</div>
+            <div class="evo-cta__check">Essential Eight gap assessment included</div>
+            <div class="evo-cta__check">Perth-based security team, not an overseas call centre</div>
+            <div class="evo-cta__check">Remediation plan delivered within 48 hours</div>
+          </div>
+        </div>
+        <div class="evo-cta__btns">
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-cta evo-btn-cta--red">
+            🔍 Book Free Security Audit
+          </a>
+          <a href="{{ section.settings.cta_secondary_link }}" class="evo-btn-cta evo-btn-cta--lime">
+            ✅ Essential Eight Assessment
+          </a>
+          <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-btn-cta evo-btn-cta--outline">
+            📞 {{ section.settings.phone_number }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Cyber Security Perth",
+  "tag": "section",
+  "class": "evo-cyber-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contact Details"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone Number",
+      "default": "0466 911 816"
+    },
+    {
+      "type": "text",
+      "id": "email_address",
+      "label": "Email Address",
+      "default": "info@evotech.au"
+    },
+    {
+      "type": "header",
+      "content": "Call-to-Action Links"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_link",
+      "label": "Primary CTA (Security Audit / Contact Form)"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_link",
+      "label": "Secondary CTA (Essential Eight / Contact)"
+    },
+    {
+      "type": "header",
+      "content": "Page Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announce",
+      "label": "Show Announcement Bar",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cyber Security Perth"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,224 @@
+<div class="before-after-section color-{{ section.settings.color_scheme }} gradient-enabled ic-py-14">
+    <div class="ic-container">
+        {% if section.settings.subheading != blank or section.settings.heading != blank or section.settings.description != blank %}
+            <div class="text-container ic-break-words ic-flex-col-lg-6 ic-mx-auto ic-text-center ic-mb-8">
+                {% if section.settings.subheading != blank %}
+                <p class="sub-heading ic-mb-1">{{ section.settings.subheading }}</p>
+                {% endif %}
+                {% if section.settings.heading != blank %}
+                <h2 class="heading ic-mb-4">{{ section.settings.heading }}</h2>
+                {% endif %}
+                {% if section.settings.description != blank %}
+                <div class="description">{{ section.settings.description }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+        <div class="before-after-container" data-initial-drag="{{ section.settings.initial-drag }}">
+            {% if section.settings.before-text != blank %}
+                <p class="before-text">{{ section.settings.before-text }}</p>
+            {% endif %}
+            {% if section.settings.before-image != nil %}
+                {% liquid
+                    if section.settings.before-image.alt != null
+                        assign alt = section.settings.before-image.alt
+                    else
+                        assign alt = section.settings.before-image.src | split: '/' | last | split: '.' | first
+                    endif
+                %}
+                {{ 
+                    section.settings.before-image 
+                    | image_url: width: 1500
+                    | image_tag: 
+                        loading: 'lazy',
+                        sizes: '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 605px, (max-width: 899px) 730px, (max-width: 1023px) 865px, (max-width: 1279px) 990px, (max-width: 1535px) 1245px, 1500px',
+                        widths: '200, 260, 300, 400, 500, 600, 650, 750, 900, 1000, 1300, 1500',
+                        alt: alt
+                }}
+                {% else %}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'ic-bg-light' }}
+            {% endif %}
+            <div class="after-container">
+                <div class="image-container">
+                    {% if section.settings.after-image != nil %}
+                        {% liquid
+                            if section.settings.after-image.alt != null
+                                assign alt = section.settings.after-image.alt
+                            else
+                                assign alt = section.settings.after-image.src | split: '/' | last | split: '.' | first
+                            endif
+                        %}
+                        {{ 
+                            section.settings.after-image 
+                            | image_url: width: 1500
+                            | image_tag:
+                                loading: 'lazy',
+                                sizes: '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 605px, (max-width: 899px) 730px, (max-width: 1023px) 865px, (max-width: 1279px) 990px, (max-width: 1535px) 1245px, 1500px',
+                                widths: '200, 260, 300, 400, 500, 600, 650, 750, 900, 1000, 1300, 1500',
+                                alt: alt
+                        }}
+                        {% else %}
+                        {{ 'lifestyle-2' | placeholder_svg_tag: 'ic-bg-dark' }}
+                    {% endif %}
+                    {% if section.settings.after-text != blank %}
+                        <p class="after-text">{{ section.settings.after-text }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <span class="revealer">{% render 'icon-before-after' %}</span>
+        </div>
+        {% if section.blocks.size > 0 %}
+            <div class="included-product-container {{ section.settings.products_style }} color-{{ section.settings.products_color_scheme }} gradient-enabled">
+                {% for block in section.blocks %}
+                    {% case block.type %}
+                        {% when 'product' %}
+                            {% assign product = block.settings.product %}
+                            <div class="included-product-card" {{ block.shopify_attributes }}>
+                                <div class="image-container">
+                                    {% if product.featured_media %}
+                                        {% assign alt = product.image.alt | escape | default: product.title %}
+                                        {{ product.featured_media 
+                                            | image_url: width: 80
+                                            | image_tag:
+                                            loading: 'lazy',
+                                            widths: '80', 
+                                            sizes: '80px',
+                                            alt: alt,
+                                            class: "background-image"
+                                        }}
+                                        {% else %}
+                                            {{ 'product-5' | placeholder_svg_tag }}
+                                    {% endif %}
+                                </div>
+                                <div class="product-detail-container ic-break-words">
+                                    {% assign product_vendor = 'sections.before_after_image.default.vendor' | t %}
+                                    {% assign product_title = 'sections.before_after_image.default.title' | t %}
+                                    <p class="vendor ic-text-sm ic-mb-1">{{ product.vendor | default: product_vendor }}</p>
+                                    <a href="{{ product.url }}" class="link-heading">
+                                        <h3 class="ic-mb-4 heading">{{ product.title | default: product_title }}</h3>
+                                    </a>
+                                    <p class="price-text">{{ product.price | default: 99900 | money }}</p>
+                                </div>
+                            </div>
+                            
+                    {% endcase %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "t:sections.before_after_image.name",
+        "class": "section",
+        "tag": "section",
+        "settings": [
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type": "text",
+                "id": "subheading",
+                "default": "Subheading",
+                "label": "t:sections.before_after_image.settings.subheading.label"
+            },
+            {
+                "type": "text",
+                "id": "heading",
+                "default": "Before/after",
+                "label": "t:sections.before_after_image.settings.heading.label"
+            },
+            {
+                "type": "richtext",
+                "id": "description",
+                "default": "<p>Describe your products in a short sentence and showcase your product with before/after image.</p>",
+                "label": "t:sections.before_after_image.settings.description.label"
+            },
+            {
+                "type": "image_picker",
+                "id": "before-image",
+                "label": "t:sections.before_after_image.settings.before_image.label",
+                "info": "t:sections.before_after_image.settings.before_image.info"
+            },
+            {
+                "type": "image_picker",
+                "id": "after-image",
+                "label": "t:sections.before_after_image.settings.after_image.label",
+                "info": "t:sections.before_after_image.settings.after_image.info"
+            },
+            {
+                "type": "text",
+                "id": "before-text",
+                "default": "Before",
+                "label": "t:sections.before_after_image.settings.before_text.label"
+            },
+            {
+                "type": "text",
+                "id": "after-text",
+                "default": "After",
+                "label": "t:sections.before_after_image.settings.after_text.label"
+            },
+            {
+                "type": "range",
+                "id":"initial-drag",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "%",
+                "default": 50,
+                "label": "t:sections.before_after_image.settings.initial_drag_position.label"
+            },
+            {
+                "type": "header",
+                "content": "t:sections.before_after_image.settings.products.content"
+            },
+            {
+                "type": "color_scheme",
+                "id": "products_color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type": "select",
+                "id": "products_style",
+                "options": [
+                    {
+                        "value": "card-style",
+                        "label": "t:sections.before_after_image.settings.products.style.option_1.label"
+                    },
+                    {
+                        "value": "divider-style",
+                        "label": "t:sections.before_after_image.settings.products.style.option_2.label"
+                    }
+                ],
+                "label": "t:sections.before_after_image.settings.products.style.label",
+                "default": "card-style"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "product",
+                "name": "t:sections.before_after_image.blocks.product.name",
+                "limit": 3,
+                "settings": [
+                    {
+                        "type": "product",
+                        "id": "product",
+                        "label": "t:sections.before_after_image.blocks.product.settings.product.label"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "t:sections.before_after_image.name"
+            }
+        ],
+        "disabled_on": {
+            "groups": ["*"]
+        }
+    }
+{% endschema %}

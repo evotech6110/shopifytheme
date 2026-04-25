@@ -1,0 +1,374 @@
+{% comment %}
+  ============================================================
+  SHAREPOINT & AUTOMATION — Full-Page SEO Section
+  For: evotech.au/pages/sharepoint-automation
+  Brand Colors: #0e2240 (navy), #cff394 (lime-green), #ffffff
+  ============================================================
+{% endcomment %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "EvoTech Digital",
+  "description": "Stop emailing files. Modernize your workflow with SharePoint and Power Automate. Expert SharePoint consulting in Perth.",
+  "url": "{{ shop.url }}",
+  "telephone": "+61466911816",
+  "email": "info@evotech.au",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Perth",
+    "addressRegion": "WA",
+    "addressCountry": "AU"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Can you migrate our shared drive to SharePoint?","acceptedAnswer":{"@type":"Answer","text":"Yes. We map your existing folder structure to SharePoint, configure permissions, and migrate all documents — with staff training to ensure adoption."}},
+    {"@type":"Question","name":"How long does a SharePoint intranet build take?","acceptedAnswer":{"@type":"Answer","text":"A standard SharePoint intranet with 5–10 department sites typically takes 4–8 weeks, depending on complexity and the volume of content to migrate."}},
+    {"@type":"Question","name":"Can SharePoint automate our approval processes?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. Power Automate can handle approval workflows for documents, purchase orders, leave requests, and any other process currently handled by email or paper."}}
+  ]
+}
+</script>
+
+<style>
+  .evo-page { font-family: var(--body-font, 'Inter', sans-serif); color: #5e6979; background: #fff; }
+
+  .evo-announce {
+    background: #0e2240; color: #cff394; text-align: center;
+    padding: 10px 20px; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .evo-announce a { color: #fff; text-decoration: underline; }
+
+  .evo-hero {
+    background: #0e2240; position: relative; overflow: hidden; padding: 80px 0 70px;
+  }
+  .evo-hero::before {
+    content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 55%;
+    background: radial-gradient(ellipse at 80% 50%, rgba(207,243,148,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .evo-hero__grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; position: relative; z-index: 1;
+  }
+  .evo-hero__eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(207,243,148,0.12); border: 1px solid rgba(207,243,148,0.3);
+    color: #cff394; border-radius: 20px; padding: 5px 14px; font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .evo-hero__title { color: #fff; font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; margin-bottom: 18px; }
+  .evo-hero__title span { color: #cff394; }
+  .evo-hero__lead { color: #a8b8cc; font-size: 1.05rem; line-height: 1.65; margin-bottom: 30px; }
+  .evo-hero__btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .evo-hero__cta-primary {
+    background: #cff394; color: #0e2240; padding: 14px 28px; border-radius: 8px;
+    text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: background 0.2s, transform 0.15s;
+  }
+  .evo-hero__cta-primary:hover { background: #b8e070; transform: translateY(-1px); }
+  .evo-hero__cta-secondary {
+    background: rgba(255,255,255,0.08); color: #fff; padding: 14px 28px; border-radius: 8px;
+    text-decoration: none; font-weight: 600; font-size: 0.95rem; border: 1px solid rgba(255,255,255,0.2);
+    transition: background 0.2s;
+  }
+  .evo-hero__cta-secondary:hover { background: rgba(255,255,255,0.14); }
+
+  .evo-hero__card-group { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .evo-hero__card {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 18px; transition: background 0.2s;
+  }
+  .evo-hero__card:hover { background: rgba(255,255,255,0.11); }
+  .evo-hero__card-icon { font-size: 1.6rem; margin-bottom: 8px; }
+  .evo-hero__card-title { color: #fff; font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+  .evo-hero__card-desc { color: #8a9ab0; font-size: 0.8rem; line-height: 1.5; }
+
+  .evo-section { padding: 80px 0; }
+  .evo-section--gray { background: #f8fafb; }
+  .evo-section-head { text-align: center; margin-bottom: 48px; }
+  .evo-badge {
+    display: inline-block; background: #cff394; color: #0e2240;
+    border-radius: 20px; padding: 4px 14px; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .evo-section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: #0e2240; font-weight: 800; margin: 0 auto; max-width: 680px; }
+  .evo-section-head p { color: #5e6979; max-width: 620px; margin: 12px auto 0; font-size: 1.05rem; line-height: 1.65; }
+
+  .evo-feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .evo-feat-card {
+    background: #fff; border: 1px solid #e5eaf2; border-radius: 12px; padding: 28px;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .evo-feat-card:hover { box-shadow: 0 8px 28px rgba(14,34,64,0.1); transform: translateY(-2px); }
+  .evo-feat-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .evo-feat-card h3 { color: #0e2240; font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .evo-feat-card p { color: #5e6979; font-size: 0.9rem; line-height: 1.6; margin: 0; }
+
+  .evo-services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .evo-mega-col-title { color: #0e2240; font-weight: 700; font-size: 0.95rem; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #cff394; }
+  .evo-service-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .evo-service-list li { color: #5e6979; font-size: 0.9rem; padding-left: 16px; position: relative; }
+  .evo-service-list li::before { content: '›'; color: #a8e060; font-weight: 700; position: absolute; left: 0; }
+
+  .evo-trust-strip {
+    background: #0e2240; padding: 40px 0;
+  }
+  .evo-trust-strip__inner { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 24px; }
+  .evo-trust-item { text-align: center; }
+  .evo-trust-item strong { display: block; color: #cff394; font-size: 1.9rem; font-weight: 800; }
+  .evo-trust-item span { color: #a8b8cc; font-size: 0.85rem; }
+
+  .evo-faq__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .evo-faq-item {
+    background: #fff; border: 1px solid #e5eaf2; border-radius: 12px; padding: 24px;
+  }
+  .evo-faq-item h4 { color: #0e2240; font-size: 0.95rem; font-weight: 700; margin: 0 0 10px; }
+  .evo-faq-item p { color: #5e6979; font-size: 0.88rem; line-height: 1.65; margin: 0; }
+
+  .evo-cta { background: #0e2240; padding: 80px 0; }
+  .evo-cta__inner { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
+  .evo-cta h2 { color: #fff; font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 800; margin: 10px 0 16px; }
+  .evo-cta p { color: #a8b8cc; font-size: 1rem; line-height: 1.65; }
+  .evo-cta__checks { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+  .evo-cta__check { color: #cff394; font-size: 0.88rem; font-weight: 600; padding-left: 20px; position: relative; }
+  .evo-cta__check::before { content: '✓'; position: absolute; left: 0; }
+  .evo-cta__btns { display: flex; flex-direction: column; gap: 12px; min-width: 220px; }
+  .evo-btn-cta {
+    display: block; text-align: center; padding: 14px 24px; border-radius: 8px;
+    text-decoration: none; font-weight: 700; font-size: 0.92rem; transition: all 0.2s;
+  }
+  .evo-btn-cta--lime { background: #cff394; color: #0e2240; }
+  .evo-btn-cta--lime:hover { background: #b8e070; }
+  .evo-btn-cta--outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
+  .evo-btn-cta--outline:hover { background: rgba(255,255,255,0.08); }
+
+  .ic-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  @media (max-width: 900px) {
+    .evo-hero__grid, .evo-feat-grid, .evo-services-grid, .evo-faq__grid, .evo-cta__inner { grid-template-columns: 1fr; }
+    .evo-hero__card-group { grid-template-columns: 1fr 1fr; }
+    .evo-trust-strip__inner { flex-direction: row; justify-content: center; }
+  }
+  @media (max-width: 560px) {
+    .evo-hero__card-group { grid-template-columns: 1fr; }
+    .evo-hero { padding: 50px 0 40px; }
+    .evo-section { padding: 50px 0; }
+  }
+</style>
+
+<div class="evo-page">
+
+  {% if section.settings.show_announce %}
+  <div class="evo-announce">
+    🏆 Perth's Trusted IT Partner — <a href="{{ section.settings.cta_primary_link }}">Free SharePoint Consultation →</a>
+  </div>
+  {% endif %}
+
+  {%- comment -%} HERO {%- endcomment -%}
+  <section class="evo-hero">
+    <div class="ic-container">
+      <div class="evo-hero__grid">
+        <div>
+          <div class="evo-hero__eyebrow">📍 Perth, Western Australia</div>
+          <h1 class="evo-hero__title">SharePoint Development & Business Automation <span>Perth</span></h1>
+          <p class="evo-hero__lead">Build a digital workplace that works — with SharePoint, Teams, and Power Automate. Trusted by Perth businesses for fast, reliable, expert support.</p>
+          <div class="evo-hero__btns">
+            <a href="{{ section.settings.cta_primary_link }}" class="evo-hero__cta-primary">Streamline My Workflow</a>
+            <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-hero__cta-secondary">📞 {{ section.settings.phone_number }}</a>
+          </div>
+        </div>
+        <div class="evo-hero__card-group">
+          <div class="evo-hero__card">
+            <div class="evo-hero__card-icon">📁</div>
+            <div class="evo-hero__card-title">Document Management</div>
+            <div class="evo-hero__card-desc">Structured SharePoint DMS to replace shared drives and email attachmen...</div>
+          </div>
+          <div class="evo-hero__card">
+            <div class="evo-hero__card-icon">🔄</div>
+            <div class="evo-hero__card-title">Power Automate Workflows</div>
+            <div class="evo-hero__card-desc">Automate approvals, notifications, and repetitive tasks across your bu...</div>
+          </div>
+          <div class="evo-hero__card">
+            <div class="evo-hero__card-icon">🏠</div>
+            <div class="evo-hero__card-title">Intranet Design</div>
+            <div class="evo-hero__card-desc">Modern SharePoint intranet — news, policies, and team sites in one pla...</div>
+          </div>
+          <div class="evo-hero__card">
+            <div class="evo-hero__card-icon">🔒</div>
+            <div class="evo-hero__card-title">Document Security</div>
+            <div class="evo-hero__card-desc">Granular permissions and sensitivity labels to control who sees what....</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} TRUST STRIP {%- endcomment -%}
+  <div class="evo-trust-strip">
+    <div class="ic-container">
+      <div class="evo-trust-strip__inner">
+        <div class="evo-trust-item"><strong>15 Min</strong><span>Response Target</span></div>
+        <div class="evo-trust-item"><strong>Perth</strong><span>Local Team</span></div>
+        <div class="evo-trust-item"><strong>24/7</strong><span>Monitoring</span></div>
+        <div class="evo-trust-item"><strong>Fixed</strong><span>Monthly Pricing</span></div>
+        <div class="evo-trust-item"><strong>No</strong><span>Lock-In Contracts</span></div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} FEATURES {%- endcomment -%}
+  <section class="evo-section">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">SharePoint</span>
+        <h2>Our SharePoint & Automation Services</h2>
+        <p>Comprehensive solutions for Perth businesses — from initial consultation through to ongoing support and management.</p>
+      </div>
+      <div class="evo-feat-grid">
+        
+        <div class="evo-feat-card">
+          <div class="evo-feat-icon">📁</div>
+          <h3>Document Management</h3>
+          <p>Structured SharePoint DMS to replace shared drives and email attachments.</p>
+        </div>
+        <div class="evo-feat-card">
+          <div class="evo-feat-icon">🔄</div>
+          <h3>Power Automate Workflows</h3>
+          <p>Automate approvals, notifications, and repetitive tasks across your business.</p>
+        </div>
+        <div class="evo-feat-card">
+          <div class="evo-feat-icon">🏠</div>
+          <h3>Intranet Design</h3>
+          <p>Modern SharePoint intranet — news, policies, and team sites in one place.</p>
+        </div>
+        <div class="evo-feat-card">
+          <div class="evo-feat-icon">🔒</div>
+          <h3>Document Security</h3>
+          <p>Granular permissions and sensitivity labels to control who sees what.</p>
+        </div>
+        <div class="evo-feat-card">
+          <div class="evo-feat-icon">📊</div>
+          <h3>Power BI Dashboards</h3>
+          <p>Real-time business intelligence dashboards connected to your data.</p>
+        </div>
+        <div class="evo-feat-card">
+          <div class="evo-feat-icon">🤖</div>
+          <h3>Teams Integration</h3>
+          <p>Embed SharePoint directly into Microsoft Teams for seamless access.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} SERVICES BREAKDOWN {%- endcomment -%}
+  <section class="evo-section evo-section--gray">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">What's Included</span>
+        <h2>Everything Covered in Our SharePoint & Automation Package</h2>
+      </div>
+      <div class="evo-services-grid">
+        
+            <div>
+              <div class="evo-mega-col-title">SharePoint</div>
+              <ul class="evo-service-list">
+                <li>Site Architecture</li>
+                <li>Document Libraries</li>
+                <li>Metadata & Search</li>
+                <li>External Sharing</li>
+              </ul>
+            </div>
+            <div>
+              <div class="evo-mega-col-title">Power Platform</div>
+              <ul class="evo-service-list">
+                <li>Power Automate Flows</li>
+                <li>Power Apps Forms</li>
+                <li>Power BI Reports</li>
+                <li>Copilot Integration</li>
+              </ul>
+            </div>
+            <div>
+              <div class="evo-mega-col-title">Migration</div>
+              <ul class="evo-service-list">
+                <li>Shared Drive Migration</li>
+                <li>Legacy Intranet Migration</li>
+                <li>OneDrive Migration</li>
+                <li>Permission Mapping</li>
+              </ul>
+            </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} FAQ {%- endcomment -%}
+  <section class="evo-section">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">FAQ</span>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div class="evo-faq__grid">
+        
+        <div class="evo-faq-item">
+          <h4>Can you migrate our shared drive to SharePoint?</h4>
+          <p>Yes. We map your existing folder structure to SharePoint, configure permissions, and migrate all documents — with staff training to ensure adoption.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>How long does a SharePoint intranet build take?</h4>
+          <p>A standard SharePoint intranet with 5–10 department sites typically takes 4–8 weeks, depending on complexity and the volume of content to migrate.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Can SharePoint automate our approval processes?</h4>
+          <p>Absolutely. Power Automate can handle approval workflows for documents, purchase orders, leave requests, and any other process currently handled by email or paper.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} CTA {%- endcomment -%}
+  <section class="evo-cta">
+    <div class="ic-container">
+      <div class="evo-cta__inner">
+        <div>
+          <span class="evo-badge evo-badge--white" style="background:rgba(207,243,148,0.15);color:#cff394;">Get Started Today</span>
+          <h2>Ready to Get Started with SharePoint & Automation?</h2>
+          <p>Book a <strong style="color:#cff394">free, no-obligation consultation</strong> with EvoTech Digital. Perth-based experts ready to help your business.</p>
+          <div class="evo-cta__checks">
+            <div class="evo-cta__check">Free consultation — no obligation, no pressure</div>
+            <div class="evo-cta__check">Custom quote within 24 hours</div>
+            <div class="evo-cta__check">Perth-based team, not an overseas call centre</div>
+          </div>
+        </div>
+        <div class="evo-cta__btns">
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-cta evo-btn-cta--lime">📧 Streamline My Workflow</a>
+          <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-btn-cta evo-btn-cta--outline">📞 {{ section.settings.phone_number }}</a>
+          <a href="mailto:{{ section.settings.email_address }}" class="evo-btn-cta evo-btn-cta--outline">✉️ {{ section.settings.email_address }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "SharePoint & Automation",
+  "tag": "section",
+  "class": "evo-service-section",
+  "settings": [
+    { "type": "header", "content": "Contact Details" },
+    { "type": "text", "id": "phone_number", "label": "Phone Number", "default": "0466 911 816" },
+    { "type": "text", "id": "email_address", "label": "Email Address", "default": "info@evotech.au" },
+    { "type": "header", "content": "Call-to-Action" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary CTA Link" },
+    { "type": "header", "content": "Page Options" },
+    { "type": "checkbox", "id": "show_announce", "label": "Show Announcement Bar", "default": true }
+  ],
+  "presets": [{ "name": "SharePoint & Automation" }]
+}
+{% endschema %}

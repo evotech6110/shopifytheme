@@ -1,0 +1,596 @@
+{% comment %}
+  PAGE 8 — NETWORK DESIGN & SECURITY (SD-WAN)
+  evotech.au/pages/network-design-security
+  SEO Title : Business Networking Perth | Managed WiFi & SD-WAN | Evotech
+  Meta Desc : High-speed, secure, and reliable networking for your Perth office. Managed SD-WAN, WiFi 6, and firewall security.
+  Keyword   : Business networking Perth · SD-WAN Perth
+  v3 sole-trader honest · 1 min response · full SEO
+{% endcomment %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "EvoTech Digital",
+  "description": "Perth-based network design, installation and security. Business networking, SD-WAN, firewall management, managed Wi-Fi and network infrastructure for WA SMBs.",
+  "url": "{{ shop.url }}",
+  "telephone": "+61466911816",
+  "email": "info@evotech.au",
+  "address": { "@type": "PostalAddress", "addressLocality": "Perth", "addressRegion": "WA", "addressCountry": "AU" },
+  "areaServed": ["Perth CBD","Subiaco","Joondalup","Fremantle","Midland","Rockingham","Mandurah","Osborne Park","Western Australia"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog", "name": "Network Design & Security",
+    "itemListElement": [
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Business Network Design Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"SD-WAN Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Firewall Installation Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Managed Wi-Fi Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Network Security Perth"}}
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What is SD-WAN and does my Perth business need it?","acceptedAnswer":{"@type":"Answer","text":"SD-WAN intelligently routes traffic across multiple internet connections for speed, reliability and failover. Perth businesses with multiple sites or heavy cloud usage benefit most — it reduces latency for Microsoft 365, Teams and VoIP, and provides automatic failover if one connection drops."}},
+    {"@type":"Question","name":"Why does my Perth business need a business-grade firewall?","acceptedAnswer":{"@type":"Answer","text":"A business-grade firewall (Fortinet FortiGate, Cisco Meraki) provides intrusion prevention, DNS filtering, application control and detailed traffic logging that consumer-grade routers lack entirely — critical for protecting Perth SMBs from ransomware and data breaches."}},
+    {"@type":"Question","name":"Can EvoTech design and install a network for a new Perth office?","acceptedAnswer":{"@type":"Answer","text":"Yes. EvoTech Digital provides end-to-end network design and installation for new Perth offices — cabling, rack build, firewall configuration, Wi-Fi deployment, VLAN segmentation and ongoing managed network support."}},
+    {"@type":"Question","name":"How much does business networking cost for a small Perth office?","acceptedAnswer":{"@type":"Answer","text":"A basic business network for a small Perth office (firewall/router, managed switch, 2-3 Wi-Fi APs) typically starts from $1,200-$2,500 in hardware plus installation labour. Contact EvoTech Digital for a free site assessment and transparent quote."}},
+    {"@type":"Question","name":"Does EvoTech provide ongoing network monitoring?","acceptedAnswer":{"@type":"Answer","text":"Yes. EvoTech Digital offers 24/7 remote network monitoring for Perth businesses — uptime alerts, bandwidth anomalies, device health and security events — with remote incident response included."}}
+  ]
+}
+</script>
+
+<style>
+  .evo-page{font-family:var(--body-font,sans-serif);color:#5e6979;background:#fff}
+  .evo-announce{background:#0e2240;color:#cff394;text-align:center;padding:10px 20px;font-size:.85rem;font-weight:600;letter-spacing:.02em}
+  .evo-announce a{color:#fff;text-decoration:underline}
+  .evo-hero{background:#0e2240;position:relative;overflow:hidden;padding:80px 0 70px}
+  .evo-hero::before{content:'';position:absolute;top:0;right:0;bottom:0;width:55%;background:radial-gradient(ellipse at 80% 50%,rgba(207,243,148,.08) 0%,transparent 65%);pointer-events:none}
+  .evo-hero__grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;position:relative;z-index:1}
+  .evo-hero__eyebrow{display:inline-flex;align-items:center;gap:8px;color:#cff394;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
+  .evo-hero__eyebrow::before{content:'';display:inline-block;width:24px;height:2px;background:#cff394;flex-shrink:0}
+  .evo-hero h1{font-family:var(--heading-font,sans-serif);font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:700;color:#fff;line-height:1.13;margin-bottom:20px}
+  .evo-hero h1 span{color:#cff394}
+  .evo-hero__lead{font-size:1.05rem;color:#c5d3e8;line-height:1.75;margin-bottom:32px}
+  .evo-hero__actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+  .evo-hero__pills{display:flex;gap:10px;flex-wrap:wrap;padding-top:28px;border-top:1px solid rgba(255,255,255,.1)}
+  .evo-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(207,243,148,.1);border:1px solid rgba(207,243,148,.22);border-radius:50px;padding:7px 14px;font-size:.8rem;font-weight:600;color:#d8f0b0}
+  .evo-pill::before{content:'✓';color:#cff394;font-weight:700}
+  .evo-btn-lime{display:inline-flex;align-items:center;gap:7px;background:#cff394;color:#0e2240;padding:14px 28px;border-radius:var(--button-border-radius,6px);font-weight:700;font-size:.93rem;text-decoration:none;transition:background .2s,transform .2s}
+  .evo-btn-lime:hover{background:#b8e87c;transform:translateY(-2px);text-decoration:none;color:#0e2240}
+  .evo-btn-outline-white{display:inline-flex;align-items:center;gap:7px;background:transparent;color:#fff;padding:13px 28px;border-radius:var(--button-border-radius,6px);font-weight:600;font-size:.93rem;text-decoration:none;border:1.5px solid rgba(255,255,255,.3);transition:border-color .2s,color .2s}
+  .evo-btn-outline-white:hover{border-color:#cff394;color:#cff394;text-decoration:none}
+  .evo-services-visual{background:rgba(255,255,255,.05);border:1px solid rgba(207,243,148,.16);border-radius:14px;padding:30px}
+  .evo-vis-header{font-size:.75rem;font-weight:700;color:rgba(207,243,148,.6);text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px}
+  .evo-vis-item{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .evo-vis-item:last-child{border-bottom:none}
+  .evo-vis-icon{width:38px;height:38px;border-radius:8px;background:rgba(207,243,148,.1);border:1px solid rgba(207,243,148,.18);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+  .evo-vis-name{font-size:.87rem;font-weight:600;color:#e8f0fa}
+  .evo-vis-desc{font-size:.75rem;color:#7a90a8;margin-top:2px}
+  .evo-vis-badge{margin-left:auto;background:rgba(110,224,122,.15);border:1px solid rgba(110,224,122,.3);border-radius:4px;padding:3px 8px;font-size:.7rem;font-weight:700;color:#6ee07a;white-space:nowrap}
+  .evo-partners{background:#f8f9fd;border-top:1px solid #e2e4e8;border-bottom:1px solid #e2e4e8;padding:22px 0}
+  .evo-partners__inner{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .evo-partners__label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9aa3b0;white-space:nowrap;padding-right:12px;border-right:1px solid #e2e4e8}
+  .evo-partners__logos{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .evo-partner-badge{background:#fff;border:1px solid #e2e4e8;border-radius:6px;padding:7px 16px;font-size:.8rem;font-weight:700;color:#0e2240;white-space:nowrap}
+  .evo-section-head{text-align:center;max-width:680px;margin:0 auto 56px}
+  .evo-badge{display:inline-block;padding:4px 14px;border-radius:50px;border:1.5px solid #0e2240;color:#0e2240;font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+  .evo-badge--lime{border-color:#5c7d26;background:rgba(207,243,148,.15);color:#3a5a10}
+  .evo-badge--white{border-color:rgba(255,255,255,.35);color:#fff;background:rgba(255,255,255,.07)}
+  .evo-section-head h2{font-family:var(--heading-font,sans-serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#0e2240;line-height:1.2}
+  .evo-section-head--light h2{color:#fff}
+  .evo-section-head p{margin-top:14px;font-size:1rem;line-height:1.7;color:#5e6979}
+  .evo-section-head--light p{color:#b8cce0}
+  .evo-services{padding:88px 0;background:#fff}
+  .evo-services__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .evo-service-card{background:#fff;border:1px solid #e2e4e8;border-radius:10px;padding:30px 28px;transition:all .28s;position:relative;overflow:hidden}
+  .evo-service-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:#cff394;transform:scaleX(0);transform-origin:left;transition:transform .28s}
+  .evo-service-card:hover{box-shadow:0 8px 32px rgba(14,34,64,.09);transform:translateY(-3px);border-color:#c4d8a4}
+  .evo-service-card:hover::after{transform:scaleX(1)}
+  .evo-service-icon{width:48px;height:48px;border-radius:10px;background:#f0f8e8;border:1px solid #d6f0b0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:18px}
+  .evo-service-card h3{font-family:var(--heading-font,sans-serif);font-size:1.05rem;font-weight:700;color:#0e2240;margin-bottom:10px;line-height:1.3}
+  .evo-service-card p{font-size:.88rem;line-height:1.65;color:#5e6979;margin:0}
+  .evo-service-link{display:inline-flex;align-items:center;gap:5px;margin-top:18px;font-size:.85rem;font-weight:700;color:#0e2240;text-decoration:none;transition:gap .2s,color .2s}
+  .evo-service-link:hover{gap:9px;color:#5c7d26;text-decoration:none}
+  .evo-why{background:#f8f9fd;padding:88px 0}
+  .evo-why__grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .evo-why__points{display:flex;flex-direction:column;gap:16px;margin-top:30px}
+  .evo-why-item{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid #e2e4e8;border-radius:10px;padding:20px;transition:border-color .2s}
+  .evo-why-item:hover{border-color:#cff394}
+  .evo-why-num{font-family:var(--heading-font,sans-serif);font-size:1.6rem;font-weight:700;color:#a8d87a;line-height:1;min-width:36px;padding-top:3px}
+  .evo-why-item h4{font-family:var(--heading-font,sans-serif);font-size:.97rem;font-weight:700;color:#0e2240;margin-bottom:5px}
+  .evo-why-item p{font-size:.87rem;line-height:1.6;margin:0}
+  .evo-value-box{background:#0e2240;border-radius:14px;padding:40px;color:#fff}
+  .evo-value-box__title{font-family:var(--heading-font,sans-serif);font-size:1.1rem;font-weight:700;color:#cff394;margin-bottom:24px;line-height:1.3}
+  .evo-value-list{display:flex;flex-direction:column;gap:16px}
+  .evo-value-item{display:flex;gap:14px;align-items:flex-start;padding:16px;background:rgba(255,255,255,.05);border:1px solid rgba(207,243,148,.12);border-radius:8px}
+  .evo-value-icon{width:36px;height:36px;border-radius:8px;flex-shrink:0;background:rgba(207,243,148,.12);display:flex;align-items:center;justify-content:center;font-size:1rem}
+  .evo-value-label{font-size:.9rem;font-weight:700;color:#e8f0fa;margin-bottom:3px}
+  .evo-value-desc{font-size:.8rem;color:#7a90a8;line-height:1.5}
+  .evo-cta-box{margin-top:24px;padding:20px;background:rgba(207,243,148,.08);border:1px solid rgba(207,243,148,.2);border-radius:10px;text-align:center}
+  .evo-cta-box p{color:#b8cce0;font-size:.88rem;margin-bottom:14px}
+  .evo-included{background:#f8f9fd;padding:88px 0}
+  .evo-included__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .evo-include-card{background:#fff;border:1px solid #e2e4e8;border-radius:10px;padding:28px}
+  .evo-include-card h3{font-family:var(--heading-font,sans-serif);font-size:1.05rem;font-weight:700;color:#0e2240;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .evo-include-list{display:flex;flex-direction:column;gap:9px}
+  .evo-include-item{display:flex;align-items:flex-start;gap:8px;font-size:.88rem;color:#5e6979;line-height:1.5}
+  .evo-include-item::before{content:'✓';color:#5c7d26;font-weight:700;flex-shrink:0;margin-top:1px}
+  .evo-process{background:#0e2240;padding:88px 0}
+  .evo-process__steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:16px}
+  .evo-step{background:rgba(255,255,255,.04);border:1px solid rgba(207,243,148,.14);border-radius:10px;padding:30px 24px;text-align:center;transition:all .25s}
+  .evo-step:hover{background:rgba(207,243,148,.06);border-color:rgba(207,243,148,.32)}
+  .evo-step-num{width:52px;height:52px;border-radius:50%;border:2px solid #cff394;display:flex;align-items:center;justify-content:center;font-family:var(--heading-font,sans-serif);font-size:1.1rem;font-weight:700;color:#cff394;margin:0 auto 18px}
+  .evo-step h3{font-family:var(--heading-font,sans-serif);font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px}
+  .evo-step p{font-size:.85rem;color:#8fa5bf;margin:0;line-height:1.65}
+  .evo-industries{background:#fff;padding:88px 0}
+  .evo-industries__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .evo-industry{background:#f8f9fd;border:1px solid #e2e4e8;border-radius:8px;padding:18px 16px;display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:600;color:#0e2240;transition:all .2s}
+  .evo-industry:hover{background:#f0f8e8;border-color:#b8e07c;transform:translateY(-2px)}
+  .evo-industry__icon{font-size:1.2rem;flex-shrink:0}
+  .evo-suburbs{background:#fff;padding:80px 0}
+  .evo-suburbs__grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  .evo-suburb{background:#f8f9fd;border:1px solid #e2e4e8;border-radius:6px;padding:10px 12px;font-size:.82rem;color:#5e6979;text-align:center;font-weight:500;transition:all .18s}
+  .evo-suburb:hover{background:#f0f8e8;border-color:#c4d8a4;color:#3a5a10}
+  .evo-faq{background:#f8f9fd;padding:88px 0}
+  .evo-faq__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .evo-faq-item{background:#fff;border:1px solid #e2e4e8;border-radius:10px;padding:26px}
+  .evo-faq-item h4{font-family:var(--heading-font,sans-serif);font-size:.97rem;font-weight:700;color:#0e2240;margin-bottom:10px;line-height:1.35}
+  .evo-faq-item p{font-size:.87rem;line-height:1.68;margin:0}
+  .evo-cta{background:#0e2240;padding:80px 0}
+  .evo-cta__inner{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+  .evo-cta h2{font-family:var(--heading-font,sans-serif);font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:#fff;margin-bottom:10px}
+  .evo-cta p{color:#b8cce0;font-size:1rem;margin:0}
+  .evo-cta__checks{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+  .evo-cta__check{display:flex;align-items:center;gap:8px;font-size:.88rem;color:#c5d3e8}
+  .evo-cta__check::before{content:'✓';color:#cff394;font-weight:700;flex-shrink:0}
+  .evo-cta__btns{display:flex;flex-direction:column;gap:10px;min-width:220px}
+  .evo-btn-cta{display:block;text-align:center;padding:15px 26px;border-radius:var(--button-border-radius,6px);font-weight:700;font-size:.9rem;text-decoration:none;transition:all .2s;white-space:nowrap}
+  .evo-btn-cta--lime{background:#cff394;color:#0e2240}
+  .evo-btn-cta--lime:hover{background:#b8e87c;text-decoration:none;color:#0e2240}
+  .evo-btn-cta--outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+  .evo-btn-cta--outline:hover{border-color:#cff394;color:#cff394;text-decoration:none}
+  .ic-container{max-width:1200px;margin:0 auto;padding:0 24px}
+  @media(max-width:1024px){.evo-hero__grid,.evo-why__grid,.evo-faq__grid,.evo-cta__inner{grid-template-columns:1fr}.evo-services__grid{grid-template-columns:1fr 1fr}.evo-process__steps{grid-template-columns:1fr 1fr}.evo-industries__grid{grid-template-columns:repeat(3,1fr)}.evo-suburbs__grid{grid-template-columns:repeat(4,1fr)}.evo-included__grid{grid-template-columns:1fr}}
+  @media(max-width:767px){.evo-hero{padding:52px 0 46px}.evo-hero h1{font-size:1.85rem}.evo-services__grid,.evo-process__steps,.evo-included__grid{grid-template-columns:1fr}.evo-industries__grid{grid-template-columns:1fr 1fr}.evo-suburbs__grid{grid-template-columns:repeat(3,1fr)}.evo-services,.evo-why,.evo-process,.evo-industries,.evo-included,.evo-faq,.evo-cta{padding:56px 0}.evo-cta__btns{flex-direction:row;flex-wrap:wrap;min-width:auto}}
+  @media(max-width:480px){.evo-suburbs__grid{grid-template-columns:repeat(2,1fr)}.evo-faq__grid{grid-template-columns:1fr}}
+</style>
+
+<div class="evo-page">
+
+  {% if section.settings.show_announce %}
+  <div class="evo-announce">
+    🌐 Slow or unsecured office network? Get a <strong>Free Network Assessment</strong> — no obligation.
+    <a href="{{ section.settings.cta_primary_link }}">Book Now →</a>
+  </div>
+  {% endif %}
+
+  <section class="evo-hero" aria-labelledby="evo-h1">
+    <div class="ic-container">
+      <div class="evo-hero__grid">
+        <div>
+          <div class="evo-hero__eyebrow">Perth Network Specialist</div>
+          <h1 id="evo-h1">
+            Business Networking &amp;<br>
+            <span>Network Security</span><br>
+            Perth
+          </h1>
+          <p class="evo-hero__lead">
+            A slow or unsecured network costs your Perth business every day. EvoTech Digital designs, installs and manages <strong style="color:#e8f0fa">business-grade networks — firewalls, SD-WAN, managed switches and Wi-Fi</strong> built to perform and protect.
+          </p>
+          <div class="evo-hero__actions">
+            <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-lime">Upgrade My Network →</a>
+            <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-btn-outline-white">📞 {{ section.settings.phone_number }}</a>
+          </div>
+          <div class="evo-hero__pills">
+            <span class="evo-pill">Business-Grade Hardware</span>
+            <span class="evo-pill">Firewall &amp; IPS</span>
+            <span class="evo-pill">Wi-Fi Site Survey</span>
+            <span class="evo-pill">24/7 Monitoring</span>
+          </div>
+        </div>
+        <div aria-hidden="true">
+          <div class="evo-services-visual">
+            <div class="evo-vis-header">Network Services — EvoTech Digital</div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">🛡️</div>
+              <div><div class="evo-vis-name">Firewall Management</div><div class="evo-vis-desc">Fortinet, Cisco Meraki &amp; pfSense</div></div>
+              <span class="evo-vis-badge">Active</span>
+            </div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">🔀</div>
+              <div><div class="evo-vis-name">SD-WAN &amp; WAN</div><div class="evo-vis-desc">Multi-site connectivity &amp; failover</div></div>
+              <span class="evo-vis-badge">Active</span>
+            </div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">📶</div>
+              <div><div class="evo-vis-name">Managed Wi-Fi</div><div class="evo-vis-desc">Site survey, AP placement &amp; SSID config</div></div>
+              <span class="evo-vis-badge">Active</span>
+            </div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">🔌</div>
+              <div><div class="evo-vis-name">Managed Switching &amp; VLAN</div><div class="evo-vis-desc">Segmented networks, QoS &amp; PoE</div></div>
+              <span class="evo-vis-badge">Active</span>
+            </div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">📊</div>
+              <div><div class="evo-vis-name">Network Monitoring</div><div class="evo-vis-desc">24/7 uptime, traffic &amp; threat detection</div></div>
+              <span class="evo-vis-badge">Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="evo-partners">
+    <div class="ic-container">
+      <div class="evo-partners__inner">
+        <span class="evo-partners__label">Network Vendors</span>
+        <div class="evo-partners__logos">
+          <span class="evo-partner-badge">Fortinet</span>
+          <span class="evo-partner-badge">Cisco Meraki</span>
+          <span class="evo-partner-badge">Ubiquiti</span>
+          <span class="evo-partner-badge">Netgear</span>
+          <span class="evo-partner-badge">pfSense / OPNsense</span>
+          <span class="evo-partner-badge">Palo Alto</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="evo-services" id="services" aria-labelledby="evo-services-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">Our Services</span>
+        <h2 id="evo-services-h2">Business Network Design, Installation &amp; Security — Perth</h2>
+        <p>From a single-office Wi-Fi upgrade to a multi-site secure SD-WAN — EvoTech Digital designs and delivers business networks that are fast, reliable and secured from the ground up.</p>
+      </div>
+      <div class="evo-services__grid">
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🛡️</div>
+          <h3>Firewall Installation &amp; Management</h3>
+          <p>Business-grade firewall deployment for Perth offices — Fortinet FortiGate, Cisco Meraki MX or pfSense/OPNsense configured with intrusion prevention, DNS filtering, application control and geo-IP blocking. Managed and updated remotely on an ongoing basis.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🔀</div>
+          <h3>SD-WAN &amp; Multi-Site Connectivity</h3>
+          <p>Connect multiple Perth office locations securely and reliably. SD-WAN intelligently routes traffic across your internet connections, provides automatic failover and dramatically reduces latency for cloud applications including Microsoft 365, Teams and VoIP.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">📶</div>
+          <h3>Managed Wi-Fi Design &amp; Installation</h3>
+          <p>Survey-led Wi-Fi design for Perth offices — heat mapping, optimal access point placement, seamless roaming configuration and SSID separation for staff, guest and IoT devices. Enterprise-grade coverage with no dead spots or interference.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🔌</div>
+          <h3>Managed Switches &amp; VLAN Segmentation</h3>
+          <p>Properly segmented networks using managed switches — separating staff, guest, VoIP and IoT traffic onto dedicated VLANs. Prevents lateral movement in a breach, improves performance and makes your Perth office network fully auditable.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🌐</div>
+          <h3>Structured Cabling &amp; Network Racks</h3>
+          <p>Professional structured cabling for Perth offices — Cat6/Cat6A runs, patch panel termination, network rack builds and clean cable management. A tidy, documented physical network makes troubleshooting and future expansion straightforward.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">📊</div>
+          <h3>Network Monitoring &amp; Management</h3>
+          <p>24/7 remote monitoring of your Perth network — uptime alerts, bandwidth anomalies, device health checks and security event detection. Issues are investigated and resolved proactively before they cause downtime for your business.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="evo-why" id="why" aria-labelledby="evo-why-h2">
+    <div class="ic-container">
+      <div class="evo-why__grid">
+        <div>
+          <span class="evo-badge">Why EvoTech Digital</span>
+          <h2 id="evo-why-h2" style="font-family:var(--heading-font,sans-serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#0e2240;line-height:1.2;margin-top:10px">
+            Perth Business Networking Built Right the First Time
+          </h2>
+          <p style="margin-top:12px;font-size:1rem;line-height:1.7;color:#5e6979">
+            Most Perth small business network problems stem from a consumer-grade router that was "good enough" when the business had two staff — and was never properly upgraded. EvoTech Digital assesses your infrastructure honestly and builds a business-grade network that scales with your growth.
+          </p>
+          <div class="evo-why__points">
+            <div class="evo-why-item">
+              <div class="evo-why-num">01</div>
+              <div>
+                <h4>Free Network Assessment First</h4>
+                <p>Before recommending anything, I assess your current Perth office network — identifying bottlenecks, security gaps and capacity issues. You get an honest findings report at no cost.</p>
+              </div>
+            </div>
+            <div class="evo-why-item">
+              <div class="evo-why-num">02</div>
+              <div>
+                <h4>Security Built Into Every Design</h4>
+                <p>Every network I design includes VLAN segmentation, a business-grade firewall and proper Wi-Fi authentication — security is not an afterthought added after something goes wrong.</p>
+              </div>
+            </div>
+            <div class="evo-why-item">
+              <div class="evo-why-num">03</div>
+              <div>
+                <h4>Hardware Sourced &amp; Installed Together</h4>
+                <p>EvoTech Digital sources and supplies networking hardware — firewalls, switches, access points — through trusted suppliers. No need to coordinate between a separate retailer and a separate installer.</p>
+              </div>
+            </div>
+            <div class="evo-why-item">
+              <div class="evo-why-num">04</div>
+              <div>
+                <h4>Ongoing Managed Support Available</h4>
+                <p>After installation, I can remotely monitor and manage your Perth network — firmware updates, security patches, bandwidth analysis and rapid response to outages — keeping you connected and protected.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="evo-value-box">
+          <div class="evo-value-box__title">The EvoTech Network Advantage</div>
+          <div class="evo-value-list">
+            <div class="evo-value-item">
+              <div class="evo-value-icon">🛡️</div>
+              <div>
+                <div class="evo-value-label">Security-First Design</div>
+                <div class="evo-value-desc">Firewall, VLAN segmentation and guest isolation built into every network from day one — not bolted on later</div>
+              </div>
+            </div>
+            <div class="evo-value-item">
+              <div class="evo-value-icon">📦</div>
+              <div>
+                <div class="evo-value-label">Supply + Install in One</div>
+                <div class="evo-value-desc">Hardware sourced through EvoTech's procurement channel — one point of contact for both supply and installation</div>
+              </div>
+            </div>
+            <div class="evo-value-item">
+              <div class="evo-value-icon">📍</div>
+              <div>
+                <div class="evo-value-label">Perth On-Site Service</div>
+                <div class="evo-value-desc">Physical installation, cabling and rack builds performed at your Perth office — 1 min response target during business hours</div>
+              </div>
+            </div>
+            <div class="evo-value-item">
+              <div class="evo-value-icon">📊</div>
+              <div>
+                <div class="evo-value-label">Documented &amp; Monitored</div>
+                <div class="evo-value-desc">Full network documentation provided — optionally monitored 24/7 so issues are caught before they become outages</div>
+              </div>
+            </div>
+          </div>
+          <div class="evo-cta-box">
+            <p>Get an honest assessment of your Perth office network</p>
+            <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-lime" style="display:inline-flex">Book Free Network Assessment →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="evo-included" aria-labelledby="evo-included-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge evo-badge--lime">What's Included</span>
+        <h2 id="evo-included-h2">Everything in a Managed Network Engagement</h2>
+        <p>EvoTech Digital covers the complete stack — design, installation, security hardening, documentation and optional ongoing management.</p>
+      </div>
+      <div class="evo-included__grid">
+        <div class="evo-include-card">
+          <h3><span>🗺️</span> Network Design</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Network assessment and current-state documentation</div>
+            <div class="evo-include-item">Topology design — core, distribution and access layers</div>
+            <div class="evo-include-item">VLAN design and IP address plan</div>
+            <div class="evo-include-item">Wi-Fi site survey and access point placement plan</div>
+            <div class="evo-include-item">Hardware specification and procurement coordination</div>
+          </div>
+        </div>
+        <div class="evo-include-card">
+          <h3><span>🔌</span> Installation</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Structured cabling (Cat6/Cat6A) installation and testing</div>
+            <div class="evo-include-item">Network rack build and cable management</div>
+            <div class="evo-include-item">Managed switch and router configuration</div>
+            <div class="evo-include-item">Wi-Fi access point mounting and SSID configuration</div>
+            <div class="evo-include-item">Firewall deployment and baseline security policy</div>
+          </div>
+        </div>
+        <div class="evo-include-card">
+          <h3><span>🛡️</span> Security Configuration</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Firewall rules — deny-by-default with permitted exceptions</div>
+            <div class="evo-include-item">Intrusion Prevention System (IPS) activation</div>
+            <div class="evo-include-item">DNS filtering for malware and phishing domains</div>
+            <div class="evo-include-item">Guest network isolation and optional captive portal</div>
+            <div class="evo-include-item">Remote management VPN configuration</div>
+          </div>
+        </div>
+        <div class="evo-include-card">
+          <h3><span>📊</span> Monitoring &amp; Ongoing Management</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">24/7 uptime monitoring with instant alerting</div>
+            <div class="evo-include-item">Bandwidth and traffic analysis reporting</div>
+            <div class="evo-include-item">Firmware and security patch management</div>
+            <div class="evo-include-item">Monthly network health reports</div>
+            <div class="evo-include-item">Remote incident response and troubleshooting</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="evo-process" aria-labelledby="evo-process-h2">
+    <div class="ic-container">
+      <div class="evo-section-head evo-section-head--light">
+        <span class="evo-badge evo-badge--white">How It Works</span>
+        <h2 id="evo-process-h2">Getting Your Perth Network Right</h2>
+        <p>A structured process from assessment to go-live — minimal disruption, maximum confidence.</p>
+      </div>
+      <div class="evo-process__steps">
+        <div class="evo-step">
+          <div class="evo-step-num">1</div>
+          <h3>Free Network Assessment</h3>
+          <p>I review your existing Perth office infrastructure — cabling, devices, ISP connection and security posture — and provide a findings report at no cost.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">2</div>
+          <h3>Design &amp; Proposal</h3>
+          <p>A clear network design with topology diagram, hardware specification and transparent pricing. Hardware ordered once you're happy to proceed.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">3</div>
+          <h3>Installation Day</h3>
+          <p>I attend your Perth office and complete the full installation — cabling, rack build, device configuration and Wi-Fi deployment. Fully tested before I leave.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">4</div>
+          <h3>Handover &amp; Monitoring</h3>
+          <p>Full network documentation provided. Optional ongoing monitoring and management keeps your Perth network fast, secure and up to date.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="evo-industries" id="industries" aria-labelledby="evo-industries-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge evo-badge--lime">Industries</span>
+        <h2 id="evo-industries-h2">Business Networking for Perth's Key Industries</h2>
+        <p>Every Perth industry has unique network performance, security and compliance requirements. EvoTech Digital designs networks suited to your specific sector.</p>
+      </div>
+      <div class="evo-industries__grid">
+        <div class="evo-industry"><span class="evo-industry__icon">⚖️</span> Legal Firms</div>
+        <div class="evo-industry"><span class="evo-industry__icon">💊</span> Healthcare &amp; Medical</div>
+        <div class="evo-industry"><span class="evo-industry__icon">💰</span> Financial Services</div>
+        <div class="evo-industry"><span class="evo-industry__icon">⛏️</span> Mining &amp; Resources</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏗️</span> Engineering &amp; Construction</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏢</span> Professional Services</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🎓</span> Education</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏛️</span> Government</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🛒</span> Retail &amp; Hospitality</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🚛</span> Transport &amp; Logistics</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏭</span> Manufacturing</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏠</span> Real Estate</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="evo-suburbs" aria-labelledby="evo-suburbs-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">Service Areas</span>
+        <h2 id="evo-suburbs-h2">Business Networking Across All Perth Suburbs</h2>
+        <p>EvoTech Digital provides onsite network design, installation and support across the entire Perth metropolitan area, including:</p>
+      </div>
+      <div class="evo-suburbs__grid">
+        <div class="evo-suburb">Perth CBD</div><div class="evo-suburb">Subiaco</div><div class="evo-suburb">West Perth</div>
+        <div class="evo-suburb">Northbridge</div><div class="evo-suburb">Osborne Park</div><div class="evo-suburb">Joondalup</div>
+        <div class="evo-suburb">Wanneroo</div><div class="evo-suburb">Mirrabooka</div><div class="evo-suburb">Midland</div>
+        <div class="evo-suburb">Fremantle</div><div class="evo-suburb">Cockburn</div><div class="evo-suburb">Canning Vale</div>
+        <div class="evo-suburb">Cannington</div><div class="evo-suburb">Armadale</div><div class="evo-suburb">Rockingham</div>
+        <div class="evo-suburb">Mandurah</div><div class="evo-suburb">Belmont</div><div class="evo-suburb">Victoria Park</div>
+        <div class="evo-suburb">South Perth</div><div class="evo-suburb">Nedlands</div><div class="evo-suburb">Claremont</div>
+        <div class="evo-suburb">Cottesloe</div><div class="evo-suburb">Stirling</div><div class="evo-suburb">Karrinyup</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="evo-faq" id="faq" aria-labelledby="evo-faq-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">FAQ</span>
+        <h2 id="evo-faq-h2">Frequently Asked Questions — Business Networking Perth</h2>
+      </div>
+      <div class="evo-faq__grid">
+        <div class="evo-faq-item">
+          <h4>What is SD-WAN and does my Perth business need it?</h4>
+          <p>SD-WAN (Software-Defined Wide Area Network) intelligently routes traffic across multiple internet connections for reliability and automatic failover. Perth businesses with multiple sites, high Microsoft 365 or Teams usage, or VoIP deployments benefit most — it reduces latency and ensures calls and files stay accessible even when one connection drops.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Why does my Perth office need a business-grade firewall?</h4>
+          <p>A business-grade firewall provides intrusion prevention, DNS filtering, application control and detailed traffic logging that consumer routers simply don't have. These are essential for detecting and blocking the ransomware, phishing and data-exfiltration attempts that target Perth SMBs every day.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Can EvoTech design and install a network for a new Perth office?</h4>
+          <p>Yes. I provide end-to-end network design and installation for new Perth offices — structured cabling, rack build, firewall configuration, managed switch deployment, Wi-Fi installation and optional ongoing managed network support. Hardware is sourced through EvoTech's supply chain at competitive pricing.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>How much does business networking cost for a small Perth office?</h4>
+          <p>A basic setup — business-grade firewall/router, managed switch, 2–3 Wi-Fi access points — typically starts from $1,200–$2,500 in hardware plus installation labour, depending on office size and whether cabling is required. Contact me for a free site assessment and transparent quote before any commitment.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>What's the difference between a consumer router and a business firewall?</h4>
+          <p>Consumer routers provide basic NAT and Wi-Fi — nothing more. A business firewall like FortiGate or Meraki MX adds IPS, deep packet inspection, DNS filtering, application-layer controls, site-to-site VPN, VLAN management and full traffic logging. For any Perth business handling client data, this difference is critical.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Can you improve Wi-Fi coverage in my existing Perth office?</h4>
+          <p>Yes. A Wi-Fi site survey identifies dead spots, interference sources and coverage gaps. I design an access point layout that delivers reliable, seamless roaming coverage — and can supplement or replace your existing infrastructure with enterprise-grade Ubiquiti or Cisco Meraki access points.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Do you provide ongoing network support after installation?</h4>
+          <p>Yes. I offer remote network monitoring and management for Perth businesses — 24/7 uptime alerts, firmware updates, security patches and rapid remote response when issues arise. Monthly network health reports are included so you always have visibility over your infrastructure.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Can EvoTech connect multiple Perth office locations?</h4>
+          <p>Yes. I design and manage site-to-site VPN and SD-WAN connectivity between multiple Perth locations — giving staff secure access to shared resources and ensuring your network behaves as a single, well-managed environment regardless of how many sites you operate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="evo-cta" id="contact" aria-labelledby="evo-cta-h2">
+    <div class="ic-container">
+      <div class="evo-cta__inner">
+        <div>
+          <span class="evo-badge evo-badge--white">Get Started Today</span>
+          <h2 id="evo-cta-h2" style="margin-top:10px">Ready to Upgrade Your Perth Business Network?</h2>
+          <p>Book a <strong style="color:#cff394">free, no-obligation network assessment</strong> with EvoTech Digital. I'll review your current setup, identify the gaps and give you honest recommendations — no cost, no pressure.</p>
+          <div class="evo-cta__checks">
+            <div class="evo-cta__check">Free network assessment — no obligation, no hard sell</div>
+            <div class="evo-cta__check">1 min first-response target during business hours</div>
+            <div class="evo-cta__check">Hardware sourced and installed — one point of contact</div>
+            <div class="evo-cta__check">Perth-based — onsite support across the entire metro area</div>
+          </div>
+        </div>
+        <div class="evo-cta__btns">
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-cta evo-btn-cta--lime">📧 Book Free Assessment</a>
+          <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-btn-cta evo-btn-cta--outline">📞 {{ section.settings.phone_number }}</a>
+          <a href="mailto:{{ section.settings.email_address }}" class="evo-btn-cta evo-btn-cta--outline">✉️ {{ section.settings.email_address }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Network Design Security",
+  "tag": "section",
+  "class": "evo-network-section",
+  "settings": [
+    { "type": "header", "content": "Contact Details" },
+    { "type": "text", "id": "phone_number", "label": "Phone Number", "default": "0466 911 816" },
+    { "type": "text", "id": "email_address", "label": "Email Address", "default": "info@evotech.au" },
+    { "type": "header", "content": "Call-to-Action" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary CTA Link (Contact Page)" },
+    { "type": "header", "content": "Options" },
+    { "type": "checkbox", "id": "show_announce", "label": "Show Announcement Bar", "default": true }
+  ],
+  "presets": [{ "name": "Network Design Security" }]
+}
+{% endschema %}

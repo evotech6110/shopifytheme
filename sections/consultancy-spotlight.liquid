@@ -1,0 +1,203 @@
+{% comment %}
+  EvolveAI Consultancy Spotlight
+  Strategic section to balance Hardware Sales with Tech Services.
+  Design: Sleek Dark High-Tech Aesthetic.
+{% endcomment %}
+
+<style>
+  .spotlight-section {
+    background: #0f172a; /* Deep Slate - Dark Contrast */
+    color: #ffffff;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .spotlight-section::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(0, 128, 96, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .spotlight-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .spotlight-content {
+    z-index: 2;
+  }
+
+  .spotlight-pre {
+    color: #008060;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .spotlight-title {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    background: linear-gradient(to right, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .spotlight-description {
+    font-size: 18px;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .service-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 24px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: #008060;
+    transform: translateY(-5px);
+  }
+
+  .service-icon {
+    font-size: 24px;
+    margin-bottom: 15px;
+    display: block;
+  }
+
+  .service-name {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #f8fafc;
+  }
+
+  .service-desc {
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .spotlight-image {
+    position: relative;
+    z-index: 2;
+  }
+
+  .main-spotlight-img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px -12px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .btn-spotlight {
+    display: inline-block;
+    background: #008060;
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: 50px;
+  }
+
+  .btn-spotlight:hover {
+    background: #004b38;
+    box-shadow: 0 0 20px rgba(0, 128, 96, 0.4);
+  }
+
+  @media (max-width: 991px) {
+    .spotlight-wrapper {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .services-grid {
+      text-align: left;
+    }
+    .btn-spotlight {
+      margin-top: 30px;
+    }
+  }
+</style>
+
+<section class="spotlight-section">
+  <div class="ic-container">
+    <div class="spotlight-wrapper">
+      
+      <div class="spotlight-content">
+        <span class="spotlight-pre">EvolveAI Framework</span>
+        <h2 class="spotlight-title">Beyond Hardware:<br>Intelligent Integration</h2>
+        <p class="spotlight-description">We don't just sell parts; we architect the intelligence that drives them. EvoTech’s AI consultancy integrates enterprise grade hardware with self-evolving custom frameworks.</p>
+        
+        <div class="services-grid">
+          <div class="service-card">
+            <span class="service-icon">🏗️</span>
+            <div class="service-name">Custom Node Clusters</div>
+            <div class="service-desc">Distributed computing builds for AI processing & storage.</div>
+          </div>
+          <div class="service-card">
+            <span class="service-icon">🤖</span>
+            <div class="service-name">Sovereign Automation</div>
+            <div class="service-desc">Self-hosted, autonomous maintenance cycles for IT infra.</div>
+          </div>
+          <div class="service-card">
+            <span class="service-icon">🛡️</span>
+            <div class="service-name">Enterprise Guard</div>
+            <div class="service-desc">Security audits and high-availability systems integration.</div>
+          </div>
+          <div class="service-card">
+            <span class="service-icon">⚡</span>
+            <div class="service-name">Edge Deployment</div>
+            <div class="service-desc">Optimizing speed & data sovereignty across your network.</div>
+          </div>
+        </div>
+
+        <a href="/pages/contact" class="btn-spotlight">Book a Strategy Session</a>
+      </div>
+
+      <div class="spotlight-image">
+        <img src="https://m.media-amazon.com/images/I/71Y8J1HjJ1L._AC_SL1500_.jpg" class="main-spotlight-img" alt="EvolveAI Engineering">
+        <!-- Floating Stat/Badge for Trust -->
+        <div style="position: absolute; bottom: -20px; left: -20px; background: #008060; color: #fff; padding: 20px; border-radius: 12px; font-weight: 800; font-size: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
+          99.9%<br><span style="font-size: 12px; font-weight: 400; opacity: 0.8; text-transform: uppercase;">Uptime Guaranteed</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Consultancy Spotlight",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Consultancy Spotlight"
+    }
+  ]
+}
+{% endschema %}

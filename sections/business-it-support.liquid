@@ -1,0 +1,1233 @@
+{% comment %}
+  ============================================================
+  BUSINESS IT SUPPORT PERTH — Full-Page SEO Section
+  For: evotech.au/pages/business-it-support
+  SEO Title: IT Support Perth | Fast, Reliable Business Tech Support | Evotech
+  Meta Description: Tired of slow IT support? Evotech provides rapid-response IT
+    support for Perth businesses. Remote and on-site help when you need it most.
+  Target Keywords: IT support Perth, Perth tech support, business IT support
+  Brand Colors: #0e2240 (navy), #cff394 (lime), #3b82f6 (support blue)
+  Strategy: Service-Led SEO — helpdesk, on-site support, small business focus
+  ============================================================
+{% endcomment %}
+
+{% comment %} ── SCHEMA.ORG STRUCTURED DATA ─────────────────── {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "EvoTech Digital",
+  "description": "Perth-based business IT support services. Remote and on-site helpdesk, cybersecurity, Microsoft 365 management, and hardware procurement for small businesses across Western Australia.",
+  "url": "{{ shop.url }}",
+  "telephone": "+61466911816",
+  "email": "info@evotech.au",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Perth",
+    "addressRegion": "WA",
+    "addressCountry": "AU"
+  },
+  "areaServed": ["Perth CBD","Subiaco","Joondalup","Fremantle","Midland","Rockingham","Mandurah","Osborne Park","West Perth","Cannington","Canning Vale","Belmont","Victoria Park","Armadale","Wanneroo","Western Australia"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Business IT Support Perth",
+    "itemListElement": [
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Remote IT Support Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"On-Site IT Support Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Helpdesk Services Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Microsoft 365 Support Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"IT Security Support Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Hardware Procurement Perth"}}
+    ]
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What is business IT support in Perth?","acceptedAnswer":{"@type":"Answer","text":"Business IT support in Perth means having a dedicated local technician to handle your technology needs — resolving computer issues, managing networks, implementing cybersecurity and sourcing hardware. EvoTech Digital is a Perth-based IT support provider focused on helping small businesses get reliable, practical technology support without the overhead of a large IT department."}},
+    {"@type":"Question","name":"How does EvoTech handle IT support requests?","acceptedAnswer":{"@type":"Answer","text":"EvoTech Digital handles support requests via phone, email, and an online ticketing system. Most issues are resolved remotely on the same business day. For hardware or network issues that require a physical visit, on-site support is available across the Perth metropolitan area by appointment."}},
+    {"@type":"Question","name":"What does IT support cost for businesses in Perth?","acceptedAnswer":{"@type":"Answer","text":"Business IT support in Perth typically ranges from $80–$150 per user per month for managed support agreements, or $120–$180 per hour for break-fix services. EvoTech Digital offers transparent, flat-rate pricing with no hidden call-out fees. Contact us for a quote tailored to your business size."}},
+    {"@type":"Question","name":"Does EvoTech provide on-site IT support across Perth?","acceptedAnswer":{"@type":"Answer","text":"Yes. EvoTech Digital provides both remote and on-site IT support across all Perth metropolitan suburbs. Our technicians can visit your office for hardware issues, network problems, server failures, new equipment installations and regular proactive site visits."}},
+    {"@type":"Question","name":"What is the difference between managed IT and break-fix IT support?","acceptedAnswer":{"@type":"Answer","text":"Break-fix IT support means you call when something goes wrong and pay per incident. Managed IT support is proactive — EvoTech monitors your systems 24/7, fixes issues before they cause downtime, and provides unlimited helpdesk for a flat monthly fee. Most Perth businesses save money and lose far less time with managed IT."}},
+    {"@type":"Question","name":"Can EvoTech support Microsoft 365 and cloud services for my Perth business?","acceptedAnswer":{"@type":"Answer","text":"Yes. EvoTech Digital provides full Microsoft 365 support including setup, migration, security hardening, Teams configuration, SharePoint and OneDrive management. With Microsoft's Perth data centre now live, local Azure adoption is also faster and more compliant than ever."}},
+    {"@type":"Question","name":"Do you provide IT support for small businesses in Perth?","acceptedAnswer":{"@type":"Answer","text":"EvoTech Digital specialises in IT support for Perth small businesses. Working directly with the business owner, we provide practical, jargon-free support — whether that's a one-off fix, ongoing monthly support, or help setting up your cloud environment. No large call centres, just straightforward help from someone who knows your setup."}},
+    {"@type":"Question","name":"What IT support services does EvoTech provide in Perth?","acceptedAnswer":{"@type":"Answer","text":"EvoTech Digital provides remote helpdesk support, on-site IT support, Microsoft 365 management, network monitoring, cybersecurity (Essential Eight), hardware procurement, cloud migration, backup and disaster recovery, and strategic IT consulting (vCIO) for Perth businesses."}}
+  ]
+}
+</script>
+
+<style>
+  /* ═══════════════════════════════════════════════
+     EVOTECH BUSINESS IT SUPPORT PAGE — DESIGN SYSTEM
+     Brand:  #0e2240 (navy)  |  #cff394 (lime)
+     Accent: #3b82f6 (support blue)
+     Inherits theme fonts via var(--body-font) / var(--heading-font)
+  ═══════════════════════════════════════════════ */
+
+  .evo-page { font-family: var(--body-font); color: #5e6979; background: #fff; }
+
+  :root {
+    --support-blue: #3b82f6;
+    --support-blue-soft: rgba(59,130,246,0.10);
+  }
+
+  /* ── ANNOUNCE BAR ─────────────────────────── */
+  .evo-announce {
+    background: #0e2240;
+    color: #cff394;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .evo-announce a { color: #fff; text-decoration: underline; }
+  .evo-announce strong { color: #fff; }
+
+  /* ── HERO ─────────────────────────────────── */
+  .evo-hero {
+    background: #0e2240;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 0 70px;
+  }
+  .evo-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+  .evo-hero::after {
+    content: '';
+    position: absolute;
+    top: -80px; right: -120px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(207,243,148,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .evo-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .evo-hero__eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: #cff394;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 18px;
+  }
+  .evo-hero__eyebrow::before {
+    content: ''; display: inline-block; width: 24px; height: 2px;
+    background: #cff394; flex-shrink: 0;
+  }
+  .evo-hero h1 {
+    font-family: var(--heading-font);
+    font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+    font-weight: 700; color: #fff; line-height: 1.13; margin-bottom: 20px;
+  }
+  .evo-hero h1 span { color: #cff394; }
+  .evo-hero__lead { font-size: 1.05rem; color: #c5d3e8; line-height: 1.75; margin-bottom: 28px; }
+
+  /* Response badge */
+  .evo-response-badge {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.35);
+    border-radius: 8px; padding: 12px 18px; margin-bottom: 28px;
+  }
+  .evo-response-badge__num {
+    font-family: var(--heading-font); font-size: 1.6rem; font-weight: 700; color: #60a5fa; line-height: 1;
+  }
+  .evo-response-badge__text { font-size: 0.88rem; color: #c5d3e8; line-height: 1.3; }
+  .evo-response-badge__text strong { color: #fff; display: block; }
+
+  .evo-hero__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+  .evo-btn-lime {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: #cff394; color: #0e2240;
+    padding: 14px 28px; border-radius: var(--button-border-radius, 6px);
+    font-weight: 700; font-size: 0.93rem; text-decoration: none;
+    transition: background 0.2s, transform 0.2s; border: none;
+  }
+  .evo-btn-lime:hover { background: #b8e87c; transform: translateY(-2px); text-decoration: none; color: #0e2240; }
+  .evo-btn-outline-white {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: transparent; color: #fff;
+    padding: 13px 28px; border-radius: var(--button-border-radius, 6px);
+    font-weight: 600; font-size: 0.93rem; text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.3); transition: border-color 0.2s, color 0.2s;
+  }
+  .evo-btn-outline-white:hover { border-color: #cff394; color: #cff394; text-decoration: none; }
+
+  .evo-hero__pills {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .evo-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(207,243,148,0.08);
+    border: 1px solid rgba(207,243,148,0.18);
+    border-radius: 50px; padding: 7px 14px;
+    font-size: 0.8rem; font-weight: 600; color: #d8f0b0;
+  }
+  .evo-pill::before { content: '✓'; color: #cff394; font-weight: 700; }
+
+  /* Hero visual — helpdesk dashboard */
+  .evo-helpdesk-vis {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 14px; padding: 28px;
+  }
+  .evo-vis-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .evo-vis-title { font-size: 0.75rem; font-weight: 700; color: rgba(96,165,250,0.8); text-transform: uppercase; letter-spacing: 0.1em; }
+  .evo-vis-live {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.72rem; font-weight: 600; color: #6ee07a;
+  }
+  .evo-status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #6ee07a; box-shadow: 0 0 8px #6ee07a;
+    animation: statusPulse 2s infinite;
+  }
+  @keyframes statusPulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+  .evo-ticket-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .evo-ticket-row:last-child { border-bottom: none; }
+  .evo-ticket-icon {
+    width: 38px; height: 38px; border-radius: 8px; flex-shrink: 0;
+    background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.25);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .evo-ticket-info { flex: 1; min-width: 0; }
+  .evo-ticket-name { font-size: 0.87rem; font-weight: 600; color: #e8f0fa; }
+  .evo-ticket-meta { font-size: 0.72rem; color: #7a90a8; margin-top: 2px; display: flex; gap: 8px; }
+  .evo-ticket-badge {
+    margin-left: auto; border-radius: 4px; padding: 3px 10px;
+    font-size: 0.7rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+  }
+  .evo-badge--resolved { background: rgba(110,224,122,0.15); border: 1px solid rgba(110,224,122,0.3); color: #6ee07a; }
+  .evo-badge--active   { background: rgba(59,130,246,0.18); border: 1px solid rgba(59,130,246,0.35); color: #93c5fd; }
+  .evo-badge--onsite   { background: rgba(251,191,36,0.15); border: 1px solid rgba(251,191,36,0.3); color: #fbbf24; }
+
+  .evo-vis-stat {
+    margin-top: 20px; padding: 14px;
+    background: rgba(207,243,148,0.07);
+    border: 1px solid rgba(207,243,148,0.14); border-radius: 8px;
+    display: flex; gap: 20px; justify-content: space-around; text-align: center;
+  }
+  .evo-vis-stat__num { font-family: var(--heading-font); font-size: 1.4rem; font-weight: 700; color: #cff394; line-height: 1; }
+  .evo-vis-stat__label { font-size: 0.7rem; color: #8fa5bf; margin-top: 3px; }
+
+  /* ── PARTNERS / TRUST BAR ─────────────────── */
+  .evo-partners {
+    background: #f8f9fd;
+    border-top: 1px solid #e2e4e8; border-bottom: 1px solid #e2e4e8;
+    padding: 22px 0;
+  }
+  .evo-partners__inner { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .evo-partners__label {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #9aa3b0;
+    white-space: nowrap; padding-right: 12px; border-right: 1px solid #e2e4e8;
+  }
+  .evo-partners__logos { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .evo-partner-badge {
+    background: #fff; border: 1px solid #e2e4e8; border-radius: 6px;
+    padding: 7px 16px; font-size: 0.8rem; font-weight: 700; color: #0e2240; white-space: nowrap;
+  }
+
+  /* ── SECTION HEADERS ──────────────────────── */
+  .evo-section-head { text-align: center; max-width: 700px; margin: 0 auto 56px; }
+  .evo-badge {
+    display: inline-block; padding: 4px 14px; border-radius: 50px;
+    border: 1.5px solid #0e2240; color: #0e2240;
+    font-size: 0.73rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .evo-badge--lime  { border-color: #5c7d26; background: rgba(207,243,148,0.15); color: #3a5a10; }
+  .evo-badge--blue  { border-color: #2563eb; background: rgba(59,130,246,0.1); color: #1d4ed8; }
+  .evo-badge--white { border-color: rgba(255,255,255,0.35); color: #fff; background: rgba(255,255,255,0.07); }
+  .evo-section-head h2 {
+    font-family: var(--heading-font);
+    font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; color: #0e2240; line-height: 1.2;
+  }
+  .evo-section-head--light h2 { color: #fff; }
+  .evo-section-head p { margin-top: 14px; font-size: 1rem; line-height: 1.7; color: #5e6979; }
+  .evo-section-head--light p { color: #b8cce0; }
+
+  /* ── SERVICES GRID ────────────────────────── */
+  .evo-services { padding: 88px 0; background: #fff; }
+  .evo-services__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .evo-service-card {
+    background: #fff; border: 1px solid #e2e4e8; border-radius: 10px;
+    padding: 30px 28px; transition: all 0.28s; position: relative; overflow: hidden;
+  }
+  .evo-service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: #cff394; transform: scaleX(0); transform-origin: left; transition: transform 0.28s;
+  }
+  .evo-service-card:hover { box-shadow: 0 8px 32px rgba(14,34,64,0.09); transform: translateY(-3px); border-color: #c4d8a4; }
+  .evo-service-card:hover::after { transform: scaleX(1); }
+  .evo-service-icon {
+    width: 48px; height: 48px; border-radius: 10px;
+    background: #f0f8e8; border: 1px solid #d6f0b0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 18px; flex-shrink: 0;
+  }
+  .evo-service-card h3 { font-family: var(--heading-font); font-size: 1.05rem; font-weight: 700; color: #0e2240; margin-bottom: 10px; line-height: 1.3; }
+  .evo-service-card p { font-size: 0.88rem; line-height: 1.65; color: #5e6979; margin: 0; }
+  .evo-service-link {
+    display: inline-flex; align-items: center; gap: 5px; margin-top: 18px;
+    font-size: 0.85rem; font-weight: 700; color: #0e2240; text-decoration: none; transition: gap 0.2s, color 0.2s;
+  }
+  .evo-service-link:hover { gap: 9px; color: #5c7d26; text-decoration: none; }
+
+  /* ── WHY EVOTECH ──────────────────────────── */
+  .evo-why { background: #f8f9fd; padding: 88px 0; }
+  .evo-why__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .evo-why__content h2 { font-family: var(--heading-font); font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 700; color: #0e2240; line-height: 1.2; margin-bottom: 16px; }
+  .evo-why__content p { color: #5e6979; font-size: 1rem; line-height: 1.7; }
+  .evo-why__points { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+  .evo-why-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: #fff; border: 1px solid #e2e4e8; border-radius: 10px;
+    padding: 20px; transition: border-color 0.2s;
+  }
+  .evo-why-item:hover { border-color: #cff394; }
+  .evo-why-num {
+    font-family: var(--heading-font); font-size: 1.6rem; font-weight: 700;
+    color: #a8d87a; line-height: 1; min-width: 36px; padding-top: 3px;
+  }
+  .evo-why-item h4 { font-family: var(--heading-font); font-size: 0.97rem; font-weight: 700; color: #0e2240; margin-bottom: 5px; }
+  .evo-why-item p { font-size: 0.87rem; line-height: 1.6; margin: 0; }
+
+  /* Value box */
+  .evo-value-box { background: #0e2240; border-radius: 14px; padding: 36px; }
+  .evo-value-box__title {
+    font-family: var(--heading-font); font-size: 1.1rem; font-weight: 700;
+    color: #cff394; margin-bottom: 22px; line-height: 1.3;
+  }
+  .evo-value-list { display: flex; flex-direction: column; gap: 14px; }
+  .evo-value-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 16px; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(207,243,148,0.12); border-radius: 8px;
+  }
+  .evo-value-icon {
+    width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+    background: rgba(59,130,246,0.15);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .evo-value-label { font-size: 0.9rem; font-weight: 700; color: #e8f0fa; margin-bottom: 3px; }
+  .evo-value-desc { font-size: 0.8rem; color: #7a90a8; line-height: 1.5; }
+  .evo-cta-inset {
+    margin-top: 22px; padding: 18px;
+    background: rgba(207,243,148,0.08);
+    border: 1px solid rgba(207,243,148,0.2); border-radius: 10px; text-align: center;
+  }
+  .evo-cta-inset p { color: #b8cce0; font-size: 0.88rem; margin-bottom: 14px; }
+
+  /* ── RESPONSE TIME ────────────────────────── */
+  .evo-response-sec { background: #0e2240; padding: 88px 0; }
+  .evo-response-sec__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 16px; }
+  .evo-response-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 12px; padding: 32px 22px; text-align: center; transition: all 0.25s;
+  }
+  .evo-response-card:hover { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.45); transform: translateY(-3px); }
+  .evo-response-icon {
+    width: 58px; height: 58px; border-radius: 50%;
+    background: rgba(59,130,246,0.15); border: 2px solid #3b82f6;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin: 0 auto 18px;
+  }
+  .evo-response-time {
+    font-family: var(--heading-font); font-size: 1.6rem; font-weight: 700; color: #60a5fa; line-height: 1; margin-bottom: 8px;
+  }
+  .evo-response-card h3 { font-family: var(--heading-font); font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .evo-response-card p { font-size: 0.82rem; color: #8fa5bf; margin: 0; line-height: 1.55; }
+
+  /* ── MANAGED vs BREAK-FIX ─────────────────── */
+  .evo-compare { background: #fff; padding: 88px 0; }
+  .evo-compare__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .evo-compare__content h2 { font-family: var(--heading-font); font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 700; color: #0e2240; line-height: 1.2; margin-bottom: 16px; }
+  .evo-compare__content h2 span { color: #3b82f6; }
+  .evo-compare__content p { color: #5e6979; font-size: 1rem; line-height: 1.7; }
+  .evo-compare__points { display: flex; flex-direction: column; gap: 14px; margin-top: 26px; }
+  .evo-compare-point {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #f8f9fd; border: 1px solid #e2e4e8; border-radius: 10px; padding: 18px; transition: all 0.2s;
+  }
+  .evo-compare-point:hover { border-color: #cff394; background: #f0f8e8; }
+  .evo-compare-point__icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+  .evo-compare-point h4 { font-family: var(--heading-font); font-size: 0.95rem; font-weight: 700; color: #0e2240; margin-bottom: 4px; }
+  .evo-compare-point p { font-size: 0.85rem; color: #5e6979; line-height: 1.55; margin: 0; }
+
+  /* Comparison table */
+  .evo-ctable {
+    background: #f8f9fd; border: 1px solid #e2e4e8; border-radius: 14px; overflow: hidden;
+  }
+  .evo-ctable-title {
+    font-size: 0.75rem; font-weight: 700; color: #5c7d26; text-transform: uppercase;
+    letter-spacing: 0.1em; padding: 18px 24px 14px;
+    border-bottom: 1px solid #e2e4e8;
+  }
+  .evo-crow {
+    display: grid; grid-template-columns: 1.6fr 1fr 1fr;
+    border-bottom: 1px solid #e2e4e8;
+  }
+  .evo-crow:last-child { border-bottom: none; }
+  .evo-crow--head { background: #0e2240; }
+  .evo-crow--head .evo-ccell { color: rgba(255,255,255,0.7); font-weight: 700; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .evo-crow--head .evo-ccell--evo { color: #cff394; }
+  .evo-ccell { padding: 14px 20px; font-size: 0.87rem; color: #5e6979; }
+  .evo-ccell--feat { font-weight: 600; color: #0e2240; }
+  .evo-ccell--yes { color: #22c55e; font-weight: 700; text-align: center; }
+  .evo-ccell--no  { color: #94a3b8; text-align: center; }
+  .evo-ccell--mid { color: #f59e0b; font-weight: 600; text-align: center; font-size: 0.82rem; }
+  .evo-crow:nth-child(even) { background: #fafbfd; }
+
+  /* ── WHAT'S INCLUDED ──────────────────────── */
+  .evo-included { background: #f8f9fd; padding: 88px 0; }
+  .evo-included__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .evo-include-card {
+    background: #fff; border: 1px solid #e2e4e8; border-radius: 10px; padding: 28px;
+    transition: border-color 0.2s;
+  }
+  .evo-include-card:hover { border-color: #c4d8a4; }
+  .evo-include-card h3 {
+    font-family: var(--heading-font); font-size: 1.05rem; font-weight: 700;
+    color: #0e2240; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .evo-include-card h3 span { font-size: 1.2rem; }
+  .evo-include-list { display: flex; flex-direction: column; gap: 9px; }
+  .evo-include-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 0.88rem; color: #5e6979; line-height: 1.5;
+  }
+  .evo-include-item::before { content: '✓'; color: #5c7d26; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── INDUSTRIES ───────────────────────────── */
+  .evo-industries { background: #fff; padding: 88px 0; }
+  .evo-industries__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .evo-industry {
+    background: #f8f9fd; border: 1px solid #e2e4e8; border-radius: 8px;
+    padding: 18px 16px; display: flex; align-items: center; gap: 10px;
+    font-size: 0.9rem; font-weight: 600; color: #0e2240; transition: all 0.2s;
+  }
+  .evo-industry:hover { background: #f0f8e8; border-color: #b8e07c; transform: translateY(-2px); }
+  .evo-industry__icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  /* ── PROCESS ──────────────────────────────── */
+  .evo-process { background: #0a1628; padding: 88px 0; }
+  .evo-process__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 16px; }
+  .evo-step {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(59,130,246,0.15);
+    border-radius: 10px; padding: 30px 24px; text-align: center; transition: all 0.25s;
+  }
+  .evo-step:hover { background: rgba(59,130,246,0.07); border-color: rgba(59,130,246,0.38); }
+  .evo-step-num {
+    width: 52px; height: 52px; border-radius: 50%; border: 2px solid #3b82f6;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--heading-font); font-size: 1.1rem; font-weight: 700; color: #60a5fa;
+    margin: 0 auto 18px;
+  }
+  .evo-step h3 { font-family: var(--heading-font); font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .evo-step p { font-size: 0.85rem; color: #8fa5bf; margin: 0; line-height: 1.65; }
+
+  /* ── SUBURBS ──────────────────────────────── */
+  .evo-suburbs { background: #f8f9fd; padding: 80px 0; }
+  .evo-suburbs__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .evo-suburb {
+    background: #fff; border: 1px solid #e2e4e8; border-radius: 6px;
+    padding: 10px 12px; font-size: 0.82rem; color: #5e6979;
+    text-align: center; font-weight: 500; transition: all 0.18s;
+  }
+  .evo-suburb:hover { background: #f0f8e8; border-color: #c4d8a4; color: #3a5a10; }
+
+  /* ── FAQ ──────────────────────────────────── */
+  .evo-faq { background: #fff; padding: 88px 0; }
+  .evo-faq__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .evo-faq-item {
+    background: #f8f9fd; border: 1px solid #e2e4e8; border-radius: 10px; padding: 26px;
+  }
+  .evo-faq-item h4 { font-family: var(--heading-font); font-size: 0.97rem; font-weight: 700; color: #0e2240; margin-bottom: 10px; line-height: 1.35; }
+  .evo-faq-item p { font-size: 0.87rem; line-height: 1.68; margin: 0; }
+
+  /* ── CTA ──────────────────────────────────── */
+  .evo-cta { background: #0e2240; padding: 80px 0; }
+  .evo-cta__inner { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
+  .evo-cta h2 { font-family: var(--heading-font); font-size: clamp(1.5rem, 2.5vw, 2.1rem); font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .evo-cta p { color: #b8cce0; font-size: 1rem; margin: 0; }
+  .evo-cta__checks { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+  .evo-cta__check { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #c5d3e8; }
+  .evo-cta__check::before { content: '✓'; color: #cff394; font-weight: 700; flex-shrink: 0; }
+  .evo-cta__btns { display: flex; flex-direction: column; gap: 10px; min-width: 220px; }
+  .evo-btn-cta {
+    display: block; text-align: center; padding: 15px 26px;
+    border-radius: var(--button-border-radius, 6px);
+    font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; white-space: nowrap;
+  }
+  .evo-btn-cta--lime { background: #cff394; color: #0e2240; }
+  .evo-btn-cta--lime:hover { background: #b8e87c; text-decoration: none; color: #0e2240; }
+  .evo-btn-cta--blue { background: #3b82f6; color: #fff; }
+  .evo-btn-cta--blue:hover { background: #2563eb; text-decoration: none; color: #fff; }
+  .evo-btn-cta--outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
+  .evo-btn-cta--outline:hover { border-color: #cff394; color: #cff394; text-decoration: none; }
+
+  /* ── RESPONSIVE ───────────────────────────── */
+  @media (max-width: 1024px) {
+    .evo-hero__grid, .evo-why__grid, .evo-compare__grid, .evo-faq__grid, .evo-cta__inner { grid-template-columns: 1fr; }
+    .evo-services__grid { grid-template-columns: 1fr 1fr; }
+    .evo-response-sec__grid { grid-template-columns: 1fr 1fr; }
+    .evo-industries__grid { grid-template-columns: repeat(3, 1fr); }
+    .evo-suburbs__grid { grid-template-columns: repeat(4, 1fr); }
+    .evo-included__grid { grid-template-columns: 1fr; }
+    .evo-process__steps { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 767px) {
+    .evo-hero { padding: 52px 0 46px; }
+    .evo-hero h1 { font-size: 1.85rem; }
+    .evo-services__grid, .evo-response-sec__grid, .evo-included__grid, .evo-process__steps { grid-template-columns: 1fr; }
+    .evo-industries__grid { grid-template-columns: 1fr 1fr; }
+    .evo-suburbs__grid { grid-template-columns: repeat(3, 1fr); }
+    .evo-services, .evo-why, .evo-response-sec, .evo-compare, .evo-included,
+    .evo-industries, .evo-process, .evo-suburbs, .evo-faq, .evo-cta { padding: 56px 0; }
+    .evo-cta__btns { flex-direction: row; flex-wrap: wrap; min-width: auto; }
+  }
+  @media (max-width: 480px) {
+    .evo-suburbs__grid { grid-template-columns: repeat(2, 1fr); }
+    .evo-faq__grid { grid-template-columns: 1fr; }
+    .evo-crow { grid-template-columns: 1fr; }
+    .evo-crow--head .evo-ccell:not(:first-child) { display: none; }
+  }
+</style>
+
+<div class="evo-page">
+
+  {% comment %} ANNOUNCE BAR {% endcomment %}
+  {% if section.settings.show_announce %}
+  <div class="evo-announce">
+    🛠️ <strong>Perth-Based IT Support</strong> — Practical, reliable tech help for small businesses. No jargon, no big call centres.
+    <a href="{{ section.settings.cta_primary_link }}">Get in Touch →</a>
+  </div>
+  {% endif %}
+
+  {% comment %} ════════════════════════
+     HERO
+  ════════════════════════ {% endcomment %}
+  <section class="evo-hero" aria-labelledby="evo-it-h1">
+    <div class="ic-container">
+      <div class="evo-hero__grid">
+
+        <div>
+          <div class="evo-hero__eyebrow">Business IT Support Perth</div>
+          <h1 id="evo-it-h1">
+            Fast <span>IT Support</span><br>
+            Perth Businesses<br>Can Count On
+          </h1>
+          <p class="evo-hero__lead">
+            When technology breaks down, your business stops. EvoTech Digital is a <strong style="color:#e8f0fa">Perth-based IT support provider</strong> helping small businesses stay productive — with practical remote help, on-site visits, and proactive care for your systems.
+          </p>
+
+          <div class="evo-hero__actions">
+            <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-lime">
+              Get IT Support Now →
+            </a>
+            <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-btn-outline-white">
+              📞 {{ section.settings.phone_number }}
+            </a>
+          </div>
+          <div class="evo-hero__pills">
+            <span class="evo-pill">Perth-Based</span>
+            <span class="evo-pill">Remote & On-Site</span>
+            <span class="evo-pill">Small Business Focus</span>
+            <span class="evo-pill">No Lock-In Contracts</span>
+          </div>
+        </div>
+
+        <div aria-hidden="true">
+          <div class="evo-helpdesk-vis">
+            <div class="evo-vis-header">
+              <span class="evo-vis-title">🎫 Live Helpdesk</span>
+              <span class="evo-vis-live">
+                <span class="evo-status-dot"></span>
+                Online — Perth Team Active
+              </span>
+            </div>
+            <div class="evo-ticket-row">
+              <div class="evo-ticket-icon">💻</div>
+              <div class="evo-ticket-info">
+                <div class="evo-ticket-name">Workstation Not Booting</div>
+                <div class="evo-ticket-meta"><span>Accounting Dept.</span><span>· 8 mins ago</span></div>
+              </div>
+              <span class="evo-ticket-badge evo-badge--resolved">Resolved</span>
+            </div>
+            <div class="evo-ticket-row">
+              <div class="evo-ticket-icon">🌐</div>
+              <div class="evo-ticket-info">
+                <div class="evo-ticket-name">Office WiFi Dropping</div>
+                <div class="evo-ticket-meta"><span>Floor 2 — Subiaco</span><span>· 12 mins ago</span></div>
+              </div>
+              <span class="evo-ticket-badge evo-badge--active">In Progress</span>
+            </div>
+            <div class="evo-ticket-row">
+              <div class="evo-ticket-icon">🖥️</div>
+              <div class="evo-ticket-info">
+                <div class="evo-ticket-name">New Staff Setup × 3</div>
+                <div class="evo-ticket-meta"><span>Joondalup Office</span><span>· Scheduled</span></div>
+              </div>
+              <span class="evo-ticket-badge evo-badge--onsite">On-Site</span>
+            </div>
+            <div class="evo-ticket-row">
+              <div class="evo-ticket-icon">🔐</div>
+              <div class="evo-ticket-info">
+                <div class="evo-ticket-name">MFA Setup — 12 Users</div>
+                <div class="evo-ticket-meta"><span>M365 Security</span><span>· 2 hrs ago</span></div>
+              </div>
+              <span class="evo-ticket-badge evo-badge--resolved">Complete</span>
+            </div>
+            <div class="evo-vis-stat">
+              <div>
+                <div class="evo-vis-stat__num">Same</div>
+                <div class="evo-vis-stat__label">Day Remote Response</div>
+              </div>
+              <div>
+                <div class="evo-vis-stat__num">Perth</div>
+                <div class="evo-vis-stat__label">Local & On-Site</div>
+              </div>
+              <div>
+                <div class="evo-vis-stat__num">SMB</div>
+                <div class="evo-vis-stat__label">Specialist Focus</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} TECHNOLOGY PARTNERS {% endcomment %}
+  <div class="evo-partners">
+    <div class="ic-container">
+      <div class="evo-partners__inner">
+        <span class="evo-partners__label">Technology Partners</span>
+        <div class="evo-partners__logos">
+          <span class="evo-partner-badge">Microsoft 365</span>
+          <span class="evo-partner-badge">Azure</span>
+          <span class="evo-partner-badge">Cisco</span>
+          <span class="evo-partner-badge">Fortinet</span>
+          <span class="evo-partner-badge">Ubiquiti</span>
+          <span class="evo-partner-badge">Veeam</span>
+          <span class="evo-partner-badge">Dell</span>
+          <span class="evo-partner-badge">Lenovo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} ════════════════════════
+     SERVICES
+  ════════════════════════ {% endcomment %}
+  <section class="evo-services" id="services" aria-labelledby="evo-services-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">Our IT Support Services</span>
+        <h2 id="evo-services-h2">Complete Business IT Support for Perth Companies</h2>
+        <p>From everyday helpdesk issues to critical infrastructure — EvoTech Digital handles the full spectrum of IT support so your Perth business runs without interruption.</p>
+      </div>
+      <div class="evo-services__grid">
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">💻</div>
+          <h3>Remote IT Helpdesk</h3>
+          <p>Most IT issues — software errors, connectivity problems, account access, configuration changes — can be resolved remotely without you waiting for a site visit. EvoTech connects securely to your system and works through the problem with you directly.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Get Remote Support →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🏢</div>
+          <h3>On-Site IT Support Perth</h3>
+          <p>Some problems need hands-on attention — hardware failures, network cabling, printer setup, or a new workstation build. EvoTech visits Perth businesses by appointment for on-site work that can't be handled remotely.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Book On-Site Visit →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🎫</div>
+          <h3>Ongoing IT Support Agreements</h3>
+          <p>For businesses that want regular, structured IT support, EvoTech offers monthly agreements covering helpdesk access, system monitoring, patch management, and periodic check-ins — so your technology stays in good shape year-round.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">View Support Options →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🔒</div>
+          <h3>IT Security Support</h3>
+          <p>Security is embedded in every support agreement — not sold separately. We manage MFA, endpoint protection, email filtering, and Essential Eight compliance for your Perth business.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Security Support →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">☁️</div>
+          <h3>Microsoft 365 & Cloud Support</h3>
+          <p>Full Microsoft 365 support including Teams, SharePoint, Exchange and OneDrive. We also manage Azure environments — with Microsoft's Perth data centre now live, local cloud performance is unmatched.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">M365 Support →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🛒</div>
+          <h3>IT Hardware Procurement</h3>
+          <p>Unique in Perth — we combine IT support with a full hardware store. Laptops, servers, networking gear, firewalls and workstations sourced, pre-configured, and deployed by your support team.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">View Hardware →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">📊</div>
+          <h3>System Health & Monitoring</h3>
+          <p>EvoTech sets up monitoring tools on your key systems — servers, firewalls, and endpoints — so problems are flagged early rather than discovered after something breaks. Regular health checks keep your infrastructure in good shape.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Learn More →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">💾</div>
+          <h3>Backup & Disaster Recovery</h3>
+          <p>Immutable, off-site backups with tested recovery procedures. If ransomware or hardware failure strikes your Perth business, we'll have you back up fast — with minimal data loss.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Protect My Data →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🗺️</div>
+          <h3>IT Planning & Advice</h3>
+          <p>Not sure what technology your business actually needs, or whether you're spending on the right things? EvoTech can review your current setup and give you straightforward advice on what to prioritise — without the sales pitch.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Book a Consultation →</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     WHY EVOTECH
+  ════════════════════════ {% endcomment %}
+  <section class="evo-why" id="why" aria-labelledby="evo-why-h2">
+    <div class="ic-container">
+      <div class="evo-why__grid">
+
+        <div class="evo-why__content">
+          <span class="evo-badge">Why EvoTech Digital</span>
+          <h2 id="evo-why-h2" style="margin-top:12px">IT Support Perth Businesses Can Actually Rely On</h2>
+          <p>EvoTech Digital is a solo-operated IT business based in Perth. That means when you contact EvoTech, you're speaking directly with the person doing the work — someone who knows your systems, your business, and your history with every interaction.</p>
+          <div class="evo-why__points">
+            <div class="evo-why-item">
+              <div class="evo-why-num">01</div>
+              <div>
+                <h4>You Deal Directly With the Technician</h4>
+                <p>There's no front-line staff filtering your calls. When you reach EvoTech, you're talking to the person who will actually fix your problem — someone who knows your systems, your business, and your history.</p>
+              </div>
+            </div>
+            <div class="evo-why-item">
+              <div class="evo-why-num">02</div>
+              <div>
+                <h4>Perth-Based, Locally Focused</h4>
+                <p>EvoTech is based in Perth and serves Perth businesses. On-site visits are available across the metro area, and remote support is handled during WA business hours by the same person managing your account.</p>
+              </div>
+            </div>
+            <div class="evo-why-item">
+              <div class="evo-why-num">03</div>
+              <div>
+                <h4>IT Support Combined With Hardware Supply</h4>
+                <p>EvoTech also operates an IT hardware store — so when your business needs new laptops, servers, or networking gear, you can source and configure everything through the same provider handling your support.</p>
+              </div>
+            </div>
+            <div class="evo-why-item">
+              <div class="evo-why-num">04</div>
+              <div>
+                <h4>Straightforward Pricing, No Lock-In</h4>
+                <p>EvoTech offers both one-off support and monthly agreements — with clear, upfront pricing. There are no long-term lock-in contracts, so you stay because the service works, not because you're tied in.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="evo-value-box">
+          <div class="evo-value-box__title">What Working With EvoTech Actually Looks Like</div>
+          <div class="evo-value-list">
+            <div class="evo-value-item">
+              <div class="evo-value-icon">🧑‍💻</div>
+              <div>
+                <div class="evo-value-label">One Person, Full Accountability</div>
+                <div class="evo-value-desc">EvoTech is owner-operated. You contact one person, get one person, and that person is responsible for your outcome.</div>
+              </div>
+            </div>
+            <div class="evo-value-item">
+              <div class="evo-value-icon">📍</div>
+              <div>
+                <div class="evo-value-label">Perth-Based, Available for Site Visits</div>
+                <div class="evo-value-desc">On-site support is available across Perth metro by appointment — no outsourcing to subcontractors you've never met.</div>
+              </div>
+            </div>
+            <div class="evo-value-item">
+              <div class="evo-value-icon">🛒</div>
+              <div>
+                <div class="evo-value-label">Hardware Supply Built In</div>
+                <div class="evo-value-desc">Need new equipment? EvoTech can source, configure, and deliver hardware through the same business handling your support.</div>
+              </div>
+            </div>
+            <div class="evo-value-item">
+              <div class="evo-value-icon">🔐</div>
+              <div>
+                <div class="evo-value-label">Security Advice Included</div>
+                <div class="evo-value-desc">Cybersecurity isn't a separate upsell — sensible security practices are part of every support engagement.</div>
+              </div>
+            </div>
+          </div>
+          <div class="evo-cta-inset">
+            <p>Get in touch to discuss what your business needs.</p>
+            <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-lime" style="display:inline-flex">
+              Book a Free IT Consultation →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     RESPONSE TIME SLA
+  ════════════════════════ {% endcomment %}
+  <section class="evo-response-sec" aria-labelledby="evo-response-h2">
+    <div class="ic-container">
+      <div class="evo-section-head evo-section-head--light">
+        <span class="evo-badge evo-badge--blue">How Support Works</span>
+        <h2 id="evo-response-h2">What to Expect When You Contact EvoTech</h2>
+        <p>EvoTech is a solo-operated Perth IT business. Here's honestly how support requests are handled — so there are no surprises.</p>
+      </div>
+      <div class="evo-response-sec__grid">
+        <div class="evo-response-card">
+          <div class="evo-response-icon">📧</div>
+          <div class="evo-response-time">Contact</div>
+          <h3>Get in Touch</h3>
+          <p>Reach EvoTech by phone or email during business hours. For non-urgent requests, email is preferred so nothing gets missed and the issue is properly documented.</p>
+        </div>
+        <div class="evo-response-card">
+          <div class="evo-response-icon">💻</div>
+          <div class="evo-response-time">Remote First</div>
+          <h3>Remote Resolution</h3>
+          <p>The majority of issues — software, cloud, connectivity, user access — are resolved remotely on the same business day, without needing a site visit.</p>
+        </div>
+        <div class="evo-response-card">
+          <div class="evo-response-icon">🔧</div>
+          <div class="evo-response-time">On-Site</div>
+          <h3>On-Site When Needed</h3>
+          <p>Hardware issues, network installations, and equipment setup require a physical visit. On-site support is available across Perth metro by scheduled appointment.</p>
+        </div>
+        <div class="evo-response-card">
+          <div class="evo-response-icon">📋</div>
+          <div class="evo-response-time">Ongoing</div>
+          <h3>Monthly Support Option</h3>
+          <p>Businesses that prefer regular, predictable support can move to a monthly agreement — covering monitoring, patch management, and priority access to helpdesk.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     MANAGED vs BREAK-FIX
+  ════════════════════════ {% endcomment %}
+  <section class="evo-compare" aria-labelledby="evo-compare-h2">
+    <div class="ic-container">
+      <div class="evo-compare__grid">
+
+        <div class="evo-compare__content">
+          <span class="evo-badge evo-badge--blue">Managed IT Explained</span>
+          <h2 id="evo-compare-h2" style="margin-top:14px">
+            Why Perth Businesses Are Switching from <span>Break-Fix</span> to Managed IT Support
+          </h2>
+          <p>Traditional break-fix IT — calling a technician only when something breaks — is unpredictable and often expensive. A monthly support agreement with EvoTech means your systems are monitored, maintained, and kept up to date rather than waiting until something fails.</p>
+          <div class="evo-compare__points">
+            <div class="evo-compare-point">
+              <span class="evo-compare-point__icon">📉</span>
+              <div>
+                <h4>Fewer Surprises, Less Downtime</h4>
+                <p>Keeping software patched, monitoring system health, and addressing small issues early prevents the larger failures that cost time and money. Prevention is almost always cheaper than emergency repair.</p>
+              </div>
+            </div>
+            <div class="evo-compare-point">
+              <span class="evo-compare-point__icon">💸</span>
+              <div>
+                <h4>Predictable Monthly Cost</h4>
+                <p>A support agreement replaces unpredictable per-incident bills with a fixed monthly fee. You know what IT costs each month — and you're not hit with a large invoice every time something goes wrong.</p>
+              </div>
+            </div>
+            <div class="evo-compare-point">
+              <span class="evo-compare-point__icon">🔐</span>
+              <div>
+                <h4>Security Doesn't Get Left Behind</h4>
+                <p>Break-fix support reacts to problems after they happen. Ongoing support means patch management and security hygiene are handled regularly — not ignored until something goes wrong.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="evo-ctable">
+            <div class="evo-ctable-title">Monthly Support Agreement vs Break-Fix</div>
+            <div class="evo-crow evo-crow--head">
+              <div class="evo-ccell">Feature</div>
+              <div class="evo-ccell evo-ccell--evo" style="text-align:center">EvoTech Monthly</div>
+              <div class="evo-ccell" style="text-align:center;color:rgba(255,255,255,0.5)">Break-Fix</div>
+            </div>
+            <div class="evo-crow">
+              <div class="evo-ccell evo-ccell--feat">Proactive patch management</div>
+              <div class="evo-ccell evo-ccell--yes">✓</div>
+              <div class="evo-ccell evo-ccell--no">✗</div>
+            </div>
+            <div class="evo-crow">
+              <div class="evo-ccell evo-ccell--feat">System health monitoring</div>
+              <div class="evo-ccell evo-ccell--yes">✓</div>
+              <div class="evo-ccell evo-ccell--no">✗</div>
+            </div>
+            <div class="evo-crow">
+              <div class="evo-ccell evo-ccell--feat">Predictable monthly cost</div>
+              <div class="evo-ccell evo-ccell--yes">✓ Flat fee</div>
+              <div class="evo-ccell evo-ccell--no">✗ Per incident</div>
+            </div>
+            <div class="evo-crow">
+              <div class="evo-ccell evo-ccell--feat">Security included</div>
+              <div class="evo-ccell evo-ccell--yes">✓</div>
+              <div class="evo-ccell evo-ccell--no">✗</div>
+            </div>
+            <div class="evo-crow">
+              <div class="evo-ccell evo-ccell--feat">Hardware procurement</div>
+              <div class="evo-ccell evo-ccell--yes">✓ Available</div>
+              <div class="evo-ccell evo-ccell--mid">Separate vendor</div>
+            </div>
+            <div class="evo-crow">
+              <div class="evo-ccell evo-ccell--feat">Priority access to support</div>
+              <div class="evo-ccell evo-ccell--yes">✓</div>
+              <div class="evo-ccell evo-ccell--no">✗</div>
+            </div>
+            <div class="evo-crow">
+              <div class="evo-ccell evo-ccell--feat">Unexpected IT bills</div>
+              <div class="evo-ccell evo-ccell--yes">Minimised</div>
+              <div class="evo-ccell" style="text-align:center;color:#ef4444;font-weight:600">Common</div>
+            </div>
+          </div>
+          <div style="margin-top:20px;padding:18px;background:#f0f8e8;border:1px solid #c4d8a4;border-radius:10px;text-align:center">
+            <div style="font-size:0.78rem;color:#5c7d26;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em">The reality for most small businesses</div>
+            <div style="font-family:var(--heading-font);font-size:1.4rem;font-weight:700;color:#0e2240">IT problems don't wait for a convenient time</div>
+            <div style="font-size:0.82rem;color:#5e6979;margin-top:6px">Regular maintenance and monitoring means fewer crises — and less time you spend worrying about technology instead of running your business.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     WHAT'S INCLUDED
+  ════════════════════════ {% endcomment %}
+  <section class="evo-included" aria-labelledby="evo-included-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge evo-badge--lime">What's Included</span>
+        <h2 id="evo-included-h2">Everything in Your EvoTech IT Support Agreement</h2>
+        <p>Our managed IT support agreements for Perth businesses cover the full spectrum — from everyday helpdesk to strategic planning, all for a flat monthly fee.</p>
+      </div>
+      <div class="evo-included__grid">
+        <div class="evo-include-card">
+          <h3><span>💻</span> Desktop, Laptop & Device Support</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Windows and macOS troubleshooting and repair</div>
+            <div class="evo-include-item">Software installation, updates, and configuration</div>
+            <div class="evo-include-item">Virus, malware, and ransomware removal</div>
+            <div class="evo-include-item">Hardware diagnostics, repair, and replacement</div>
+            <div class="evo-include-item">New device procurement, setup, and deployment</div>
+            <div class="evo-include-item">Mobile device management (MDM) — iOS and Android</div>
+          </div>
+        </div>
+        <div class="evo-include-card">
+          <h3><span>🌐</span> Network & Connectivity</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">WiFi and wired network troubleshooting</div>
+            <div class="evo-include-item">Firewall configuration and management (Fortinet, Cisco)</div>
+            <div class="evo-include-item">VPN setup and remote access for hybrid workers</div>
+            <div class="evo-include-item">Network switch management and segmentation</div>
+            <div class="evo-include-item">Internet connectivity monitoring and failover</div>
+            <div class="evo-include-item">Regular network security assessment</div>
+          </div>
+        </div>
+        <div class="evo-include-card">
+          <h3><span>🔒</span> Security & Compliance</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Endpoint protection and antivirus management</div>
+            <div class="evo-include-item">Email security, spam filtering, and anti-phishing</div>
+            <div class="evo-include-item">Multi-factor authentication (MFA) rollout and management</div>
+            <div class="evo-include-item">Automated patch management — OS and applications</div>
+            <div class="evo-include-item">Essential Eight compliance guidance and monitoring</div>
+            <div class="evo-include-item">Dark web monitoring for compromised credentials</div>
+          </div>
+        </div>
+        <div class="evo-include-card">
+          <h3><span>☁️</span> Cloud, Microsoft 365 & Productivity</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Microsoft 365 management — Teams, SharePoint, Exchange</div>
+            <div class="evo-include-item">User provisioning, licensing, and account management</div>
+            <div class="evo-include-item">Azure cloud monitoring and cost optimisation</div>
+            <div class="evo-include-item">Cloud backup — Microsoft 365 and Azure data</div>
+            <div class="evo-include-item">OneDrive and SharePoint storage management</div>
+            <div class="evo-include-item">Cloud migration assistance and project support</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     INDUSTRIES
+  ════════════════════════ {% endcomment %}
+  <section class="evo-industries" id="industries" aria-labelledby="evo-industries-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge evo-badge--lime">Industries We Serve</span>
+        <h2 id="evo-industries-h2">IT Support for Every Perth Business Type</h2>
+        <p>EvoTech Digital provides IT support across every major industry in Perth and Western Australia — with an understanding of the specific compliance, security, and operational needs of each sector.</p>
+      </div>
+      <div class="evo-industries__grid">
+        <div class="evo-industry"><span class="evo-industry__icon">⚖️</span> Legal Firms</div>
+        <div class="evo-industry"><span class="evo-industry__icon">💊</span> Healthcare & NDIS</div>
+        <div class="evo-industry"><span class="evo-industry__icon">💰</span> Financial Services</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏗️</span> Engineering & Construction</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏢</span> Professional Services</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🛒</span> Retail & Hospitality</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🚛</span> Transport & Logistics</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏭</span> Manufacturing</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🎓</span> Education</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏠</span> Real Estate</div>
+        <div class="evo-industry"><span class="evo-industry__icon">⛏️</span> Mining & Resources</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏛️</span> Government & NFP</div>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     HOW IT WORKS — PROCESS
+  ════════════════════════ {% endcomment %}
+  <section class="evo-process" aria-labelledby="evo-process-h2">
+    <div class="ic-container">
+      <div class="evo-section-head evo-section-head--light">
+        <span class="evo-badge evo-badge--white">How It Works</span>
+        <h2 id="evo-process-h2">From First Call to Fully Supported in 4 Steps</h2>
+        <p>EvoTech's onboarding is designed to get your Perth business fully supported quickly — without any disruption to your operations.</p>
+      </div>
+      <div class="evo-process__steps">
+        <div class="evo-step">
+          <div class="evo-step-num">1</div>
+          <h3>Free IT Assessment</h3>
+          <p>We review your current environment — devices, network, cloud, security, and support experience — and deliver a clear picture of where you stand and what to fix first.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">2</div>
+          <h3>Tailored Support Plan</h3>
+          <p>You receive a transparent support proposal with clear scope, response SLAs, and flat-rate pricing — no surprises. We recommend the plan that fits your team size and risk profile.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">3</div>
+          <h3>Fast Onboarding</h3>
+          <p>We deploy our monitoring and management tools across your environment, document your infrastructure, and set up your helpdesk portal — all with zero downtime for your team.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">4</div>
+          <h3>Ongoing Support & Check-Ins</h3>
+          <p>Regular helpdesk access, system health monitoring, patch management, and periodic reviews — your technology stays well-maintained and you're kept informed of anything that needs attention.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     SUBURBS
+  ════════════════════════ {% endcomment %}
+  <section class="evo-suburbs" aria-labelledby="evo-suburbs-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">Service Areas</span>
+        <h2 id="evo-suburbs-h2">IT Support Across All Perth Suburbs</h2>
+        <p>EvoTech Digital provides remote and on-site IT support across the entire Perth metropolitan area — from Joondalup to Mandurah, and everywhere in between.</p>
+      </div>
+      <div class="evo-suburbs__grid">
+        <div class="evo-suburb">Perth CBD</div>
+        <div class="evo-suburb">Subiaco</div>
+        <div class="evo-suburb">West Perth</div>
+        <div class="evo-suburb">Northbridge</div>
+        <div class="evo-suburb">Osborne Park</div>
+        <div class="evo-suburb">Joondalup</div>
+        <div class="evo-suburb">Wanneroo</div>
+        <div class="evo-suburb">Mirrabooka</div>
+        <div class="evo-suburb">Midland</div>
+        <div class="evo-suburb">Fremantle</div>
+        <div class="evo-suburb">Cockburn</div>
+        <div class="evo-suburb">Canning Vale</div>
+        <div class="evo-suburb">Cannington</div>
+        <div class="evo-suburb">Armadale</div>
+        <div class="evo-suburb">Rockingham</div>
+        <div class="evo-suburb">Mandurah</div>
+        <div class="evo-suburb">Belmont</div>
+        <div class="evo-suburb">Victoria Park</div>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     FAQ
+  ════════════════════════ {% endcomment %}
+  <section class="evo-faq" id="faq" aria-labelledby="evo-faq-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">FAQ</span>
+        <h2 id="evo-faq-h2">Frequently Asked Questions About IT Support in Perth</h2>
+      </div>
+      <div class="evo-faq__grid">
+        <div class="evo-faq-item">
+          <h4>What is business IT support in Perth?</h4>
+          <p>Business IT support means having someone you can call when your technology stops working — and someone who proactively keeps it running in the first place. EvoTech Digital is a Perth-based IT provider helping small businesses with remote support, on-site visits, Microsoft 365, cybersecurity basics, and hardware procurement — all handled by one person who knows your setup.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>How does EvoTech handle support requests?</h4>
+          <p>Contact EvoTech by phone or email during business hours. Most issues are resolved remotely on the same business day. On-site visits for hardware or network work are scheduled by appointment across the Perth metro area. For businesses on a monthly support agreement, requests receive priority handling.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>What does IT support cost for a Perth business?</h4>
+          <p>EvoTech offers both one-off support (charged hourly) and monthly support agreements (flat-rate per month based on the scope of services). Monthly agreements are better value for businesses that need regular help. Contact EvoTech for a straightforward quote based on your actual requirements.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>What's the difference between monthly support and break-fix?</h4>
+          <p>Break-fix means you only call when something breaks — you pay per incident and get no proactive maintenance. A monthly support agreement means patch management, system monitoring, and security hygiene are handled on a regular schedule, reducing the likelihood of things breaking in the first place. Most businesses find the predictable cost and fewer surprises worth the switch.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Does EvoTech provide on-site IT support across Perth?</h4>
+          <p>Yes. On-site support is available across the Perth metropolitan area by appointment. EvoTech visits businesses for hardware setup, network installations, equipment replacement, and any issue that can't be resolved remotely. If you're unsure whether your issue needs a site visit, get in touch and we'll advise.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Can EvoTech support Microsoft 365 and cloud services?</h4>
+          <p>Yes. EvoTech provides Microsoft 365 setup, migration, and ongoing management — including Teams, SharePoint, Exchange, OneDrive, and user account management. With Microsoft's Perth data centre now live, businesses using Azure benefit from better local performance and Australian data residency.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Is EvoTech suitable for very small businesses?</h4>
+          <p>EvoTech Digital is specifically focused on small Perth businesses — from sole traders and startups to established SMBs with a small team. If you've been managing IT yourself or relying on a friend for help, EvoTech can take that off your plate properly, without the cost of a large IT firm.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>What happens if I have an IT issue outside business hours?</h4>
+          <p>EvoTech is a small business and operates during standard Perth business hours. For businesses that need after-hours coverage, this is something to discuss upfront — EvoTech can advise on monitoring tools and self-service options that reduce the impact of out-of-hours issues, and discuss what escalation options are appropriate for your situation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} ════════════════════════
+     CTA
+  ════════════════════════ {% endcomment %}
+  <section class="evo-cta" id="contact" aria-labelledby="evo-cta-h2">
+    <div class="ic-container">
+      <div class="evo-cta__inner">
+        <div>
+          <span class="evo-badge evo-badge--white">Get Started Today</span>
+          <h2 id="evo-cta-h2" style="margin-top:10px">
+            Ready for IT Support Perth Businesses Trust?
+          </h2>
+          <p>Book a <strong style="color:#cff394">free, no-obligation IT consultation</strong> with EvoTech Digital. We'll talk through what your business is dealing with, what's actually worth fixing, and what support would look like — no pressure, no jargon.</p>
+          <div class="evo-cta__checks">
+            <div class="evo-cta__check">Free initial consultation — understand your options first</div>
+            <div class="evo-cta__check">Perth-based, owner-operated — you deal directly with the technician</div>
+            <div class="evo-cta__check">Remote and on-site support available across Perth</div>
+            <div class="evo-cta__check">Hardware supply and IT support under one roof</div>
+          </div>
+        </div>
+        <div class="evo-cta__btns">
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-cta evo-btn-cta--lime">
+            📧 Contact Support Now
+          </a>
+          <a href="{{ section.settings.cta_secondary_link }}" class="evo-btn-cta evo-btn-cta--blue">
+            🗓️ Book a Free Assessment
+          </a>
+          <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-btn-cta evo-btn-cta--outline">
+            📞 {{ section.settings.phone_number }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Business IT Support Perth",
+  "tag": "section",
+  "class": "evo-business-it-support-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contact Details"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone Number",
+      "default": "0466 911 816"
+    },
+    {
+      "type": "text",
+      "id": "email_address",
+      "label": "Email Address",
+      "default": "info@evotech.au"
+    },
+    {
+      "type": "header",
+      "content": "Call-to-Action Links"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_link",
+      "label": "Primary CTA — Contact Support / Contact Form"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_link",
+      "label": "Secondary CTA — Book Assessment / Discovery Call"
+    },
+    {
+      "type": "header",
+      "content": "Page Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announce",
+      "label": "Show Announcement Bar",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Business IT Support Perth"
+    }
+  ]
+}
+{% endschema %}

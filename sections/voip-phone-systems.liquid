@@ -1,0 +1,629 @@
+{% comment %}
+  PAGE 9 — VOIP & BUSINESS PHONE SYSTEMS
+  evotech.au/pages/voip-phone-systems
+  SEO Title : Business VoIP Perth | Microsoft Teams Calling Solutions | Evotech
+  Meta Desc : Cut your phone bill and modernise communications. Smart business VoIP and MS Teams calling for Perth companies. Number porting, auto attendant, mobile apps.
+  Keywords  : Business VoIP Perth · MS Teams calling Perth · business phone systems Perth
+  v3 sole-trader honest · 1 min response · full SEO + rich results
+{% endcomment %}
+
+{%- comment -%} ── SCHEMA.ORG LD+JSON ── {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "EvoTech Digital",
+  "description": "Perth-based VoIP and business phone system specialist. Cloud telephony, Microsoft Teams Calling, number porting and ongoing VoIP support for WA small businesses.",
+  "url": "{{ shop.url }}",
+  "telephone": "+61466911816",
+  "email": "info@evotech.au",
+  "address": { "@type": "PostalAddress", "addressLocality": "Perth", "addressRegion": "WA", "addressCountry": "AU" },
+  "areaServed": ["Perth CBD","Subiaco","Joondalup","Fremantle","Midland","Rockingham","Mandurah","Osborne Park","Western Australia"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "VoIP & Phone Systems",
+    "itemListElement": [
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Business VoIP Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Microsoft Teams Calling Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Business Phone Systems Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Number Porting Perth"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Auto Attendant IVR Perth"}}
+    ]
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is VoIP and how does it benefit my Perth business?",
+      "acceptedAnswer": { "@type": "Answer", "text": "VoIP (Voice over IP) routes your business calls over the internet instead of traditional phone lines — delivering better call quality, lower monthly costs, mobile app access and features like auto attendant, call recording and voicemail-to-email that traditional PABX systems charge extra for." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I keep my existing Perth phone number when switching to VoIP?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Number porting transfers your current Perth business phone numbers to your new VoIP system so clients continue reaching you on the same number. EvoTech Digital manages the full porting process with your current carrier — minimal disruption to incoming calls." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Microsoft Teams replace my phone system?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — with Microsoft Teams Calling (Direct Routing), Teams becomes your full business phone system. Your Perth team makes and receives external calls directly inside Teams on any device — desktop, laptop or mobile — with no separate phone app required." }
+    },
+    {
+      "@type": "Question",
+      "name": "How reliable is VoIP for Perth business use?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Modern cloud VoIP is highly reliable for Perth businesses. EvoTech Digital assesses your internet connection speed and configures QoS on your network router before go-live — prioritising voice traffic to ensure clear, uninterrupted calls even when other staff are using the internet." }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does a business VoIP system cost in Perth?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Hosted VoIP for Perth businesses typically costs $15–$35 per user per month depending on the platform and call inclusions — significantly less than traditional PABX maintenance and PSTN line rental. Contact EvoTech Digital for a free VoIP assessment and tailored quote." }
+    }
+  ]
+}
+</script>
+
+<style>
+  .evo-page{font-family:var(--body-font,sans-serif);color:#5e6979;background:#fff}
+  .evo-announce{background:#0e2240;color:#cff394;text-align:center;padding:10px 20px;font-size:.85rem;font-weight:600;letter-spacing:.02em}
+  .evo-announce a{color:#fff;text-decoration:underline}
+  .evo-hero{background:#0e2240;position:relative;overflow:hidden;padding:80px 0 70px}
+  .evo-hero::before{content:'';position:absolute;top:0;right:0;bottom:0;width:55%;background:radial-gradient(ellipse at 80% 50%,rgba(207,243,148,.08) 0%,transparent 65%);pointer-events:none}
+  .evo-hero__grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;position:relative;z-index:1}
+  .evo-hero__eyebrow{display:inline-flex;align-items:center;gap:8px;color:#cff394;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
+  .evo-hero__eyebrow::before{content:'';display:inline-block;width:24px;height:2px;background:#cff394;flex-shrink:0}
+  .evo-hero h1{font-family:var(--heading-font,sans-serif);font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:700;color:#fff;line-height:1.13;margin-bottom:20px}
+  .evo-hero h1 span{color:#cff394}
+  .evo-hero__lead{font-size:1.05rem;color:#c5d3e8;line-height:1.75;margin-bottom:32px}
+  .evo-hero__actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+  .evo-hero__pills{display:flex;gap:10px;flex-wrap:wrap;padding-top:28px;border-top:1px solid rgba(255,255,255,.1)}
+  .evo-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(207,243,148,.1);border:1px solid rgba(207,243,148,.22);border-radius:50px;padding:7px 14px;font-size:.8rem;font-weight:600;color:#d8f0b0}
+  .evo-pill::before{content:'✓';color:#cff394;font-weight:700}
+  .evo-btn-lime{display:inline-flex;align-items:center;gap:7px;background:#cff394;color:#0e2240;padding:14px 28px;border-radius:var(--button-border-radius,6px);font-weight:700;font-size:.93rem;text-decoration:none;transition:background .2s,transform .2s}
+  .evo-btn-lime:hover{background:#b8e87c;transform:translateY(-2px);text-decoration:none;color:#0e2240}
+  .evo-btn-outline-white{display:inline-flex;align-items:center;gap:7px;background:transparent;color:#fff;padding:13px 28px;border-radius:var(--button-border-radius,6px);font-weight:600;font-size:.93rem;text-decoration:none;border:1.5px solid rgba(255,255,255,.3);transition:border-color .2s,color .2s}
+  .evo-btn-outline-white:hover{border-color:#cff394;color:#cff394;text-decoration:none}
+  .evo-services-visual{background:rgba(255,255,255,.05);border:1px solid rgba(207,243,148,.16);border-radius:14px;padding:30px}
+  .evo-vis-header{font-size:.75rem;font-weight:700;color:rgba(207,243,148,.6);text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px}
+  .evo-vis-item{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .evo-vis-item:last-child{border-bottom:none}
+  .evo-vis-icon{width:38px;height:38px;border-radius:8px;background:rgba(207,243,148,.1);border:1px solid rgba(207,243,148,.18);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+  .evo-vis-name{font-size:.87rem;font-weight:600;color:#e8f0fa}
+  .evo-vis-desc{font-size:.75rem;color:#7a90a8;margin-top:2px}
+  .evo-vis-badge{margin-left:auto;background:rgba(110,224,122,.15);border:1px solid rgba(110,224,122,.3);border-radius:4px;padding:3px 8px;font-size:.7rem;font-weight:700;color:#6ee07a;white-space:nowrap}
+  .evo-partners{background:#f8f9fd;border-top:1px solid #e2e4e8;border-bottom:1px solid #e2e4e8;padding:22px 0}
+  .evo-partners__inner{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .evo-partners__label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9aa3b0;white-space:nowrap;padding-right:12px;border-right:1px solid #e2e4e8}
+  .evo-partners__logos{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .evo-partner-badge{background:#fff;border:1px solid #e2e4e8;border-radius:6px;padding:7px 16px;font-size:.8rem;font-weight:700;color:#0e2240;white-space:nowrap}
+  .evo-section-head{text-align:center;max-width:680px;margin:0 auto 56px}
+  .evo-badge{display:inline-block;padding:4px 14px;border-radius:50px;border:1.5px solid #0e2240;color:#0e2240;font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+  .evo-badge--lime{border-color:#5c7d26;background:rgba(207,243,148,.15);color:#3a5a10}
+  .evo-badge--white{border-color:rgba(255,255,255,.35);color:#fff;background:rgba(255,255,255,.07)}
+  .evo-section-head h2{font-family:var(--heading-font,sans-serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#0e2240;line-height:1.2}
+  .evo-section-head--light h2{color:#fff}
+  .evo-section-head p{margin-top:14px;font-size:1rem;line-height:1.7;color:#5e6979}
+  .evo-section-head--light p{color:#b8cce0}
+  .evo-services{padding:88px 0;background:#fff}
+  .evo-services__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .evo-service-card{background:#fff;border:1px solid #e2e4e8;border-radius:10px;padding:30px 28px;transition:all .28s;position:relative;overflow:hidden}
+  .evo-service-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:#cff394;transform:scaleX(0);transform-origin:left;transition:transform .28s}
+  .evo-service-card:hover{box-shadow:0 8px 32px rgba(14,34,64,.09);transform:translateY(-3px);border-color:#c4d8a4}
+  .evo-service-card:hover::after{transform:scaleX(1)}
+  .evo-service-icon{width:48px;height:48px;border-radius:10px;background:#f0f8e8;border:1px solid #d6f0b0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:18px}
+  .evo-service-card h3{font-family:var(--heading-font,sans-serif);font-size:1.05rem;font-weight:700;color:#0e2240;margin-bottom:10px;line-height:1.3}
+  .evo-service-card p{font-size:.88rem;line-height:1.65;color:#5e6979;margin:0}
+  .evo-service-link{display:inline-flex;align-items:center;gap:5px;margin-top:18px;font-size:.85rem;font-weight:700;color:#0e2240;text-decoration:none;transition:gap .2s,color .2s}
+  .evo-service-link:hover{gap:9px;color:#5c7d26;text-decoration:none}
+  .evo-why{background:#f8f9fd;padding:88px 0}
+  .evo-why__grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .evo-why__points{display:flex;flex-direction:column;gap:16px;margin-top:30px}
+  .evo-why-item{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid #e2e4e8;border-radius:10px;padding:20px;transition:border-color .2s}
+  .evo-why-item:hover{border-color:#cff394}
+  .evo-why-num{font-family:var(--heading-font,sans-serif);font-size:1.6rem;font-weight:700;color:#a8d87a;line-height:1;min-width:36px;padding-top:3px}
+  .evo-why-item h4{font-family:var(--heading-font,sans-serif);font-size:.97rem;font-weight:700;color:#0e2240;margin-bottom:5px}
+  .evo-why-item p{font-size:.87rem;line-height:1.6;margin:0}
+  .evo-value-box{background:#0e2240;border-radius:14px;padding:40px;color:#fff}
+  .evo-value-box__title{font-family:var(--heading-font,sans-serif);font-size:1.1rem;font-weight:700;color:#cff394;margin-bottom:24px;line-height:1.3}
+  .evo-value-list{display:flex;flex-direction:column;gap:16px}
+  .evo-value-item{display:flex;gap:14px;align-items:flex-start;padding:16px;background:rgba(255,255,255,.05);border:1px solid rgba(207,243,148,.12);border-radius:8px}
+  .evo-value-icon{width:36px;height:36px;border-radius:8px;flex-shrink:0;background:rgba(207,243,148,.12);display:flex;align-items:center;justify-content:center;font-size:1rem}
+  .evo-value-label{font-size:.9rem;font-weight:700;color:#e8f0fa;margin-bottom:3px}
+  .evo-value-desc{font-size:.8rem;color:#7a90a8;line-height:1.5}
+  .evo-cta-box{margin-top:24px;padding:20px;background:rgba(207,243,148,.08);border:1px solid rgba(207,243,148,.2);border-radius:10px;text-align:center}
+  .evo-cta-box p{color:#b8cce0;font-size:.88rem;margin-bottom:14px}
+  .evo-included{background:#f8f9fd;padding:88px 0}
+  .evo-included__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .evo-include-card{background:#fff;border:1px solid #e2e4e8;border-radius:10px;padding:28px}
+  .evo-include-card h3{font-family:var(--heading-font,sans-serif);font-size:1.05rem;font-weight:700;color:#0e2240;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .evo-include-list{display:flex;flex-direction:column;gap:9px}
+  .evo-include-item{display:flex;align-items:flex-start;gap:8px;font-size:.88rem;color:#5e6979;line-height:1.5}
+  .evo-include-item::before{content:'✓';color:#5c7d26;font-weight:700;flex-shrink:0;margin-top:1px}
+  .evo-process{background:#0e2240;padding:88px 0}
+  .evo-process__steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:16px}
+  .evo-step{background:rgba(255,255,255,.04);border:1px solid rgba(207,243,148,.14);border-radius:10px;padding:30px 24px;text-align:center;transition:all .25s}
+  .evo-step:hover{background:rgba(207,243,148,.06);border-color:rgba(207,243,148,.32)}
+  .evo-step-num{width:52px;height:52px;border-radius:50%;border:2px solid #cff394;display:flex;align-items:center;justify-content:center;font-family:var(--heading-font,sans-serif);font-size:1.1rem;font-weight:700;color:#cff394;margin:0 auto 18px}
+  .evo-step h3{font-family:var(--heading-font,sans-serif);font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px}
+  .evo-step p{font-size:.85rem;color:#8fa5bf;margin:0;line-height:1.65}
+  .evo-industries{background:#fff;padding:88px 0}
+  .evo-industries__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .evo-industry{background:#f8f9fd;border:1px solid #e2e4e8;border-radius:8px;padding:18px 16px;display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:600;color:#0e2240;transition:all .2s}
+  .evo-industry:hover{background:#f0f8e8;border-color:#b8e07c;transform:translateY(-2px)}
+  .evo-industry__icon{font-size:1.2rem;flex-shrink:0}
+  .evo-suburbs{background:#fff;padding:80px 0}
+  .evo-suburbs__grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  .evo-suburb{background:#f8f9fd;border:1px solid #e2e4e8;border-radius:6px;padding:10px 12px;font-size:.82rem;color:#5e6979;text-align:center;font-weight:500;transition:all .18s}
+  .evo-suburb:hover{background:#f0f8e8;border-color:#c4d8a4;color:#3a5a10}
+  .evo-faq{background:#f8f9fd;padding:88px 0}
+  .evo-faq__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .evo-faq-item{background:#fff;border:1px solid #e2e4e8;border-radius:10px;padding:26px}
+  .evo-faq-item h4{font-family:var(--heading-font,sans-serif);font-size:.97rem;font-weight:700;color:#0e2240;margin-bottom:10px;line-height:1.35}
+  .evo-faq-item p{font-size:.87rem;line-height:1.68;margin:0}
+  .evo-cta{background:#0e2240;padding:80px 0}
+  .evo-cta__inner{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+  .evo-cta h2{font-family:var(--heading-font,sans-serif);font-size:clamp(1.5rem,2.5vw,2.1rem);font-weight:700;color:#fff;margin-bottom:10px}
+  .evo-cta p{color:#b8cce0;font-size:1rem;margin:0}
+  .evo-cta__checks{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+  .evo-cta__check{display:flex;align-items:center;gap:8px;font-size:.88rem;color:#c5d3e8}
+  .evo-cta__check::before{content:'✓';color:#cff394;font-weight:700;flex-shrink:0}
+  .evo-cta__btns{display:flex;flex-direction:column;gap:10px;min-width:220px}
+  .evo-btn-cta{display:block;text-align:center;padding:15px 26px;border-radius:var(--button-border-radius,6px);font-weight:700;font-size:.9rem;text-decoration:none;transition:all .2s;white-space:nowrap}
+  .evo-btn-cta--lime{background:#cff394;color:#0e2240}
+  .evo-btn-cta--lime:hover{background:#b8e87c;text-decoration:none;color:#0e2240}
+  .evo-btn-cta--outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+  .evo-btn-cta--outline:hover{border-color:#cff394;color:#cff394;text-decoration:none}
+  .ic-container{max-width:1200px;margin:0 auto;padding:0 24px}
+  @media(max-width:1024px){.evo-hero__grid,.evo-why__grid,.evo-faq__grid,.evo-cta__inner{grid-template-columns:1fr}.evo-services__grid{grid-template-columns:1fr 1fr}.evo-process__steps{grid-template-columns:1fr 1fr}.evo-industries__grid{grid-template-columns:repeat(3,1fr)}.evo-suburbs__grid{grid-template-columns:repeat(4,1fr)}.evo-included__grid{grid-template-columns:1fr}}
+  @media(max-width:767px){.evo-hero{padding:52px 0 46px}.evo-hero h1{font-size:1.85rem}.evo-services__grid,.evo-process__steps,.evo-included__grid{grid-template-columns:1fr}.evo-industries__grid{grid-template-columns:1fr 1fr}.evo-suburbs__grid{grid-template-columns:repeat(3,1fr)}.evo-services,.evo-why,.evo-process,.evo-industries,.evo-included,.evo-faq,.evo-cta{padding:56px 0}.evo-cta__btns{flex-direction:row;flex-wrap:wrap;min-width:auto}}
+  @media(max-width:480px){.evo-suburbs__grid{grid-template-columns:repeat(2,1fr)}.evo-faq__grid{grid-template-columns:1fr}}
+</style>
+
+<div class="evo-page">
+
+  {% if section.settings.show_announce %}
+  <div class="evo-announce">
+    📞 Cut your phone bill and modernise communications — <strong>Free VoIP Assessment</strong> for Perth businesses.
+    <a href="{{ section.settings.cta_primary_link }}">Book Now →</a>
+  </div>
+  {% endif %}
+
+  {%- comment -%} ══ HERO ══ {%- endcomment -%}
+  <section class="evo-hero" aria-labelledby="evo-h1">
+    <div class="ic-container">
+      <div class="evo-hero__grid">
+        <div>
+          <div class="evo-hero__eyebrow">Perth VoIP Specialist</div>
+          <h1 id="evo-h1">
+            Business VoIP &amp;<br>
+            <span>Phone Systems</span><br>
+            Perth
+          </h1>
+          <p class="evo-hero__lead">
+            Ditch expensive PSTN lines and unreliable PABX hardware. EvoTech Digital delivers <strong style="color:#e8f0fa">cloud VoIP, Microsoft Teams Calling and hosted telephony</strong> for Perth businesses — lower costs, better features, works on any device anywhere.
+          </p>
+          <div class="evo-hero__actions">
+            <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-lime">Get a Free VoIP Quote →</a>
+            <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-btn-outline-white">📞 {{ section.settings.phone_number }}</a>
+          </div>
+          <div class="evo-hero__pills">
+            <span class="evo-pill">Number Porting Included</span>
+            <span class="evo-pill">Teams Calling Ready</span>
+            <span class="evo-pill">Mobile App Access</span>
+            <span class="evo-pill">No Locked-In Hardware</span>
+          </div>
+        </div>
+        <div aria-hidden="true">
+          <div class="evo-services-visual">
+            <div class="evo-vis-header">VoIP &amp; Telephony Services</div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">☁️</div>
+              <div><div class="evo-vis-name">Cloud VoIP Phone System</div><div class="evo-vis-desc">Hosted, scalable, no hardware lock-in</div></div>
+              <span class="evo-vis-badge">Available</span>
+            </div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">🤝</div>
+              <div><div class="evo-vis-name">Microsoft Teams Calling</div><div class="evo-vis-desc">External calls directly inside Teams</div></div>
+              <span class="evo-vis-badge">Available</span>
+            </div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">📱</div>
+              <div><div class="evo-vis-name">Mobile Softphone Apps</div><div class="evo-vis-desc">iOS &amp; Android — business number on mobile</div></div>
+              <span class="evo-vis-badge">Available</span>
+            </div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">🔢</div>
+              <div><div class="evo-vis-name">Auto Attendant &amp; IVR</div><div class="evo-vis-desc">Professional call menus for any business size</div></div>
+              <span class="evo-vis-badge">Available</span>
+            </div>
+            <div class="evo-vis-item">
+              <div class="evo-vis-icon">🔄</div>
+              <div><div class="evo-vis-name">Number Porting</div><div class="evo-vis-desc">Keep your existing Perth business numbers</div></div>
+              <span class="evo-vis-badge">Available</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} PARTNERS {%- endcomment -%}
+  <div class="evo-partners">
+    <div class="ic-container">
+      <div class="evo-partners__inner">
+        <span class="evo-partners__label">VoIP Platforms</span>
+        <div class="evo-partners__logos">
+          <span class="evo-partner-badge">Microsoft Teams</span>
+          <span class="evo-partner-badge">3CX</span>
+          <span class="evo-partner-badge">Yealink</span>
+          <span class="evo-partner-badge">Poly</span>
+          <span class="evo-partner-badge">RingCentral</span>
+          <span class="evo-partner-badge">Vonage</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ══ SERVICES ══ {%- endcomment -%}
+  <section class="evo-services" id="services" aria-labelledby="evo-services-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">Our Services</span>
+        <h2 id="evo-services-h2">VoIP &amp; Business Phone System Services for Perth</h2>
+        <p>EvoTech Digital supplies, configures and manages VoIP phone systems for Perth businesses — from single-user setups to multi-site office telephony deployments.</p>
+      </div>
+      <div class="evo-services__grid">
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">☁️</div>
+          <h3>Cloud VoIP Phone Systems</h3>
+          <p>Replace your traditional PABX or PSTN lines with a fully hosted cloud VoIP system. Pay per seat, scale up or down instantly, and access your full phone system from any device or location — no on-premises hardware required.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🤝</div>
+          <h3>Microsoft Teams Calling</h3>
+          <p>Turn Microsoft Teams into your complete business phone system with Direct Routing. Your Perth team makes and receives external calls directly inside Teams on desktop or mobile — no separate phone app, no additional software licence needed.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">📱</div>
+          <h3>Mobile &amp; Remote Calling</h3>
+          <p>VoIP softphone apps for iOS and Android let your Perth staff take business calls on their personal phones while keeping their private number hidden. Perfect for mobile workers, remote staff and businesses without a fixed office location.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🔢</div>
+          <h3>Auto Attendant &amp; IVR</h3>
+          <p>Professional call routing menus greet callers and direct them to the right person or department automatically — giving your Perth business a polished, enterprise-style phone presence regardless of team size or budget.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">📋</div>
+          <h3>Call Recording &amp; Analytics</h3>
+          <p>Optional call recording for compliance, training or dispute resolution — plus call analytics dashboards showing volume, duration, missed calls and peak times across your Perth business. Stored securely in the cloud.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+        <article class="evo-service-card">
+          <div class="evo-service-icon" aria-hidden="true">🔄</div>
+          <h3>Number Porting &amp; Migration</h3>
+          <p>Keep your existing Perth business phone numbers when switching to VoIP. EvoTech Digital manages the full porting process with your current carrier — coordinating timing so your numbers transfer with zero gap in incoming call service.</p>
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-service-link">Enquire Now →</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ══ WHY EVOTECH ══ {%- endcomment -%}
+  <section class="evo-why" id="why" aria-labelledby="evo-why-h2">
+    <div class="ic-container">
+      <div class="evo-why__grid">
+        <div>
+          <span class="evo-badge">Why EvoTech Digital</span>
+          <h2 id="evo-why-h2" style="font-family:var(--heading-font,sans-serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;color:#0e2240;line-height:1.2;margin-top:10px">
+            Perth VoIP That's Set Up Right the First Time
+          </h2>
+          <p style="margin-top:12px;font-size:1rem;line-height:1.7;color:#5e6979">
+            VoIP call quality is only as good as the network it runs on. EvoTech Digital assesses your internet connection, configures QoS on your router, selects the right VoIP platform for your Perth business and ensures everything works before I hand over — not after.
+          </p>
+          <div class="evo-why__points">
+            <div class="evo-why-item">
+              <div class="evo-why-num">01</div>
+              <div>
+                <h4>Network Assessment Before Setup</h4>
+                <p>I check your Perth office internet speed, jitter, packet loss and router QoS configuration before VoIP goes live — preventing call quality issues before they ever occur.</p>
+              </div>
+            </div>
+            <div class="evo-why-item">
+              <div class="evo-why-num">02</div>
+              <div>
+                <h4>Microsoft 365 Integration</h4>
+                <p>If your Perth business already uses Microsoft 365, Teams Calling gives you a single platform for calls, chat, meetings and files — no separate phone system to manage or pay for.</p>
+              </div>
+            </div>
+            <div class="evo-why-item">
+              <div class="evo-why-num">03</div>
+              <div>
+                <h4>Honest Platform Recommendations</h4>
+                <p>I recommend the VoIP solution that suits your call volume and budget — not the most expensive option. Sometimes a simple hosted system is genuinely all a Perth small business needs.</p>
+              </div>
+            </div>
+            <div class="evo-why-item">
+              <div class="evo-why-num">04</div>
+              <div>
+                <h4>1 Min Response, Ongoing Support</h4>
+                <p>After go-live, I provide ongoing VoIP support with a 1 min first-response target during business hours — adding users, managing numbers, troubleshooting quality issues and updating call routing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="evo-value-box">
+          <div class="evo-value-box__title">Why Perth Businesses Choose EvoTech for VoIP</div>
+          <div class="evo-value-list">
+            <div class="evo-value-item">
+              <div class="evo-value-icon">📍</div>
+              <div>
+                <div class="evo-value-label">Perth-Based Support</div>
+                <div class="evo-value-desc">Onsite visit if needed — no sending phones back to a Sydney warehouse for configuration</div>
+              </div>
+            </div>
+            <div class="evo-value-item">
+              <div class="evo-value-icon">💰</div>
+              <div>
+                <div class="evo-value-label">Lower Monthly Costs</div>
+                <div class="evo-value-desc">Cloud VoIP typically costs significantly less than traditional PSTN line rental and PABX maintenance</div>
+              </div>
+            </div>
+            <div class="evo-value-item">
+              <div class="evo-value-icon">📱</div>
+              <div>
+                <div class="evo-value-label">Works on Any Device</div>
+                <div class="evo-value-desc">Desk phones, softphones, mobile apps — your team chooses the device that suits them</div>
+              </div>
+            </div>
+            <div class="evo-value-item">
+              <div class="evo-value-icon">🔄</div>
+              <div>
+                <div class="evo-value-label">Easy to Scale</div>
+                <div class="evo-value-desc">Add or remove users in minutes — no physical hardware changes, no technician visit required</div>
+              </div>
+            </div>
+          </div>
+          <div class="evo-cta-box">
+            <p>Find out how much your Perth business could save on telephony</p>
+            <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-lime" style="display:inline-flex">Book Free VoIP Assessment →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ══ WHAT'S INCLUDED ══ {%- endcomment -%}
+  <section class="evo-included" aria-labelledby="evo-included-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge evo-badge--lime">What's Included</span>
+        <h2 id="evo-included-h2">Everything in Your VoIP Deployment</h2>
+        <p>EvoTech Digital handles the complete VoIP setup — platform provisioning, network configuration, device setup, porting and staff training.</p>
+      </div>
+      <div class="evo-included__grid">
+        <div class="evo-include-card">
+          <h3><span>☁️</span> Platform Setup</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Cloud VoIP account provisioning and configuration</div>
+            <div class="evo-include-item">DID number allocation or porting from current carrier</div>
+            <div class="evo-include-item">Extension setup for all Perth office users</div>
+            <div class="evo-include-item">Auto attendant and IVR call routing menus</div>
+            <div class="evo-include-item">Voicemail-to-email configuration</div>
+          </div>
+        </div>
+        <div class="evo-include-card">
+          <h3><span>🌐</span> Network Configuration</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Router and firewall QoS configuration for voice traffic</div>
+            <div class="evo-include-item">VLAN setup to separate voice from data traffic</div>
+            <div class="evo-include-item">Internet speed, jitter and packet-loss testing</div>
+            <div class="evo-include-item">Wi-Fi phone support configuration (if required)</div>
+            <div class="evo-include-item">Ongoing call quality monitoring</div>
+          </div>
+        </div>
+        <div class="evo-include-card">
+          <h3><span>📱</span> Devices &amp; Hardware</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Desk phone provisioning and registration (if required)</div>
+            <div class="evo-include-item">Mobile softphone app setup — iOS &amp; Android</div>
+            <div class="evo-include-item">Microsoft Teams Calling integration and testing</div>
+            <div class="evo-include-item">Headset compatibility testing and recommendations</div>
+            <div class="evo-include-item">User quick-start guides for each device type</div>
+          </div>
+        </div>
+        <div class="evo-include-card">
+          <h3><span>🔄</span> Porting &amp; Ongoing Support</h3>
+          <div class="evo-include-list">
+            <div class="evo-include-item">Existing number porting — EvoTech manages with your carrier</div>
+            <div class="evo-include-item">Porting timeline coordination and progress updates</div>
+            <div class="evo-include-item">Staff training on new VoIP system features</div>
+            <div class="evo-include-item">Ongoing support for adds, moves and changes</div>
+            <div class="evo-include-item">Monthly call usage reporting (optional)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ══ PROCESS ══ {%- endcomment -%}
+  <section class="evo-process" aria-labelledby="evo-process-h2">
+    <div class="ic-container">
+      <div class="evo-section-head evo-section-head--light">
+        <span class="evo-badge evo-badge--white">How It Works</span>
+        <h2 id="evo-process-h2">Getting Your Perth Business onto VoIP</h2>
+        <p>A smooth transition from your existing phone system — assessed, configured and live with minimal disruption to your operations.</p>
+      </div>
+      <div class="evo-process__steps">
+        <div class="evo-step">
+          <div class="evo-step-num">1</div>
+          <h3>Free VoIP Assessment</h3>
+          <p>I review your Perth office internet connection, existing phone setup, call volume and team size to recommend the right VoIP platform and configuration.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">2</div>
+          <h3>Platform &amp; Number Setup</h3>
+          <p>Your VoIP account is provisioned, numbers allocated or porting initiated, all extensions configured and call routing set up — before any device touches the system.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">3</div>
+          <h3>Device &amp; Network Config</h3>
+          <p>Phones, apps and your network QoS are configured and fully tested. I confirm call quality on all devices before handing over to your Perth team.</p>
+        </div>
+        <div class="evo-step">
+          <div class="evo-step-num">4</div>
+          <h3>Training &amp; Handover</h3>
+          <p>Staff training on the new system, quick-start guides provided, and I remain available for post-go-live support — no abandonment after installation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ══ INDUSTRIES ══ {%- endcomment -%}
+  <section class="evo-industries" id="industries" aria-labelledby="evo-industries-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge evo-badge--lime">Industries</span>
+        <h2 id="evo-industries-h2">VoIP Phone Systems for Perth's Key Industries</h2>
+        <p>Every Perth industry has unique telephony requirements — call recording for compliance, mobile calling for field workers, or Teams integration for office-based teams. EvoTech Digital configures VoIP to suit your sector.</p>
+      </div>
+      <div class="evo-industries__grid">
+        <div class="evo-industry"><span class="evo-industry__icon">⚖️</span> Legal Firms</div>
+        <div class="evo-industry"><span class="evo-industry__icon">💊</span> Healthcare &amp; Medical</div>
+        <div class="evo-industry"><span class="evo-industry__icon">💰</span> Financial Services</div>
+        <div class="evo-industry"><span class="evo-industry__icon">⛏️</span> Mining &amp; Resources</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏗️</span> Engineering &amp; Construction</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏢</span> Professional Services</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🎓</span> Education</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏛️</span> Government</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🛒</span> Retail &amp; Hospitality</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🚛</span> Transport &amp; Logistics</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏭</span> Manufacturing</div>
+        <div class="evo-industry"><span class="evo-industry__icon">🏠</span> Real Estate</div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ══ SUBURBS ══ {%- endcomment -%}
+  <section class="evo-suburbs" aria-labelledby="evo-suburbs-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">Service Areas</span>
+        <h2 id="evo-suburbs-h2">VoIP Phone System Support Across All Perth Suburbs</h2>
+        <p>EvoTech Digital provides VoIP setup, number porting and ongoing phone system support across the entire Perth metropolitan area, including:</p>
+      </div>
+      <div class="evo-suburbs__grid">
+        <div class="evo-suburb">Perth CBD</div><div class="evo-suburb">Subiaco</div><div class="evo-suburb">West Perth</div>
+        <div class="evo-suburb">Northbridge</div><div class="evo-suburb">Osborne Park</div><div class="evo-suburb">Joondalup</div>
+        <div class="evo-suburb">Wanneroo</div><div class="evo-suburb">Mirrabooka</div><div class="evo-suburb">Midland</div>
+        <div class="evo-suburb">Fremantle</div><div class="evo-suburb">Cockburn</div><div class="evo-suburb">Canning Vale</div>
+        <div class="evo-suburb">Cannington</div><div class="evo-suburb">Armadale</div><div class="evo-suburb">Rockingham</div>
+        <div class="evo-suburb">Mandurah</div><div class="evo-suburb">Belmont</div><div class="evo-suburb">Victoria Park</div>
+        <div class="evo-suburb">South Perth</div><div class="evo-suburb">Nedlands</div><div class="evo-suburb">Claremont</div>
+        <div class="evo-suburb">Cottesloe</div><div class="evo-suburb">Stirling</div><div class="evo-suburb">Karrinyup</div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ══ FAQ ══ {%- endcomment -%}
+  <section class="evo-faq" id="faq" aria-labelledby="evo-faq-h2">
+    <div class="ic-container">
+      <div class="evo-section-head">
+        <span class="evo-badge">FAQ</span>
+        <h2 id="evo-faq-h2">Frequently Asked Questions — Business VoIP Perth</h2>
+      </div>
+      <div class="evo-faq__grid">
+        <div class="evo-faq-item">
+          <h4>What is VoIP and how does it benefit my Perth business?</h4>
+          <p>VoIP (Voice over IP) routes business calls over the internet instead of traditional phone lines — delivering better call quality, lower monthly costs, and features like auto attendant, call recording, mobile apps and voicemail-to-email that traditional PABX systems charge significant extras for.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Can I keep my existing Perth phone number?</h4>
+          <p>Yes. Number porting transfers your current Perth business phone numbers to your new VoIP system — clients continue reaching you on the same number with no interruption. EvoTech Digital manages the full porting process with your current carrier and coordinates timing carefully.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Does Microsoft Teams replace my phone system?</h4>
+          <p>Yes — with Microsoft Teams Calling (Direct Routing), Teams becomes your complete business phone system. Your Perth team makes and receives external calls directly inside Teams on any device with no separate phone app. If you already pay for Microsoft 365 Business Voice, the phone capability is already included in your licence.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>How reliable is VoIP for Perth business use?</h4>
+          <p>Modern cloud VoIP is highly reliable for Perth businesses on NBN or fibre connections. EvoTech Digital assesses your internet speed, jitter and packet loss before setup, then configures QoS on your router to prioritise voice traffic — ensuring call quality even when other staff are running video calls or downloading files.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>What internet speed does VoIP need?</h4>
+          <p>Each concurrent VoIP call requires approximately 100Kbps of upload and download bandwidth. Most Perth NBN business connections comfortably support 10–20 simultaneous calls. A basic speed and jitter test during the assessment phase confirms your connection is suitable before any purchase.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>How much does business VoIP cost in Perth?</h4>
+          <p>Hosted VoIP for Perth businesses typically costs $15–$35 per user per month depending on the platform and call inclusions — significantly less than traditional PSTN line rental and PABX maintenance costs. Setup fees depend on the number of users, extensions and whether number porting is required. Contact EvoTech for a free tailored quote.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>Can staff use VoIP on their mobile phones?</h4>
+          <p>Yes. VoIP softphone apps for iOS and Android let your Perth staff make and receive business calls on their personal mobile — displaying your business number to callers, not their private mobile number. This is ideal for remote workers, tradespeople and any Perth business without a permanent office.</p>
+        </div>
+        <div class="evo-faq-item">
+          <h4>What happens if my internet goes down?</h4>
+          <p>VoIP can be configured with failover options — for example, automatically diverting incoming calls to a mobile number if your Perth office internet connection drops. This ensures callers are never met with silence during an outage, maintaining your business availability at all times.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ══ CTA ══ {%- endcomment -%}
+  <section class="evo-cta" id="contact" aria-labelledby="evo-cta-h2">
+    <div class="ic-container">
+      <div class="evo-cta__inner">
+        <div>
+          <span class="evo-badge evo-badge--white">Get Started Today</span>
+          <h2 id="evo-cta-h2" style="margin-top:10px">Ready to Modernise Your Perth Business Phone System?</h2>
+          <p>Book a <strong style="color:#cff394">free, no-obligation VoIP assessment</strong> with EvoTech Digital. I'll review your current phone setup, assess your connection and provide honest recommendations — at no cost.</p>
+          <div class="evo-cta__checks">
+            <div class="evo-cta__check">Free VoIP assessment — no obligation, no pressure</div>
+            <div class="evo-cta__check">1 min first-response target during business hours</div>
+            <div class="evo-cta__check">Number porting fully managed — keep your Perth numbers</div>
+            <div class="evo-cta__check">Perth-based — onsite support available if needed</div>
+          </div>
+        </div>
+        <div class="evo-cta__btns">
+          <a href="{{ section.settings.cta_primary_link }}" class="evo-btn-cta evo-btn-cta--lime">📧 Get a Free VoIP Quote</a>
+          <a href="tel:{{ section.settings.phone_number | remove: ' ' }}" class="evo-btn-cta evo-btn-cta--outline">📞 {{ section.settings.phone_number }}</a>
+          <a href="mailto:{{ section.settings.email_address }}" class="evo-btn-cta evo-btn-cta--outline">✉️ {{ section.settings.email_address }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "VoIP Phone Systems",
+  "tag": "section",
+  "class": "evo-voip-section",
+  "settings": [
+    { "type": "header", "content": "Contact Details" },
+    { "type": "text", "id": "phone_number", "label": "Phone Number", "default": "0466 911 816" },
+    { "type": "text", "id": "email_address", "label": "Email Address", "default": "info@evotech.au" },
+    { "type": "header", "content": "Call-to-Action" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary CTA Link (Contact Page)" },
+    { "type": "header", "content": "Options" },
+    { "type": "checkbox", "id": "show_announce", "label": "Show Announcement Bar", "default": true }
+  ],
+  "presets": [{ "name": "VoIP Phone Systems" }]
+}
+{% endschema %}

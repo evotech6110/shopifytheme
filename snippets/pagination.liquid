@@ -1,0 +1,37 @@
+{% if pagination.pages > 1 %}
+    <nav role="navigation" aria-label="{{ 'snippets.pagination.label' | t }}" class="pagination">
+        {% if pagination.previous %}
+            <a href="{{ pagination.previous.url | append: content_Id | default: '#' }}" class="prev" data-title="previous" aria-label="{{ 'snippets.pagination.prev_label' | t }}">
+                <span class="ic-screen-reader">{{ "snippets.pagination.previous" | t }}</span>
+                {% render 'icon-chevron-left' %}
+            </a>
+        {% else %}
+            <a href="javascript:void(0)" class="prev" data-title="prev"  aria-label="{{ 'snippets.pagination.prev_label' | t }}" disabled>
+                <span class="ic-screen-reader">{{ "snippets.pagination.previous" | t }}</span>
+                {% render 'icon-chevron-left' %}
+            </a>
+        {% endif %}
+        
+        {% for part in pagination.parts %}
+            {% if part.is_link %}
+                <a href="{{ part.url | append: content_Id | default: '#' }}" class="page-count" data-title="{{ part.title }}" aria-label="{{ 'snippets.pagination.goto_label' | t }} {{ part.title }}">{{ part.title }}</a>
+                {% elsif part.title == '&hellip;' %}
+                <span href="javascript:void(0)" class="page-count ellipsis" data-title="{{ part.title }}">{{ part.title }}</span>
+                {% else %}
+                <a href="javascript:void(0)" class="page-count active" data-title="{{ part.title }}" aria-label="{{ 'snippets.pagination.current_page_label' | t }} {{ part.title }}" aria-current="true">{{ part.title }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if pagination.next %}
+            <a href="{{ pagination.next.url | append: content_Id | default: '#' }}" class="next" data-title="next" aria-label="{{ 'snippets.pagination.next_label' | t }}">
+                <span class="ic-screen-reader">{{ "snippets.pagination.next" | t }}</span>
+                {% render 'icon-chevron-right' %}
+            </a>
+        {% else %}
+            <a href="javascript:void(0)" class="next" data-title="next" aria-label="{{ 'snippets.pagination.next_label' | t }}" disabled>
+                <span class="ic-screen-reader">{{ "snippets.pagination.next" | t }}</span>
+                {% render 'icon-chevron-right' %}
+            </a>
+        {% endif %}
+    </nav>
+{% endif %}

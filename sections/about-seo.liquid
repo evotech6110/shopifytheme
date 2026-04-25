@@ -1,0 +1,128 @@
+{% schema %}
+{
+  "name": "About SEO & FAQ Schema",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SEO Structured Data (JSON-LD)"
+    },
+    {
+      "type": "text",
+      "id": "faq_question_1",
+      "label": "FAQ Question 1",
+      "default": "What services does EvoTech Digital provide?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_answer_1",
+      "label": "FAQ Answer 1",
+      "default": "EvoTech Digital provides Managed IT Services, Cyber Security solutions, Cloud Migration, and IT Consulting for businesses in Perth. We also run an online technology store serving customers Australia-wide."
+    },
+    {
+      "type": "text",
+      "id": "faq_question_2",
+      "label": "FAQ Question 2",
+      "default": "Where is EvoTech Digital located?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_answer_2",
+      "label": "FAQ Answer 2",
+      "default": "We are located at 30 Tenterden Way, Gosnells, WA 6110, Perth, Australia."
+    },
+    {
+      "type": "text",
+      "id": "faq_question_3",
+      "label": "FAQ Question 3",
+      "default": "How can I contact EvoTech Digital?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_answer_3",
+      "label": "FAQ Answer 3",
+      "default": "You can contact us via email at info@evotech.au or by phone at +61 466 911 816. Our office is open Monday to Friday, 8:00am – 6:00pm AWST."
+    }
+  ],
+  "presets": [
+    {
+      "name": "About SEO & FAQ Schema"
+    }
+  ]
+}
+{% endschema %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "{{ shop.url }}/#organization",
+      "name": "EvoTech Digital",
+      "url": "{{ shop.url }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ settings.logo | image_url: width: 600 }}"
+      },
+      "sameAs": [
+        "https://www.facebook.com/evotechdigital",
+        "https://www.linkedin.com/company/evotechdigital"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+61 466 911 816",
+        "contactType": "customer service",
+        "email": "info@evotech.au",
+        "areaServed": "AU",
+        "availableLanguage": "en"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "30 Tenterden Way",
+        "addressLocality": "Gosnells",
+        "addressRegion": "WA",
+        "postalCode": "6110",
+        "addressCountry": "AU"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "{{ shop.url }}{{ page.url }}/#webpage",
+      "url": "{{ shop.url }}{{ page.url }}",
+      "name": "{{ page.title }} | EvoTech Digital",
+      "isPartOf": { "@id": "{{ shop.url }}/#website" },
+      "about": { "@id": "{{ shop.url }}/#organization" },
+      "description": "{{ page_description | escape }}"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "{{ section.settings.faq_question_1 }}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{ section.settings.faq_question_1 }}"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "{{ section.settings.faq_question_2 }}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{ section.settings.faq_question_2 }}"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "{{ section.settings.faq_question_3 }}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{ section.settings.faq_question_3 }}"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>

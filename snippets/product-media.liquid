@@ -1,0 +1,152 @@
+{% liquid
+    assign extClass = 'ic-w-100 ic-h-100 main-video ' | append: ext_class
+    assign extVideoId = 'ext_video__' | append: video_index
+    assign videoId = 'video__' | append: video_index
+    assign img_class = 'ic-w-100 ic-h-100 ic-object-contain'
+    if thumbnail_media
+    assign media_width = 200
+    assign sizes = '(max-width: 639px) calc((100vw - 40px) / 4), (max-width: 767px) 110px, (max-width: 899px) 140px, (max-width: 1023px) 175px, (max-width: 1279px) 60px, (max-width: 1535px) 85px, 110px'
+    assign srcset = '100, 160, 200'
+    else
+    assign media_width = 850
+    assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 540px, (max-width: 899px) 665px, (max-width: 1023px) 800px, (max-width: 1279px) 385px, (max-width: 1535px) 510px, 640px'
+    assign srcset = '200, 250, 300, 400, 500, 550, 600, 700, 850'
+    endif
+%}
+
+{% case media.media_type %}
+    {% when 'image' %}
+        <div class="zoom-wrapper ic-w-100 ic-h-100" 
+            {% if thumbnail_media != true %}
+            data-zoom-type="{{ settings.product_image_zoom_type }}"
+            data-zoom-mobile-disable="{{ settings.product_image_zoom_mobile_disable }}"
+            role="button" 
+            aria-label="{{ 'snippets.product_media.activate_zoom' | t }}"
+            {% endif %}
+        >
+            {% liquid
+                assign alt = media.alt | escape
+                assign zoom = media | image_url: width: '1600'
+            %}
+            {{ media 
+                | image_url: width: media_width
+                | image_tag:
+                loading: 'lazy',
+                widths: srcset, 
+                sizes: sizes,
+                alt: alt,
+                class: img_class,
+                data-zoom: zoom
+            }}
+        </div>
+    {% when 'external_video' %}
+        <div class="thumb-wrapper video-preview ext-video"
+        {% if thumbnail_media != true %}
+            tabindex="0"
+            aria-label="{{ 'snippets.product_media.play_video' | t }}"
+        {% endif %}
+        >
+            <span class="play-badge">
+                {% render 'icon-play' %}
+            </span>
+            {% assign alt = media.alt | escape %}
+            {{ media.preview_image 
+                | image_url: width: media_width
+                | image_tag:
+                loading: 'lazy',
+                widths: srcset, 
+                sizes: sizes,
+                alt: alt,
+                class: img_class
+            }}
+        </div>
+        <div class="ic-w-100 ic-h-100 ic-visibility-hidden ic-absolute ic-top-0 ic-left-0 media_{{ media.id }}" data-mediaid="{{ media.id }}">
+            {{ media | external_video_url: autoplay: false, loop: false, muted: true, playlist: media.external_id, enablejsapi: 1 | external_video_tag: class: extClass, loading: "lazy", id: extVideoId }}
+        </div>
+        {%- if thumbnail_media != true -%}
+          <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "VideoObject",
+              "name": {{ media.alt | default: product.title | json }},
+              "description": {{ product.description | strip_html | truncatewords: 30 | json }},
+              "thumbnailUrl": [
+                {{ media.preview_image | image_url: width: 1200 | prepend: "https:" | json }}
+              ],
+              "uploadDate": {{ product.created_at | date: "%Y-%m-%dT%H:%M:%S%z" | json }},
+              "contentUrl": {{ media | external_video_url | json }},
+              "embedUrl": {{ media | external_video_url | json }}
+            }
+          </script>
+        {%- endif -%}
+    {% when 'video' %}
+        <div class="thumb-wrapper video-preview int-video"
+        {% if thumbnail_media != true %}
+            tabindex="0"
+            aria-label="{{ 'snippets.product_media.play_video' | t }}"
+        {% endif %}
+        >
+            <span class="play-badge">
+                {% render 'icon-play' %}
+            </span>
+            {% assign alt = media.alt | escape %}
+            {{ media.preview_image 
+                | image_url: width: media_width
+                | image_tag:
+                loading: 'lazy',
+                widths: srcset, 
+                sizes: sizes,
+                alt: alt,
+                class: img_class
+            }}
+        </div>
+        {{ media | media_tag: image_size: "2048x", autoplay: false, loop: loop, controls: true, preload: "none", class: 'ic-w-100 ic-h-100 ic-object-contain main-video ic-visibility-hidden ic-absolute ic-top-0 ic-left-0' , data-video-id: videoId }}
+        {%- if thumbnail_media != true -%}
+          <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "VideoObject",
+              "name": {{ media.alt | default: product.title | json }},
+              "description": {{ product.description | strip_html | truncatewords: 30 | json }},
+              "thumbnailUrl": [
+                {{ media.preview_image | image_url: width: 1200 | prepend: "https:" | json }}
+              ],
+              "uploadDate": {{ product.created_at | date: "%Y-%m-%dT%H:%M:%S%z" | json }},
+              "contentUrl": {{ media.sources[0].url | prepend: "https:" | json }}
+            }
+          </script>
+        {%- endif -%}
+    {% when 'model' %}
+       <product-model data-media-id="{{ media.id }}">
+            <div class="ic-h-100">
+                <button data-button-id="productModelOpenButton_{{ media.id }}" class="ic-w-100 ic-h-100 ic-relative thumb-image"
+                {% if thumbnail_media != true %}
+                    aria-label="{{ 'snippets.product_media.view_3d_model' | t }}"
+                {% endif %}
+                >
+                    <span class="model-icon">
+                        {% render 'icon-3d-model' %}
+                    </span>
+                    {% assign alt = media.alt | escape %}
+                    {{ media 
+                        | image_url: width: media_width
+                        | image_tag:
+                        loading: 'lazy',
+                        widths: srcset, 
+                        sizes: sizes,
+                        alt: alt,
+                        class: img_class
+                    }}
+                </button>
+            </div>
+            
+            <template>
+                {{ media | model_viewer_tag: reveal: 'interaction' }}
+            </template>
+        </product-model>
+
+    {% else %}
+
+        {{ media | media_tag }}
+        
+{% endcase %}

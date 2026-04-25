@@ -1,0 +1,122 @@
+<div class="newsletter-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container ic-py-20 ic-text-center ic-break-words">
+        {% for block in section.blocks %}
+            {% case block.type %}
+                {% when '@app' %}
+                    {% render block %}
+                {% when 'heading' %}
+                    {% if block.settings.heading != empty %}
+                        <h2 class="ic-my-4" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+                    {% endif %}
+                {% when 'paragraph' %}
+                    {% if block.settings.subheading != empty %}
+                        <div class="ic-my-4 richtext-container" {{ block.shopify_attributes }}>{{ block.settings.subheading }}</div>
+                    {% endif %}
+                {% when 'email-form' %}
+                    <div class="ic-flex ic-justify-content-center">
+                        {% assign formID = 'newsletterContactForm-' | append: section.id %}
+                        {% form 'customer', id: formID, class: 'newsletter' %}
+                            <input type="hidden" name="contact[tags]" value="newsletter">
+                            <div class="ic-relative ic-i wrapper">
+                                <label for="NewsletterForm-{{ section.id }}" class="ic-screen-reader" aria-label="{{ 'sections.newsletter.enter_your_email' | t }}">{{ "sections.newsletter.enter_your_email" | t }}</label>
+                                <input 
+                                    type="email" 
+                                    id="NewsletterForm-{{ section.id }}" 
+                                    name="contact[email]" 
+                                    placeholder="{{ "sections.newsletter.email" | t }}" 
+                                    class="ic-w-100" 
+                                    {% if form.errors %}
+                                        aria-describedby="contactError-{{ section.id }}"
+                                      {% elsif form.posted_successfully? %}
+                                        aria-describedby="contactSuccess-{{ section.id }}"
+                                      {% endif %}
+                                    required />
+                                <button type="submit" name="commit" aria-label="{{ 'sections.newsletter.aria_label.submit' | t }}">{% render 'icon-right' %}</button>
+                            </div>
+                            {% if form.errors %}
+                                    {% assign errorId = 'contactError-' | append: section.id %}
+                                    {% render 'form-error', form: form, error_id: errorId %}
+                            {% elsif form.posted_successfully? %}
+                                <div class="success-box ic-text-sm ic-font-medium" id="contactSuccess-{{ section.id }}">
+                                    <span>{% render 'icon-success' %}</span> {{ "sections.newsletter.posted_succesfully" | t }}
+                                </div>
+                            {% endif %}
+                            
+                        {% endform %}
+                    </div>
+                    
+            {% endcase %}
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "t:sections.newsletter.name",
+    "class": "section",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "color_scheme",
+            "id": "color_scheme",
+            "label": "t:settings_schema.general.settings.color_scheme.label",
+            "default": "scheme_1"
+        }
+    ],
+    "blocks":[
+        {
+            "type":"heading",
+            "name":"t:sections.newsletter.blocks.heading.name",
+            "limit":1,
+            "settings":[
+                {
+                    "type":"text",
+                    "id":"heading",
+                    "default":"Subscribe to our emails",
+                    "label":"t:sections.newsletter.blocks.heading.settings.heading.label"
+                }
+            ]
+        },
+        {
+            "type":"paragraph",
+            "name":"t:sections.newsletter.blocks.subheading.name",
+            "limit":1,
+            "settings":[
+                {
+                    "type":"richtext",
+                    "id":"subheading",
+                    "default":"<p>Be the first to know about new collections and exclusive offers.</p>",
+                    "label":"t:sections.newsletter.blocks.subheading.settings.description.label"
+                }
+            ]
+        },
+        {
+            "type":"email-form",
+            "name":"t:sections.newsletter.blocks.email_form.name",
+            "limit":1
+        },
+        {
+            "type":"@app"
+        }
+    ],
+    "presets":[
+        {
+            "name":"t:sections.newsletter.name",
+            "blocks":[
+                {
+                    "type":"heading"
+                },
+                {
+                    "type":"paragraph"
+                },
+                {
+                    "type":"email-form"
+                }
+            ]
+        }
+    ],
+    "disabled_on": {
+        "groups": ["*"]
+    }
+}
+{% endschema %}

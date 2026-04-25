@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "sharepoint_automation": {
+      "type": "sharepoint-automation",
+      "settings": {
+        "phone_number": "0466 911 816",
+        "email_address": "info@evotech.au",
+        "cta_primary_link": "/pages/contact",
+        "show_announce": true
+      }
+    }
+  },
+  "order": [
+    "sharepoint_automation"
+  ]
+}

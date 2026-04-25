@@ -1,0 +1,269 @@
+<div class="color-{{ section.settings.color_scheme }} gradient-enabled ic-py-14 collection-list">
+    <div class="ic-container">
+        {% if section.settings.pre-heading != blank or section.settings.title != blank %}
+            <div class="{{ section.settings.text_align }} ic-mb-10">
+                {% if section.settings.pre-heading != blank %}
+                    <p class="ic-mb-4 ic-break-words">{{ section.settings.pre-heading }}</p>
+                {% endif %}
+                {% if section.settings.title != blank %}
+                    <h2 class="ic-break-words">{{ section.settings.title }}</h2>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% liquid
+            if section.settings.slider_or_grid == 'slider'
+            assign outer_class = 'collection-slider-container'
+            assign container_class = 'swiper collection-list-slider'
+            assign wrapper_class = 'swiper-wrapper'
+            assign item_class = 'swiper-slide'
+                if section.settings.card-style == 'style-2'
+                assign slider_attr = ' data-desktop-slides="4" data-smalldesktop-slides="3" data-laptop-slides="2" data-tablet-slides="2" data-mobile-slides="1" x-swiper'
+                assign sizes = '(max-width: 639px) calc((100vw - 40px) / 2), (max-width: 767px) 205px, (max-width: 899px) 110px, (max-width: 1023px) 140px, (max-width: 1279px) 165px, (max-width: 1535px) 130px, 115px'
+                assign srcset = '120, 150, 200, 250'
+                elsif section.settings.card-style == 'style-1' or section.settings.card-style == 'style-3'
+                assign slider_attr = ' data-desktop-slides="6" data-smalldesktop-slides="5" data-laptop-slides="4" data-tablet-slides="3" data-mobile-slides="2" x-swiper'
+                assign sizes = '(max-width: 519px) calc(100vw - 40px), (max-width: 639px) calc((100vw - 40px) / 2), (max-width: 767px) 250px, (max-width: 899px) 195px, (max-width: 1023px) 240px, 200px'
+                assign srcset = '200, 250, 300, 400, 500'
+                endif
+            else
+            assign outer_class = 'collection-grid-container'
+            assign container_class = 'collection-list-grid ic-overflow-hidden'
+            if section.settings.card-style == 'style-2'
+            assign wrapper_class = 'collection-list-grid-container ic-flex ic-flex-gap-y-8 ic--mx-4' 
+            assign item_class = 'ic-flex-item ic-flex-col-12 ic-flex-col-md-6 ic-flex-col-xl-4 ic-flex-col-2xl-3 ic-px-4'
+            assign sizes = '(max-width: 639px) calc((100vw - 40px) / 2), (max-width: 767px) 215px, (max-width: 899px) 115px, (max-width: 1023px) 140px, (max-width: 1279px) 165px, (max-width: 1535px) 130px, 115px'
+            assign srcset = '120, 150, 200, 250'
+            elsif section.settings.card-style == 'style-1' or section.settings.card-style == 'style-3'
+            assign wrapper_class = 'collection-list-grid-container ic-flex ic-flex-gap-y-8 ic--mx-4'
+            assign item_class = 'ic-flex-item ic-flex-col-12 ic-flex-col-sm-6 ic-flex-col-md-4 ic-flex-col-lg-3 ic-flex-col-xl-5/12 ic-flex-col-2xl-2 ic-px-4'
+            assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 255px, (max-width: 899px) 200px, (max-width: 1023px) 240px, 200px'
+            assign srcset = '200, 270, 320, 400, 500, 600'
+            endif
+            assign slider_attr = nil
+            endif
+        %}
+        <div class="{{ outer_class }}">
+            {% if section.settings.slider_or_grid == 'slider' %}
+                <button type="button" class="slider-btn slider-btn-prev color-{{ section.settings.card_color_scheme }}">{% render 'icon-left' %}</button>
+            {% endif %}
+            <div id="{{ section.id }}"  class="{{ container_class }} {{ section.settings.list_style }}"{{ slider_attr }} data-item-align="{{ section.settings.items_align }}">
+                <div class="{{ wrapper_class }}">
+                    {% for block in section.blocks %}
+                        {% case block.type %}
+                            {% when 'collection' %}
+                                <div class="{{ item_class }}"{% if section.settings.slider_or_grid == 'slider' %} data-index="{{ forloop.index0 }}"{% endif %} {{ block.shopify_attributes }} data-aos="fade-up" data-aos-delay="{{ forloop.index0 | times: 100 }}">
+                                    {% render 'collection-card', card-style: section.settings.card-style, collection: block.settings.collection, starting-price: section.settings.starting-price, button: section.settings.button, button-text: section.settings.button-text, card-scheme: section.settings.card_color_scheme, srcset: srcset, sizes: sizes, default_image: section.settings.default_image %}
+                                </div>
+                            {% else %}
+                        {% endcase %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% if section.settings.slider_or_grid == 'slider' %}
+                <button type="button" class="slider-btn slider-btn-next color-{{ section.settings.card_color_scheme }}">{% render 'icon-right' %}</button>
+            {% endif %}
+            
+        </div>
+    </div>
+</div>
+
+{% javascript %}
+    if (Shopify.designMode) {
+        document.addEventListener('shopify:block:select', function(){
+            if(event.target.classList.contains('swiper-slide')){
+                const collectionListSwiperEl = event.target.closest('.swiper.collection-list-slider');
+                let slideIndex = event.target.dataset.index;
+                if(collectionListSwiperEl){
+                    collectionListSwiperEl.swiper.slideTo(slideIndex);
+                }
+            }
+        });
+    }
+{% endjavascript %}
+
+{% schema %}
+    {
+        "name":"t:sections.collection_list.name",
+        "class": "section",
+        "tag": "section",
+        "settings":[
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type":"text",
+                "id":"pre-heading",
+                "default":"Preheading",
+                "label":"t:sections.collection_list.settings.pre-heading.label"
+            },
+            {
+                "type":"text",
+                "id":"title",
+                "default":"Collections",
+                "label":"t:sections.collection_list.settings.title.label"
+            },
+            {
+                "type": "select",
+                "id": "text_align",
+                "options": [
+                    {
+                        "value": "ic-text-left",
+                        "label": "t:sections.collection_list.settings.text-align.option_1.label"
+                    },
+                    {
+                        "value": "ic-text-center",
+                        "label": "t:sections.collection_list.settings.text-align.option_2.label"
+                    }
+                ],
+                "default": "ic-text-center",
+                "label": "t:sections.collection_list.settings.text-align.label"
+            },
+            {
+                "type": "select",
+                "id": "items_align",
+                "options": [
+                    {
+                        "value": "item-left",
+                        "label": "t:sections.collection_list.settings.item-align.option_1.label"
+                    },
+                    {
+                        "value": "item-center",
+                        "label": "t:sections.collection_list.settings.item-align.option_2.label"
+                    }
+                ],
+                "default": "item-center",
+                "label": "t:sections.collection_list.settings.item-align.label"
+            },
+            {
+                "type":"select",
+                "id":"slider_or_grid",
+                "options": [
+                    {
+                        "value": "slider",
+                        "label": "t:sections.collection_list.settings.slider_or_grid.option_1.label"
+                    },
+                    {
+                        "value": "grid",
+                        "label": "t:sections.collection_list.settings.slider_or_grid.option_2.label"
+                    }
+                ],
+                "default": "slider",
+                "label": "t:sections.collection_list.settings.slider_or_grid.label"
+            },
+            {
+                "type": "select",
+                "id": "list_style",
+                "options": [
+                    {
+                        "value": "list-card",
+                        "label": "t:sections.collection_list.settings.list_style.option_1.label"
+                    },
+                    {
+                        "value": "list-divider",
+                        "label": "t:sections.collection_list.settings.list_style.option_2.label"
+                    }
+                ],
+                "default": "list-card",
+                "label": "t:sections.collection_list.settings.list_style.label"
+            },
+            {
+                "type": "color_scheme",
+                "id": "card_color_scheme",
+                "label": "t:sections.collection_list.settings.card_color_scheme.label",
+                "default": "scheme_3"
+            },
+            {
+                "type": "image_picker",
+                "id": "default_image",
+                "label": "t:sections.collection_list.settings.card_default_image.label"
+            },
+            {
+                "type": "select",
+                "id": "card-style",
+                "options": [
+                    {
+                        "value": "style-1",
+                        "label": "t:sections.collection_list.settings.card_style.option_1"
+                    },
+                    {
+                        "value": "style-2",
+                        "label": "t:sections.collection_list.settings.card_style.option_2"
+                    },
+                    {
+                        "value": "style-3",
+                        "label": "t:sections.collection_list.settings.card_style.option_3"
+                    }
+                ],
+                "default": "style-1",
+                "label": "t:sections.collection_list.settings.card_style.label"
+            },
+            {
+                "type": "checkbox",
+                "id": "starting-price",
+                "default": false,
+                "label": "t:sections.collection_list.settings.starting_price.label"
+            },
+            {
+                "type": "checkbox",
+                "id": "button",
+                "default": false,
+                "label": "t:sections.collection_list.settings.show_button.label"
+            },
+            {
+                "type": "text",
+                "id": "button-text",
+                "default": "View",
+                "label": "t:sections.collection_list.settings.button_text.label",
+                "info": "t:sections.collection_list.settings.button_text.info"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "collection",
+                "name": "t:sections.collection_list.blocks.collection.name",
+                "limit": 12,
+                "settings": [
+                    {
+                        "type":"collection",
+                        "id":"collection",
+                        "label":"t:sections.collection_list.blocks.collection.settings.collection.label"
+                    }
+                ]
+            }
+        ],
+        "presets":[
+            {
+                "name":"t:sections.collection_list.presets.name",
+                "blocks": [
+                    {
+                        "type": "collection"
+                    },
+                    {
+                        "type": "collection"
+                    },
+                    {
+                        "type": "collection"
+                    },
+                    {
+                        "type": "collection"
+                    },
+                    {
+                        "type": "collection"
+                    },
+                    {
+                        "type": "collection"
+                    },
+                    {
+                        "type": "collection"
+                    }
+                ]
+            }
+        ],
+        "disabled_on": {
+            "groups": ["*"]
+        }
+    }
+{% endschema %}

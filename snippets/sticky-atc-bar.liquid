@@ -1,0 +1,60 @@
+{% comment %}
+  Next-Gen Sticky ATC Bar for Elite IT Authority — evotech.au
+{% endcomment %}
+<div id="StickyAtcBar" class="sticky-atc-bar ic-hidden ic-lg-flex ic-px-6 ic-py-4 color-{{ section.settings.color_scheme }} gradient-enabled" x-data="{ visible: false }" :class="{ 'visible': visible }" @scroll.window="visible = (window.scrollY > document.getElementById('buy-{{ section.id }}').offsetTop + 100)">
+    <div class="ic-container ic-flex ic-align-items-center ic-justify-content-space-between">
+        <div class="atc-product-info ic-flex ic-align-items-center ic-flex-gap-4">
+            <div class="atc-image-wrapper ic-w-50px ic-h-50px ic-border-radius-4 ic-overflow-hidden">
+                <img src="{{ product.featured_media | image_url: width: 100 }}" alt="{{ product.title }}" class="ic-w-100 ic-h-100 ic-object-cover">
+            </div>
+            <div class="atc-text-wrapper">
+                <h4 class="ic-text-sm ic-font-semibold ic-mb-0">{{ product.title | truncate: 40 }}</h4>
+                <div class="atc-price ic-text-xs ic-font-medium ic-color-success">
+                    {{ selected_variant.price | money }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="atc-actions ic-flex ic-align-items-center ic-flex-gap-4">
+            {% unless product.has_only_default_variant %}
+                <div class="atc-variant-shortcut ic-text-xs ic-font-medium ic-px-3 ic-py-2 ic-border ic-border-radius-4">
+                    {{ selected_variant.title }}
+                </div>
+            {% endunless %}
+            
+            <button type="button" 
+                    onclick="document.querySelector('#product-form-{{ section.id }} button[name=add]').click()"
+                    class="ic-btn ic-btn-secondary ic-px-8 ic-py-2 ic-text-xs ic-text-uppercase ic-font-bold">
+                {{ 'sections.template_product.add_to_cart' | t }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.sticky-atc-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(14, 34, 64, 0.95);
+    backdrop-filter: blur(12px);
+    border-top: 2px solid #cff394;
+    z-index: 9999;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+}
+.sticky-atc-bar.visible {
+    transform: translateY(0);
+}
+@media (max-width: 1023px) {
+    .sticky-atc-bar {
+        display: flex !important;
+        padding: 8px 16px;
+    }
+    .atc-image-wrapper, .atc-variant-shortcut {
+        display: none;
+    }
+}
+</style>

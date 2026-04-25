@@ -1,0 +1,415 @@
+{% doc %}
+  @prompt
+    Generate JSON-LD structured data code for breadcrumb navigation that is compatible with Google Search Console and will appear in rich search results. The code should follow Google's BreadcrumbList schema.org guidelines and dynamically generate breadcrumb items based on the current page URL. Include proper itemListElement array with position, name, and item properties for each breadcrumb level. The code should work across all page types (products, collections, pages, blog posts) and be SEO-friendly for rich snippets in Google search results.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% liquid
+  assign breadcrumb_items = ''
+  assign breadcrumb_count = 0
+  assign shop_url = shop.url
+%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": {{ shop.name | json }},
+      "item": {{ shop_url | json }}
+    }
+    {%- if template.name == 'product' and product -%}
+      {%- if collection -%}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ collection.title | json }},
+          "item": {{ shop_url | append: collection.url | json }}
+        }
+        ,{
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ product.title | json }},
+          "item": {{ shop_url | append: product.url | json }}
+        }
+      {%- else -%}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ product.title | json }},
+          "item": {{ shop_url | append: product.url | json }}
+        }
+      {%- endif -%}
+    {%- elsif template.name == 'collection' and collection -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ collection.title | json }},
+        "item": {{ shop_url | append: collection.url | json }}
+      }
+    {%- elsif template.name == 'page' and page -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ page.title | json }},
+        "item": {{ shop_url | append: page.url | json }}
+      }
+    {%- elsif template.name == 'article' and article -%}
+      {%- if blog -%}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ blog.title | json }},
+          "item": {{ shop_url | append: blog.url | json }}
+        }
+        ,{
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ article.title | json }},
+          "item": {{ shop_url | append: article.url | json }}
+        }
+      {%- else -%}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ article.title | json }},
+          "item": {{ shop_url | append: article.url | json }}
+        }
+      {%- endif -%}
+    {%- elsif template.name == 'blog' and blog -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ blog.title | json }},
+        "item": {{ shop_url | append: blog.url | json }}
+      }
+    {%- elsif template.name == 'search' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Search results",
+        "item": {{ shop_url | append: '/search' | json }}
+      }
+    {%- elsif template.name == 'cart' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Cart",
+        "item": {{ shop_url | append: '/cart' | json }}
+      }
+    {%- elsif template.name == 'list-collections' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Collections",
+        "item": {{ shop_url | append: '/collections' | json }}
+      }
+    {%- elsif template.name == '404' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Page not found",
+        "item": {{ shop_url | append: request.path | json }}
+      }
+    {%- endif -%}
+  ]
+}
+</script>
+
+{% if block.settings.show_visual_breadcrumbs %}
+  {% style %}
+    .ai-breadcrumb-container-{{ ai_gen_id }} {
+      display: block;
+      width: 100%;
+      padding: {{ block.settings.vertical_padding }}px {{ block.settings.horizontal_padding }}px;
+      background-color: {{ block.settings.background_color }};
+    }
+
+    .ai-breadcrumb-nav-{{ ai_gen_id }} {
+      max-width: {{ block.settings.max_width }}px;
+      margin: 0 auto;
+    }
+
+    .ai-breadcrumb-list-{{ ai_gen_id }} {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: {{ block.settings.item_spacing }}px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: {{ block.settings.font_size }}px;
+    }
+
+    .ai-breadcrumb-item-{{ ai_gen_id }} {
+      display: flex;
+      align-items: center;
+      gap: {{ block.settings.item_spacing }}px;
+    }
+
+    .ai-breadcrumb-link-{{ ai_gen_id }} {
+      color: {{ block.settings.link_color }};
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .ai-breadcrumb-link-{{ ai_gen_id }}:hover {
+      color: {{ block.settings.link_hover_color }};
+      text-decoration: {{ block.settings.hover_underline }};
+    }
+
+    .ai-breadcrumb-current-{{ ai_gen_id }} {
+      color: {{ block.settings.current_color }};
+    }
+
+    .ai-breadcrumb-separator-{{ ai_gen_id }} {
+      color: {{ block.settings.separator_color }};
+      user-select: none;
+    }
+
+    @media screen and (max-width: 749px) {
+      .ai-breadcrumb-container-{{ ai_gen_id }} {
+        padding: {{ block.settings.vertical_padding | times: 0.7 }}px {{ block.settings.horizontal_padding | times: 0.7 }}px;
+      }
+
+      .ai-breadcrumb-list-{{ ai_gen_id }} {
+        font-size: {{ block.settings.font_size | times: 0.9 }}px;
+      }
+    }
+  {% endstyle %}
+
+  <div class="ai-breadcrumb-container-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+    <nav class="ai-breadcrumb-nav-{{ ai_gen_id }}" aria-label="Breadcrumb">
+      <ol class="ai-breadcrumb-list-{{ ai_gen_id }}">
+        <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+          <a href="{{ routes.root_url }}" class="ai-breadcrumb-link-{{ ai_gen_id }}">
+            {%- if block.settings.show_home_icon -%}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M2 6L8 1L14 6V13C14 13.5304 13.7893 14.0391 13.4142 14.4142C13.0391 14.7893 12.5304 15 12 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V6Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 15V8H10V15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            {%- else -%}
+              {{ block.settings.home_text }}
+            {%- endif -%}
+          </a>
+        </li>
+
+        {%- if template.name == 'product' and product -%}
+          {%- if collection -%}
+            <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+              <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+              <a href="{{ collection.url }}" class="ai-breadcrumb-link-{{ ai_gen_id }}">{{ collection.title }}</a>
+            </li>
+          {%- endif -%}
+          <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+            <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+            <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">{{ product.title }}</span>
+          </li>
+        {%- elsif template.name == 'collection' and collection -%}
+          <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+            <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+            <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">{{ collection.title }}</span>
+          </li>
+        {%- elsif template.name == 'page' and page -%}
+          <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+            <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+            <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">{{ page.title }}</span>
+          </li>
+        {%- elsif template.name == 'article' and article -%}
+          {%- if blog -%}
+            <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+              <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+              <a href="{{ blog.url }}" class="ai-breadcrumb-link-{{ ai_gen_id }}">{{ blog.title }}</a>
+            </li>
+          {%- endif -%}
+          <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+            <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+            <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">{{ article.title }}</span>
+          </li>
+        {%- elsif template.name == 'blog' and blog -%}
+          <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+            <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+            <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">{{ blog.title }}</span>
+          </li>
+        {%- elsif template.name == 'search' -%}
+          <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+            <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+            <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">Search results</span>
+          </li>
+        {%- elsif template.name == 'cart' -%}
+          <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+            <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+            <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">Cart</span>
+          </li>
+        {%- elsif template.name == 'list-collections' -%}
+          <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+            <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+            <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">Collections</span>
+          </li>
+        {%- elsif template.name == '404' -%}
+          <li class="ai-breadcrumb-item-{{ ai_gen_id }}">
+            <span class="ai-breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator }}</span>
+            <span class="ai-breadcrumb-current-{{ ai_gen_id }}" aria-current="page">Page not found</span>
+          </li>
+        {%- endif -%}
+      </ol>
+    </nav>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Breadcrumb JSON-LD",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "JSON-LD structured data"
+    },
+    {
+      "type": "paragraph",
+      "content": "This block automatically generates Google-compliant BreadcrumbList schema.org JSON-LD structured data for all page types. The structured data is invisible but helps Google display rich breadcrumb snippets in search results."
+    },
+    {
+      "type": "header",
+      "content": "Visual breadcrumbs"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_visual_breadcrumbs",
+      "label": "Show visual breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_home_icon",
+      "label": "Show home icon",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "home_text",
+      "label": "Home text",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator",
+      "default": "/"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#5e6979"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#0e2240"
+    },
+    {
+      "type": "color",
+      "id": "current_color",
+      "label": "Current page color",
+      "default": "#0e2240"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator color",
+      "default": "#5e6979"
+    },
+    {
+      "type": "select",
+      "id": "hover_underline",
+      "label": "Hover underline",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "underline",
+          "label": "Underline"
+        }
+      ],
+      "default": "underline"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Item spacing",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "horizontal_padding",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Breadcrumb JSON-LD"
+    }
+  ]
+}
+{% endschema %}

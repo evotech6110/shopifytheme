@@ -1,0 +1,48 @@
+<div class="product-specification-wrapper color-{{ section.settings.color_scheme }} gradient enabled">
+    <div class="ic-container ic-py-13">
+        <div class="spec-container">
+            <h3 class="ic-font-medium ic-mb-4">{{ section.settings.title }}</h3>
+            <div class="spec-wrapper richtext-container ic-break-words">
+                {{ section.settings.specs }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name":"t:sections.template_product.specification.name",
+        "tag": "section",
+        "class": "section",
+        "limit": 1,
+        "settings":[
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type": "text",
+                "id":"title",
+                "default": "Specifications",
+                "label": "t:sections.template_product.specification.settings.title.label"
+            },
+            {
+                "type": "richtext",
+                "id":"specs",
+                "default": "<ul><li>Specification 1</li><li>Specification 2</li><li>Specification 3</li><li>Specification 4</li><li>Specification 5</li><li>Specification 6</li><li>Specification 7</li><li>Specification 8</li><li>Specification 9</li><li>Specification 10</li><li>Specification 11</li><li>Specification 12</li><li>Specification 13</li></ul>",
+                "label": "t:sections.template_product.specification.settings.specs.label",
+                "info": "t:sections.template_product.specification.settings.specs.info"
+            }
+        ],
+        "presets":[
+            {
+                "name": "t:sections.template_product.specification.name"
+            }
+        ],
+        "enabled_on": {
+            "templates": ["product"]
+        }
+    }
+{% endschema %}

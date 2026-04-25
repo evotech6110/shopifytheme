@@ -1,0 +1,73 @@
+<div id="price-{{ section.id }}" class="price-container">
+    <div class="ic-flex ic-align-items-end ic-mb-2 ic-flex-gap-3 centered-flex" aria-live="polite">
+        <span class="ic-screen-reader">{{ 'snippets.product_price.sale_price' | t }}</span>
+        <span class="ic-block ic-h1 ic-font-medium price-text">
+            {% if product != blank %}
+                {{ selected_variant.price | money }}
+                {% else %}
+                {{ '2999' | money }}
+            {% endif %}
+        </span>
+        {% if selected_variant.compare_at_price and selected_variant.compare_at_price > selected_variant.price %}
+            <span class="ic-screen-reader">{{ 'snippets.product_price.regular_price' | t }}</span>
+            <span class="ic-inline-block ic-text-line-through ic-font-medium compare-price ic-mb-1">
+                {{ selected_variant.compare_at_price | money }}
+            </span>
+        {% endif %}
+        {% if offer or badge %}
+            <div class="ic-flex ic-align-items-end ic-flex-gap-3 centered-flex">
+                {% if offer %}
+                    {% if selected_variant.compare_at_price and selected_variant.compare_at_price > selected_variant.price %}
+                        {% liquid 
+                            assign compare_at_price = selected_variant.compare_at_price
+                            assign price = selected_variant.price
+                            assign one_percent = compare_at_price | divided_by: 100
+                            assign discount_price = compare_at_price | minus: price
+                            assign off_price = discount_price | divided_by: one_percent
+                            if off_price < 5
+                            assign offer_price = discount_price | money
+                            assign off_text = 'snippets.product_price.save' | t
+                            assign offer_text = off_text | append: offer_price
+                            else
+                            assign off_percent_text = 'snippets.product_price.save' | t
+                            assign offer_text = off_percent_text | append: off_price | append: '%'
+                            endif
+                        %}
+                        <span class="ic-screen-reader">{{ 'snippets.product_price.discount_amount' | t }}</span>
+                        <span class="offer-badge ic-font-medium ic-text-sm ic-mb-1 ic-text-uppercase">
+                            {{ offer_text }}
+                        </span>
+                    {% endif %}
+                {% endif %}
+                {% if badge %}
+                    {% liquid 
+                        if product == blank or selected_variant.available == false
+                        assign badge_text = 'snippets.product_card.sale_badge.sold_out' | t
+                        assign badge_class = 'sold'
+                        elsif selected_variant.compare_at_price > selected_variant.price and selected_variant.available
+                        assign badge_text = 'snippets.product_card.sale_badge.sale' | t
+                        assign badge_class = 'sale'
+                        endif
+                    %}
+                    <div class="product-badge ic-inline-block ic-mb-1">
+                        <span class="sale-badge {{ badge_class }} ic-text-sm ic-text-uppercase">{{ badge_text }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    {% if product.selected_or_first_available_variant.unit_price_measurement != nil %}
+        <small class="product-unit-price">
+            <span>
+                <span>{{- product.selected_or_first_available_variant.unit_price | money -}}</span>
+                <span aria-hidden="true">/</span>
+                <span>
+                    {%- if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 -%}
+                    {{- product.selected_or_first_available_variant.unit_price_measurement.reference_value -}}
+                    {%- endif -%}
+                    {{ product.selected_or_first_available_variant.unit_price_measurement.reference_unit }}
+                </span>
+            </span>
+        </small>
+    {% endif %}
+    </div>

@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "it_consulting_vcio": {
+      "type": "it-consulting-vcio",
+      "settings": {
+        "phone_number": "0466 911 816",
+        "email_address": "info@evotech.au",
+        "cta_primary_link": "/pages/contact",
+        "show_announce": true
+      }
+    }
+  },
+  "order": [
+    "it_consulting_vcio"
+  ]
+}

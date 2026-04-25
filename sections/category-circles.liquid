@@ -1,0 +1,207 @@
+{% comment %}
+  Expanded Category Navigation - 20 Main IT Categories
+  Next-Gen Horizontal Scroll / High-Density Grid responsive design.
+{% endcomment %}
+
+<style>
+  .cat-nav-wrapper {
+    padding: 60px 0;
+    background: #ffffff;
+  }
+  .cat-nav-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .cat-nav-header h2 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .cat-scroll-container {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    padding: 20px;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #008060 #f1f1f1;
+  }
+  .cat-scroll-container::-webkit-scrollbar {
+    height: 6px;
+  }
+  .cat-scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  .cat-scroll-container::-webkit-scrollbar-thumb {
+    background: #008060;
+    border-radius: 10px;
+  }
+
+  .cat-circle-item {
+    flex: 0 0 140px;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .cat-circle-item:hover {
+    transform: translateY(-10px);
+  }
+
+  .cat-circle-img-wrap {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 15px;
+    background: #fff;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f1f1f1;
+    overflow: hidden;
+  }
+  .cat-circle-img-wrap img {
+    width: 85%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .cat-circle-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+  
+  @media (max-width: 768px) {
+    .cat-circle-item { flex: 0 0 110px; }
+    .cat-circle-img-wrap { width: 90px; height: 90px; }
+    .cat-circle-label { font-size: 11px; }
+  }
+</style>
+
+<div class="cat-nav-wrapper">
+  <div class="ic-container">
+    <div class="cat-nav-header">
+      <h2>Explore Expertise Categories</h2>
+    </div>
+    
+    <div class="cat-scroll-container">
+      <!-- 1. Networking-Routers -->
+      <a href="/collections/networking-routers-gateways" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/networking_icons_3d_v2_1775928200280.png" alt="Routers">
+        </div>
+        <span class="cat-circle-label">Routers & Gateways</span>
+      </a>
+
+      <!-- 2. Networking-Switches -->
+      <a href="/collections/networking-switches-hubs" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/networking_icons_3d_v2_1775928200280.png" alt="Switches">
+        </div>
+        <span class="cat-circle-label">Switches & Hubs</span>
+      </a>
+
+      <!-- 3. Wireless -->
+      <a href="/collections/networking-wireless-access-points" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/networking_icons_3d_v2_1775928200280.png" alt="Wireless">
+        </div>
+        <span class="cat-circle-label">Access Points</span>
+      </a>
+
+      <!-- 4. NAS -->
+      <a href="/collections/storage-nas-systems" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/nas_icon_3d_v1775928200280_1775928340_1775928240485.png" alt="NAS">
+        </div>
+        <span class="cat-circle-label">NAS Systems</span>
+      </a>
+
+      <!-- 5. Enterprise HDD -->
+      <a href="/collections/storage-enterprise-hdds" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/storage_circle_icon_1775922682350.png" alt="HDD">
+        </div>
+        <span class="cat-circle-label">Enterprise HDDs</span>
+      </a>
+
+      <!-- 6. GPU -->
+      <a href="/collections/components-graphics-cards-gpu" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/gpu_icon_3d_v1775928200280_1775928340_1775928640_1775928365935.png" alt="GPU">
+        </div>
+        <span class="cat-circle-label">Graphics Cards</span>
+      </a>
+
+      <!-- 7. Laptops -->
+      <a href="/collections/computing-laptops" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/laptop_icon_3d_v1775928200280_1775928340_1775928640_1775928940_1775928408543.png" alt="Laptops">
+        </div>
+        <span class="cat-circle-label">Workstation Laptops</span>
+      </a>
+
+      <!-- 8. CPUs -->
+      <a href="/collections/components-processors-cpu" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/cpu_icon_3d_v2_1775928200280_1775928340_1775928640_1775928940_1775928408543_1775928640_1775928700_1775964789599.png" alt="CPUs">
+        </div>
+        <span class="cat-circle-label">Processors (CPU)</span>
+      </a>
+
+      <!-- 9. Motherboards -->
+      <a href="/collections/components-motherboard" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/motherboard_icon_3d_v1775964789599_1775964940_1775964832738.png" alt="Motherboards">
+        </div>
+        <span class="cat-circle-label">Motherboards</span>
+      </a>
+
+      <!-- 10. RAM -->
+      <a href="/collections/components-memory-ram" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/ram_icon_3d_v1775964832738_1775965240_1775964875344.png" alt="RAM">
+        </div>
+        <span class="cat-circle-label">Memory (RAM)</span>
+      </a>
+
+      <!-- 11. Monitors -->
+      <a href="/collections/peripherals-monitors-displays" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/monitor_icon_3d_v1775964875344_1775965640_1775964918162.png" alt="Monitors">
+        </div>
+        <span class="cat-circle-label">Monitors & Displays</span>
+      </a>
+
+      <!-- 12. Keyboards/Mouse -->
+      <a href="/collections/peripherals-input-devices-kb-mouse" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/peripherals_icon_3d_v1775964918162_1775966040_1775964976291.png" alt="Input">
+        </div>
+        <span class="cat-circle-label">Input Devices</span>
+      </a>
+
+      <!-- 13. Security -->
+      <a href="/collections/smarthome-security-cctv" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/security_icon_3d_v1775964976291_1775966440_1775965028259.png" alt="Security">
+        </div>
+        <span class="cat-circle-label">Security & CCTV</span>
+      </a>
+
+      <a href="/collections/networking-sfp-transceivers" class="cat-circle-item">
+        <div class="cat-circle-img-wrap">
+          <img src="https://cdn.shopify.com/s/files/1/0784/2303/2025/files/networking_icons_3d_v2_1775928200280.png" alt="SFP">
+        </div>
+        <span class="cat-circle-label">SFP & Transceivers</span>
+      </a>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "voip_phone_systems": {
+      "type": "voip-phone-systems",
+      "settings": {
+        "phone_number": "0466 911 816",
+        "email_address": "info@evotech.au",
+        "cta_primary_link": "/pages/contact",
+        "show_announce": true
+      }
+    }
+  },
+  "order": [
+    "voip_phone_systems"
+  ]
+}

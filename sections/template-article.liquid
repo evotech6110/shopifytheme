@@ -1,0 +1,451 @@
+{% style %}
+  .share-button__button:not(.ic-hidden){
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+  }
+  .share-button__button svg {
+    width: 20px;
+    height: auto;
+    display: block;
+  }
+
+  button.share-button__button {
+    background-color: transparent;
+    border: none;
+    cursor:pointer;
+  }
+
+  button.share-button__button:hover{
+    color:var(--link-hover-color);
+  }
+
+  .share-button {
+    display: block;
+  }
+
+  .share-button__copy{
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+
+  }
+
+  .btn--share{
+    border:none;
+    padding: 2px;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.btn--share svg{
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.btn--share-label{
+  margin-left: 8px;
+  font-size: 16px
+}
+
+
+.social-sharing-wrapper{
+  display: flex;
+  align-items: center;
+}
+.social-sharing-wrapper .social-sharing {
+    height: 25px;
+    display: flex;
+    gap: 12px;
+}
+
+.social-sharing-wrapper .social-sharing li a{
+    width: 25px;
+    height: auto;
+}
+
+.social-sharing-wrapper .share-dropdown {
+    width: 0;
+    height: 33px;
+    padding: 4px;
+    overflow: hidden;
+    display: flex;
+    gap: 12px;
+    margin-left: 12px;
+    visibility: hidden;
+}
+
+.link-copy {
+    position: relative;
+    height: 25px;
+}
+
+.link-copy .link-copy-button{
+    cursor: copy;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.social-sharing-wrapper.opened .share-dropdown{
+    width: auto;
+    visibility: visible;
+}
+
+.share-dropdown svg {
+    width: 25px;
+    height: 25px;
+    display: block;
+}
+
+.share-dropdown .link-copy svg {
+    margin-top: 0px;
+}
+{% endstyle %}
+<div class="article-section-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+  <div class="ic-container ic-py-13">
+    <article class="ic-flex ic-flex-col ic-align-items-center ic-mb-8 article-page" itemscope itemtype="http://schema.org/BlogPosting">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'article_title' %}
+            <div class="ic-my-3 ic-w-100" {{ block.shopify_attributes }}>
+              <div class="">
+                <a href="{{ blog.url | default: '#' }}" class="ic-text-uppercase ic-font-bold ic-mb-3 ic-inline-block ic-text-no-underline">
+                  {{- blog.title -}}
+                </a>
+                <h1 class="ic-font-medium ic-break-words" itemprop="headline">{{ article.title }}</h1>
+              </div>
+            </div>
+          {% when 'article_author_and_date' %}
+            <div class="ic-my-3 ic-w-100" {{ block.shopify_attributes }}>
+              <div class="article-author-date" itemscope itemtype="http://schema.org/Person">
+                {% if block.settings.enable_author %}
+                  <p itemprop="author" class="article-author">
+                    <span class="icon">{% render 'icon-author' %}</span>
+                    {{ article.author }}
+                  </p>
+                {% endif %}
+                {% if block.settings.enable_published_date %}
+                  <time itemprop="datePublished dateCreated" datetime="{{ article.published_at | date: '%d-%m-%Y' }}">
+                    {{- 'sections.blog.published' | t }}
+                    {{ article.published_at | date: format: 'on_date' -}}
+                  </time>
+                {% endif %}
+              </div>
+            </div>
+          {% when 'featured_image' %}
+            <div
+              itemprop="image"
+              class="image-container ic-overflow-hidden ic-my-4 ic-w-100"
+              {{ block.shopify_attributes }}
+            >
+              {% if article.image != blank %}
+                {{ article.image
+                  | image_url: width: 1500
+                  | image_tag:
+                  loading: 'lazy',
+                  widths: '400, 600 ,800 ,900, 1000, 1300, 1500', 
+                  sizes: '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 600px, (max-width: 899px) 800px, (max-width: 1023px) 900px, (max-width: 1279px) 1000px, (max-width: 1535px) 1300px, 1500px',
+                  alt: article.image.alt,
+                  class: 'ic-w-100 ic-h-100 ic-object-cover ic-object-center ic-block'
+                }}
+              {% else %}
+                {% assign placeholder_image = 'lifestyle-1' %}
+                {{ placeholder_image | placeholder_svg_tag: 'w-full h-80 md:h-96 object-cover object-center p-5' }}
+              {% endif %}
+            </div>
+          {% when 'article_content' %}
+            <div class="ic-my-4 ic-w-100" {{ block.shopify_attributes }}>
+              <div itemprop="articleBody" class="article-content ic-break-words richtext-container">
+                {{ article.content }}
+              </div>
+            </div>
+          {%- when 'share' -%}
+            <div class="ic-my-3 ic-w-100 ic-flex ic-justify-content-{{ block.settings.share-style }}" {{ block.shopify_attributes }}>
+
+              {% render 'social-sharing', share_title: article.title, article_url: article.url, share_image: article.image, icon_style: block.settings.share_icon_style %}
+            </div>
+          {% else %}
+
+        {% endcase %}
+      {% endfor %}
+    </article>
+
+      <div class="ic-text-center ic-mb-8">
+          <a href="{{ blog.url | default: '#' }}" class="backto-link">
+              <span class="ic-w30px">{% render 'icon-left' %}</span>
+              {{ "sections.blog.back_to_blog" | t }}
+          </a>
+      </div>
+
+    {% if blog.comments_enabled? %}
+      <div id="comments" class="ic-flex ic-flex-col ic-align-items-center my-8 article-comments">
+        {% if article.comments_count > 0 %}
+          <div class="ic-flex-col-12 ic-flex-col-md-10 ic-flex-col-lg-8 ic-flex-col-xl-6 ic-my-4 ic-w-100">
+            <h2 class="ic-font-medium ic-mb-6 ic-text-center">{{ 'sections.blog.text' | t }}</h2>
+            {% if article.comments_count > 0 %}
+              <p class="ic-mb-6 ic-text-lg">
+                {{ article.comments_count }}
+                {{ 'sections.blog.comment_count' | t: count: article.comments_count }}
+              </p>
+            {% endif %}
+            {% paginate article.comments by 5 %}
+              {% for comment in article.comments %}
+                <div class="ic-py-4 ic-px-6 comment-card ic-shadow-sm ic-mb-5">
+                  <div class="ic-flex ic-justify-content-space-between ic-mb-4">
+                    <span class="ic-font-medium ic-break-words">{{ comment.author }}</span>
+                    <span class="ic-text-xs comment-date">{{ comment.created_at | date: '%B %d, %Y' }}</span>
+                  </div>
+                  <div class="ic-text-sm ic-break-words comment-content">
+                    {{ comment.content | truncate: 172 }}
+                    {{ comment.content }}
+                    {% if comment.content.size > 172 %}
+                      <span onclick="this.parentElement.classList.add('expanded')">Read More</span>
+                      <span onclick="this.parentElement.classList.remove('expanded')">Read Less</span>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+              <div class="max-w-6xl mx-auto">
+                {% render 'pagination', pagination: paginate, content_Id: '#comments' %}
+              </div>
+            {% endpaginate %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div id="comment_form_wrapper" class="ic-flex ic-flex-col ic-align-items-center my-8">
+        <div class="ic-flex-col-12 ic-flex-col-md-10 ic-flex-col-lg-8 ic-flex-col-xl-6 ic-my-4 ic-w-100">
+          <h2 class="ic-font-medium ic-text-center">{{ 'sections.blog.leave_comment' | t }}</h2>
+        </div>
+        {% form 'new_comment',
+          article,
+          class: 'ic-flex-col-12 ic-flex-col-md-10 ic-flex-col-lg-8 ic-flex-col-xl-6 ic-my-4 ic-w-100'
+        %}
+          <div class="">
+            {% if form.errors %}
+              {% render 'form-error', form: form, error_id: 'article_email' %}
+            {% elsif form.posted_successfully? %}
+              <div class="success-box">
+                <div class="ic-text-sm ic-font-medium  ic-color-success ic-flex ic-flex-gap-2 ic-flex-nowrap">
+                  <span>{% render 'icon-success' %}</span>
+                  {{ 'sections.blog.posted_succesfully' | t }}
+                </div>
+              </div>
+            {% endif %}
+            <div class="ic-flex ic-flex-col ic-flex-md-row ic-flex-wrap ic-flex-gap-x-8 ic-flex-gap-y-6 ic-mt-4">
+              <div class="ic-flex-1">
+                <label for="comment_author" class="ic-screen-reader" aria-label="{{ 'sections.blog.name' | t }}">{{ 'sections.blog.name' | t }}</label>
+                <input
+                  type="text"
+                  name="comment[author]"
+                  id="comment_author"
+                  class="ic-w-100 ic-block"
+                  placeholder="{{ 'sections.blog.name' | t }} *"
+                  required
+                  oninvalid="this.setCustomValidity('{{ 'sections.blog.validation_error' | t }}')"
+                  oninput="setCustomValidity('')"
+                >
+              </div>
+              <div class="ic-flex-1">
+                <label for="comment_email" class="ic-screen-reader" aria-label="{{ 'sections.blog.email' | t }}">{{ 'sections.blog.email' | t }}</label>
+                <input
+                  type="email"
+                  name="comment[email]"
+                  id="comment_email"
+                  class="ic-w-100 ic-block"
+                  placeholder="{{ 'sections.blog.email' | t }} *"
+                  aria-describedby="article_email"
+                  required
+                  oninvalid="this.setCustomValidity('{{ 'sections.blog.validation_error' | t }}')"
+                  oninput="setCustomValidity('')"
+                >
+              </div>
+              <div class="ic-w-100">
+                <label for="comment_content" class="ic-screen-reader" aria-label="{{ 'sections.blog.comment' | t }}">{{ 'sections.blog.comment' | t }}</label>
+                <textarea
+                  class="ic-w-100 ic-resize-none ic-h90px ic-block"
+                  placeholder="{{ 'sections.blog.comment' | t }} *"
+                  name="comment[body]"
+                  id="comment_content"
+                  required
+                  oninvalid="this.setCustomValidity('{{ 'sections.blog.validation_error' | t }}')"
+                  oninput="setCustomValidity('')"
+                ></textarea>
+              </div>
+              <div class="ic-w-100">
+                <input
+                  type="submit"
+                  id="comment-form-submit"
+                  class="ic-w-100 ic-justify-content-center ic-btn ic-btn-primary"
+                  value="{{ 'sections.blog.post_comment' | t }}"
+                >
+              </div>
+            </div>
+          </div>
+        {% endform %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ article.title | json }},
+      "articleBody": {{ article.content | strip_html | json }},
+      {% if article.excerpt != blank %}
+          "description": {{ article.excerpt | strip_html | json }},
+      {% endif %}
+      {% if article.image %}
+          "image":[
+              {{ article.image | image_url | prepend: 'https:' | json }}
+          ],
+      {% endif %}
+      "datePublished": {{ article.published_at | date: format: "default" | json }},
+      "dateCreated": {{ article.created_at | date: format: "default" | json }},
+      "author": {
+          "@type": "Person",
+          "name": {{ article.author | json }}
+      },
+      "publisher":{
+          "@type": "Organization",
+          "name": {{ shop.name | json }}
+      }
+  }
+</script>
+
+<script>
+  const iframe = document.querySelector('.article-content iframe');
+  window.addEventListener('load', iframeRatio);
+  window.addEventListener('resize', iframeRatio);
+  function iframeRatio() {
+    if(iframe){
+      const width = iframe.getAttribute('width');
+      const height = iframe.getAttribute('height');
+      const aspectRatio = (height / width) * 100;
+      if(width && height){
+        iframe.style.width = '100%';
+      }
+      const iframe_width = iframe.offsetWidth;
+      const newIframeHeight = iframe_width * (aspectRatio / 100);
+      if (width && height) {
+        iframe.style.height = `${newIframeHeight}px`;
+      }
+    }
+  }
+</script>
+
+<script>
+  if(document.getElementById('comment_form_wrapper')){
+      document.getElementById('comment_form_wrapper').addEventListener('submit', function () {
+      document.getElementById('comment-form-submit').setAttribute('disabled', 'disabled');
+    });
+  }
+</script>
+
+
+{% schema %}
+{
+  "name": "t:sections.template_article.name",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings_schema.general.settings.color_scheme.label",
+      "default": "scheme_1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article_title",
+      "name": "t:sections.template_article.blocks.article_title.name",
+      "limit": 1
+    },
+    {
+      "type": "article_author_and_date",
+      "name": "t:sections.template_article.blocks.article_author_and_date.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_author",
+          "default": true,
+          "label": "t:sections.template_article.blocks.article_author_and_date.settings.enable_author.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_published_date",
+          "default": true,
+          "label": "t:sections.template_article.blocks.article_author_and_date.settings.enable_published_date.label"
+        }
+      ]
+    },
+    {
+      "type": "featured_image",
+      "name": "t:sections.template_article.blocks.featured_image.name",
+      "limit": 1
+    },
+    {
+      "type": "article_content",
+      "name": "t:sections.template_article.blocks.article_content.name",
+      "limit": 1
+    },
+    {
+      "type": "share",
+      "name": "t:sections.template_article.blocks.share.name",
+      "limit": 1,
+      "settings":[
+        {
+            "type": "select",
+            "id": "share-style",
+            "options":[
+                {
+                    "value": "start",
+                    "label":"t:sections.template_article.blocks.share_style.option_1"
+                },
+                {
+                    "value": "center",
+                    "label":"t:sections.template_article.blocks.share_style.option_2"
+                },
+                {
+                    "value": "end",
+                    "label":"t:sections.template_article.blocks.share_style.option_3"
+                }
+            ],
+            "default": "start",
+            "label": "t:sections.template_article.blocks.share_style.label"
+        },
+        {
+          "type": "select",
+          "id": "share_icon_style",
+          "label": "t:sections.template_article.blocks.share.settings.icon_style.label",
+          "options": [
+            {
+            "value": "fill",
+            "label": "t:sections.template_article.blocks.share.settings.icon_style.option_1.label"
+            },
+            {
+            "value": "outline",
+            "label": "t:sections.template_article.blocks.share.settings.icon_style.option_2.label"
+            },
+            {
+            "value": "colored",
+            "label": "t:sections.template_article.blocks.share.settings.icon_style.option_3.label"
+            }
+          ],
+          "default": "fill"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

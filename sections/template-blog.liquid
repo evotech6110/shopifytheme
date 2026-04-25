@@ -1,0 +1,152 @@
+<div class="blog-section-wrapper color-{{ section.settings.color_scheme }} gradient-enabled">
+    <div class="ic-container ic-py-10">
+        {% paginate blog.articles by section.settings.number_of_blog_posts %}
+            <h1 class="ic-mb-10">{{ blog.title }}</h1>
+            <div class="ic-grid ic-grid-template-cols-1 ic-grid-template-cols-sm-2 ic-grid-template-cols-md-3 ic-grid-template-cols-lg-4 ic-grid-gap-8 ic-mb-10 {{ section.settings.card_align }}">
+                {% liquid
+                    if section.settings.image_style == 'ic-object-contain'
+                    assign sizes = '(max-width: 639px) calc(100vw - 40px), (max-width: 767px) 260px, (max-width: 899px) 200px, (max-width: 1023px) 245px, (max-width: 1279px) 200px, (max-width: 1535px) 265px, 330px'
+                    assign srcset = '200, 300, 400, 500, 600'
+                    assign largest_width = 600
+                    else
+                    assign sizes = '(max-width: 639px) calc(200vw - 40px), (max-width: 767px) 520px, (max-width: 899px) 400px, (max-width: 1023px) 490px, (max-width: 1279px) 400px, (max-width: 1535px) 530px, 660px'
+                    assign srcset = '200, 300, 420, 500, 600, 700, 1000, 1150, 1250'
+                    assign largest_width = 1250
+                    endif
+                %}
+                {% for article in blog.articles %}
+                    {% render 'article-card', article: article, read_more_text: section.settings.blog_read_more, image_style: section.settings.image_style, featured_image: section.settings.featured_image, placeholder_image: section.settings.placeholder_image, show_date: section.settings.date, show_author: section.settings.author, color_scheme: section.settings.card_color_scheme, image_ratio: section.settings.image_ratio, srcset: srcset, sizes: sizes, largest_width: largest_width %}
+                {% endfor %}
+            </div>
+            {% render 'pagination', pagination: paginate %}
+        {% endpaginate %}
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name":"t:sections.blog.name",
+        "settings":[
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type":"range",
+                "id":"number_of_blog_posts",
+                "step":1,
+                "min":1,
+                "max":12,
+                "label":"t:sections.blog.settings.number_of_blog_posts.label",
+                "default":8
+            },
+            {
+                "type":"header",
+                "content":"t:sections.blog.settings.card.content"
+            },
+            {
+                "type": "color_scheme",
+                "id": "card_color_scheme",
+                "label": "t:settings_schema.general.settings.color_scheme.label",
+                "default": "scheme_1"
+            },
+            {
+                "type":"text",
+                "id":"blog_read_more",
+                "label":"t:snippets.article_card.read_more.label",
+                "default":"Read more"
+            },
+            {
+                "type":"select",
+                "id":"image_style",
+                "options":[
+                    {
+                        "value":"ic-object-cover",
+                        "label":"t:snippets.article_card.image_style.option_1.label"
+                    },
+                    {
+                        "value":"ic-object-contain",
+                        "label":"t:snippets.article_card.image_style.option_2.label"
+                    }
+                ],
+                "default":"ic-object-cover",
+                "label":"t:snippets.article_card.image_style.label"
+            },
+            {
+                "type": "select",
+                "id": "image_ratio",
+                "options": [
+                    {
+                    "value": "16:9",
+                    "label": "16:9"
+                    },
+                    {
+                    "value": "4:3",
+                    "label": "4:3"
+                    },
+                    {
+                    "value": "3:2",
+                    "label": "3:2"
+                    },
+                    {
+                    "value": "1:1",
+                    "label": "1:1"
+                    }
+                ],
+                "default": "4:3",
+                "label": "t:snippets.article_card.image_ratio.label"
+            },
+            {
+                "type":"checkbox",
+                "id":"featured_image",
+                "default": true,
+                "label":"t:snippets.article_card.show_image.label"
+            },
+            {
+                "type":"checkbox",
+                "id":"placeholder_image",
+                "default": true,
+                "label":"t:snippets.article_card.show_placeholder.label"
+            },
+            {
+                "type": "checkbox",
+                "id": "date",
+                "default": true,
+                "label": "t:snippets.article_card.show_date.label"
+            },
+            {
+                "type": "checkbox",
+                "id": "author",
+                "default": true,
+                "label": "t:snippets.article_card.show_author.label"
+            },
+            {
+                "type":"select",
+                "id":"card_align",
+                "options":[
+                    {
+                        "value":"ic-align-items-stretch",
+                        "label":"t:sections.blog.settings.card.alignment.option_1"
+                    },
+                    {
+                        "value":"ic-align-items-start",
+                        "label":"t:sections.blog.settings.card.alignment.option_2"
+                    },
+                    {
+                        "value":"ic-align-items-center",
+                        "label":"t:sections.blog.settings.card.alignment.option_3"
+                    },
+                    {
+                        "value":"ic-align-items-end",
+                        "label":"t:sections.blog.settings.card.alignment.option_4"
+                    }
+                ],
+                "default":"ic-align-items-stretch",
+                "label":"t:sections.blog.settings.card.alignment.label",
+                "info":"t:sections.blog.settings.card.alignment.info"
+            }
+        ]
+    }
+{% endschema %}

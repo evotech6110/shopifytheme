@@ -1,0 +1,225 @@
+<style>
+  .evotech-next-gen-card .product-vendor {
+    color: #64748b !important; /* Slate 500 */
+    font-weight: 600;
+  }
+  .evotech-next-gen-card .card-link h3 {
+    color: #0f172a !important; /* Deep Navy */
+    font-weight: 700;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+  .evotech-next-gen-card .card-link:hover h3 {
+    color: #008060 !important;
+  }
+  .evotech-next-gen-card .price-text {
+    color: #1e293b !important; /* Navy 800 */
+    font-size: 1.1rem;
+  }
+  .evotech-next-gen-card .compare-price {
+    color: #94a3b8 !important; /* Slate 400 */
+  }
+  .evotech-next-gen-card .quick-view-button {
+    border: 2px solid #0f172a !important;
+    color: #0f172a !important;
+    font-weight: 700;
+  }
+</style>
+
+<div class="product-card evotech-next-gen-card ic-relative ic-h-100 ic-overflow-hidden ic-pt-3 {% if color_scheme %} color-{{ color_scheme }} gradient-enabled{% endif %}" data-aos="fade-up">
+    {% liquid
+        if product.featured_media or default_image != nil
+            assign productTopOuter = 'image-container ic-px-4 ic-pt-10'
+            assign productTopInner = 'ratio-container ic-relative'
+            if product.media.size > 1
+                assign productTopInner = productTopInner | append: ' multiple-images'
+            endif
+            assign show_image = true
+        else
+            assign productTopOuter = 'title-container ic-break-words ic-px-4 ic-pt-10'
+            assign productTopInner = 'title-ratio-container'
+            if show_placeholder
+            assign show_image = true
+            else
+            assign show_image = false
+            endif
+        endif
+    %}
+    <div class="{{ productTopOuter }}">
+        <div class="{{ productTopInner }}">
+            {% if product.featured_media or default_image != nil %}
+                {% liquid
+                    if srcset != ''
+                    assign widths_string_no_spaces = srcset | replace: ' ', ''
+                    assign widths_array = widths_string_no_spaces | split: ','
+                    assign sorted_widths_array = widths_array | sort | reverse
+                    assign largest_width = sorted_widths_array[0]
+                    else
+                    assign largest_width = 400
+                    endif
+                    assign img_class = 'ic-absolute ic-top-0 ic-left-0 ic-w-100 ic-h-100 ic-object-contain'
+                    if product.media.size > 1
+                        for image in product.media
+                            if forloop.index == 2
+                            assign alt = image.alt | escape | default: product.title
+                            echo image | image_url: width: largest_width | image_tag: loading: 'lazy', widths: srcset, sizes: sizes, alt: alt, class: img_class
+                            endif
+                        endfor
+                    endif
+
+                    if product.featured_media
+                    assign alt = product.image.alt | escape | default: product.title
+                    assign product_image = product.featured_media
+                    else
+                    assign alt = default_image.alt | escape | default: product.title
+                    assign product_image = default_image
+                    endif
+                %}
+                {{ product_image 
+                    | image_url: width: largest_width
+                    | image_tag:
+                    loading: 'lazy',
+                    widths: srcset, 
+                    sizes: sizes,
+                    alt: alt,
+                    class: img_class
+                }}
+            {% else %}
+            {% if show_image %}
+                {{ 'product-5' | placeholder_svg_tag: 'ic-absolute ic-top-0 ic-left-0 ic-w-100 ic-h-100 ic-object-contain' }}
+            {% else %}
+                {% assign default_title = 'snippets.product_card.title' | t %}
+                <a href="{{ product.url | within: collection | default: '#' }}" class="card-link ic-inline-block">
+                    <h3 class="ic-font-semibold ic-text-lg">{{ product.title | default: default_title }}</h3>
+                </a>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% if sale_badge == true or offer_badge == true %}
+        <div class="product-badge">
+            {% if sale_badge == true %}
+                {% if product != nil %}
+                    {%- if product.selected_or_first_available_variant.available == false -%}
+                        <span class="sale-badge sold ic-text-sm">{{ 'snippets.product_card.sale_badge.sold_out' | t }}</span>
+                    {%- elsif product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price and product.selected_or_first_available_variant.available -%}
+                        <span class="sale-badge sale ic-text-sm">{{ 'snippets.product_card.sale_badge.sale' | t }}</span>
+                    {%- endif -%}
+                {% else %}
+                    <span class="sale-badge sale ic-text-sm">{{ 'snippets.product_card.sale_badge.sale' | t }}</span>
+                {% endif %}
+            {% endif %}
+
+            {% if offer_badge == true %}
+                {% if product != nil %}
+                    {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price and product.selected_or_first_available_variant.available %}
+                        {% liquid 
+                            assign product_compare_price = product.selected_or_first_available_variant.compare_at_price
+                            assign product_variant_price = product.selected_or_first_available_variant.price
+                            assign product_one_percent = product_compare_price | divided_by: 100
+                            assign discounted_price = product_compare_price | minus: product_variant_price
+                            assign discounted_percentage = discounted_price | divided_by: product_one_percent
+                        %}
+                        {% if discounted_percentage > 0 %}
+                            <span class="offer-badge ic-text-sm">-{{ discounted_percentage }}%</span>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <span class="offer-badge ic-text-sm">-25%</span>
+                {% endif %}
+                        
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="text-content ic-px-4 ic-py-5 ic-flex-1 ic-flex ic-flex-col ic-break-words">
+        {% liquid
+            if show_image == false
+                if vendor == false
+                assign priceMarginTop = 'ic-mt-auto'
+                elsif vendor == true
+                assign vendorMarginTop = 'ic-mt-auto'
+                assign priceMarginTop = 'ic-mt-4'
+                endif
+            else
+                assign priceMarginTop = 'ic-mt-4'
+                assign vendorMarginTop = ''
+            endif
+        %}
+        {% if vendor == true %}
+            {% assign default_vendor = 'snippets.product_card.vendor' | t %}
+            <p class="product-vendor ic-text-sm ic-mb-1 {{ vendorMarginTop }}">{{ product.vendor | default: default_vendor }}</p>
+        {% endif %}
+        {% if show_image %}
+            {% assign default_title = 'snippets.product_card.title' | t %}
+            <a href="{{ product.url | within: collection | default: '#' }}" class="card-link ic-mb-auto ic-inline-block">
+                <h3>{{ product.title | default: default_title }}</h3>
+            </a>
+        {% endif %}
+        <div class="ic-flex ic-justify-content-space-between ic-align-items-end ic-flex-gap-y-3 ic-pt-4 {{ priceMarginTop }} price-wrapper">
+            <div>
+                <div class="ic-flex ic-flex-gap-x-2 ic-align-items-center">
+                    {% liquid 
+                        if product.price_varies
+                        assign from = 'snippets.product_card.from' | t
+                        else
+                        assign from = nil
+                        endif
+                    %}
+                    <p class="ic-font-semibold ic-text-sm price-text">
+                        {% if from %}
+                            <span class="ic-font-norma ic-color-text">{{ from }}</span> 
+                        {% endif %}
+                        {{ product.price | default: 99900 | money }}
+                    </p>
+                    {% if product.compare_at_price and product.compare_at_price > product.price %}
+                        <p class="ic-text-line-through ic-text-xs compare-price">
+                            {{ product.compare_at_price | money }}
+                        </p>
+                    {% endif %}
+                </div>
+                {% if product.selected_or_first_available_variant.unit_price_measurement != nil %}
+                <div class="ic-flex ic-flex-gap-x-2 ic-align-items-center unit-price">
+                    <small>
+                        <span>
+                        <span>{{- product.selected_or_first_available_variant.unit_price | money -}}</span>
+                        <span aria-hidden="true">/</span>
+                        <span>
+                            {%- if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 -%}
+                            {{- product.selected_or_first_available_variant.unit_price_measurement.reference_value -}}
+                            {%- endif -%}
+                            {{ product.selected_or_first_available_variant.unit_price_measurement.reference_unit }}
+                        </span>
+                        </span>
+                    </small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if quick_view %}
+    <div class="quick-view-wrapper ic-px-4 ic-pb-5">
+        <button 
+            class="ic-btn ic-btn-tertiary quick-view-button" 
+            aria-haspopup="dialog" 
+            aria-expanded="false" 
+            aria-label="{{ 'snippets.product_card.quick_view_label' | t: title: product.title }}"
+            data-product-id="{{ product.id }}"
+            data-url="{{ product.url }}"
+            {% if product.available == false %} disabled {% endif %}
+        >
+            {% if product.available == false %}
+                {{ 'snippets.product_card.sale_badge.sold_out' | t }}
+            {% else %}
+                {{ 'snippets.product_card.quick_view' | t }}
+            {% endif %}
+        </button>
+        {% if product.available %}
+            {% form 'product', product %}
+                <input type="hidden" name="id" value="{{ product.id }}">
+                <input type="hidden" name="quantity" value="1">
+                {{ form | payment_button }}
+            {% endform %}
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
