@@ -1,0 +1,305 @@
+{% liquid 
+    assign active_url = ''
+    if filter_data == collection
+        assign prefix = '?'
+    elsif filter_data == search
+        assign prefix = '&'
+    endif
+
+    for filter in filter_data.filters
+        for active_value in filter.active_values
+            assign encoded_value = active_value.value | url_encode
+            assign active_url = active_url | append: prefix | append: active_value.param_name | append: '=' | append: encoded_value
+            assign prefix = '&'
+        endfor
+
+        if filter.type == 'price_range'
+            if filter.min_value.value
+                assign min_price_value = filter.min_value.value | divided_by: 100 | floor
+                assign active_url = active_url | append: prefix | append: filter.min_value.param_name | append: '=' | append: min_price_value
+                assign prefix = '&'
+            endif
+            if filter.max_value.value
+                assign max_price_value = filter.max_value.value | divided_by: 100 | ceil
+                assign active_url = active_url | append: prefix | append: filter.max_value.param_name | append: '=' | append: max_price_value
+                assign prefix = '&'
+            endif
+        endif
+    endfor
+
+    if filter_data.sort_by != blank and filter_data.sort_by != filter_data.default_sort_by
+        assign active_url = active_url | append: prefix | append: 'sort_by=' | append: filter_data.sort_by
+    endif
+
+    if filter_data == collection
+        assign data_url = collection.url | append: active_url
+    elsif filter_data == search
+        assign search_terms = search.terms | url_encode
+        assign data_url = routes.search_url | append: '?q=' | append: search_terms | append: active_url
+    endif
+ %}
+<filter-form data-url="{{ data_url }}">
+    <form class="filter-form">
+        <div class="filter-head">
+            <h2 class="heading ic-h3">{{ "snippets.filter.filters" | t }}</h2>
+            {% if active_url != '' %}
+                {% liquid
+                    assign clear_query = ''
+                    if filter_data == collection
+                        if filter_data.sort_by != ''
+                        assign clear_query = '?sort_by=' | append: filter_data.sort_by
+                        endif
+                    elsif filter_data == search
+                        if filter_data.terms != ''
+                        assign clear_query = '?q=' | append: filter_data.terms | replace: ' ', '+'
+                        endif
+                        if filter_data.sort_by != ''
+                            if clear_query == ''
+                            assign clear_query = '?sort_by=' | append: filter_data.sort_by
+                            else
+                            assign clear_query = clear_query | append: '&sort_by=' | append: filter_data.sort_by
+                            endif
+                        endif
+                        
+                    endif
+
+
+                %}
+                <filter-remove class="clear-all">
+                    <a href="{{ filter_data.url }}{{ clear_query }}" class="active-filters__clear ic-text-underline" role="button">{{ "snippets.filter.clear_all" | t }}</a>
+                </filter-remove>
+            {% endif %}
+        </div>
+        <div class="active-filters">
+            {% if active_url != '' %}
+                <div class="active-inner">
+                    {%- for filter in filter_data.filters -%}
+                    {%- if filter.type == "price_range" -%}
+                        {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                        <filter-remove>
+                            {%- assign min_value = filter.min_value.value | default: 0 | divided_by: 100.0 | floor -%}
+                            {%- assign max_value = filter.max_value.value | default: filter.range_max | divided_by: 100.0 | ceil -%}
+                            {%- assign min_display = min_value | times: 100 | money_without_trailing_zeros -%}
+                            {%- assign max_display = max_value | times: 100 | money_without_trailing_zeros -%}
+                            <a class="active-filters__remove-filter" href="{{ filter.url_to_remove | default: '#' }}" role="button">
+                                {% render 'icon-close' %}
+                                {{ min_display }} - {{ max_display }}
+                            </a>
+                        </filter-remove>
+                        {%- endif -%}
+                    {%- else -%}
+                        {%- for filter_value in filter.active_values -%}
+                        <filter-remove class="pill" data-type="{{ filter.label }}" data-value="{{ filter_value.label }}">
+                            <a class="active-filters__remove-filter" href="{{ filter_value.url_to_remove | default: '#' }}" role="button">
+                                {% render 'icon-close' %}
+                                {{ filter.label }}: {{ filter_value.label }}
+                            </a>
+                        </filter-remove>
+                        {%- endfor -%}
+                    {%- endif -%}
+                    {%- endfor -%}
+                </div>
+            {% endif %}
+        </div>
+
+        {%- for filter in filter_data.filters -%}
+            {% liquid 
+                if forloop.index == 1
+                assign filter_open = 'open'
+                assign filter_expanded = 'true'
+                else
+                assign filter_open = nil
+                assign filter_expanded = 'false'
+                endif
+            %}
+            
+            <details class="filter-group product-facet-card" {{ filter_open }}>
+            <summary class="filter-group-summary product-facet-header" aria-label="{{ filter.label }}" aria-expanded="{{ filter_expanded }}" aria-controls="Filter-{{ section.id }}-{{ forloop.index }}">
+                <div>
+                <span>{{ filter.label }}</span>
+                </div>
+                <span class="icon">
+                {% render 'icon-chevron-down' %}
+                </span>
+            </summary>
+        
+            <div id="Filter-{{ section.id }}-{{ forloop.index }}" class="filter-group-display" data-name="{{ filter.param_name }}">
+                
+                {%- case filter.type -%}
+                {%- when 'boolean' or 'list' -%}
+                    <div class="filter-group-display__header ic-mb-4 ic-flex ic-justify-content-space-between">
+                    <span class="filter-group-display__header-selected">{{ filter.active_values.size }} {{ "snippets.filter.selected" | t: count: filter.active_values.size }}</span>
+            
+                    {%- if filter.active_values.size > 0 -%}
+                        <filter-remove>
+                            <a href="{{ filter.url_to_remove | default: '#' }}" class="filter-group-display__header-reset ic-text-underline" role="button">{{ "snippets.filter.reset" | t }}</a>
+                        </filter-remove>
+                    {%- endif -%}
+                    </div>
+                    <ul class="filter-group-display__list{% if filter.param_name == 'filter.v.option.color' %} filter-group-display__list-color{% endif %}">
+                    {%- for filter_value in filter.values -%}
+                        {% liquid
+
+                            if filter.param_name == 'filter.v.option.color'
+
+                            assign color = filter_value.value | split: ' ' | last | downcase
+                            assign color_image = filter_value.value | handleize | append: '.png'
+                            assign color_image_url = color_image | file_img_url
+                            assign color_code = color | color_to_hex
+
+                            assign colorBrightness = section.settings.color_scheme.settings.color_background | color_brightness
+                            
+                            if colorBrightness > 128
+                            assign colorVariant = section.settings.color_scheme.settings.color_background | color_darken: 10
+                            else
+                            assign colorVariant = section.settings.color_scheme.settings.color_background | color_lighten: 10
+                            endif
+
+                            if color_code == blank
+                            assign color_code = colorVariant
+                            endif
+
+                            assign colorVariantBrightness = color_code | color_brightness
+
+                            if colorVariantBrightness > 128
+                            assign colorCheck = color_code | color_darken: 100
+                            else
+                            assign colorCheck = color_code | color_lighten: 100
+                            endif
+                            
+                            assign color_style = "style=background-color:" | append: color | append: ";background-image:url(" | append: color_image_url | append: ");--check-color:" | append: colorCheck | append: ";"
+                            else
+                            assign color_style = nil
+                            endif
+                        %}
+                        <li class="filter-group-display__list-item">
+                        <input type="checkbox"
+                            name="{{ filter_value.param_name }}"
+                            value="{{ filter_value.value | escape }}"
+                            class="ic-screen-reader checkbox-input"
+                            id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                            {% if filter_value.active -%}checked{%- endif %}
+                            {% if filter_value.count == 0 and filter_value.active == false -%}disabled{%- endif %}
+                        >
+                        <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}" 
+                            class="checkbox-label" 
+                            aria-label="{{ filter_value.label | capitalize }} ({{ filter_value.count }})"
+                            {{ color_style }}
+                            {% if filter.param_name == 'filter.v.option.color' %} title="{{ filter_value.value }}"{% endif %}>
+                            {% if filter.param_name == 'filter.v.option.color' and color_image_url != blank %}
+                                <img src="{{ color_image | file_img_url }}" alt="{{ filter_value.label | capitalize }}" width="auto" height="auto" loading="lazy" class="filter-color-image">
+                            {% endif %}
+                            <span class="icon-checked">{% render 'icon-check' %}</span>
+                            <span class="filter-label">{{ filter_value.label | capitalize }}</span>
+                            
+
+                            <span class="stock-count">({{ filter_value.count }})</span>
+                        </label>
+                        </li>
+                    {%- endfor -%}
+                    </ul>
+                {%- when 'price_range' -%}
+                    <price-range>
+                        {% liquid 
+                            for product in collections['all'].products
+                                if forloop.first
+                                assign lowest_price = product.price
+                                endif
+                                assign new_price = product.price
+                                if lowest_price == 0
+                                assign lowest_price = new_price
+                                endif
+                                if new_price < lowest_price and new_price != 0
+                                assign lowest_price = new_price
+                                endif
+                            endfor
+                        %}
+                        <div class="price-slider">
+                            <div class="price-progress"></div>
+                        </div>
+                        <div class="price-range-input">
+                        <input 
+                            type="range" 
+                            class="price-range-min"
+                            min="0"
+                            max="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                            {% if filter.min_value.value -%}
+                                value="{{ filter.min_value.value | divided_by: 100.0 | floor }}"
+                            {%- else %}
+                                value="0"
+                            {%- endif %}>
+                        <input 
+                            type="range" 
+                            class="price-range-max"
+                            min="0"
+                            max="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                            {% if filter.max_value.value -%}
+                                value="{{ filter.max_value.value | divided_by: 100.0 | ceil }}"
+                            {%- else %}
+                                value="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                            {%- endif %}>
+                        </div>
+                        <div class="price-filed-wrapper">
+                            <div class="price-field">
+                                <span class="price-symbol">{{ cart.currency.symbol }}</span>
+                                <input 
+                                    name="{{ filter.min_value.param_name }}" 
+                                    id="Filter-{{ filter.min_value.param_name }}"
+                                    {% if filter.min_value.value -%}
+                                    value="{{ filter.min_value.value | divided_by: 100.0 | floor }}"
+                                    {%- else %}
+                                    value="0"
+                                    {% endif %} 
+                                    type="text" 
+                                    inputmode="decimal"
+                                    placeholder="0"
+                                    data-pattern="\d| |,|\."
+                                    data-min="0"
+                                    data-max="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                                    class="price-min">
+                                <label for="Filter-{{ filter.min_value.param_name }}" class="ic-screen-reader" aria-label="{{ 'snippets.collection_filter.from' | t }}">{{ "snippets.collection_filter.from" | t }}</label>
+                            </div>
+                            <div class="price-field-separator">-</div>
+                            <div class="price-field">
+                              <span class="price-symbol">{{ cart.currency.symbol }}</span>
+                              <input 
+                                name="{{ filter.max_value.param_name }}"
+                                id="Filter-{{ filter.max_value.param_name }}"
+                                {% if filter.max_value.value -%}
+                                  value="{{ filter.max_value.value | divided_by: 100.0 | ceil }}"
+                                {%- else %}
+                                  value="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                                {%- endif %} 
+                                type="text" 
+                                inputmode="decimal"
+                                placeholder="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                                data-pattern="\d| |,|\."
+                                data-min="0"
+                                data-max="{{ filter.range_max | divided_by: 100.0 | ceil }}"
+                                class="price-max">
+                                <label for="Filter-{{ filter.max_value.param_name }}" class="ic-screen-reader" aria-label="{{ 'snippets.collection_filter.to' | t }}">{{ "snippets.collection_filter.to" | t }}</label>
+                            </div>
+                        </div>
+                        
+                        {% assign max_price_data = filter.range_max | divided_by: 100.0 | ceil %}
+                        {% assign max_price = max_price_data | times: 100 | money_without_trailing_zeros %}
+                        <div class="ic-color-error ic-text-xs ic-flex ic-flex-nowrap ic-flex-gap-2 filter-price-error to-error ic-mt-2">
+                            {% render 'icon-error' %}
+                            <span class="error-message">{{ 'snippets.filter.to_price_error' | t: max_price: max_price }}</span>
+                        </div>
+                        <div class="ic-color-error ic-text-xs ic-flex ic-flex-nowrap ic-flex-gap-2 filter-price-error from-error ic-mt-2">
+                            {% render 'icon-error' %}
+                            <span class="error-message">{{ 'snippets.filter.from_price_error' | t }}</span>
+                        </div>
+                        <div class="ic-color-error ic-text-xs ic-flex ic-flex-nowrap ic-flex-gap-2 filter-price-error both-error ic-mt-2">
+                            {% render 'icon-error' %}
+                            <span class="error-message">{{ 'snippets.filter.both_price_error' | t }}</span>
+                        </div>
+                    </price-range>
+                    
+                {%- endcase -%}
+            </div>
+            </details>
+        {%- endfor -%}
+    </form>
+</filter-form>

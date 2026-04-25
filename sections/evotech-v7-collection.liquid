@@ -1,0 +1,335 @@
+{%- comment -%}
+  Evotech v7.0 — Advanced Collection Grid with Filtering
+  Inspired by Maranello (Chroma) and high-end electronics stores.
+  Features sidebar filtering, modern product cards, and premium animations.
+{%- endcomment -%}
+
+{%- paginate collection.products by section.settings.products_per_page -%}
+
+<section class="v7-collection" id="v7CollectionGrid" data-af-reveal>
+  <div class="af-container">
+    
+    <div class="v7-col-layout">
+      <button type="button" class="v7-mobile-filter-toggle" onclick="toggleMobileFilters()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+        <span>Filters</span>
+      </button>
+      <!-- Sidebar Filters -->
+      <aside class="v7-col-sidebar">
+        <div class="v7-sidebar-header">
+          <h2>{{ 'sections.collection.filter_by_label' | t }}</h2>
+          <div class="v7-sidebar-actions">
+            <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="v7-filter-clear">{{ 'snippets.filter.clear_all' | t }}</a>
+            <button type="button" class="v7-mobile-close" onclick="toggleMobileFilters()">✕</button>
+          </div>
+        </div>
+
+        <form class="v7-filter-form" id="FacetFiltersForm">
+
+          {%- for filter in collection.filters -%}
+            <div class="v7-filter-group">
+              <div class="v7-filter-group-header" onclick="toggleFilterGroup(this)">
+                <span>{{ filter.label }}</span>
+                {%- if filter.active_values.size > 0 -%}
+                  <span class="v7-filter-count-badge">{{ filter.active_values.size }}</span>
+                {%- endif -%}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <div class="v7-filter-group-content">
+                {%- case filter.type -%}
+                  {%- when 'list' -%}
+                    <ul class="v7-filter-list">
+                      {%- for value in filter.values -%}
+                        <li>
+                          <label class="v7-filter-checkbox">
+                            <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" 
+                              {% if value.active %}checked{% endif %}
+                              {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                              onchange="this.form.submit()"
+                            >
+                            <span class="v7-check-box"></span>
+                            <span class="v7-check-label">{{ value.label }} ({{ value.count }})</span>
+                          </label>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- when 'price_range' -%}
+                    <div class="v7-filter-price">
+                      <div class="v7-price-input">
+                        <span class="v7-currency-symbol">{{ cart.currency.symbol }}</span>
+                        <input name="{{ filter.min_value.param_name }}"
+                          id="Filter-{{ filter.label }}-GTE"
+                          {%- if filter.min_value.value -%}
+                            value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                          {%- endif -%}
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                          max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                          onchange="this.form.submit()"
+                        >
+                      </div>
+                      <span class="v7-price-sep">to</span>
+                      <div class="v7-price-input">
+                        <span class="v7-currency-symbol">{{ cart.currency.symbol }}</span>
+                        <input name="{{ filter.max_value.param_name }}"
+                          id="Filter-{{ filter.label }}-LTE"
+                          {%- if filter.max_value.value -%}
+                            value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                          {%- endif -%}
+                          type="number"
+                          placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                          min="0"
+                          max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                          onchange="this.form.submit()"
+                        >
+                      </div>
+                    </div>
+                {%- endcase -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </form>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="v7-col-main">
+        <header class="v7-col-header">
+          <div class="v7-col-info">
+            <h1>{{ collection.title }}</h1>
+            <p>{{ 'sections.collection.showing_products' | t: count: collection.products_count }}</p>
+          </div>
+          <div class="v7-col-sort">
+            <label for="SortBy">Sort by:</label>
+            <select name="sort_by" id="SortBy" class="v7-sort-select" onchange="window.location.href = window.location.pathname + '?sort_by=' + this.value">
+              {%- for option in collection.sort_options -%}
+                <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected="selected"{% endif %}>{{ option.name }}</option>
+              {%- endfor -%}
+            </select>
+          </div>
+        </header>
+
+        <div class="v7-product-grid">
+          {%- for product in collection.products -%}
+            <div class="v7-product-card" {{ block.shopify_attributes }}>
+              <a href="{{ product.url | within: collection }}" class="v7-card-link">
+                <div class="v7-card-media">
+                  {%- if product.featured_media -%}
+                    {{ product.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
+                  {%- endif -%}
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="v7-badge v7-badge-sale">SALE</span>
+                  {%- endif -%}
+                </div>
+                <div class="v7-card-content">
+                  <span class="v7-card-vendor">{{ product.vendor }}</span>
+                  <h3 class="v7-card-title">{{ product.title }}</h3>
+                  
+                  <div class="v7-card-status">
+                    {%- if product.available -%}
+                      <span class="v7-status-in">● IN STOCK</span>
+                    {%- else -%}
+                      <span class="v7-status-out">○ OUT OF STOCK</span>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="v7-card-price">
+                    <span class="v7-price-now">{{ product.price | money }}</span>
+                    {%- if product.compare_at_price > product.price -%}
+                      <span class="v7-price-old">{{ product.compare_at_price | money }}</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </a>
+              <form action="/cart/add" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                <button type="submit" class="v7-add-btn">Add to cart</button>
+              </form>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <div class="v7-pagination">
+            {{ paginate | default_pagination }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function toggleFilterGroup(el) {
+    el.parentElement.classList.toggle('open');
+  }
+  
+  function toggleMobileFilters() {
+    document.querySelector('.v7-col-sidebar').classList.toggle('active');
+    document.body.style.overflow = document.querySelector('.v7-col-sidebar').classList.contains('active') ? 'hidden' : '';
+  }
+</script>
+
+<style>
+  .v7-collection { padding: 40px 0 80px; background: #05040C; color: #fff; }
+  
+  .v7-mobile-filter-toggle {
+    display: none;
+    width: 100%;
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .v7-filter-count-badge {
+    background: #A8E898;
+    color: #000;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 8px;
+  }
+  
+  .v7-col-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 48px;
+  }
+
+  @media (max-width: 991px) {
+    .v7-col-layout { grid-template-columns: 1fr; }
+    .v7-col-sidebar { 
+      display: none; 
+      position: fixed; 
+      top: 0; left: 0; width: 100%; height: 100%; 
+      background: #05040C; z-index: 1000; 
+      padding: 30px; overflow-y: auto;
+    }
+    .v7-col-sidebar.active { display: block; }
+    .v7-mobile-filter-toggle { display: flex; }
+  }
+
+  /* Sidebar */
+  .v7-sidebar-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; }
+  .v7-sidebar-header h2 { font-family: 'Clash Display', sans-serif; font-size: 24px; margin: 0; letter-spacing: -0.02em; }
+  .v7-sidebar-actions { display: flex; align-items: center; gap: 15px; }
+  .v7-mobile-close { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; padding: 0; line-height: 1; }
+  .v7-filter-clear { color: #A8E898; font-size: 13px; text-decoration: none; font-family: 'JetBrains Mono', monospace; }
+
+  @media (max-width: 991px) {
+    .v7-mobile-close { display: block; }
+  }
+
+  .v7-filter-group { border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 15px; margin-bottom: 15px; }
+  .v7-filter-group-header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    cursor: pointer; font-weight: 600; font-size: 15px; padding: 10px 0;
+  }
+  .v7-filter-group-header svg { transition: transform 0.3s ease; }
+  .v7-filter-group.open .v7-filter-group-header svg { transform: rotate(180deg); }
+  
+  .v7-filter-group-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .v7-filter-group.open .v7-filter-group-content { max-height: 500px; padding: 10px 0; }
+
+  .v7-filter-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .v7-filter-checkbox { display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: rgba(255,255,255,0.7); }
+  .v7-filter-checkbox input { display: none; }
+  .v7-check-box { width: 18px; height: 18px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; position: relative; }
+  .v7-filter-checkbox input:checked + .v7-check-box { background: #A8E898; border-color: #A8E898; }
+  .v7-filter-checkbox input:checked + .v7-check-box::after {
+    content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #000; font-size: 12px;
+  }
+
+  .v7-filter-price { display: flex; align-items: center; gap: 10px; }
+  .v7-price-input { position: relative; flex: 1; }
+  .v7-currency-symbol { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 12px; color: rgba(255,255,255,0.4); }
+  .v7-price-input input { 
+    width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); 
+    color: #fff; padding: 8px 8px 8px 25px; border-radius: 6px; font-size: 13px;
+  }
+
+  /* Main Grid */
+  .v7-col-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
+  .v7-col-info h1 { font-family: 'Clash Display', sans-serif; font-size: 40px; margin: 0 0 5px; }
+  .v7-col-info p { color: rgba(255,255,255,0.5); font-size: 14px; margin: 0; }
+  
+  .v7-col-sort { display: flex; align-items: center; gap: 10px; }
+  .v7-col-sort label { font-size: 13px; color: rgba(255,255,255,0.5); }
+  .v7-sort-select { background: #111; color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 8px; font-size: 14px; }
+
+  .v7-product-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+    gap: 30px; 
+  }
+
+  /* Product Card */
+  .v7-product-card { 
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); 
+    border-radius: 20px; overflow: hidden; transition: all 0.4s ease;
+    display: flex; flex-direction: column;
+  }
+  .v7-product-card:hover { transform: translateY(-5px); border-color: rgba(168,232,152,0.2); background: rgba(255,255,255,0.04); }
+  
+  .v7-card-media { position: relative; aspect-ratio: 1; overflow: hidden; background: #fff; display: flex; align-items: center; justify-content: center; }
+  .v7-card-media img { width: 80%; height: auto; transition: transform 0.6s ease; }
+  .v7-product-card:hover .v7-card-media img { transform: scale(1.1); }
+  
+  .v7-badge { position: absolute; top: 15px; left: 15px; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+  .v7-badge-sale { background: #FF7A4A; color: #fff; }
+
+  .v7-card-content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .v7-card-vendor { font-size: 11px; color: #A8E898; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .v7-card-title { font-size: 16px; font-weight: 600; margin: 0 0 12px; line-height: 1.4; color: #fff; min-height: 44px; }
+  
+  .v7-card-status { font-size: 10px; font-weight: 700; margin-bottom: 12px; }
+  .v7-status-in { color: #A8E898; }
+  .v7-status-out { color: rgba(255,255,255,0.3); }
+
+  .v7-card-price { display: flex; align-items: baseline; gap: 10px; margin-top: auto; }
+  .v7-price-now { font-size: 20px; font-weight: 700; }
+  .v7-price-old { font-size: 14px; text-decoration: line-through; color: rgba(255,255,255,0.4); }
+
+  .v7-add-btn { 
+    width: 100%; padding: 15px; background: transparent; border: 0; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #fff; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.3s;
+  }
+  .v7-product-card:hover .v7-add-btn { background: #A8E898; color: #000; }
+
+  .v7-pagination { margin-top: 60px; text-align: center; display: flex; justify-content: center; gap: 10px; }
+  .v7-pagination a, .v7-pagination span { padding: 10px 18px; border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; }
+  .v7-pagination .current { background: #A8E898; color: #000; }
+</style>
+
+{% schema %}
+{
+  "name": "EvoTech v7 Collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 12,
+      "max": 48,
+      "step": 4,
+      "default": 24,
+      "label": "Products per page"
+    }
+  ],
+  "presets": [
+    {
+      "name": "EvoTech v7 Collection"
+    }
+  ]
+}
+{% endschema %}

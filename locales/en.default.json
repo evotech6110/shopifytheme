@@ -80,6 +80,40 @@
       "post_comment": "Post comment"
     }
   },
+  "sections": {
+    "collection": {
+      "empty": "No products found",
+      "filter_by_label": "Filter by:",
+      "sort_by_label": "Sort by:",
+      "load_more": "Load more",
+      "showing_products": "Showing {{ count }} products"
+    }
+  },
+  "snippets": {
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "label": "Page {{ current_page }} of {{ total_pages }}",
+      "prev_label": "Previous page",
+      "current_page_label": "Page {{ current_page }}",
+      "goto_label": "Go to page {{ page }}"
+    },
+    "product_card": {
+      "quick_view": "Quick view",
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable"
+    },
+    "filter": {
+      "clear_all": "Clear all",
+      "selected": "{{ count }} selected",
+      "label": "Filter: {{ name }}",
+      "price_range": "Price range",
+      "from": "From",
+      "to": "To",
+      "filters": "Filters"
+    }
+  },
   "gift_cards": {
     "issued": {
       "title": "Here's your gift card!",
