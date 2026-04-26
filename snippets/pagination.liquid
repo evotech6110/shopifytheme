@@ -20,7 +20,7 @@
                 {% render 'icon-chevron-left' %}
             </a>
         {% endif %}
-        
+
         {% for part in pagination.parts %}
             {% if part.is_link %}
                 <a href="{{ part.url | append: content_Id | default: '#' }}" class="page-count" data-title="{{ part.title }}" aria-label="{{ 'snippets.pagination.goto_label' | t }} {{ part.title }}">{{ part.title }}</a>
