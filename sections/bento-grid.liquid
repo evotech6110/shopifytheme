@@ -1,56 +1,85 @@
 {% comment %}
-  Bento Grid 2.0 - High Density Commercial Edition
-  Inspired by Kogan & Apple minimalist-but-informative style.
-  Features: Trust Badges, Pricing, and Next-Gen Glow Animations.
+  Bento Grid 2.0 - High Density Premium Edition
+  Inspired by high-end tech marketplaces (Apple, Kogan, Framer sleekness).
+  Features: 3D Asset Integration, Glow Hover States, and Industrial Dark Aesthetic.
 {% endcomment %}
 
 <style>
   :root {
-    --bento-glow: rgba(0, 128, 96, 0.15); /* Eco/Pro Green Glow */
-    --accent-gold: #FFD700;
+    --bento-glow: rgba(163, 230, 53, 0.15); /* Vibrant Lime Glow */
+    --bento-accent: #a3e635;
+    --bento-bg: #000000;
+    --bento-card-bg: #0a0f1a;
+    --bento-border: #1f2937;
   }
 
   .bento-section {
-    padding: 60px 0;
-    background: #ffffff;
+    padding: 100px 0;
+    background: var(--bento-bg);
+  }
+
+  .bento-header {
+    margin-bottom: 60px;
+    padding: 0 20px;
+  }
+
+  .bento-header .sub-title {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--bento-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    margin-bottom: 15px;
+  }
+
+  .bento-header h2 {
+    font-size: 48px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
   .bento-grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 350px);
-    gap: 20px;
+    grid-template-rows: repeat(2, 380px);
+    gap: 24px;
+    padding: 0 20px;
   }
 
   .bento-item {
-    background: #f8fafc;
-    border-radius: 20px;
-    padding: 30px;
+    background: var(--bento-card-bg);
+    border-radius: 24px;
+    padding: 40px;
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    border: 1px solid #f1f5f9;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    border: 1.5px solid var(--bento-border);
     text-decoration: none;
     color: inherit;
   }
 
   /* Next-Gen Light Animation (Glow on Hover) */
   .bento-item:hover {
-    transform: translateY(-8px);
-    border-color: var(--bento-glow);
-    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08), 0 0 15px var(--bento-glow);
+    transform: translateY(-10px) scale(1.01);
+    border-color: var(--bento-accent);
+    box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5), 0 0 25px rgba(163, 230, 53, 0.1);
   }
 
   .bento-item::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle at top right, var(--bento-glow), transparent 70%);
+    background: radial-gradient(circle at top right, var(--bento-glow), transparent 75%);
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s ease;
+    z-index: 1;
   }
 
   .bento-item:hover::before {
@@ -59,42 +88,50 @@
 
   .bento-badge {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background: #000;
-    color: #fff;
-    padding: 4px 12px;
+    top: 25px;
+    right: 25px;
+    background: var(--bento-accent);
+    color: #000;
+    padding: 5px 14px;
     border-radius: 50px;
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    z-index: 2;
+    letter-spacing: 0.12em;
+    z-index: 5;
   }
 
   .bento-type {
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #64748b;
-    margin-bottom: 8px;
+    letter-spacing: 0.15em;
+    color: var(--bento-accent);
+    margin-bottom: 12px;
+    z-index: 2;
+    position: relative;
   }
 
   .bento-title {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 800;
-    line-height: 1.1;
+    line-height: 1.15;
     margin: 0;
-    color: #0f172a;
-    max-width: 80%;
+    color: #ffffff;
+    max-width: 85%;
+    z-index: 2;
+    position: relative;
+    letter-spacing: -0.01em;
   }
 
   .bento-desc {
-    font-size: 14px;
-    color: #475569;
-    margin-top: 15px;
+    font-size: 15px;
+    color: #94a3b8;
+    margin-top: 20px;
     line-height: 1.5;
+    max-width: 80%;
+    z-index: 2;
+    position: relative;
   }
 
   .bento-price {
