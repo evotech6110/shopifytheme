@@ -1,33 +1,34 @@
 {%- comment -%}
-  EvoTech — Emergency Marquee Fix.
+  EvoTech - Emergency Marquee Fix.
   This section has been modified to bypass the "Locked" maintenance message.
 {%- endcomment -%}
 
 {%- assign words_csv = 'MANAGED IT | CYBER SECURITY | AI AGENTS | CLOUD | COMPLIANCE | PROCUREMENT' -%}
-{%- assign words = words_csv | split: '|' -%}
+{%- assign words = words_csv | split: ' | ' -%}
 
 <section class="evo evo-marquee" aria-hidden="true">
   <div class="evo-marquee__track">
     {%- for i in (1..2) -%}
       {%- for w in words -%}
         <span class="evo-marquee__word">{{ w }}</span>
-        <span class="evo-marquee__star">✦</span>
+        <span class="evo-marquee__star">*</span>
       {%- endfor -%}
     {%- endfor -%}
   </div>
 </section>
 
 {%- if request.page_type == 'index' -%}
+  {%- comment -%} Removed illegal recursive call {%- endcomment -%}
 {%- endif -%}
 
 {% schema %}
 {
-  "name": "EvoTech — Marquee",
+  "name": "EvoTech - Marquee",
   "tag": "section",
   "class": "evo-section-marquee",
   "settings": [
     { "type": "text", "id": "words", "label": "Words (pipe-separated)", "default": "AI Automation|Cyber Security|Observability|Compliance|Governance|Procurement" }
   ],
-  "presets": [ { "name": "EvoTech — Marquee" } ]
+  "presets": [ { "name": "EvoTech - Marquee" } ]
 }
 {% endschema %}
