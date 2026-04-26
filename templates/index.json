@@ -1,0 +1,124 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "category_circles": {
+      "type": "category-circles",
+      "settings": {}
+    },
+    "bento_grid_hp": {
+      "type": "bento-grid",
+      "settings": {}
+    },
+    "consultancy_spotlight": {
+      "type": "consultancy-spotlight",
+      "settings": {}
+    },
+    "rich_text_premium": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_elite": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "<p>Elite Tech Curation<\/p>"
+          }
+        },
+        "text_main": {
+          "type": "text",
+          "settings": {
+            "description": "<p>EvoTech Digital provides high-performance networking, premium storage, and core computing hardware. Industrial-grade technology for Australian professionals.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_elite",
+        "text_main"
+      ],
+      "settings": {
+        "text_width": "ic-flex-col-lg-8",
+        "text_position": "ic-justify-content-center",
+        "text_align": "ic-text-center"
+      }
+    },
+    "collection-list-bento": {
+      "type": "collection-list",
+      "blocks": {
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "networking"
+          }
+        },
+        "collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "storage"
+          }
+        },
+        "collection-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "pc-components"
+          }
+        },
+        "collection-4": {
+          "type": "collection",
+          "settings": {
+            "collection": "cables-sfp"
+          }
+        }
+      },
+      "block_order": [
+        "collection-1",
+        "collection-2",
+        "collection-3",
+        "collection-4"
+      ],
+      "settings": {
+        "color_scheme": "scheme_1",
+        "pre-heading": "Essential Gear",
+        "title": "Industrial Strength Networking",
+        "text_align": "ic-text-center",
+        "slider_or_grid": "grid",
+        "list_style": "list-card",
+        "card-style": "style-2",
+        "button": true,
+        "button-text": "Explore All"
+      }
+    },
+    "1766483787132c41e9": {
+      "type": "apps",
+      "blocks": {
+        "google_reviews_by_dragonapps_google_review_grid_1_gWd8XC": {
+          "type": "shopify:\/\/apps\/google-reviews-by-dragonapps\/blocks\/google-review-grid-1\/4d6027ed-027b-4bdb-b7ab-294b846e6049",
+          "settings": {
+            "color": "light-purple",
+            "desktop_columns": 6,
+            "tablet_columns": 3,
+            "phone_columns": 2
+          }
+        }
+      },
+      "block_order": [
+        "google_reviews_by_dragonapps_google_review_grid_1_gWd8XC"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "category_circles",
+    "bento_grid_hp",
+    "consultancy_spotlight",
+    "rich_text_premium",
+    "collection-list-bento",
+    "1766483787132c41e9"
+  ]
+}
+
