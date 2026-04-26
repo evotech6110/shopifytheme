@@ -1,4 +1,13 @@
 {% if pagination.pages > 1 %}
+    <style>
+      .pagination .prev svg,
+      .pagination .next svg {
+        width: 20px;
+        height: auto;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    </style>
     <nav role="navigation" aria-label="{{ 'snippets.pagination.label' | t }}" class="pagination">
         {% if pagination.previous %}
             <a href="{{ pagination.previous.url | append: content_Id | default: '#' }}" class="prev" data-title="previous" aria-label="{{ 'snippets.pagination.prev_label' | t }}">
